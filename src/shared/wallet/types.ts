@@ -35,6 +35,14 @@ export type CategoryBulletPropsType = {
   category: TransactionCategory
 }
 
+export type CategoryCardPropsType = {
+  category: TransactionCategory
+}
+
+export type CurrencyCardPropsType = {
+  currency: Currency
+}
+
 export type TransactionCardPropsType = {
   transaction: Transaction
   onPress?: (transaction: Transaction) => void
