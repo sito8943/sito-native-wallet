@@ -1,0 +1,7 @@
+import { TransactionType, type Transaction } from "../../lib/models/Wallet"
+
+export const sortByDate = (transactions: Transaction[]): Transaction[] =>
+  [...transactions].sort((a, b) => b.date.localeCompare(a.date))
+
+export const getTransactionType = (transaction: Transaction): TransactionType =>
+  transaction.categories[0]?.type ?? TransactionType.Out
