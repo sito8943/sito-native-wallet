@@ -1,8 +1,8 @@
 import { type ReactElement } from "react"
 import { ScrollView, StyleSheet } from "react-native"
 
-import { TransactionCard } from "./components"
-import { type Transaction } from "./lib/models/Wallet"
+import TransactionCard from "./TransactionCard"
+import { type Transaction } from "./types"
 
 export default function TransactionList({
   data,

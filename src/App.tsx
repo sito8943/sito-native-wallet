@@ -2,8 +2,7 @@ import { StatusBar } from "expo-status-bar"
 import { type ReactElement } from "react"
 import { StyleSheet, Text, View } from "react-native"
 
-import { useTransactions } from "./hooks"
-import TransactionList from "./TransactionList"
+import { TransactionList, useTransactions } from "#shared/wallet"
 
 export default function App(): ReactElement {
   const { data } = useTransactions()

@@ -3,7 +3,7 @@ import {
   type Currency,
   type Transaction,
   type TransactionCategory,
-} from "../../lib/models/Wallet"
+} from "./types"
 
 const euro: Currency = {
   id: "eur",
@@ -65,3 +65,13 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
     date: "2026-05-22",
   },
 ]
+
+export const TRANSACTION_TYPE_COLORS: Record<TransactionType, string> = {
+  [TransactionType.In]: "#2e7d32",
+  [TransactionType.Out]: "#c62828",
+}
+
+export const TRANSACTION_TYPE_LABELS: Record<TransactionType, string> = {
+  [TransactionType.In]: "income",
+  [TransactionType.Out]: "expense",
+}

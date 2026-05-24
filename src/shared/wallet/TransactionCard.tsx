@@ -1,16 +1,16 @@
 import { type ReactElement } from "react"
+import { StyleSheet, Text, View } from "react-native"
 
-import { View, Text, StyleSheet } from "react-native"
+import Card from "#shared/design/Card"
 
-import { getTransactionType } from "../../../hooks/useTransactions/utils"
-import Card from "../../ui/Card"
-import CategoryBullet from "../CategoryBullet"
-import TransactionTypeBadge from "../TransactionTypeBadge"
-
+import CategoryBullet from "./CategoryBullet"
+import TransactionTypeBadge from "./TransactionTypeBadge"
 import { type TransactionCardPropsType } from "./types"
+import { getTransactionType } from "./utils"
 
 const TransactionCard = (props: TransactionCardPropsType): ReactElement => {
   const { transaction } = props
+
   return (
     <Card key={transaction.id}>
       <View style={styles.header}>

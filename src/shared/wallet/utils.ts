@@ -1,4 +1,4 @@
-import { TransactionType, type Transaction } from "../../lib/models/Wallet"
+import { TransactionType, type Transaction } from "./types"
 
 export const sortByDate = (transactions: Transaction[]): Transaction[] =>
   [...transactions].sort((a, b) => b.date.localeCompare(a.date))

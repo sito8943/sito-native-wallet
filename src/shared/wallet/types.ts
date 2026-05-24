@@ -24,3 +24,21 @@ export type Transaction = {
   categories: TransactionCategory[]
   date: string
 }
+
+export type UseTransactionsState = {
+  data: Transaction[] | null
+  error: Error | null
+  isLoading: boolean
+}
+
+export type CategoryBulletPropsType = {
+  category: TransactionCategory
+}
+
+export type TransactionCardPropsType = {
+  transaction: Transaction
+}
+
+export type TransactionTypeBadgePropsType = {
+  type: TransactionType
+}
