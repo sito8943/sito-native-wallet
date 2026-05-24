@@ -1,5 +1,5 @@
 import { type ReactElement } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Pressable, StyleSheet, Text, View } from "react-native"
 
 import Card from "#shared/design/Card"
 
@@ -9,9 +9,9 @@ import { type TransactionCardPropsType } from "./types"
 import { getTransactionType } from "./utils"
 
 const TransactionCard = (props: TransactionCardPropsType): ReactElement => {
-  const { transaction } = props
+  const { onPress, transaction } = props
 
-  return (
+  const content = (
     <Card key={transaction.id}>
       <View style={styles.header}>
         <View style={styles.titleGroup}>
@@ -32,6 +32,12 @@ const TransactionCard = (props: TransactionCardPropsType): ReactElement => {
       </View>
     </Card>
   )
+
+  if (onPress === undefined) {
+    return content
+  }
+
+  return <Pressable onPress={() => onPress(transaction)}>{content}</Pressable>
 }
 
 const styles = StyleSheet.create({

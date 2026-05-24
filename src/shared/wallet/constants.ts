@@ -8,7 +8,7 @@ import {
 const euro: Currency = {
   id: "eur",
   name: "Euro",
-  symbol: "EUR",
+  symbol: "€",
 }
 
 const salary: TransactionCategory = {

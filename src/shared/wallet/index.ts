@@ -17,6 +17,7 @@ export type {
   Transaction,
   TransactionCardPropsType,
   TransactionCategory,
+  TransactionListPropsType,
   TransactionTypeBadgePropsType,
   UseTransactionsState,
 } from "./types"

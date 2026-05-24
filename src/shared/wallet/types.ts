@@ -37,8 +37,14 @@ export type CategoryBulletPropsType = {
 
 export type TransactionCardPropsType = {
   transaction: Transaction
+  onPress?: (transaction: Transaction) => void
 }
 
 export type TransactionTypeBadgePropsType = {
   type: TransactionType
+}
+
+export type TransactionListPropsType = {
+  data?: Transaction[]
+  onTransactionPress?: (transaction: Transaction) => void
 }
