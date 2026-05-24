@@ -1,0 +1,32 @@
+{
+  "private": true,
+  "name": "sito-wallet",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "lint": "npm run lint-typecheck && npm run lint-eslint && npm run lint-prettier && npm run lint-knip",
+    "lint:fix": "eslint --fix .",
+    "lint-typecheck": "tsc --noEmit",
+    "lint-eslint": "eslint .",
+    "lint-prettier": "prettier --check .",
+    "lint-knip": "knip",
+    "prettier:format": "prettier --write .",
+    "start": "expo start"
+  },
+  "dependencies": {
+    "expo": "~54.0.33",
+    "expo-status-bar": "~3.0.9",
+    "react": "19.1.0",
+    "react-native": "0.81.5"
+  },
+  "devDependencies": {
+    "@christopherjbaker/eslint-config": "^3.1.4",
+    "@types/react": "~19.1.0",
+    "eslint": "^9.39.4",
+    "eslint-config-expo": "~10.0.0",
+    "knip": "^6.14.1",
+    "prettier": "^3.8.3",
+    "typescript": "~5.9.2"
+  }
+}
