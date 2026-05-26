@@ -52,6 +52,7 @@ export type CurrencyCardPropsType = {
 
 export type AccountCardPropsType = {
   account: Account
+  onPress?: (account: Account) => void
 }
 
 export type TransactionCardPropsType = {

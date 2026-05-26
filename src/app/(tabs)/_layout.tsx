@@ -30,6 +30,7 @@ export default function Layout(): ReactElement {
         name="accounts"
         options={{
           title: "Accounts",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <FontAwesome5 size={20} name="wallet" color={color} />
           ),

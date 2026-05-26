@@ -1,5 +1,5 @@
 import { type ReactElement } from "react"
-import { StyleSheet, View } from "react-native"
+import { Pressable, StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
@@ -9,8 +9,9 @@ import { type AccountCardPropsType } from "./types"
 
 export default function AccountCard({
   account,
+  onPress,
 }: AccountCardPropsType): ReactElement {
-  return (
+  const content = (
     <Card>
       <View style={styles.header}>
         <View style={styles.copy}>
@@ -26,6 +27,12 @@ export default function AccountCard({
       </View>
     </Card>
   )
+
+  if (onPress === undefined) {
+    return content
+  }
+
+  return <Pressable onPress={() => onPress(account)}>{content}</Pressable>
 }
 
 const styles = StyleSheet.create({
