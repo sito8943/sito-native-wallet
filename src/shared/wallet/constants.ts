@@ -1,4 +1,5 @@
 import {
+  type Account,
   TransactionType,
   type Currency,
   type Transaction,
@@ -10,6 +11,35 @@ const euro: Currency = {
   name: "Euro",
   symbol: "€",
 }
+
+const dollar: Currency = {
+  id: "usd",
+  name: "US Dollar",
+  symbol: "$",
+}
+
+export const INITIAL_CURRENCIES: Currency[] = [euro, dollar]
+
+export const INITIAL_ACCOUNTS: Account[] = [
+  {
+    id: "main",
+    name: "Main account",
+    balance: 2487.48,
+    currency: euro,
+  },
+  {
+    id: "travel",
+    name: "Travel card",
+    balance: 420.35,
+    currency: euro,
+  },
+  {
+    id: "savings",
+    name: "Savings jar",
+    balance: 1200,
+    currency: dollar,
+  },
+]
 
 const salary: TransactionCategory = {
   id: "salary",
@@ -39,12 +69,19 @@ const home: TransactionCategory = {
   type: TransactionType.Out,
 }
 
+export const INITIAL_CATEGORIES: TransactionCategory[] = [
+  salary,
+  food,
+  transport,
+  home,
+]
+
 export const INITIAL_TRANSACTIONS: Transaction[] = [
   {
     id: "1",
     description: "Monthly salary",
     amount: 2150,
-    currency: euro,
+    account: INITIAL_ACCOUNTS[0],
     categories: [salary],
     date: "2026-05-24",
   },
@@ -52,7 +89,7 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
     id: "2",
     description: "Groceries",
     amount: 54.12,
-    currency: euro,
+    account: INITIAL_ACCOUNTS[0],
     categories: [food, home],
     date: "2026-05-23",
   },
@@ -60,9 +97,17 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
     id: "3",
     description: "Metro card",
     amount: 8.4,
-    currency: euro,
+    account: INITIAL_ACCOUNTS[1],
     categories: [transport],
     date: "2026-05-22",
+  },
+  {
+    id: "4",
+    description: "Savings transfer",
+    amount: 200,
+    account: INITIAL_ACCOUNTS[2],
+    categories: [transport],
+    date: "2026-05-20",
   },
 ]
 

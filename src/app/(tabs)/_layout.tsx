@@ -18,12 +18,20 @@ export default function Layout(): ReactElement {
       }}
     >
       <Tabs.Screen
-        name="transactions"
+        name="currencies"
         options={{
-          title: "Transactions",
-          headerShown: false,
+          title: "Currencies",
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 size={20} name="file-invoice-dollar" color={color} />
+            <FontAwesome5 name="coins" color={color} size={20} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="accounts"
+        options={{
+          title: "Accounts",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 size={20} name="wallet" color={color} />
           ),
         }}
       />
@@ -37,11 +45,12 @@ export default function Layout(): ReactElement {
         }}
       />
       <Tabs.Screen
-        name="currencies"
+        name="transactions"
         options={{
-          title: "Currencies",
+          title: "Transactions",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 name="coins" color={color} size={20} />
+            <FontAwesome5 size={20} name="file-invoice-dollar" color={color} />
           ),
         }}
       />

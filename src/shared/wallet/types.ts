@@ -9,6 +9,13 @@ export type Currency = {
   symbol: string
 }
 
+export type Account = {
+  id: string
+  name: string
+  balance: number
+  currency: Currency
+}
+
 export type TransactionCategory = {
   id: string
   name: string
@@ -20,7 +27,7 @@ export type Transaction = {
   id: string
   description: string
   amount: number
-  currency: Currency
+  account: Account
   categories: TransactionCategory[]
   date: string
 }
@@ -41,6 +48,10 @@ export type CategoryCardPropsType = {
 
 export type CurrencyCardPropsType = {
   currency: Currency
+}
+
+export type AccountCardPropsType = {
+  account: Account
 }
 
 export type TransactionCardPropsType = {

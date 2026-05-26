@@ -26,7 +26,11 @@ const TransactionCard = (props: TransactionCardPropsType): ReactElement => {
       </View>
 
       <Typography variant="bodyStrong" style={styles.amount}>
-        {transaction.amount.toFixed(2)} {transaction.currency.symbol}
+        {transaction.amount.toFixed(2)} {transaction.account.currency.symbol}
+      </Typography>
+
+      <Typography variant="caption" tone="muted" style={styles.account}>
+        {transaction.account.name}
       </Typography>
 
       <View style={styles.categories}>
@@ -57,6 +61,9 @@ const styles = StyleSheet.create({
   },
   amount: {
     marginTop: spacing.sm - 2,
+  },
+  account: {
+    marginTop: spacing.xxs,
   },
   categories: {
     flexDirection: "row",

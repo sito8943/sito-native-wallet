@@ -30,11 +30,14 @@ export default function TransactionDetails(): ReactElement {
       <Card style={styles.details}>
         <Typography variant="label">Amount</Typography>
         <Typography variant="body">
-          {transaction.amount.toFixed(2)} {transaction.currency.symbol}
+          {transaction.amount.toFixed(2)} {transaction.account.currency.symbol}
         </Typography>
 
+        <Typography variant="label">Account</Typography>
+        <Typography variant="body">{transaction.account.name}</Typography>
+
         <Typography variant="label">Currency</Typography>
-        <Typography variant="body">{transaction.currency.name}</Typography>
+        <Typography variant="body">{transaction.account.currency.name}</Typography>
 
         <Typography variant="label">Categories</Typography>
         <Typography variant="body">
