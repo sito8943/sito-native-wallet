@@ -1,7 +1,6 @@
 import { useLocalSearchParams, useRouter } from "expo-router"
 import { type ReactElement } from "react"
 
-import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 import Page from "#design/templates/Page"
@@ -31,21 +30,8 @@ export default function AccountDetails(): ReactElement {
     <Page>
       <AccountCard account={account} />
 
-      <Card style={styles.summary}>
-        <Typography variant="label">Balance</Typography>
-        <Typography variant="body">
-          {account.balance.toFixed(2)} {account.currency.symbol}
-        </Typography>
-
-        <Typography variant="label">Currency</Typography>
-        <Typography variant="body">{account.currency.name}</Typography>
-
-        <Typography variant="label">Transactions</Typography>
-        <Typography variant="body">{accountTransactions.length}</Typography>
-      </Card>
-
       <Typography variant="title" style={styles.heading}>
-        Transactions
+        Transactions ({accountTransactions.length})
       </Typography>
 
       <TransactionList
@@ -62,10 +48,6 @@ export default function AccountDetails(): ReactElement {
 }
 
 const styles = {
-  summary: {
-    gap: spacing.xxs,
-    paddingVertical: spacing.sm,
-  },
   heading: {
     marginHorizontal: spacing.md,
     marginTop: spacing.sm,
