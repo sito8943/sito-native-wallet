@@ -5,6 +5,7 @@
   "main": "expo-router/entry",
   "type": "module",
   "imports": {
+    "#design/*": "./src/shared/design/*/index.ts",
     "#shared/*": "./src/shared/*/index.ts"
   },
   "scripts": {

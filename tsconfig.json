@@ -3,7 +3,8 @@
   "compilerOptions": {
     "jsx": "react-native",
     "paths": {
-      "#shared/*": ["./shared/*/index.ts"]
+      "#design/*": ["./src/shared/design/*/index.ts"],
+      "#shared/*": ["./src/shared/*/index.ts"]
     },
     "strict": true
   }

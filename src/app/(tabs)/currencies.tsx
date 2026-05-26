@@ -1,6 +1,6 @@
 import { type ReactElement } from "react"
-import { ScrollView, StyleSheet } from "react-native"
 
+import Page from "#design/templates/Page"
 import { CurrencyCard, useTransactions } from "#shared/wallet"
 
 export default function Currencies(): ReactElement {
@@ -15,17 +15,10 @@ export default function Currencies(): ReactElement {
   ]
 
   return (
-    <ScrollView style={styles.container}>
+    <Page scroll>
       {currencies.map((currency) => (
         <CurrencyCard key={currency.id} currency={currency} />
       ))}
-    </ScrollView>
+    </Page>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f4f4f4",
-  },
-})

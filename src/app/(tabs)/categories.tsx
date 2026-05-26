@@ -1,6 +1,6 @@
 import { type ReactElement } from "react"
-import { ScrollView, StyleSheet } from "react-native"
 
+import Page from "#design/templates/Page"
 import { CategoryCard, useTransactions } from "#shared/wallet"
 
 export default function Categories(): ReactElement {
@@ -14,17 +14,10 @@ export default function Categories(): ReactElement {
   ]
 
   return (
-    <ScrollView style={styles.container}>
+    <Page scroll>
       {categories.map((category) => (
         <CategoryCard key={category.id} category={category} />
       ))}
-    </ScrollView>
+    </Page>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f4f4f4",
-  },
-})

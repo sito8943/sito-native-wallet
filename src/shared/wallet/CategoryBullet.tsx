@@ -1,5 +1,8 @@
 import { type ReactElement } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, View } from "react-native"
+
+import Typography from "#design/elements/Typography"
+import { radius, spacing } from "#design/foundations"
 
 import { type CategoryBulletPropsType } from "./types"
 
@@ -9,7 +12,7 @@ export default function CategoryBullet({
   return (
     <View style={styles.container}>
       <View style={[styles.bullet, { backgroundColor: category.color }]} />
-      <Text style={styles.label}>{category.name}</Text>
+      <Typography variant="caption">{category.name}</Typography>
     </View>
   )
 }
@@ -18,17 +21,11 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     flexDirection: "row",
-    gap: 6,
+    gap: spacing.xs - 2,
   },
   bullet: {
-    borderRadius: 4,
+    borderRadius: radius.sm,
     height: 8,
     width: 8,
-  },
-  label: {
-    color: "#666",
-    marginTop: 3,
-    fontSize: 12,
-    fontWeight: "600",
   },
 })

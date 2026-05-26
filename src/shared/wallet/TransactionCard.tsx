@@ -1,7 +1,9 @@
 import { type ReactElement } from "react"
-import { Pressable, StyleSheet, Text, View } from "react-native"
+import { Pressable, StyleSheet, View } from "react-native"
 
-import Card from "#shared/design/Card"
+import Card from "#design/elements/Card"
+import Typography from "#design/elements/Typography"
+import { spacing } from "#design/foundations"
 
 import CategoryBullet from "./CategoryBullet"
 import TransactionTypeBadge from "./TransactionTypeBadge"
@@ -15,15 +17,17 @@ const TransactionCard = (props: TransactionCardPropsType): ReactElement => {
     <Card key={transaction.id}>
       <View style={styles.header}>
         <View style={styles.titleGroup}>
-          <Text style={styles.description}>{transaction.description}</Text>
-          <Text style={styles.date}>{transaction.date}</Text>
+          <Typography variant="title">{transaction.description}</Typography>
+          <Typography variant="caption" tone="subtle">
+            {transaction.date}
+          </Typography>
         </View>
         <TransactionTypeBadge type={getTransactionType(transaction)} />
       </View>
 
-      <Text style={styles.amount}>
+      <Typography variant="bodyStrong" style={styles.amount}>
         {transaction.amount.toFixed(2)} {transaction.currency.symbol}
-      </Text>
+      </Typography>
 
       <View style={styles.categories}>
         {transaction.categories.map((category) => (
@@ -44,33 +48,21 @@ const styles = StyleSheet.create({
   header: {
     alignItems: "flex-start",
     flexDirection: "row",
-    gap: 12,
+    gap: spacing.sm,
     justifyContent: "space-between",
   },
   titleGroup: {
     flex: 1,
-    gap: 4,
-  },
-  description: {
-    color: "#1f2933",
-    fontSize: 18,
-    fontWeight: "700",
-  },
-  date: {
-    color: "#888",
-    fontSize: 12,
+    gap: spacing.xxs,
   },
   amount: {
-    color: "#1f2933",
-    fontSize: 16,
-    fontWeight: "700",
-    marginTop: 10,
+    marginTop: spacing.sm - 2,
   },
   categories: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 10,
-    marginTop: 10,
+    gap: spacing.sm - 2,
+    marginTop: spacing.sm - 2,
   },
 })
 

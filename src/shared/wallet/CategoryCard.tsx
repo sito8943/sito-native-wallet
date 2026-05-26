@@ -1,7 +1,8 @@
 import { type ReactElement } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 
-import Card from "#shared/design/Card"
+import Card from "#design/elements/Card"
+import Typography from "#design/elements/Typography"
 
 import CategoryBullet from "./CategoryBullet"
 import { type CategoryCardPropsType, TransactionType } from "./types"
@@ -13,9 +14,9 @@ export default function CategoryCard({
     <Card>
       <View style={styles.row}>
         <CategoryBullet category={category} />
-        <Text style={styles.type}>
+        <Typography variant="label" tone="muted">
           {category.type === TransactionType.In ? "income" : "expense"}
-        </Text>
+        </Typography>
       </View>
     </Card>
   )
@@ -26,10 +27,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  type: {
-    color: "#666",
-    fontSize: 12,
-    fontWeight: "700",
   },
 })

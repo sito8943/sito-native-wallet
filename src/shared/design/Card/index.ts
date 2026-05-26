@@ -1,4 +1,2 @@
-import Card from "./Card"
-
-export default Card
-export type { CardPropsType } from "./types"
+export { default } from "../elements/Card"
+export type { CardPropsType } from "../elements/Card"

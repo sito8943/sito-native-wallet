@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
-import { StyleSheet, View } from "react-native"
 
+import Page from "#design/templates/Page"
 import { TransactionList, useTransactions } from "#shared/wallet"
 
 export default function Transactions(): ReactElement {
@@ -9,7 +9,7 @@ export default function Transactions(): ReactElement {
   const { data } = useTransactions()
 
   return (
-    <View style={styles.container}>
+    <Page>
       <TransactionList
         data={data ?? undefined}
         onTransactionPress={(transaction) =>
@@ -19,13 +19,6 @@ export default function Transactions(): ReactElement {
           })
         }
       />
-    </View>
+    </Page>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f4f4f4",
-  },
-})

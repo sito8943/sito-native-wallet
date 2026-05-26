@@ -3,9 +3,20 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5"
 import { Tabs } from "expo-router"
 import { type ReactElement } from "react"
 
+import { colors } from "#design/foundations"
+
 export default function Layout(): ReactElement {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.textMuted,
+        tabBarStyle: {
+          backgroundColor: colors.surface,
+          borderTopColor: colors.border,
+        },
+      }}
+    >
       <Tabs.Screen
         name="transactions"
         options={{
