@@ -1,4 +1,3 @@
-
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5"
 import { Tabs } from "expo-router"
 import { type ReactElement } from "react"
@@ -18,30 +17,11 @@ export default function Layout(): ReactElement {
       }}
     >
       <Tabs.Screen
-        name="currencies"
+        name="home"
         options={{
-          title: "Currencies",
+          title: "Home",
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 name="coins" color={color} size={spacing.lg} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="accounts"
-        options={{
-          title: "Accounts",
-          headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <FontAwesome5 size={spacing.lg} name="wallet" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="categories"
-        options={{
-          title: "Categories",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome5 size={spacing.lg} name="tags" color={color} />
+            <FontAwesome5 name="home" color={color} size={spacing.lg} />
           ),
         }}
       />
@@ -51,10 +31,35 @@ export default function Layout(): ReactElement {
           title: "Transactions",
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 size={20} name="file-invoice-dollar" color={color} />
+            <FontAwesome5
+              name="file-invoice-dollar"
+              color={color}
+              size={spacing.lg}
+            />
           ),
         }}
       />
+      <Tabs.Screen
+        name="accounts"
+        options={{
+          title: "Accounts",
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="wallet" color={color} size={spacing.lg} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="user-alt" color={color} size={spacing.lg} />
+          ),
+        }}
+      />
+      <Tabs.Screen name="categories" options={{ href: null }} />
+      <Tabs.Screen name="currencies" options={{ href: null }} />
     </Tabs>
   )
 }
