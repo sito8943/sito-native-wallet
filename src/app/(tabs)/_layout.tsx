@@ -20,6 +20,7 @@ export default function Layout(): ReactElement {
         name="home"
         options={{
           title: "Home",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <FontAwesome5 name="home" color={color} size={spacing.lg} />
           ),
@@ -50,16 +51,15 @@ export default function Layout(): ReactElement {
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="settings"
         options={{
-          title: "Profile",
+          title: "Settings",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 name="user-alt" color={color} size={spacing.lg} />
+            <FontAwesome5 name="cog" color={color} size={spacing.lg} />
           ),
         }}
       />
-      <Tabs.Screen name="categories" options={{ href: null }} />
-      <Tabs.Screen name="currencies" options={{ href: null }} />
     </Tabs>
   )
 }

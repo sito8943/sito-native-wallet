@@ -11,13 +11,10 @@ export default function Layout(): ReactElement {
         headerTintColor: colors.textStrong,
       }}
     >
-      <Stack.Screen
-        name="index"
-        options={{
-          title: "Accounts",
-        }}
-      />
-      <Stack.Screen name="[id]" options={{ title: "Account details" }} />
+      <Stack.Screen name="index" options={{ title: "Settings" }} />
+      <Stack.Screen name="profile" options={{ title: "Profile" }} />
+      <Stack.Screen name="categories" options={{ title: "Categories" }} />
+      <Stack.Screen name="currencies" options={{ title: "Currencies" }} />
     </Stack>
   )
 }
