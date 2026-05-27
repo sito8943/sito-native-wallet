@@ -14,7 +14,7 @@ export default function Badge({
 }: BadgeProps): ReactElement {
   return (
     <View style={[styles.badge, toneStyles[tone], style]}>
-      <Typography variant="caption" tone="inverted" style={styles.label}>
+      <Typography variant="caption" tone="inverted">
         {children}
       </Typography>
     </View>
@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xxs,
   },
-  label: typography.label,
 })
 
 const toneStyles = StyleSheet.create({
