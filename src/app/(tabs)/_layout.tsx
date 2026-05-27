@@ -3,7 +3,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5"
 import { Tabs } from "expo-router"
 import { type ReactElement } from "react"
 
-import { colors } from "#design/foundations"
+import { colors, spacing } from "#design/foundations"
 
 export default function Layout(): ReactElement {
   return (
@@ -22,7 +22,7 @@ export default function Layout(): ReactElement {
         options={{
           title: "Currencies",
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 name="coins" color={color} size={20} />
+            <FontAwesome5 name="coins" color={color} size={spacing.lg} />
           ),
         }}
       />
@@ -32,7 +32,7 @@ export default function Layout(): ReactElement {
           title: "Accounts",
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 size={20} name="wallet" color={color} />
+            <FontAwesome5 size={spacing.lg} name="wallet" color={color} />
           ),
         }}
       />
@@ -41,7 +41,7 @@ export default function Layout(): ReactElement {
         options={{
           title: "Categories",
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 size={20} name="tags" color={color} />
+            <FontAwesome5 size={spacing.lg} name="tags" color={color} />
           ),
         }}
       />

@@ -1,7 +1,7 @@
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
-import { colors, radius, spacing, typography } from "#design/foundations"
+import { colors, radius, spacing } from "#design/foundations"
 
 import Typography from "../Typography"
 
