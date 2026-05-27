@@ -1,6 +1,7 @@
-import { typography } from "#design/foundations";
-import { ReactNode } from "react";
-import { StyleProp, TextProps, TextStyle } from "react-native";
+import { type ReactNode } from "react";
+import { type StyleProp, type TextProps, type TextStyle } from "react-native";
+
+import { type typography } from "#design/foundations";
 
 type TypographyVariant = keyof typeof typography
 type TypographyTone = "default" | "muted" | "subtle" | "inverted"

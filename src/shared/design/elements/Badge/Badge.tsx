@@ -1,10 +1,11 @@
-import { type ReactElement, type ReactNode } from "react"
-import { type StyleProp, StyleSheet, View, type ViewStyle } from "react-native"
+import { type ReactElement } from "react"
+import { StyleSheet, View } from "react-native"
 
 import { colors, radius, spacing, typography } from "#design/foundations"
 
 import Typography from "../Typography"
-import { BadgeProps } from "./types"
+
+import { type BadgeProps } from "./types"
 
 export default function Badge({
   children,
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
   badge: {
     alignSelf: "flex-start",
     borderRadius: radius.full,
-    paddingHorizontal: spacing.sm - 2,
+    paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xxs,
   },
   label: typography.label,

@@ -1,7 +1,7 @@
 import { type ReactElement } from "react"
 
-import { CategoryCard, useCategories } from "#shared/categories"
 import Page from "#design/templates/Page"
+import { CategoryCard, useCategories } from "#shared/categories"
 
 export default function Categories(): ReactElement {
   const { data } = useCategories()

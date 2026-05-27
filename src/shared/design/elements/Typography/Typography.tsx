@@ -1,14 +1,9 @@
-import { type ReactElement, type ReactNode } from "react"
-import {
-  type StyleProp,
-  StyleSheet,
-  Text,
-  type TextProps,
-  type TextStyle,
-} from "react-native"
+import { type ReactElement } from "react"
+import { StyleSheet, Text } from "react-native"
 
 import { colors, typography } from "#design/foundations"
-import { TypographyProps } from "./types"
+
+import { type TypographyProps } from "./types"
 
 export default function Typography({
   children,

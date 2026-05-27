@@ -1,11 +1,11 @@
 import { useLocalSearchParams, useRouter } from "expo-router"
 import { type ReactElement } from "react"
 
-import { AccountCard, useAccounts } from "#shared/accounts"
-import { TransactionList, useTransactions } from "#shared/transactions"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 import Page from "#design/templates/Page"
+import { AccountCard, useAccounts } from "#shared/accounts"
+import { TransactionList, useTransactions } from "#shared/transactions"
 
 export default function AccountDetails(): ReactElement {
   const router = useRouter()
