@@ -4,8 +4,8 @@ import { Pressable, StyleSheet, View } from "react-native"
 import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
+import { CategoryBullet } from "#shared/categories"
 
-import CategoryBullet from "./CategoryBullet"
 import TransactionTypeBadge from "./TransactionTypeBadge"
 import { type TransactionCardPropsType } from "./types"
 import { getTransactionType } from "./utils"
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     gap: spacing.xxs,
   },
   amount: {
-    marginTop: spacing.sm - 2,
+    marginTop: spacing.sm,
   },
   account: {
     marginTop: spacing.xxs,
@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
   categories: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: spacing.sm - 2,
-    marginTop: spacing.sm - 2,
+    gap: spacing.sm,
+    marginTop: spacing.sm,
   },
 })
 

@@ -1,7 +1,7 @@
 import { type ReactElement } from "react"
 
+import { CurrencyCard, useCurrencies } from "#shared/currencies"
 import Page from "#design/templates/Page"
-import { CurrencyCard, useCurrencies } from "#shared/wallet"
 
 export default function Currencies(): ReactElement {
   const { data } = useCurrencies()

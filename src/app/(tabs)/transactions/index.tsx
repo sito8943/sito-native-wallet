@@ -1,8 +1,8 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 
+import { TransactionList, useTransactions } from "#shared/transactions"
 import Page from "#design/templates/Page"
-import { TransactionList, useTransactions } from "#shared/wallet"
 
 export default function Transactions(): ReactElement {
   const router = useRouter()

@@ -8,16 +8,7 @@ import {
 } from "react-native"
 
 import { colors, typography } from "#design/foundations"
-
-type TypographyVariant = keyof typeof typography
-type TypographyTone = "default" | "muted" | "subtle" | "inverted"
-
-export type TypographyProps = TextProps & {
-  children: ReactNode
-  variant?: TypographyVariant
-  tone?: TypographyTone
-  style?: StyleProp<TextStyle>
-}
+import { TypographyProps } from "./types"
 
 export default function Typography({
   children,

@@ -1,12 +1,10 @@
 import { type ReactElement } from "react"
 
 import Badge from "#design/elements/Badge"
+import { TransactionType } from "#shared/categories"
 
 import { TRANSACTION_TYPE_LABELS } from "./constants"
-import {
-  TransactionType,
-  type TransactionTypeBadgePropsType,
-} from "./types"
+import { type TransactionTypeBadgePropsType } from "./types"
 
 export default function TransactionTypeBadge({
   type,

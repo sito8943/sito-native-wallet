@@ -1,4 +1,6 @@
-import { TransactionType, type Transaction } from "./types"
+import { TransactionType } from "#shared/categories"
+
+import { type Transaction } from "./types"
 
 export const sortByDate = (transactions: Transaction[]): Transaction[] =>
   [...transactions].sort((a, b) => b.date.localeCompare(a.date))

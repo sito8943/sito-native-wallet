@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     flexDirection: "row",
-    gap: spacing.xs - 2,
+    gap: spacing.xs,
   },
   bullet: {
     borderRadius: radius.sm,
-    height: 8,
-    width: 8,
+    height: spacing.xs,
+    width: spacing.xs,
   },
 })

@@ -3,7 +3,7 @@ import { type ReactElement } from "react"
 
 import Typography from "#design/elements/Typography"
 import Page from "#design/templates/Page"
-import { TransactionCard, useTransactions } from "#shared/wallet"
+import { TransactionCard, useTransactions } from "#shared/transactions"
 
 export default function TransactionDetails(): ReactElement {
   const { id } = useLocalSearchParams<{ id: string }>()

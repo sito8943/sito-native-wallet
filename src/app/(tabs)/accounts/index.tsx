@@ -1,8 +1,8 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 
+import { AccountCard, useAccounts } from "#shared/accounts"
 import Page from "#design/templates/Page"
-import { AccountCard, useAccounts } from "#shared/wallet"
 
 export default function Accounts(): ReactElement {
   const router = useRouter()
