@@ -2,9 +2,10 @@ import { type ReactElement } from "react"
 import { StyleSheet, Text } from "react-native"
 
 import { typography } from "#design/foundations"
-import { useThemeColors, type ThemeColors } from "#shared/theme"
+import { useThemeColors } from "#shared/theme"
 
 import { type TypographyProps } from "./types"
+import { resolveToneColor } from "./utils"
 
 export default function Typography({
   children,
@@ -21,20 +22,6 @@ export default function Typography({
       {children}
     </Text>
   )
-}
-
-const resolveToneColor = (
-  colors: ThemeColors,
-  tone: NonNullable<TypographyProps["tone"]>,
-  variant: NonNullable<TypographyProps["variant"]>,
-): string => {
-  if (tone === "muted") return colors.textMuted
-  if (tone === "subtle") return colors.textSubtle
-  if (tone === "inverted") return colors.textInverted
-
-  const isMutedVariant =
-    variant === "caption" || variant === "label" || variant === "subtle"
-  return isMutedVariant ? colors.textMuted : colors.textStrong
 }
 
 const styles = StyleSheet.create(typography)
