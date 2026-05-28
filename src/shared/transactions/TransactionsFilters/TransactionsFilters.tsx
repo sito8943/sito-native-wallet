@@ -69,26 +69,6 @@ export default function TransactionsFilters({
             ))}
           </View>
         </View>
-
-        <View style={styles.section}>
-          <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Account</Typography>
-          <View style={styles.options}>
-            <FilterChip
-              active={preferences.accountId === null}
-              label="All accounts"
-              onPress={() => setAccountId(null)}
-            />
-
-            {accounts.map((account) => (
-              <FilterChip
-                key={account.id}
-                active={preferences.accountId === account.id}
-                label={account.name}
-                onPress={() => setAccountId(account.id)}
-              />
-            ))}
-          </View>
-        </View>
       </Accordion>
     </Card>
   )
