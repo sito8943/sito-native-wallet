@@ -4,8 +4,9 @@ import { StyleSheet, View } from "react-native"
 import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
 
-import { TransactionType } from "../TransactionCategory"
 import { CategoryBullet } from "../CategoryBullet"
+import { TransactionType } from "../TransactionCategory"
+
 import { type CategoryCardPropsType } from "./types"
 
 export default function CategoryCard({

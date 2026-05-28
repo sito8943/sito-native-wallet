@@ -1,13 +1,13 @@
 import { INITIAL_ACCOUNTS } from "#shared/accounts"
 import { TransactionType } from "#shared/categories"
 
+import { type Transaction } from "../Transaction"
+import { getTransactionType, sortByDate } from "../Transaction"
 import {
   type TransactionsPreferences,
   type TransactionTypeFilter,
   type TransactionSortOrder,
 } from "../TransactionsPreferences"
-import { type Transaction } from "../Transaction"
-import { getTransactionType, sortByDate } from "../Transaction"
 
 import { DEFAULT_TRANSACTIONS_PREFERENCES } from "./constants"
 

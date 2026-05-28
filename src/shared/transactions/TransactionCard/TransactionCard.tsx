@@ -6,8 +6,9 @@ import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 import { CategoryBullet } from "#shared/categories"
 
-import { TransactionTypeBadge } from "../TransactionTypeBadge"
 import { getTransactionType } from "../Transaction"
+import { TransactionTypeBadge } from "../TransactionTypeBadge"
+
 import { type TransactionCardPropsType } from "./types"
 
 export default function TransactionCard({

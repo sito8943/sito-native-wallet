@@ -14,11 +14,11 @@ import {
   DEFAULT_TRANSACTIONS_PREFERENCES,
   TRANSACTIONS_PREFERENCES_STORAGE_KEY,
 } from "./constants"
+import { type UseFilteredTransactionsState } from "./types"
 import {
   applyTransactionsPreferences,
   parseStoredPreferences,
 } from "./utils"
-import { type UseFilteredTransactionsState } from "./types"
 
 export default function useFilteredTransactions(): UseFilteredTransactionsState {
   const {

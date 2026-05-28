@@ -1,11 +1,11 @@
 import { type Account } from "#shared/accounts"
 
+import { type Transaction } from "../Transaction"
 import {
   type TransactionSortOrder,
   type TransactionsPreferences,
   type TransactionTypeFilter,
 } from "../TransactionsPreferences"
-import { type Transaction } from "../Transaction"
 
 export type UseFilteredTransactionsState = {
   accounts: Account[]
