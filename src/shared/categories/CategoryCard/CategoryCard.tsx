@@ -15,8 +15,11 @@ export default function CategoryCard({
   return (
     <Card>
       <View style={styles.row}>
-        <CategoryBullet category={category} />
-        <Typography variant={TYPOGRAPHY_VARIANT.LABEL} tone={TYPOGRAPHY_TONE.MUTED}>
+        <CategoryBullet {...category} />
+        <Typography
+          variant={TYPOGRAPHY_VARIANT.LABEL}
+          tone={TYPOGRAPHY_TONE.MUTED}
+        >
           {category.type}
         </Typography>
       </View>
