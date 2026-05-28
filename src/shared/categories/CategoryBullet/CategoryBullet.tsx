@@ -1,10 +1,9 @@
 import { type ReactElement } from "react"
-import { StyleSheet, View } from "react-native"
+import { View } from "react-native"
 
 import Typography from "#design/elements/Typography"
 import { radius, spacing } from "#design/foundations"
-
-import { useThemeColors } from "#shared/theme"
+import { useThemedStyles, type ThemeColors } from "#shared/theme"
 
 import { type CategoryBulletProps } from "./types"
 
@@ -13,20 +12,21 @@ export default function CategoryBullet({
   name,
   style,
 }: CategoryBulletProps): ReactElement {
-  const colors = useThemeColors()
+  const styles = useThemedStyles(createStyles)
 
   return (
-    <View style={[styles.container, style, { borderColor: colors.border }]}>
+    <View style={[styles.container, style]}>
       {color && <View style={[styles.bullet, { backgroundColor: color }]} />}
       {name && <Typography variant="caption">{name}</Typography>}
     </View>
   )
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: ThemeColors) => ({
   container: {
-    alignItems: "center",
-    flexDirection: "row",
+    alignItems: "center" as const,
+    borderColor: colors.border,
+    flexDirection: "row" as const,
     gap: spacing.xs,
   },
   bullet: {

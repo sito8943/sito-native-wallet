@@ -1,5 +1,5 @@
 import { type ReactElement } from "react"
-import { Pressable, StyleSheet, View } from "react-native"
+import { Pressable, View } from "react-native"
 
 import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
@@ -7,8 +7,9 @@ import { radius, spacing } from "#design/foundations"
 import Page from "#design/templates/Page"
 import {
   THEME_PREFERENCE,
-  useThemeColors,
+  useThemedStyles,
   useThemePreference,
+  type ThemeColors,
   type ThemePreference,
 } from "#shared/theme"
 
@@ -19,7 +20,7 @@ const OPTIONS: Array<{ label: string; value: ThemePreference }> = [
 ]
 
 export default function Profile(): ReactElement {
-  const colors = useThemeColors()
+  const styles = useThemedStyles(createStyles)
   const { preference, setPreference } = useThemePreference()
 
   return (
@@ -43,10 +44,7 @@ export default function Profile(): ReactElement {
                 }}
                 style={[
                   styles.segment,
-                  {
-                    backgroundColor: active ? colors.primary : colors.surface,
-                    borderColor: active ? colors.primary : colors.border,
-                  },
+                  active ? styles.segmentActive : styles.segmentInactive,
                 ]}
               >
                 <Typography
@@ -64,21 +62,29 @@ export default function Profile(): ReactElement {
   )
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: ThemeColors) => ({
   copy: {
     gap: spacing.xs,
     marginBottom: spacing.md,
   },
   segments: {
-    flexDirection: "row",
+    flexDirection: "row" as const,
     gap: spacing.sm,
   },
   segment: {
-    alignItems: "center",
+    alignItems: "center" as const,
     borderRadius: radius.full,
     borderWidth: 1,
     flex: 1,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
+  },
+  segmentActive: {
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
+  },
+  segmentInactive: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
   },
 })

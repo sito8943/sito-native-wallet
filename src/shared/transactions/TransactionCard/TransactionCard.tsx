@@ -1,12 +1,11 @@
 import { type ReactElement } from "react"
-import { Pressable, StyleSheet, View } from "react-native"
+import { Pressable, View } from "react-native"
 
 import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
 import { radius, spacing } from "#design/foundations"
-import { CategoryBullet } from "#shared/categories"
-
-import { useThemeColors } from "#shared/theme"
+import { CategoryBullet, TRANSACTION_TYPE } from "#shared/categories"
+import { useThemedStyles, type ThemeColors } from "#shared/theme"
 
 import { getTransactionType } from "../Transaction"
 import { TransactionTypeBadge } from "../TransactionTypeBadge"
@@ -17,8 +16,11 @@ export default function TransactionCard({
   onPress,
   transaction,
 }: TransactionCardProps): ReactElement {
-  const colors = useThemeColors()
+  const styles = useThemedStyles(createStyles)
   const type = getTransactionType(transaction)
+  const amountStyle =
+    type === TRANSACTION_TYPE.INCOME ? styles.amountPositive : styles.amountNegative
+
   const content = (
     <Card key={transaction.id} style={styles.card}>
       <View style={styles.header}>
@@ -40,15 +42,7 @@ export default function TransactionCard({
             {transaction.date}
           </Typography>
         </View>
-        <Typography
-          variant="bodyStrong"
-          style={[
-            styles.amount,
-            {
-              color: type ? colors.positive : colors.negative,
-            },
-          ]}
-        >
+        <Typography variant="bodyStrong" style={amountStyle}>
           {transaction.amount.toFixed(2)} {transaction.account.currency.symbol}
         </Typography>
       </View>
@@ -62,29 +56,30 @@ export default function TransactionCard({
   return <Pressable onPress={() => onPress(transaction)}>{content}</Pressable>
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: ThemeColors) => ({
   card: {
     padding: spacing.xs,
     borderRadius: radius.md,
   },
   header: {
-    alignItems: "flex-start",
-    flexDirection: "row",
+    alignItems: "flex-start" as const,
+    flexDirection: "row" as const,
     gap: spacing.sm,
-    justifyContent: "space-between",
+    justifyContent: "space-between" as const,
   },
   titleGroup: {
     flex: 1,
     gap: spacing.xxs,
   },
   summaryGroup: {
-    flexDirection: "row",
+    flexDirection: "row" as const,
     gap: spacing.xs,
-    alignItems: "center",
+    alignItems: "center" as const,
   },
-  amount: {},
+  amountPositive: { color: colors.positive },
+  amountNegative: { color: colors.negative },
   categories: {
-    flexDirection: "row",
+    flexDirection: "row" as const,
     marginTop: -spacing.xxs,
   },
   category: {

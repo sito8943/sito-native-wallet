@@ -2,14 +2,13 @@ import { type ReactElement, type ReactNode } from "react"
 import {
   ScrollView,
   type StyleProp,
-  StyleSheet,
   View,
   type ViewStyle,
 } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
 import { spacing } from "#design/foundations"
-import { useThemeColors } from "#shared/theme"
+import { useThemedStyles, type ThemeColors } from "#shared/theme"
 
 export type PageProps = {
   children: ReactNode
@@ -26,13 +25,11 @@ export default function Page({
   style,
   contentContainerStyle,
 }: PageProps): ReactElement {
-  const colors = useThemeColors()
+  const styles = useThemedStyles(createStyles)
 
   if (scroll) {
     return (
-      <SafeAreaView
-        style={[styles.page, { backgroundColor: colors.background }, style]}
-      >
+      <SafeAreaView style={[styles.page, style]}>
         <ScrollView
           contentContainerStyle={[
             styles.content,
@@ -47,9 +44,7 @@ export default function Page({
   }
 
   return (
-    <SafeAreaView
-      style={[styles.page, { backgroundColor: colors.background }, style]}
-    >
+    <SafeAreaView style={[styles.page, style]}>
       <View
         style={[
           styles.content,
@@ -64,8 +59,9 @@ export default function Page({
   )
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: ThemeColors) => ({
   page: {
+    backgroundColor: colors.background,
     flex: 1,
   },
   fill: {
@@ -76,7 +72,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs,
   },
   centeredContent: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: "center" as const,
+    justifyContent: "center" as const,
   },
 })

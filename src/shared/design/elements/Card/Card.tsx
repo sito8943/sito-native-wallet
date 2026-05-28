@@ -1,25 +1,20 @@
 import { type ReactElement } from "react"
-import { StyleSheet, View } from "react-native"
+import { View } from "react-native"
 
 import { radius, shadows, spacing } from "#design/foundations"
-import { useThemeColors } from "#shared/theme"
+import { useThemedStyles, type ThemeColors } from "#shared/theme"
 
 import { type CardProps } from "./types"
 
 export default function Card({ children, style }: CardProps): ReactElement {
-  const colors = useThemeColors()
+  const styles = useThemedStyles(createStyles)
 
-  return (
-    <View
-      style={[styles.container, { backgroundColor: colors.surface }, style]}
-    >
-      {children}
-    </View>
-  )
+  return <View style={[styles.container, style]}>{children}</View>
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: ThemeColors) => ({
   container: {
+    backgroundColor: colors.surface,
     marginHorizontal: spacing.md,
     marginVertical: spacing.xs,
     padding: spacing.sm,

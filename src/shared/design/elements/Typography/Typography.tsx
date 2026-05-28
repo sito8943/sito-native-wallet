@@ -2,7 +2,7 @@ import { type ReactElement } from "react"
 import { StyleSheet, Text } from "react-native"
 
 import { typography } from "#design/foundations"
-import { useThemeColors } from "#shared/theme"
+import { useThemeColors, type ThemeColors } from "#shared/theme"
 
 import { type TypographyProps } from "./types"
 
@@ -14,30 +14,27 @@ export default function Typography({
   ...props
 }: TypographyProps): ReactElement {
   const colors = useThemeColors()
-
-  const toneStyles = StyleSheet.create({
-    default: {
-      color:
-        variant === "caption" || variant === "label" || variant === "subtle"
-          ? colors.textMuted
-          : colors.textStrong,
-    },
-    muted: {
-      color: colors.textMuted,
-    },
-    subtle: {
-      color: colors.textSubtle,
-    },
-    inverted: {
-      color: colors.textInverted,
-    },
-  })
+  const color = resolveToneColor(colors, tone, variant)
 
   return (
-    <Text {...props} style={[styles[variant], toneStyles[tone], style]}>
+    <Text {...props} style={[styles[variant], { color }, style]}>
       {children}
     </Text>
   )
+}
+
+const resolveToneColor = (
+  colors: ThemeColors,
+  tone: NonNullable<TypographyProps["tone"]>,
+  variant: NonNullable<TypographyProps["variant"]>,
+): string => {
+  if (tone === "muted") return colors.textMuted
+  if (tone === "subtle") return colors.textSubtle
+  if (tone === "inverted") return colors.textInverted
+
+  const isMutedVariant =
+    variant === "caption" || variant === "label" || variant === "subtle"
+  return isMutedVariant ? colors.textMuted : colors.textStrong
 }
 
 const styles = StyleSheet.create(typography)
