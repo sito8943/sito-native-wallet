@@ -2,9 +2,12 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5"
 import { Tabs } from "expo-router"
 import { type ReactElement } from "react"
 
-import { colors, spacing } from "#design/foundations"
+import { spacing } from "#design/foundations"
+import { useThemeColors } from "#shared/theme"
 
 export default function Layout(): ReactElement {
+  const colors = useThemeColors()
+
   return (
     <Tabs
       screenOptions={{

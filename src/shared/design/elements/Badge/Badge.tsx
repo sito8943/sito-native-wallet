@@ -1,7 +1,8 @@
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
-import { colors, radius, spacing } from "#design/foundations"
+import { radius, spacing } from "#design/foundations"
+import { useThemeColors } from "#shared/theme"
 
 import Typography from "../Typography"
 
@@ -12,6 +13,20 @@ export default function Badge({
   tone = "neutral",
   style,
 }: BadgeProps): ReactElement {
+  const colors = useThemeColors()
+
+  const toneStyles = StyleSheet.create({
+    neutral: {
+      backgroundColor: colors.primary,
+    },
+    positive: {
+      backgroundColor: colors.positive,
+    },
+    negative: {
+      backgroundColor: colors.negative,
+    },
+  })
+
   return (
     <View style={[styles.badge, toneStyles[tone], style]}>
       <Typography variant="caption" tone="inverted">
@@ -27,17 +42,5 @@ const styles = StyleSheet.create({
     borderRadius: radius.full,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xxs,
-  },
-})
-
-const toneStyles = StyleSheet.create({
-  neutral: {
-    backgroundColor: colors.primary,
-  },
-  positive: {
-    backgroundColor: colors.positive,
-  },
-  negative: {
-    backgroundColor: colors.negative,
   },
 })

@@ -1,12 +1,21 @@
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
-import { colors, radius, shadows, spacing } from "#design/foundations"
+import { radius, shadows, spacing } from "#design/foundations"
+import { useThemeColors } from "#shared/theme"
 
 import { type CardPropsType } from "./types"
 
 export default function Card({ children, style }: CardPropsType): ReactElement {
-  return <View style={[styles.container, style]}>{children}</View>
+  const colors = useThemeColors()
+
+  return (
+    <View
+      style={[styles.container, { backgroundColor: colors.surface }, style]}
+    >
+      {children}
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -15,7 +24,6 @@ const styles = StyleSheet.create({
     marginVertical: spacing.xs,
     padding: spacing.md,
     borderRadius: radius.lg,
-    backgroundColor: colors.surface,
     ...shadows.card,
   },
 })

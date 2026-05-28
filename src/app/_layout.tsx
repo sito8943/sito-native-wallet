@@ -2,7 +2,11 @@ import { Stack } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import { type ReactElement } from "react"
 
-export default function Layout(): ReactElement {
+import { ThemeProvider, useThemePreference } from "#shared/theme"
+
+function RootNavigator(): ReactElement {
+  const { preference } = useThemePreference()
+
   return (
     <>
       <Stack>
@@ -10,7 +14,15 @@ export default function Layout(): ReactElement {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
 
-      <StatusBar style="auto" />
+      <StatusBar style={preference === "dark" ? "light" : "dark"} />
     </>
+  )
+}
+
+export default function Layout(): ReactElement {
+  return (
+    <ThemeProvider>
+      <RootNavigator />
+    </ThemeProvider>
   )
 }

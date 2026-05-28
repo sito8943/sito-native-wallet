@@ -8,7 +8,8 @@ import {
 } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
-import { colors, spacing } from "#design/foundations"
+import { spacing } from "#design/foundations"
+import { useThemeColors } from "#shared/theme"
 
 export type PageProps = {
   children: ReactNode
@@ -25,9 +26,13 @@ export default function Page({
   style,
   contentContainerStyle,
 }: PageProps): ReactElement {
+  const colors = useThemeColors()
+
   if (scroll) {
     return (
-      <SafeAreaView style={[styles.page, style]}>
+      <SafeAreaView
+        style={[styles.page, { backgroundColor: colors.background }, style]}
+      >
         <ScrollView
           contentContainerStyle={[
             styles.content,
@@ -42,7 +47,9 @@ export default function Page({
   }
 
   return (
-    <SafeAreaView style={[styles.page, style]}>
+    <SafeAreaView
+      style={[styles.page, { backgroundColor: colors.background }, style]}
+    >
       <View
         style={[
           styles.content,
@@ -60,7 +67,6 @@ export default function Page({
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    backgroundColor: colors.background,
   },
   fill: {
     flex: 1,

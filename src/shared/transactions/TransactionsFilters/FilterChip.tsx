@@ -2,7 +2,8 @@ import { type ReactElement } from "react"
 import { Pressable, StyleSheet } from "react-native"
 
 import Typography from "#design/elements/Typography"
-import { colors, radius, spacing } from "#design/foundations"
+import { radius, spacing } from "#design/foundations"
+import { useThemeColors } from "#shared/theme"
 
 import { type FilterChipProps } from "./types"
 
@@ -11,10 +12,23 @@ export default function FilterChip({
   label,
   onPress,
 }: FilterChipProps): ReactElement {
+  const colors = useThemeColors()
+
   return (
     <Pressable
       onPress={onPress}
-      style={[styles.chip, isActive ? styles.chipActive : styles.chipInactive]}
+      style={[
+        styles.chip,
+        isActive
+          ? {
+              backgroundColor: colors.primary,
+              borderColor: colors.primary,
+            }
+          : {
+              backgroundColor: colors.surface,
+              borderColor: colors.border,
+            },
+      ]}
     >
       <Typography
         variant="subtle"
@@ -33,14 +47,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
-  },
-  chipActive: {
-    backgroundColor: colors.primary,
-    borderColor: colors.primary,
-  },
-  chipInactive: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
   },
   chipLabel: {
     textTransform: "none",

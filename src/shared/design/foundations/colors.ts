@@ -1,14 +1,14 @@
 const colors = {
-  background: "#f4f4f4",
+  background: "#f5f8fc",
   surface: "#ffffff",
-  border: "#e4e7eb",
-  textStrong: "#1f2933",
-  textMuted: "#666666",
-  textSubtle: "#888888",
+  border: "#d6e0eb",
+  textStrong: "#041e42",
+  textMuted: "#4f627d",
+  textSubtle: "#74839a",
   textInverted: "#ffffff",
   positive: "#2e7d32",
   negative: "#c62828",
-  primary: "#1f2933",
+  primary: "#041e42",
 }
 
 export default colors

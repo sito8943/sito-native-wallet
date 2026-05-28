@@ -5,11 +5,14 @@ import { Pressable, StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
-import { colors, spacing } from "#design/foundations"
+import { spacing } from "#design/foundations"
+import { useThemeColors } from "#shared/theme"
 
 import { settingsMenuItems } from "./items"
 
 export default function SettingsMenu(): ReactElement {
+  const colors = useThemeColors()
+
   return (
     <>
       {settingsMenuItems.map((item) => (
