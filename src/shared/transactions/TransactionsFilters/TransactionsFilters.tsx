@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native"
 
 import Accordion from "#design/elements/Accordion"
 import Card from "#design/elements/Card"
+import Chip from "#design/elements/Chip"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 
@@ -12,14 +13,10 @@ import {
 } from "../TransactionsPreferences"
 
 import { SORT_OPTIONS, TYPE_OPTIONS } from "./constants"
-import FilterChip from "./FilterChip"
 import { type TransactionsFiltersProps } from "./types"
 
 export default function TransactionsFilters({
-  accounts,
   preferences,
-  resetPreferences,
-  setAccountId,
   setSortOrder,
   setTypeFilter,
 }: TransactionsFiltersProps): ReactElement {
@@ -46,7 +43,7 @@ export default function TransactionsFilters({
           <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Type</Typography>
           <View style={styles.options}>
             {TYPE_OPTIONS.map((option) => (
-              <FilterChip
+              <Chip
                 key={option.value}
                 active={preferences.typeFilter === option.value}
                 label={option.label}
@@ -60,7 +57,7 @@ export default function TransactionsFilters({
           <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Sort</Typography>
           <View style={styles.options}>
             {SORT_OPTIONS.map((option) => (
-              <FilterChip
+              <Chip
                 key={option.value}
                 active={preferences.sortOrder === option.value}
                 label={option.label}
@@ -89,9 +86,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     gap: spacing.sm,
-  },
-  resetRow: {
-    alignItems: "flex-end",
   },
   section: {
     gap: spacing.xs,

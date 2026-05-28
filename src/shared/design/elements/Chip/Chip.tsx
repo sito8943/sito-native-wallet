@@ -5,13 +5,13 @@ import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useThemedStyles, type ThemeColors } from "#shared/theme"
 
-import { type FilterChipProps } from "./types"
+import { type ChipProps } from "./types"
 
-export default function FilterChip({
+export default function Chip({
   active,
   label,
   onPress,
-}: FilterChipProps): ReactElement {
+}: ChipProps): ReactElement {
   const styles = useThemedStyles(createStyles)
 
   return (

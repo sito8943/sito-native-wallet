@@ -3,6 +3,7 @@ import { type ReactElement } from "react"
 
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import Page from "#design/templates/Page"
+import { AccountSelector } from "#shared/accounts"
 import { toTransactionDetailsRoute } from "#shared/navigation"
 import {
   TransactionList,
@@ -18,7 +19,6 @@ export default function Transactions(): ReactElement {
     error,
     isLoading,
     preferences,
-    resetPreferences,
     setAccountId,
     setSortOrder,
     setTypeFilter,
@@ -27,12 +27,15 @@ export default function Transactions(): ReactElement {
   return (
     <Page>
       <TransactionsFilters
-        accounts={accounts}
         preferences={preferences}
-        resetPreferences={resetPreferences}
-        setAccountId={setAccountId}
         setSortOrder={setSortOrder}
         setTypeFilter={setTypeFilter}
+      />
+
+      <AccountSelector
+        accounts={accounts}
+        selectedId={preferences.accountId}
+        onSelect={setAccountId}
       />
 
       {error ? (
