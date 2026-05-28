@@ -20,7 +20,7 @@ export default function TransactionsFilters({
   return (
     <Card>
       <View style={styles.header}>
-        <Typography variant="title">Saved view</Typography>
+        <Typography variant="title">Filters</Typography>
         <Pressable onPress={resetPreferences}>
           <Typography variant="subtle">Reset</Typography>
         </Pressable>
