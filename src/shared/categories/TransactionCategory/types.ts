@@ -1,7 +1,7 @@
-export enum TransactionType {
-  Out = 0,
-  In = 1,
-}
+import { type TRANSACTION_TYPE } from "./constants"
+
+export type TransactionType =
+  (typeof TRANSACTION_TYPE)[keyof typeof TRANSACTION_TYPE]
 
 export type TransactionCategory = {
   id: string

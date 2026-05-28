@@ -1,2 +1,2 @@
-export { TransactionType } from "./types"
-export type { TransactionCategory } from "./types"
+export { TRANSACTION_TYPE } from "./constants"
+export type { TransactionCategory, TransactionType } from "./types"

@@ -13,7 +13,7 @@ export default function useStoredState<T>({
   parseStoredValue,
   storageKey,
 }: UseStoredStateOptions<T>): UseStoredStateResult<T> {
-  const [value, setValue] = useState<T>(initialValue)
+  const [data, setData] = useState<T>(initialValue)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
 
@@ -28,7 +28,7 @@ export default function useStoredState<T>({
           return
         }
 
-        setValue(parseStoredValue(JSON.parse(cachedValue)))
+        setData(parseStoredValue(JSON.parse(cachedValue)))
       } catch (error) {
         if (isMounted) {
           setError(toError(error, errorMessage))
@@ -50,17 +50,17 @@ export default function useStoredState<T>({
       return
     }
 
-    void AsyncStorage.setItem(storageKey, JSON.stringify(value)).catch(
+    void AsyncStorage.setItem(storageKey, JSON.stringify(data)).catch(
       (error: unknown) => {
         setError(toError(error, errorMessage))
       },
     )
-  }, [errorMessage, isLoading, storageKey, value])
+  }, [data, errorMessage, isLoading, storageKey])
 
   return {
+    data,
     error,
     isLoading,
-    setValue,
-    value,
+    setData,
   }
 }

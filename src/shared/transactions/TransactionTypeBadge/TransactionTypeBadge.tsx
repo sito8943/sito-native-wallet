@@ -5,11 +5,10 @@ import { View, StyleSheet } from "react-native"
 import Icon, { APP_ICONS } from "#design/elements/Icon"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
-import { TransactionType } from "#shared/categories"
+import { TRANSACTION_TYPE } from "#shared/categories"
 
 import { useThemeColors } from "#shared/theme"
 
-import { TRANSACTION_TYPE_LABELS } from "./constants"
 import { type TransactionTypeBadgeProps } from "./types"
 
 export default function TransactionTypeBadge({
@@ -20,7 +19,7 @@ export default function TransactionTypeBadge({
 }: TransactionTypeBadgeProps): ReactElement {
   const colors = useThemeColors()
 
-  const tone = type === TransactionType.In ? colors.positive : colors.negative
+  const tone = type === TRANSACTION_TYPE.INCOME ? colors.positive : colors.negative
 
   return (
     <View
@@ -34,12 +33,12 @@ export default function TransactionTypeBadge({
       {showIcon && (
         <Icon
           style={{ color: filled ? colors.textInverted : tone }}
-          icon={type === TransactionType.In ? APP_ICONS.in : APP_ICONS.out}
+          icon={type === TRANSACTION_TYPE.INCOME ? APP_ICONS.in : APP_ICONS.out}
         />
       )}
       {showText && (
         <Typography variant="caption" tone="inverted">
-          {TRANSACTION_TYPE_LABELS[type]}
+          {type}
         </Typography>
       )}
     </View>

@@ -1,9 +1,11 @@
 import { INITIAL_ACCOUNTS } from "#shared/accounts"
-import { TransactionType } from "#shared/categories"
+import { TRANSACTION_TYPE } from "#shared/categories"
 
 import { type Transaction } from "../Transaction"
 import { getTransactionType, sortByDate } from "../Transaction"
 import {
+  TRANSACTION_SORT_ORDER,
+  TRANSACTION_TYPE_FILTER,
   type TransactionsPreferences,
   type TransactionTypeFilter,
   type TransactionSortOrder,
@@ -14,23 +16,19 @@ import { DEFAULT_TRANSACTIONS_PREFERENCES } from "./constants"
 const isTransactionTypeFilter = (
   value: unknown,
 ): value is TransactionTypeFilter =>
-  value === "all" || value === "income" || value === "expense"
+  value === TRANSACTION_TYPE_FILTER.ALL ||
+  value === TRANSACTION_TYPE.INCOME ||
+  value === TRANSACTION_TYPE.EXPENSE
 
 const matchesTypeFilter = (
   transaction: Transaction,
   typeFilter: TransactionTypeFilter,
 ): boolean => {
-  if (typeFilter === "all") {
+  if (typeFilter === TRANSACTION_TYPE_FILTER.ALL) {
     return true
   }
 
-  const type = getTransactionType(transaction)
-
-  if (typeFilter === "income") {
-    return type === TransactionType.In
-  }
-
-  return type === TransactionType.Out
+  return getTransactionType(transaction) === typeFilter
 }
 
 export const applyTransactionsPreferences = (
@@ -49,7 +47,7 @@ export const applyTransactionsPreferences = (
 
   const sorted = sortByDate(filtered)
 
-  if (preferences.sortOrder === "oldest") {
+  if (preferences.sortOrder === TRANSACTION_SORT_ORDER.OLDEST) {
     return sorted.reverse()
   }
 
@@ -69,10 +67,12 @@ export const parseTransactionsPreferences = (
       ? candidate.accountId
       : null
   const sortOrder: TransactionSortOrder =
-    candidate.sortOrder === "oldest" ? "oldest" : "newest"
+    candidate.sortOrder === TRANSACTION_SORT_ORDER.OLDEST
+      ? TRANSACTION_SORT_ORDER.OLDEST
+      : TRANSACTION_SORT_ORDER.NEWEST
   const typeFilter = isTransactionTypeFilter(candidate.typeFilter)
     ? candidate.typeFilter
-    : "all"
+    : TRANSACTION_TYPE_FILTER.ALL
 
   return {
     accountId,

@@ -22,10 +22,10 @@ import {
 
 export default function useFilteredTransactions(): UseFilteredTransactionsState {
   const {
+    data: preferences,
     error,
     isLoading,
-    setValue: setPreferences,
-    value: preferences,
+    setData: setPreferences,
   } = useStoredState<TransactionsPreferences>({
     errorMessage: "Unable to persist transaction preferences.",
     initialValue: DEFAULT_TRANSACTIONS_PREFERENCES,

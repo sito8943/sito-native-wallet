@@ -73,7 +73,7 @@ Mezcla dentro y entre archivos.
 
 ---
 
-## 5. Hooks — Return Shape
+## 5. Hooks — Return Shape ✅ (useStoredState)
 
 **Data hooks consistentes (`{ data, error, isLoading }`):**
 - `useAccounts`, `useCategories`, `useCurrencies`, `useTransactions`
@@ -92,7 +92,7 @@ Consistente. Component `.tsx` PascalCase, `types.ts`/`constants.ts`/`index.ts` l
 
 ---
 
-## 7. Enum / Union Casing — INCONSISTENCIA SERIA
+## 7. Enum / Union Casing — INCONSISTENCIA SERIA ✅
 
 **Enum numérico:**
 ```ts
@@ -139,9 +139,9 @@ Named exports para components/hooks/types. Barrels `index.ts` uniformes. **OK.**
 |---|-------|-----------|----------|
 | 1 | `PropsType` vs `Props` (10 archivos) ✅ | Media | Bajo |
 | 3 | Constants camelCase vs UPPER_SNAKE (3 archivos) ✅ | Media | Bajo |
-| 7 | Enum `TransactionType` vs lowercase unions | Alta | Medio |
+| 7 | Enum `TransactionType` vs lowercase unions ✅ | Alta | Medio |
 | 4 | `onTransactionPress` vs `onPress` + boolean prefix mix ✅ | Baja | Bajo |
-| 5 | Hook return shape outliers | Baja | Medio |
+| 5 | Hook return shape — `useStoredState` ✅ / `useThemePreference` (skip, semántico) | Baja | Medio |
 
 **Orden recomendado:**
 1. Props sufijo — rename masivo a `ComponentNameProps`.

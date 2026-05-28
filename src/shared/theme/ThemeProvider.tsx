@@ -15,9 +15,9 @@ export function ThemeProvider({
   children,
 }: ThemeProviderProps): ReactElement {
   const {
+    data: preference,
     isLoading,
-    setValue: setPreference,
-    value: preference,
+    setData: setPreference,
   } = useStoredState<ThemePreference>({
     errorMessage: "Unable to persist theme preference.",
     initialValue: "light",

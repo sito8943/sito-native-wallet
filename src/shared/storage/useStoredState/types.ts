@@ -8,8 +8,8 @@ export type UseStoredStateOptions<T> = {
 }
 
 export type UseStoredStateResult<T> = {
+  data: T
   error: Error | null
   isLoading: boolean
-  setValue: Dispatch<SetStateAction<T>>
-  value: T
+  setData: Dispatch<SetStateAction<T>>
 }
