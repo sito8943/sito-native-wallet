@@ -9,11 +9,3 @@ export type TransactionCategory = {
   color: string
   type: TransactionType
 }
-
-export type CategoryBulletPropsType = {
-  category: TransactionCategory
-}
-
-export type CategoryCardPropsType = {
-  category: TransactionCategory
-}

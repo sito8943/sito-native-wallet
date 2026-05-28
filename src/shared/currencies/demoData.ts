@@ -1,4 +1,4 @@
-import { type Currency } from "./types"
+import { type Currency } from "./Currency"
 
 const euro: Currency = {
   id: "eur",

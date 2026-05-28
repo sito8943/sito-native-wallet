@@ -6,8 +6,3 @@ export type Account = {
   balance: number
   currency: Currency
 }
-
-export type AccountCardPropsType = {
-  account: Account
-  onPress?: (account: Account) => void
-}

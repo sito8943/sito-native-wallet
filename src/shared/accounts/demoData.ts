@@ -1,6 +1,6 @@
 import { INITIAL_CURRENCIES } from "#shared/currencies"
 
-import { type Account } from "./types"
+import { type Account } from "./Account"
 
 const [euro, dollar] = INITIAL_CURRENCIES
 

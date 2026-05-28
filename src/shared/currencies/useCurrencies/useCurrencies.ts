@@ -1,13 +1,8 @@
 import { useState } from "react"
 
-import { INITIAL_CURRENCIES } from "./constants"
-import { type Currency } from "./types"
+import { INITIAL_CURRENCIES } from "../demoData"
 
-type UseCurrenciesState = {
-  data: Currency[] | null
-  error: Error | null
-  isLoading: boolean
-}
+import { type UseCurrenciesState } from "./types"
 
 export default function useCurrencies(): UseCurrenciesState {
   const [state] = useState<UseCurrenciesState>({

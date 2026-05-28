@@ -1,13 +1,8 @@
 import { useState } from "react"
 
-import { INITIAL_ACCOUNTS } from "./constants"
-import { type Account } from "./types"
+import { INITIAL_ACCOUNTS } from "../demoData"
 
-type UseAccountsState = {
-  data: Account[] | null
-  error: Error | null
-  isLoading: boolean
-}
+import { type UseAccountsState } from "./types"
 
 export default function useAccounts(): UseAccountsState {
   const [state] = useState<UseAccountsState>({

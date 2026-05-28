@@ -1,4 +1,7 @@
-import { TransactionType, type TransactionCategory } from "./types"
+import {
+  TransactionType,
+  type TransactionCategory,
+} from "./TransactionCategory"
 
 const salary: TransactionCategory = {
   id: "salary",

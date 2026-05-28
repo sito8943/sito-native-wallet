@@ -1,6 +1,8 @@
-import CurrencyCard from "./CurrencyCard"
-import useCurrencies from "./useCurrencies"
+import { CurrencyCard } from "./CurrencyCard"
+import { useCurrencies } from "./useCurrencies"
 
-export { INITIAL_CURRENCIES } from "./constants"
+export { INITIAL_CURRENCIES } from "./demoData"
 export { CurrencyCard, useCurrencies }
-export type { Currency, CurrencyCardPropsType } from "./types"
+export type { Currency } from "./Currency"
+export type { CurrencyCardPropsType } from "./CurrencyCard"
+export type { UseCurrenciesState } from "./useCurrencies"

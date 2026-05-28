@@ -1,13 +1,8 @@
 import { useState } from "react"
 
-import { INITIAL_CATEGORIES } from "./constants"
-import { type TransactionCategory } from "./types"
+import { INITIAL_CATEGORIES } from "../demoData"
 
-type UseCategoriesState = {
-  data: TransactionCategory[] | null
-  error: Error | null
-  isLoading: boolean
-}
+import { type UseCategoriesState } from "./types"
 
 export default function useCategories(): UseCategoriesState {
   const [state] = useState<UseCategoriesState>({
