@@ -1,6 +1,7 @@
 import { createContext } from "react"
 
 import { lightColors } from "./colors"
+import { RESOLVED_THEME, THEME_PREFERENCE } from "./constants"
 import { type ThemeContextValue, type ThemePreference } from "./types"
 
 const defaultTogglePreference = (): void => undefined
@@ -12,7 +13,8 @@ const defaultSetPreference = (
 export const ThemeContext = createContext<ThemeContextValue>({
   colors: lightColors,
   isLoading: false,
-  preference: "light",
+  preference: THEME_PREFERENCE.SYSTEM,
+  resolvedTheme: RESOLVED_THEME.LIGHT,
   setPreference: defaultSetPreference,
   togglePreference: defaultTogglePreference,
 })

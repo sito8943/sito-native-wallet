@@ -1,7 +1,8 @@
+export { RESOLVED_THEME, THEME_PREFERENCE } from "./constants"
 export { ThemeProvider } from "./ThemeProvider"
 export {
   useThemeColors,
   useThemePreference,
   useThemeValue,
 } from "./useThemePreference"
-export type { ThemePreference } from "./types"
+export type { ResolvedTheme, ThemePreference } from "./types"

@@ -1,11 +1,17 @@
-import { type ReactElement, type ReactNode } from "react"
+import { useMemo, type ReactElement, type ReactNode } from "react"
+import { useColorScheme } from "react-native"
 
 import { useStoredState } from "#shared/storage"
 
-import { THEME_PREFERENCE_STORAGE_KEY } from "./constants"
+import { THEME_PREFERENCE, THEME_PREFERENCE_STORAGE_KEY } from "./constants"
 import { ThemeContext } from "./ThemeContext"
 import { type ThemePreference } from "./types"
-import { getThemeColors, parseThemePreference } from "./utils"
+import {
+  getThemeColors,
+  nextPreference,
+  parseThemePreference,
+  resolveTheme,
+} from "./utils"
 
 type ThemeProviderProps = {
   children: ReactNode
@@ -14,30 +20,34 @@ type ThemeProviderProps = {
 export function ThemeProvider({
   children,
 }: ThemeProviderProps): ReactElement {
+  const systemScheme = useColorScheme()
+
   const {
     data: preference,
     isLoading,
     setData: setPreference,
   } = useStoredState<ThemePreference>({
     errorMessage: "Unable to persist theme preference.",
-    initialValue: "light",
+    initialValue: THEME_PREFERENCE.SYSTEM,
     parseStoredValue: parseThemePreference,
     storageKey: THEME_PREFERENCE_STORAGE_KEY,
   })
 
-  return (
-    <ThemeContext.Provider
-      value={{
-        colors: getThemeColors(preference),
-        isLoading,
-        preference,
-        setPreference,
-        togglePreference: () => {
-          setPreference((current) => (current === "light" ? "dark" : "light"))
-        },
-      }}
-    >
-      {children}
-    </ThemeContext.Provider>
+  const resolvedTheme = resolveTheme(preference, systemScheme)
+
+  const value = useMemo(
+    () => ({
+      colors: getThemeColors(resolvedTheme),
+      isLoading,
+      preference,
+      resolvedTheme,
+      setPreference,
+      togglePreference: () => {
+        setPreference(nextPreference)
+      },
+    }),
+    [isLoading, preference, resolvedTheme, setPreference],
   )
+
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }

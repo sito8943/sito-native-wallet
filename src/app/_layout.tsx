@@ -2,10 +2,14 @@ import { Stack } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import { type ReactElement } from "react"
 
-import { ThemeProvider, useThemePreference } from "#shared/theme"
+import {
+  RESOLVED_THEME,
+  ThemeProvider,
+  useThemePreference,
+} from "#shared/theme"
 
 function RootNavigator(): ReactElement {
-  const { preference } = useThemePreference()
+  const { resolvedTheme } = useThemePreference()
 
   return (
     <>
@@ -14,7 +18,9 @@ function RootNavigator(): ReactElement {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
 
-      <StatusBar style={preference === "dark" ? "light" : "dark"} />
+      <StatusBar
+        style={resolvedTheme === RESOLVED_THEME.DARK ? "light" : "dark"}
+      />
     </>
   )
 }
