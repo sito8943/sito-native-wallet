@@ -6,13 +6,13 @@ import { radius, spacing } from "#design/foundations"
 
 import { useThemeColors } from "#shared/theme"
 
-import { type CategoryBulletPropsType } from "./types"
+import { type CategoryBulletProps } from "./types"
 
 export default function CategoryBullet({
   color,
   name,
   style,
-}: CategoryBulletPropsType): ReactElement {
+}: CategoryBulletProps): ReactElement {
   const colors = useThemeColors()
 
   return (

@@ -1,4 +1,4 @@
 import TransactionsFilters from "./TransactionsFilters"
 
 export { TransactionsFilters }
-export type { TransactionsFiltersPropsType } from "./types"
+export type { TransactionsFiltersProps } from "./types"

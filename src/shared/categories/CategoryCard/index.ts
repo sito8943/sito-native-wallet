@@ -1,4 +1,4 @@
 import CategoryCard from "./CategoryCard"
 
 export { CategoryCard }
-export type { CategoryCardPropsType } from "./types"
+export type { CategoryCardProps } from "./types"

@@ -1,6 +1,6 @@
 import { type Transaction } from "../Transaction"
 
-export type TransactionListPropsType = {
+export type TransactionListProps = {
   data?: Transaction[]
   emptyMessage?: string
   onTransactionPress?: (transaction: Transaction) => void

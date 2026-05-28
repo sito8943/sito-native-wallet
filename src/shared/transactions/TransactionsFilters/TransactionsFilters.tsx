@@ -8,7 +8,7 @@ import { spacing } from "#design/foundations"
 
 import { sortOptions, typeOptions } from "./constants"
 import FilterChip from "./FilterChip"
-import { type TransactionsFiltersPropsType } from "./types"
+import { type TransactionsFiltersProps } from "./types"
 
 export default function TransactionsFilters({
   accounts,
@@ -17,7 +17,7 @@ export default function TransactionsFilters({
   setAccountId,
   setSortOrder,
   setTypeFilter,
-}: TransactionsFiltersPropsType): ReactElement {
+}: TransactionsFiltersProps): ReactElement {
   return (
     <Card>
       <View style={styles.header}>

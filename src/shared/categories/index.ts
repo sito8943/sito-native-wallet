@@ -6,6 +6,6 @@ export { INITIAL_CATEGORIES } from "./demoData"
 export { CategoryBullet, CategoryCard, useCategories }
 export { TransactionType } from "./TransactionCategory"
 export type { TransactionCategory } from "./TransactionCategory"
-export type { CategoryBulletPropsType } from "./CategoryBullet"
-export type { CategoryCardPropsType } from "./CategoryCard"
+export type { CategoryBulletProps } from "./CategoryBullet"
+export type { CategoryCardProps } from "./CategoryCard"
 export type { UseCategoriesState } from "./useCategories"

@@ -14,14 +14,14 @@ export {
   useTransactions,
 }
 export type { Transaction } from "./Transaction"
-export type { TransactionCardPropsType } from "./TransactionCard"
-export type { TransactionListPropsType } from "./TransactionList"
+export type { TransactionCardProps } from "./TransactionCard"
+export type { TransactionListProps } from "./TransactionList"
 export type {
   TransactionSortOrder,
   TransactionsPreferences,
   TransactionTypeFilter,
 } from "./TransactionsPreferences"
-export type { TransactionsFiltersPropsType } from "./TransactionsFilters"
-export type { TransactionTypeBadgePropsType } from "./TransactionTypeBadge"
+export type { TransactionsFiltersProps } from "./TransactionsFilters"
+export type { TransactionTypeBadgeProps } from "./TransactionTypeBadge"
 export type { UseFilteredTransactionsState } from "./useFilteredTransactions"
 export type { UseTransactionsState } from "./useTransactions"

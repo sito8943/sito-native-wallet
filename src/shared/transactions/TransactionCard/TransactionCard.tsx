@@ -11,12 +11,12 @@ import { useThemeColors } from "#shared/theme"
 import { getTransactionType } from "../Transaction"
 import { TransactionTypeBadge } from "../TransactionTypeBadge"
 
-import { type TransactionCardPropsType } from "./types"
+import { type TransactionCardProps } from "./types"
 
 export default function TransactionCard({
   onPress,
   transaction,
-}: TransactionCardPropsType): ReactElement {
+}: TransactionCardProps): ReactElement {
   const colors = useThemeColors()
   const type = getTransactionType(transaction)
   const content = (

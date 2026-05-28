@@ -7,11 +7,11 @@ import Typography from "#design/elements/Typography"
 import { CategoryBullet } from "../CategoryBullet"
 import { TransactionType } from "../TransactionCategory"
 
-import { type CategoryCardPropsType } from "./types"
+import { type CategoryCardProps } from "./types"
 
 export default function CategoryCard({
   category,
-}: CategoryCardPropsType): ReactElement {
+}: CategoryCardProps): ReactElement {
   return (
     <Card>
       <View style={styles.row}>

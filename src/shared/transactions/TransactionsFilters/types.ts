@@ -6,7 +6,7 @@ import {
   type TransactionTypeFilter,
 } from "../TransactionsPreferences"
 
-export type TransactionsFiltersPropsType = {
+export type TransactionsFiltersProps = {
   accounts: Account[]
   preferences: TransactionsPreferences
   resetPreferences: () => void

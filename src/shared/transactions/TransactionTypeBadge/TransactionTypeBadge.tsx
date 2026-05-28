@@ -10,14 +10,14 @@ import { TransactionType } from "#shared/categories"
 import { useThemeColors } from "#shared/theme"
 
 import { TRANSACTION_TYPE_LABELS } from "./constants"
-import { type TransactionTypeBadgePropsType } from "./types"
+import { type TransactionTypeBadgeProps } from "./types"
 
 export default function TransactionTypeBadge({
   type,
   filled = true,
   showIcon = true,
   showText = true,
-}: TransactionTypeBadgePropsType): ReactElement {
+}: TransactionTypeBadgeProps): ReactElement {
   const colors = useThemeColors()
 
   const tone = type === TransactionType.In ? colors.positive : colors.negative

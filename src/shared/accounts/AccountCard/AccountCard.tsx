@@ -5,12 +5,12 @@ import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 
-import { type AccountCardPropsType } from "./types"
+import { type AccountCardProps } from "./types"
 
 export default function AccountCard({
   account,
   onPress,
-}: AccountCardPropsType): ReactElement {
+}: AccountCardProps): ReactElement {
   const content = (
     <Card>
       <View style={styles.header}>

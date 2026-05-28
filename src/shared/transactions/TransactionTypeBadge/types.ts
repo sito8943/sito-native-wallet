@@ -1,6 +1,6 @@
 import { type TransactionType } from "#shared/categories"
 
-export type TransactionTypeBadgePropsType = {
+export type TransactionTypeBadgeProps = {
   type: TransactionType
   showIcon?: boolean
   showText?: boolean

@@ -1,5 +1,5 @@
 import { type TransactionCategory } from "../TransactionCategory"
 
-export type CategoryCardPropsType = {
+export type CategoryCardProps = {
   category: TransactionCategory
 }

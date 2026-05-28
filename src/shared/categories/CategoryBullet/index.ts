@@ -1,4 +1,4 @@
 import CategoryBullet from "./CategoryBullet"
 
 export { CategoryBullet }
-export type { CategoryBulletPropsType } from "./types"
+export type { CategoryBulletProps } from "./types"

@@ -1,4 +1,4 @@
 import TransactionCard from "./TransactionCard"
 
 export { TransactionCard }
-export type { TransactionCardPropsType } from "./types"
+export type { TransactionCardProps } from "./types"

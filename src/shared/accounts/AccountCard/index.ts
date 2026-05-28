@@ -1,4 +1,4 @@
 import AccountCard from "./AccountCard"
 
 export { AccountCard }
-export type { AccountCardPropsType } from "./types"
+export type { AccountCardProps } from "./types"

@@ -4,9 +4,9 @@ import { StyleSheet, View } from "react-native"
 import { radius, shadows, spacing } from "#design/foundations"
 import { useThemeColors } from "#shared/theme"
 
-import { type CardPropsType } from "./types"
+import { type CardProps } from "./types"
 
-export default function Card({ children, style }: CardPropsType): ReactElement {
+export default function Card({ children, style }: CardProps): ReactElement {
   const colors = useThemeColors()
 
   return (

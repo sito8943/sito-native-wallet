@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { type ReactElement } from "react"
 
-import { type IconPropsType } from "./types"
+import { type IconProps } from "./types"
 
 export default function Icon({
   icon,
   ...iconProps
-}: IconPropsType): ReactElement {
+}: IconProps): ReactElement {
   return <FontAwesomeIcon {...iconProps} icon={icon} />
 }

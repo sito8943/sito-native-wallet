@@ -6,13 +6,13 @@ import { spacing } from "#design/foundations"
 
 import { TransactionCard } from "../TransactionCard"
 
-import { type TransactionListPropsType } from "./types"
+import { type TransactionListProps } from "./types"
 
 export default function TransactionList({
   data,
   emptyMessage = "No transactions available.",
   onTransactionPress,
-}: TransactionListPropsType): ReactElement {
+}: TransactionListProps): ReactElement {
   return (
     <ScrollView style={styles.list} contentContainerStyle={styles.content}>
       {data?.length ? (

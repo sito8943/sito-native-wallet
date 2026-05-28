@@ -4,11 +4,11 @@ import { StyleSheet, View } from "react-native"
 import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
 
-import { type CurrencyCardPropsType } from "./types"
+import { type CurrencyCardProps } from "./types"
 
 export default function CurrencyCard({
   currency,
-}: CurrencyCardPropsType): ReactElement {
+}: CurrencyCardProps): ReactElement {
   return (
     <Card>
       <View style={styles.row}>

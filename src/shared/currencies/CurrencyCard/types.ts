@@ -1,5 +1,5 @@
 import { type Currency } from "../Currency"
 
-export type CurrencyCardPropsType = {
+export type CurrencyCardProps = {
   currency: Currency
 }
