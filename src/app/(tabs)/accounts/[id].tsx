@@ -1,16 +1,19 @@
-import { useLocalSearchParams, useRouter } from "expo-router"
+import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 import Page from "#design/templates/Page"
 import { AccountCard, useAccounts } from "#shared/accounts"
-import { toTransactionDetailsRoute } from "#shared/navigation"
+import {
+  toTransactionDetailsRoute,
+  useDetailRouteParams,
+} from "#shared/navigation"
 import { TransactionList, useTransactions } from "#shared/transactions"
 
 export default function AccountDetails(): ReactElement {
   const router = useRouter()
-  const { id } = useLocalSearchParams<{ id: string }>()
+  const { id } = useDetailRouteParams()
   const { data: accounts } = useAccounts()
   const { data: transactions } = useTransactions()
 
