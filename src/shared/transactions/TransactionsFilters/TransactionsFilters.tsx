@@ -36,7 +36,7 @@ export default function TransactionsFilters({
           {TYPE_OPTIONS.map((option) => (
             <FilterChip
               key={option.value}
-              isActive={preferences.typeFilter === option.value}
+              active={preferences.typeFilter === option.value}
               label={option.label}
               onPress={() => setTypeFilter(option.value)}
             />
@@ -50,7 +50,7 @@ export default function TransactionsFilters({
           {SORT_OPTIONS.map((option) => (
             <FilterChip
               key={option.value}
-              isActive={preferences.sortOrder === option.value}
+              active={preferences.sortOrder === option.value}
               label={option.label}
               onPress={() => setSortOrder(option.value)}
             />
@@ -62,7 +62,7 @@ export default function TransactionsFilters({
         <Typography variant="label">Account</Typography>
         <View style={styles.options}>
           <FilterChip
-            isActive={preferences.accountId === null}
+            active={preferences.accountId === null}
             label="All accounts"
             onPress={() => setAccountId(null)}
           />
@@ -70,7 +70,7 @@ export default function TransactionsFilters({
           {accounts.map((account) => (
             <FilterChip
               key={account.id}
-              isActive={preferences.accountId === account.id}
+              active={preferences.accountId === account.id}
               label={account.name}
               onPress={() => setAccountId(account.id)}
             />

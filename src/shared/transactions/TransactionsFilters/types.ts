@@ -16,7 +16,7 @@ export type TransactionsFiltersProps = {
 }
 
 export type FilterChipProps = {
-  isActive: boolean
+  active: boolean
   label: string
   onPress: () => void
 }

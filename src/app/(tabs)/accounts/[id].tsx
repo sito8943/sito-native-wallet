@@ -41,7 +41,7 @@ export default function AccountDetails(): ReactElement {
 
       <TransactionList
         data={accountTransactions}
-        onTransactionPress={(transaction) =>
+        onPress={(transaction) =>
           router.push(toTransactionDetailsRoute(transaction.id))
         }
       />

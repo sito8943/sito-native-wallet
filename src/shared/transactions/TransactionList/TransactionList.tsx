@@ -11,7 +11,7 @@ import { type TransactionListProps } from "./types"
 export default function TransactionList({
   data,
   emptyMessage = "No transactions available.",
-  onTransactionPress,
+  onPress,
 }: TransactionListProps): ReactElement {
   return (
     <ScrollView style={styles.list} contentContainerStyle={styles.content}>
@@ -20,7 +20,7 @@ export default function TransactionList({
           <TransactionCard
             key={transaction.id}
             transaction={transaction}
-            onPress={onTransactionPress}
+            onPress={onPress}
           />
         ))
       ) : (

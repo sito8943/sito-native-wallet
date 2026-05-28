@@ -48,7 +48,7 @@ export default function Transactions(): ReactElement {
             ? "Loading saved transaction view..."
             : "No transactions match your saved filters."
         }
-        onTransactionPress={(transaction) =>
+        onPress={(transaction) =>
           router.push(toTransactionDetailsRoute(transaction.id))
         }
       />

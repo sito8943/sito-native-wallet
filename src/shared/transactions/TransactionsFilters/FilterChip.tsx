@@ -8,7 +8,7 @@ import { useThemeColors } from "#shared/theme"
 import { type FilterChipProps } from "./types"
 
 export default function FilterChip({
-  isActive,
+  active,
   label,
   onPress,
 }: FilterChipProps): ReactElement {
@@ -19,7 +19,7 @@ export default function FilterChip({
       onPress={onPress}
       style={[
         styles.chip,
-        isActive
+        active
           ? {
               backgroundColor: colors.primary,
               borderColor: colors.primary,
@@ -32,7 +32,7 @@ export default function FilterChip({
     >
       <Typography
         variant="subtle"
-        tone={isActive ? "inverted" : "default"}
+        tone={active ? "inverted" : "default"}
         style={styles.chipLabel}
       >
         {label}

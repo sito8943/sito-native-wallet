@@ -52,7 +52,7 @@ Mezcla dentro y entre archivos.
 
 ---
 
-## 4. Prop Names — Mismo concepto, distinto nombre
+## 4. Prop Names — Mismo concepto, distinto nombre ✅
 
 **Callback de press:**
 - `src/shared/accounts/AccountCard/types.ts:3` — `onPress`
@@ -140,7 +140,7 @@ Named exports para components/hooks/types. Barrels `index.ts` uniformes. **OK.**
 | 1 | `PropsType` vs `Props` (10 archivos) ✅ | Media | Bajo |
 | 3 | Constants camelCase vs UPPER_SNAKE (3 archivos) ✅ | Media | Bajo |
 | 7 | Enum `TransactionType` vs lowercase unions | Alta | Medio |
-| 4 | `onTransactionPress` vs `onPress` + boolean prefix mix | Baja | Bajo |
+| 4 | `onTransactionPress` vs `onPress` + boolean prefix mix ✅ | Baja | Bajo |
 | 5 | Hook return shape outliers | Baja | Medio |
 
 **Orden recomendado:**
