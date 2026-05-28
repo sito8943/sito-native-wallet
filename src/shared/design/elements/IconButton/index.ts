@@ -1,6 +1,4 @@
-import IconButton from "./IconButton"
-
-export { IconButton }
+export { default } from "./IconButton"
 export type {
   IconButtonProps,
   IconButtonSize,

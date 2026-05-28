@@ -1,4 +1,4 @@
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5"
+import { FontAwesome } from "@expo/vector-icons"
 import { type ReactElement } from "react"
 import { Pressable, StyleSheet, View } from "react-native"
 
@@ -48,7 +48,7 @@ export default function IconButton({
       {...props}
     >
       <View style={styles.content}>
-        <FontAwesome5
+        <FontAwesome
           color={iconColor}
           name={icon}
           size={resolvedSize.iconSize}

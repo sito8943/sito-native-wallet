@@ -1,7 +1,8 @@
 import { type ReactElement } from "react"
-import { Pressable, StyleSheet, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
+import IconButton from "#design/elements/IconButton"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 
@@ -21,9 +22,12 @@ export default function TransactionsFilters({
     <Card>
       <View style={styles.header}>
         <Typography variant="title">Filters</Typography>
-        <Pressable onPress={resetPreferences}>
-          <Typography variant="subtle">Reset</Typography>
-        </Pressable>
+        <IconButton
+          accessibilityLabel="Reset filters"
+          icon="rotate-left"
+          onPress={resetPreferences}
+          variant="text"
+        />
       </View>
 
       <View style={styles.section}>
