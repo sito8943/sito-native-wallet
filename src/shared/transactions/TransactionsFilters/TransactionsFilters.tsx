@@ -1,10 +1,15 @@
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
+import Accordion from "#design/elements/Accordion"
 import Card from "#design/elements/Card"
-import IconButton, { ICON_BUTTON_VARIANT } from "#design/elements/IconButton"
-import Typography from "#design/elements/Typography"
+import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+
+import {
+  TRANSACTION_SORT_ORDER,
+  TRANSACTION_TYPE_FILTER,
+} from "../TransactionsPreferences"
 
 import { SORT_OPTIONS, TYPE_OPTIONS } from "./constants"
 import FilterChip from "./FilterChip"
@@ -18,74 +23,95 @@ export default function TransactionsFilters({
   setSortOrder,
   setTypeFilter,
 }: TransactionsFiltersProps): ReactElement {
+  const activeCount = countActiveFilters(preferences)
+
   return (
     <Card>
-      <View style={styles.header}>
-        <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>Filters</Typography>
-        <IconButton
-          accessibilityLabel="Reset filters"
-          icon="rotate-left"
-          onPress={resetPreferences}
-          variant={ICON_BUTTON_VARIANT.TEXT}
-        />
-      </View>
-
-      <View style={styles.section}>
-        <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Type</Typography>
-        <View style={styles.options}>
-          {TYPE_OPTIONS.map((option) => (
-            <FilterChip
-              key={option.value}
-              active={preferences.typeFilter === option.value}
-              label={option.label}
-              onPress={() => setTypeFilter(option.value)}
-            />
-          ))}
+      <Accordion
+        header={
+          <View style={styles.headerContent}>
+            <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>Filters</Typography>
+            {activeCount > 0 && (
+              <Typography
+                variant={TYPOGRAPHY_VARIANT.CAPTION}
+                tone={TYPOGRAPHY_TONE.MUTED}
+              >
+                {activeCount} active
+              </Typography>
+            )}
+          </View>
+        }
+      >
+        <View style={styles.section}>
+          <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Type</Typography>
+          <View style={styles.options}>
+            {TYPE_OPTIONS.map((option) => (
+              <FilterChip
+                key={option.value}
+                active={preferences.typeFilter === option.value}
+                label={option.label}
+                onPress={() => setTypeFilter(option.value)}
+              />
+            ))}
+          </View>
         </View>
-      </View>
 
-      <View style={styles.section}>
-        <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Sort</Typography>
-        <View style={styles.options}>
-          {SORT_OPTIONS.map((option) => (
-            <FilterChip
-              key={option.value}
-              active={preferences.sortOrder === option.value}
-              label={option.label}
-              onPress={() => setSortOrder(option.value)}
-            />
-          ))}
+        <View style={styles.section}>
+          <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Sort</Typography>
+          <View style={styles.options}>
+            {SORT_OPTIONS.map((option) => (
+              <FilterChip
+                key={option.value}
+                active={preferences.sortOrder === option.value}
+                label={option.label}
+                onPress={() => setSortOrder(option.value)}
+              />
+            ))}
+          </View>
         </View>
-      </View>
 
-      <View style={styles.section}>
-        <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Account</Typography>
-        <View style={styles.options}>
-          <FilterChip
-            active={preferences.accountId === null}
-            label="All accounts"
-            onPress={() => setAccountId(null)}
-          />
-
-          {accounts.map((account) => (
+        <View style={styles.section}>
+          <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Account</Typography>
+          <View style={styles.options}>
             <FilterChip
-              key={account.id}
-              active={preferences.accountId === account.id}
-              label={account.name}
-              onPress={() => setAccountId(account.id)}
+              active={preferences.accountId === null}
+              label="All accounts"
+              onPress={() => setAccountId(null)}
             />
-          ))}
+
+            {accounts.map((account) => (
+              <FilterChip
+                key={account.id}
+                active={preferences.accountId === account.id}
+                label={account.name}
+                onPress={() => setAccountId(account.id)}
+              />
+            ))}
+          </View>
         </View>
-      </View>
+      </Accordion>
     </Card>
   )
 }
 
+const countActiveFilters = (
+  preferences: TransactionsFiltersProps["preferences"],
+): number => {
+  let count = 0
+  if (preferences.typeFilter !== TRANSACTION_TYPE_FILTER.ALL) count++
+  if (preferences.sortOrder !== TRANSACTION_SORT_ORDER.NEWEST) count++
+  if (preferences.accountId !== null) count++
+  return count
+}
+
 const styles = StyleSheet.create({
-  header: {
+  headerContent: {
     alignItems: "center",
     flexDirection: "row",
-    justifyContent: "space-between",
+    gap: spacing.sm,
+  },
+  resetRow: {
+    alignItems: "flex-end",
   },
   section: {
     gap: spacing.xs,

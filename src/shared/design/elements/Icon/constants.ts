@@ -7,6 +7,8 @@ import {
   faPlus,
   faArrowTrendUp,
   faArrowTrendDown,
+  faChevronDown,
+  faChevronUp,
 } from "@fortawesome/free-solid-svg-icons"
 
 export const APP_ICONS: Record<string, IconProp> = {
@@ -16,4 +18,6 @@ export const APP_ICONS: Record<string, IconProp> = {
   add: faPlus,
   in: faArrowTrendUp,
   out: faArrowTrendDown,
+  chevronDown: faChevronDown,
+  chevronUp: faChevronUp,
 }
