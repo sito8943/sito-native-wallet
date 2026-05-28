@@ -1,7 +1,7 @@
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5"
 import { Tabs } from "expo-router"
 import { type ReactElement } from "react"
 
+import Icon, { APP_ICONS } from "#design/elements/Icon"
 import { spacing } from "#design/foundations"
 import { useThemeColors } from "#shared/theme"
 
@@ -25,7 +25,7 @@ export default function Layout(): ReactElement {
           title: "Home",
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 name="home" color={color} size={spacing.lg} />
+            <Icon icon={APP_ICONS.home} color={color} size={spacing.lg} />
           ),
         }}
       />
@@ -35,8 +35,8 @@ export default function Layout(): ReactElement {
           title: "Transactions",
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <FontAwesome5
-              name="file-invoice-dollar"
+            <Icon
+              icon={APP_ICONS.transactions}
               color={color}
               size={spacing.lg}
             />
@@ -49,7 +49,7 @@ export default function Layout(): ReactElement {
           title: "Accounts",
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 name="wallet" color={color} size={spacing.lg} />
+            <Icon icon={APP_ICONS.accounts} color={color} size={spacing.lg} />
           ),
         }}
       />
@@ -59,7 +59,7 @@ export default function Layout(): ReactElement {
           title: "Settings",
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 name="cog" color={color} size={spacing.lg} />
+            <Icon icon={APP_ICONS.settings} color={color} size={spacing.lg} />
           ),
         }}
       />

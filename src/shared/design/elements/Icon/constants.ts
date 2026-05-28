@@ -9,6 +9,14 @@ import {
   faArrowTrendDown,
   faChevronDown,
   faChevronUp,
+  faHouse,
+  faFileInvoiceDollar,
+  faWallet,
+  faGear,
+  faChevronRight,
+  faUser,
+  faTags,
+  faCoins,
 } from "@fortawesome/free-solid-svg-icons"
 
 export const APP_ICONS: Record<string, IconProp> = {
@@ -20,4 +28,12 @@ export const APP_ICONS: Record<string, IconProp> = {
   out: faArrowTrendDown,
   chevronDown: faChevronDown,
   chevronUp: faChevronUp,
+  home: faHouse,
+  transactions: faFileInvoiceDollar,
+  accounts: faWallet,
+  settings: faGear,
+  chevronRight: faChevronRight,
+  profile: faUser,
+  categories: faTags,
+  currencies: faCoins,
 }

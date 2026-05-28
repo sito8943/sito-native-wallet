@@ -1,9 +1,9 @@
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5"
 import { Link } from "expo-router"
 import { type ReactElement } from "react"
 import { Pressable, StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
+import Icon, { APP_ICONS } from "#design/elements/Icon"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 import { useThemeColors } from "#shared/theme"
@@ -21,15 +21,15 @@ export default function SettingsMenu(): ReactElement {
             <Card>
               <View style={styles.row}>
                 <View style={styles.left}>
-                  <FontAwesome5
-                    name={item.icon}
+                  <Icon
+                    icon={item.icon}
                     color={colors.textStrong}
                     size={spacing.lg}
                   />
                   <Typography>{item.label}</Typography>
                 </View>
-                <FontAwesome5
-                  name="chevron-right"
+                <Icon
+                  icon={APP_ICONS.chevronRight}
                   color={colors.textMuted}
                   size={spacing.md}
                 />
