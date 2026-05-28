@@ -5,6 +5,7 @@ import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 import Page from "#design/templates/Page"
 import { AccountCard, useAccounts } from "#shared/accounts"
+import { toTransactionDetailsRoute } from "#shared/navigation"
 import { TransactionList, useTransactions } from "#shared/transactions"
 
 export default function AccountDetails(): ReactElement {
@@ -38,10 +39,7 @@ export default function AccountDetails(): ReactElement {
       <TransactionList
         data={accountTransactions}
         onTransactionPress={(transaction) =>
-          router.push({
-            pathname: "/transactions/[id]",
-            params: { id: transaction.id },
-          })
+          router.push(toTransactionDetailsRoute(transaction.id))
         }
       />
     </Page>

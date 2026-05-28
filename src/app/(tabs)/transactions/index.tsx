@@ -3,6 +3,7 @@ import { type ReactElement } from "react"
 
 import Typography from "#design/elements/Typography"
 import Page from "#design/templates/Page"
+import { toTransactionDetailsRoute } from "#shared/navigation"
 import {
   TransactionList,
   TransactionsFilters,
@@ -48,10 +49,7 @@ export default function Transactions(): ReactElement {
             : "No transactions match your saved filters."
         }
         onTransactionPress={(transaction) =>
-          router.push({
-            pathname: "/transactions/[id]",
-            params: { id: transaction.id },
-          })
+          router.push(toTransactionDetailsRoute(transaction.id))
         }
       />
     </Page>
