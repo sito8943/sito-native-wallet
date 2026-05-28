@@ -32,7 +32,7 @@ Todo usa `type`. Sin mezcla. Sin `I`-prefix. **OK, mantener.**
 
 ---
 
-## 3. Constants — `UPPER_SNAKE` vs `camelCase`
+## 3. Constants — `UPPER_SNAKE` vs `camelCase` ✅
 
 Mezcla dentro y entre archivos.
 
@@ -138,7 +138,7 @@ Named exports para components/hooks/types. Barrels `index.ts` uniformes. **OK.**
 | # | Issue | Severidad | Esfuerzo |
 |---|-------|-----------|----------|
 | 1 | `PropsType` vs `Props` (10 archivos) ✅ | Media | Bajo |
-| 3 | Constants camelCase vs UPPER_SNAKE (3 archivos) | Media | Bajo |
+| 3 | Constants camelCase vs UPPER_SNAKE (3 archivos) ✅ | Media | Bajo |
 | 7 | Enum `TransactionType` vs lowercase unions | Alta | Medio |
 | 4 | `onTransactionPress` vs `onPress` + boolean prefix mix | Baja | Bajo |
 | 5 | Hook return shape outliers | Baja | Medio |

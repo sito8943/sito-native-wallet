@@ -2,7 +2,7 @@ import { spacing } from "#design/foundations"
 
 import { type IconButtonSize } from "./types"
 
-export const buttonSizes: Record<
+export const BUTTON_SIZES: Record<
   IconButtonSize,
   { iconSize: number; minSize: number; padding: number }
 > = {

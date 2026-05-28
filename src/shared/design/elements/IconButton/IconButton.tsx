@@ -5,7 +5,7 @@ import { Pressable, StyleSheet, View } from "react-native"
 import { radius, spacing } from "#design/foundations"
 import { useThemeColors } from "#shared/theme"
 
-import { buttonSizes } from "./constants"
+import { BUTTON_SIZES } from "./constants"
 import { type IconButtonProps } from "./types"
 import { getContainerStyle, getIconColor } from "./utils"
 
@@ -22,7 +22,7 @@ export default function IconButton({
   ...props
 }: IconButtonProps): ReactElement {
   const colors = useThemeColors()
-  const resolvedSize = buttonSizes[size]
+  const resolvedSize = BUTTON_SIZES[size]
   const containerStyle = getContainerStyle({ colors, disabled, variant })
   const iconColor = getIconColor({ colors, disabled, variant })
 

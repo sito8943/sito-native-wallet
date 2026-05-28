@@ -6,7 +6,7 @@ import IconButton from "#design/elements/IconButton"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 
-import { sortOptions, typeOptions } from "./constants"
+import { SORT_OPTIONS, TYPE_OPTIONS } from "./constants"
 import FilterChip from "./FilterChip"
 import { type TransactionsFiltersProps } from "./types"
 
@@ -33,7 +33,7 @@ export default function TransactionsFilters({
       <View style={styles.section}>
         <Typography variant="label">Type</Typography>
         <View style={styles.options}>
-          {typeOptions.map((option) => (
+          {TYPE_OPTIONS.map((option) => (
             <FilterChip
               key={option.value}
               isActive={preferences.typeFilter === option.value}
@@ -47,7 +47,7 @@ export default function TransactionsFilters({
       <View style={styles.section}>
         <Typography variant="label">Sort</Typography>
         <View style={styles.options}>
-          {sortOptions.map((option) => (
+          {SORT_OPTIONS.map((option) => (
             <FilterChip
               key={option.value}
               isActive={preferences.sortOrder === option.value}
