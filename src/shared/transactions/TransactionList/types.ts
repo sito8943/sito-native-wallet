@@ -1,4 +1,4 @@
-import { type Transaction } from "../types"
+import { type Transaction } from "../Transaction"
 
 export type TransactionListPropsType = {
   data?: Transaction[]

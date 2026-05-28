@@ -1,7 +1,7 @@
 import { INITIAL_ACCOUNTS } from "#shared/accounts"
 import { INITIAL_CATEGORIES } from "#shared/categories"
 
-import { type Transaction } from "./types"
+import { type Transaction } from "./Transaction"
 
 const [salary, food, transport, home] = INITIAL_CATEGORIES
 

@@ -3,13 +3,12 @@ import { useMemo } from "react"
 import { INITIAL_ACCOUNTS } from "#shared/accounts"
 import { useStoredState } from "#shared/storage"
 
-import { INITIAL_TRANSACTIONS } from "../constants"
+import { INITIAL_TRANSACTIONS } from "../demoData"
 import {
   type TransactionSortOrder,
   type TransactionsPreferences,
   type TransactionTypeFilter,
-  type UseFilteredTransactionsState,
-} from "../types"
+} from "../TransactionsPreferences"
 
 import {
   DEFAULT_TRANSACTIONS_PREFERENCES,
@@ -19,6 +18,7 @@ import {
   applyTransactionsPreferences,
   parseStoredPreferences,
 } from "./utils"
+import { type UseFilteredTransactionsState } from "./types"
 
 export default function useFilteredTransactions(): UseFilteredTransactionsState {
   const {

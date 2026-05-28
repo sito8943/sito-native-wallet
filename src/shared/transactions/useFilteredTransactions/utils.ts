@@ -2,11 +2,12 @@ import { INITIAL_ACCOUNTS } from "#shared/accounts"
 import { TransactionType } from "#shared/categories"
 
 import {
-  type Transaction,
   type TransactionsPreferences,
   type TransactionTypeFilter,
-} from "../types"
-import { getTransactionType, sortByDate } from "../utils"
+  type TransactionSortOrder,
+} from "../TransactionsPreferences"
+import { type Transaction } from "../Transaction"
+import { getTransactionType, sortByDate } from "../Transaction"
 
 import { DEFAULT_TRANSACTIONS_PREFERENCES } from "./constants"
 
@@ -67,7 +68,8 @@ export const parseTransactionsPreferences = (
     typeof candidate.accountId === "string" && candidate.accountId.length > 0
       ? candidate.accountId
       : null
-  const sortOrder = candidate.sortOrder === "oldest" ? "oldest" : "newest"
+  const sortOrder: TransactionSortOrder =
+    candidate.sortOrder === "oldest" ? "oldest" : "newest"
   const typeFilter = isTransactionTypeFilter(candidate.typeFilter)
     ? candidate.typeFilter
     : "all"

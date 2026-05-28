@@ -1,4 +1,4 @@
-import { type TransactionsPreferences } from "../types"
+import { type TransactionsPreferences } from "../TransactionsPreferences"
 
 export const DEFAULT_TRANSACTIONS_PREFERENCES: TransactionsPreferences = {
   accountId: null,
