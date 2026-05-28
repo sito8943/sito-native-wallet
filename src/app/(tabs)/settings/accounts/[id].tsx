@@ -24,7 +24,10 @@ export default function AccountDetails(): ReactElement {
   if (account === undefined) {
     return (
       <Page centered>
-        <Typography variant={TYPOGRAPHY_VARIANT.BODY_STRONG} tone={TYPOGRAPHY_TONE.MUTED}>
+        <Typography
+          variant={TYPOGRAPHY_VARIANT.BODY_STRONG}
+          tone={TYPOGRAPHY_TONE.MUTED}
+        >
           Account not found
         </Typography>
       </Page>

@@ -44,12 +44,16 @@ export default function Layout(): ReactElement {
         }}
       />
       <Tabs.Screen
-        name="accounts"
+        name="subscriptions"
         options={{
-          title: "Accounts",
+          title: "Subscriptions",
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <Icon icon={APP_ICONS.accounts} color={color} size={spacing.lg} />
+            <Icon
+              icon={APP_ICONS.subscriptions}
+              color={color}
+              size={spacing.lg}
+            />
           ),
         }}
       />

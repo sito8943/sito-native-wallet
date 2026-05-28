@@ -1,7 +1,11 @@
 import { Stack } from "expo-router"
 import { StatusBar } from "expo-status-bar"
-import { type ReactElement } from "react"
+import { useEffect, type ReactElement } from "react"
 
+import {
+  INITIAL_SUBSCRIPTIONS,
+  notifyUpcomingRenewal,
+} from "#shared/subscriptions"
 import {
   RESOLVED_THEME,
   ThemeProvider,
@@ -10,6 +14,10 @@ import {
 
 function RootNavigator(): ReactElement {
   const { resolvedTheme } = useThemePreference()
+
+  useEffect(() => {
+    void notifyUpcomingRenewal(INITIAL_SUBSCRIPTIONS)
+  }, [])
 
   return (
     <>
