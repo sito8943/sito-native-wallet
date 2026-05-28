@@ -17,9 +17,7 @@ type ThemeProviderProps = {
   children: ReactNode
 }
 
-export function ThemeProvider({
-  children,
-}: ThemeProviderProps): ReactElement {
+export function ThemeProvider({ children }: ThemeProviderProps): ReactElement {
   const systemScheme = useColorScheme()
 
   const {
