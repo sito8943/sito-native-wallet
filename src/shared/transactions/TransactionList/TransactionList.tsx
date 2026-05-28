@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet } from "react-native"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 
-import TransactionCard from "./TransactionCard"
+import { TransactionCard } from "../TransactionCard"
 import { type TransactionListPropsType } from "./types"
 
 export default function TransactionList({

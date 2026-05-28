@@ -6,13 +6,14 @@ import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 import { CategoryBullet } from "#shared/categories"
 
-import TransactionTypeBadge from "./TransactionTypeBadge"
+import { TransactionTypeBadge } from "../TransactionTypeBadge"
+import { getTransactionType } from "../utils"
 import { type TransactionCardPropsType } from "./types"
-import { getTransactionType } from "./utils"
 
-const TransactionCard = (props: TransactionCardPropsType): ReactElement => {
-  const { onPress, transaction } = props
-
+export default function TransactionCard({
+  onPress,
+  transaction,
+}: TransactionCardPropsType): ReactElement {
   const content = (
     <Card key={transaction.id}>
       <View style={styles.header}>
@@ -72,5 +73,3 @@ const styles = StyleSheet.create({
     marginTop: spacing.sm,
   },
 })
-
-export default TransactionCard

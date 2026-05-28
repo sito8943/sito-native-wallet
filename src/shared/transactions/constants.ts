@@ -1,5 +1,5 @@
 import { INITIAL_ACCOUNTS } from "#shared/accounts"
-import { INITIAL_CATEGORIES, TransactionType } from "#shared/categories"
+import { INITIAL_CATEGORIES } from "#shared/categories"
 
 import { type Transaction } from "./types"
 
@@ -39,8 +39,3 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
     date: "2026-05-20",
   },
 ]
-
-export const TRANSACTION_TYPE_LABELS: Record<TransactionType, string> = {
-  [TransactionType.In]: "income",
-  [TransactionType.Out]: "expense",
-}
