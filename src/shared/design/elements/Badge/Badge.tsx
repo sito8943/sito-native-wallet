@@ -4,11 +4,12 @@ import { View } from "react-native"
 import { radius, spacing } from "#design/foundations"
 import { useThemedStyles, type ThemeColors } from "#shared/theme"
 
+import { BADGE_TONE } from "./constants"
 import { type BadgeProps } from "./types"
 
 export default function Badge({
   children,
-  tone = "neutral",
+  tone = BADGE_TONE.NEUTRAL,
   style,
 }: BadgeProps): ReactElement {
   const styles = useThemedStyles(createStyles)

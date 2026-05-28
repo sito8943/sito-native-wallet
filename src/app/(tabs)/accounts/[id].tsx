@@ -1,8 +1,8 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 
-import Typography from "#design/elements/Typography"
-import { spacing } from "#design/foundations"
+import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
+import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Page from "#design/templates/Page"
 import { AccountCard, useAccounts } from "#shared/accounts"
 import {
@@ -24,7 +24,7 @@ export default function AccountDetails(): ReactElement {
   if (account === undefined) {
     return (
       <Page centered>
-        <Typography variant="bodyStrong" tone="muted">
+        <Typography variant={TYPOGRAPHY_VARIANT.BODY_STRONG} tone={TYPOGRAPHY_TONE.MUTED}>
           Account not found
         </Typography>
       </Page>
@@ -35,7 +35,7 @@ export default function AccountDetails(): ReactElement {
     <Page>
       <AccountCard account={account} />
 
-      <Typography variant="title" style={styles.heading}>
+      <Typography variant={TYPOGRAPHY_VARIANT.TITLE} style={styles.heading}>
         Transactions ({accountTransactions.length})
       </Typography>
 

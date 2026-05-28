@@ -1,2 +1,9 @@
+export { TYPOGRAPHY_VARIANT } from "#design/foundations"
+
 export { default } from "./Typography"
-export type { TypographyProps } from "./types"
+export { TYPOGRAPHY_TONE } from "./constants"
+export type {
+  TypographyProps,
+  TypographyTone,
+  TypographyVariant,
+} from "./types"

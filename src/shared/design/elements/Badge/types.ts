@@ -1,7 +1,9 @@
-import { type ReactNode } from "react";
-import { type StyleProp, type ViewStyle } from "react-native";
+import { type ReactNode } from "react"
+import { type StyleProp, type ViewStyle } from "react-native"
 
-type BadgeTone = "neutral" | "positive" | "negative"
+import { type BADGE_TONE } from "./constants"
+
+export type BadgeTone = (typeof BADGE_TONE)[keyof typeof BADGE_TONE]
 
 export type BadgeProps = {
   children: ReactNode

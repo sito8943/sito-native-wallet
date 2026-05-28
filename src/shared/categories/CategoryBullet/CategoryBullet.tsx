@@ -2,7 +2,7 @@ import { type ReactElement } from "react"
 import { View } from "react-native"
 
 import Typography from "#design/elements/Typography"
-import { radius, spacing } from "#design/foundations"
+import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useThemedStyles, type ThemeColors } from "#shared/theme"
 
 import { type CategoryBulletProps } from "./types"
@@ -17,7 +17,7 @@ export default function CategoryBullet({
   return (
     <View style={[styles.container, style]}>
       {color && <View style={[styles.bullet, { backgroundColor: color }]} />}
-      {name && <Typography variant="caption">{name}</Typography>}
+      {name && <Typography variant={TYPOGRAPHY_VARIANT.CAPTION}>{name}</Typography>}
     </View>
   )
 }

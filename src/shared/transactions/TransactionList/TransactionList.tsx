@@ -1,7 +1,7 @@
 import { type ReactElement } from "react"
 import { ScrollView, StyleSheet } from "react-native"
 
-import Typography from "#design/elements/Typography"
+import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 
 import { TransactionCard } from "../TransactionCard"
@@ -24,7 +24,7 @@ export default function TransactionList({
           />
         ))
       ) : (
-        <Typography style={styles.emptyMessage} tone="muted">
+        <Typography style={styles.emptyMessage} tone={TYPOGRAPHY_TONE.MUTED}>
           {emptyMessage}
         </Typography>
       )}

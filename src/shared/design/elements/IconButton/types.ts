@@ -7,9 +7,16 @@ import {
   type ViewStyle,
 } from "react-native"
 
-export type IconButtonVariant = "filled" | "outlined" | "text"
+import {
+  type ICON_BUTTON_SIZE,
+  type ICON_BUTTON_VARIANT,
+} from "./constants"
 
-export type IconButtonSize = "sm" | "md" | "lg"
+export type IconButtonVariant =
+  (typeof ICON_BUTTON_VARIANT)[keyof typeof ICON_BUTTON_VARIANT]
+
+export type IconButtonSize =
+  (typeof ICON_BUTTON_SIZE)[keyof typeof ICON_BUTTON_SIZE]
 
 export type IconButtonProps = Omit<PressableProps, "children" | "style"> & {
   accessibilityLabel: string

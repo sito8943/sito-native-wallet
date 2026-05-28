@@ -1,8 +1,8 @@
 import { type ReactElement } from "react"
 import { Pressable } from "react-native"
 
-import Typography from "#design/elements/Typography"
-import { radius, spacing } from "#design/foundations"
+import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
+import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useThemedStyles, type ThemeColors } from "#shared/theme"
 
 import { type FilterChipProps } from "./types"
@@ -20,8 +20,8 @@ export default function FilterChip({
       style={[styles.chip, active ? styles.chipActive : styles.chipInactive]}
     >
       <Typography
-        variant="subtle"
-        tone={active ? "inverted" : "default"}
+        variant={TYPOGRAPHY_VARIANT.SUBTLE}
+        tone={active ? TYPOGRAPHY_TONE.INVERTED : TYPOGRAPHY_TONE.DEFAULT}
         style={styles.chipLabel}
       >
         {label}

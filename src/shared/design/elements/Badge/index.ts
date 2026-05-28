@@ -1,2 +1,3 @@
 export { default } from "./Badge"
-export type { BadgeProps } from "./types"
+export { BADGE_TONE } from "./constants"
+export type { BadgeProps, BadgeTone } from "./types"

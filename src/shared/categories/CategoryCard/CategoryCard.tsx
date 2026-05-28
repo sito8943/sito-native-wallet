@@ -2,7 +2,8 @@ import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
-import Typography from "#design/elements/Typography"
+import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
+import { TYPOGRAPHY_VARIANT } from "#design/foundations"
 
 import { CategoryBullet } from "../CategoryBullet"
 
@@ -15,7 +16,7 @@ export default function CategoryCard({
     <Card>
       <View style={styles.row}>
         <CategoryBullet category={category} />
-        <Typography variant="label" tone="muted">
+        <Typography variant={TYPOGRAPHY_VARIANT.LABEL} tone={TYPOGRAPHY_TONE.MUTED}>
           {category.type}
         </Typography>
       </View>

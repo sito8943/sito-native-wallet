@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 
-import Typography from "#design/elements/Typography"
+import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import Page from "#design/templates/Page"
 import { toTransactionDetailsRoute } from "#shared/navigation"
 import {
@@ -36,7 +36,7 @@ export default function Transactions(): ReactElement {
       />
 
       {error ? (
-        <Typography tone="muted">
+        <Typography tone={TYPOGRAPHY_TONE.MUTED}>
           Saved preferences could not be loaded. Default filters are active.
         </Typography>
       ) : null}

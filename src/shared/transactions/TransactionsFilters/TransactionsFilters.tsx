@@ -2,9 +2,9 @@ import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
-import IconButton from "#design/elements/IconButton"
+import IconButton, { ICON_BUTTON_VARIANT } from "#design/elements/IconButton"
 import Typography from "#design/elements/Typography"
-import { spacing } from "#design/foundations"
+import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 
 import { SORT_OPTIONS, TYPE_OPTIONS } from "./constants"
 import FilterChip from "./FilterChip"
@@ -21,17 +21,17 @@ export default function TransactionsFilters({
   return (
     <Card>
       <View style={styles.header}>
-        <Typography variant="title">Filters</Typography>
+        <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>Filters</Typography>
         <IconButton
           accessibilityLabel="Reset filters"
           icon="rotate-left"
           onPress={resetPreferences}
-          variant="text"
+          variant={ICON_BUTTON_VARIANT.TEXT}
         />
       </View>
 
       <View style={styles.section}>
-        <Typography variant="label">Type</Typography>
+        <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Type</Typography>
         <View style={styles.options}>
           {TYPE_OPTIONS.map((option) => (
             <FilterChip
@@ -45,7 +45,7 @@ export default function TransactionsFilters({
       </View>
 
       <View style={styles.section}>
-        <Typography variant="label">Sort</Typography>
+        <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Sort</Typography>
         <View style={styles.options}>
           {SORT_OPTIONS.map((option) => (
             <FilterChip
@@ -59,7 +59,7 @@ export default function TransactionsFilters({
       </View>
 
       <View style={styles.section}>
-        <Typography variant="label">Account</Typography>
+        <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Account</Typography>
         <View style={styles.options}>
           <FilterChip
             active={preferences.accountId === null}

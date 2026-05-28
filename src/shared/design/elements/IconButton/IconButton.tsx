@@ -5,7 +5,11 @@ import { Pressable, StyleSheet, View } from "react-native"
 import { radius, spacing } from "#design/foundations"
 import { useThemeColors } from "#shared/theme"
 
-import { BUTTON_SIZES } from "./constants"
+import {
+  BUTTON_SIZES,
+  ICON_BUTTON_SIZE,
+  ICON_BUTTON_VARIANT,
+} from "./constants"
 import { type IconButtonProps } from "./types"
 import { getContainerStyle, getIconColor } from "./utils"
 
@@ -15,9 +19,9 @@ export default function IconButton({
   hitSlop = spacing.xs,
   icon,
   iconStyle,
-  size = "md",
+  size = ICON_BUTTON_SIZE.MD,
   style,
-  variant = "filled",
+  variant = ICON_BUTTON_VARIANT.FILLED,
   children,
   ...props
 }: IconButtonProps): ReactElement {

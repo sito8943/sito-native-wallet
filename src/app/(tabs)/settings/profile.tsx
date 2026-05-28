@@ -2,8 +2,8 @@ import { type ReactElement } from "react"
 import { Pressable, View } from "react-native"
 
 import Card from "#design/elements/Card"
-import Typography from "#design/elements/Typography"
-import { radius, spacing } from "#design/foundations"
+import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
+import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Page from "#design/templates/Page"
 import {
   THEME_PREFERENCE,
@@ -27,8 +27,8 @@ export default function Profile(): ReactElement {
     <Page scroll>
       <Card>
         <View style={styles.copy}>
-          <Typography variant="title">Appearance</Typography>
-          <Typography tone="muted">
+          <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>Appearance</Typography>
+          <Typography tone={TYPOGRAPHY_TONE.MUTED}>
             Choose how SitoWallet looks. System follows your device setting.
           </Typography>
         </View>
@@ -48,8 +48,8 @@ export default function Profile(): ReactElement {
                 ]}
               >
                 <Typography
-                  variant="label"
-                  tone={active ? "inverted" : "default"}
+                  variant={TYPOGRAPHY_VARIANT.LABEL}
+                  tone={active ? TYPOGRAPHY_TONE.INVERTED : TYPOGRAPHY_TONE.DEFAULT}
                 >
                   {option.label}
                 </Typography>

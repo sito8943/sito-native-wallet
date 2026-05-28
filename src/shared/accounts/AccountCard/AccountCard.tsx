@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
-import { spacing } from "#design/foundations"
+import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 
 import { type AccountCardProps } from "./types"
 
@@ -15,13 +15,13 @@ export default function AccountCard({
     <Card>
       <View style={styles.header}>
         <View style={styles.copy}>
-          <Typography variant="title">{account.name}</Typography>
-          <Typography variant="caption">
+          <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>{account.name}</Typography>
+          <Typography variant={TYPOGRAPHY_VARIANT.CAPTION}>
             {account.currency.name} · {account.currency.symbol}
           </Typography>
         </View>
 
-        <Typography variant="bodyStrong">
+        <Typography variant={TYPOGRAPHY_VARIANT.BODY_STRONG}>
           {account.balance.toFixed(2)} {account.currency.symbol}
         </Typography>
       </View>

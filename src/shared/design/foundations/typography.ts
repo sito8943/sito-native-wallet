@@ -1,28 +1,38 @@
+export const TYPOGRAPHY_VARIANT = {
+  DISPLAY: "display",
+  TITLE: "title",
+  BODY: "body",
+  BODY_STRONG: "bodyStrong",
+  CAPTION: "caption",
+  LABEL: "label",
+  SUBTLE: "subtle",
+} as const
+
 const typography = {
-  display: {
+  [TYPOGRAPHY_VARIANT.DISPLAY]: {
     fontSize: 24,
     fontWeight: "700",
   },
-  title: {
+  [TYPOGRAPHY_VARIANT.TITLE]: {
     fontSize: 18,
     fontWeight: "700",
   },
-  body: {
+  [TYPOGRAPHY_VARIANT.BODY]: {
     fontSize: 16,
   },
-  bodyStrong: {
+  [TYPOGRAPHY_VARIANT.BODY_STRONG]: {
     fontSize: 16,
     fontWeight: "700",
   },
-  caption: {
+  [TYPOGRAPHY_VARIANT.CAPTION]: {
     fontSize: 12,
   },
-  label: {
+  [TYPOGRAPHY_VARIANT.LABEL]: {
     fontSize: 12,
     fontWeight: "700",
     textTransform: "uppercase",
   },
-  subtle: {
+  [TYPOGRAPHY_VARIANT.SUBTLE]: {
     fontSize: 14,
     fontWeight: "700",
   },

@@ -2,8 +2,8 @@ import { type ReactElement } from "react"
 import { Pressable, View } from "react-native"
 
 import Card from "#design/elements/Card"
-import Typography from "#design/elements/Typography"
-import { radius, spacing } from "#design/foundations"
+import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
+import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { CategoryBullet, TRANSACTION_TYPE } from "#shared/categories"
 import { useThemedStyles, type ThemeColors } from "#shared/theme"
 
@@ -38,11 +38,11 @@ export default function TransactionCard({
             </View>
             <Typography>{transaction.description}</Typography>
           </View>
-          <Typography variant="caption" tone="subtle">
+          <Typography variant={TYPOGRAPHY_VARIANT.CAPTION} tone={TYPOGRAPHY_TONE.SUBTLE}>
             {transaction.date}
           </Typography>
         </View>
-        <Typography variant="bodyStrong" style={amountStyle}>
+        <Typography variant={TYPOGRAPHY_VARIANT.BODY_STRONG} style={amountStyle}>
           {transaction.amount.toFixed(2)} {transaction.account.currency.symbol}
         </Typography>
       </View>

@@ -1,5 +1,6 @@
 import { type useThemeColors } from "#shared/theme"
 
+import { ICON_BUTTON_VARIANT } from "./constants"
 import { type IconButtonVariant } from "./types"
 
 export const getIconColor = ({
@@ -15,7 +16,7 @@ export const getIconColor = ({
     return colors.textSubtle
   }
 
-  if (variant === "filled") {
+  if (variant === ICON_BUTTON_VARIANT.FILLED) {
     return colors.textInverted
   }
 
@@ -37,13 +38,14 @@ export const getContainerStyle = ({
 } => {
   if (disabled) {
     return {
-      backgroundColor: variant === "filled" ? colors.border : "transparent",
+      backgroundColor:
+        variant === ICON_BUTTON_VARIANT.FILLED ? colors.border : "transparent",
       borderColor: colors.border,
-      borderWidth: variant === "outlined" ? 1 : 0,
+      borderWidth: variant === ICON_BUTTON_VARIANT.OUTLINED ? 1 : 0,
     }
   }
 
-  if (variant === "filled") {
+  if (variant === ICON_BUTTON_VARIANT.FILLED) {
     return {
       backgroundColor: colors.primary,
       borderColor: colors.primary,
@@ -51,7 +53,7 @@ export const getContainerStyle = ({
     }
   }
 
-  if (variant === "outlined") {
+  if (variant === ICON_BUTTON_VARIANT.OUTLINED) {
     return {
       backgroundColor: "transparent",
       borderColor: colors.primary,

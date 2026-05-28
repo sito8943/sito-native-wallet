@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
+import { TYPOGRAPHY_VARIANT } from "#design/foundations"
 
 import { type CurrencyCardProps } from "./types"
 
@@ -12,8 +13,8 @@ export default function CurrencyCard({
   return (
     <Card>
       <View style={styles.row}>
-        <Typography variant="title">{currency.name}</Typography>
-        <Typography variant="subtle">{currency.symbol}</Typography>
+        <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>{currency.name}</Typography>
+        <Typography variant={TYPOGRAPHY_VARIANT.SUBTLE}>{currency.symbol}</Typography>
       </View>
     </Card>
   )

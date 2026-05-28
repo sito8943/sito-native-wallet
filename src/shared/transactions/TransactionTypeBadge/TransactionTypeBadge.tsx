@@ -3,8 +3,8 @@ import { type ReactElement } from "react"
 import { View, StyleSheet } from "react-native"
 
 import Icon, { APP_ICONS } from "#design/elements/Icon"
-import Typography from "#design/elements/Typography"
-import { spacing } from "#design/foundations"
+import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
+import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { TRANSACTION_TYPE } from "#shared/categories"
 
 import { useThemeColors } from "#shared/theme"
@@ -37,7 +37,7 @@ export default function TransactionTypeBadge({
         />
       )}
       {showText && (
-        <Typography variant="caption" tone="inverted">
+        <Typography variant={TYPOGRAPHY_VARIANT.CAPTION} tone={TYPOGRAPHY_TONE.INVERTED}>
           {type}
         </Typography>
       )}
