@@ -1,8 +1,7 @@
 import { type ReactElement } from "react"
 
 import Page from "#design/templates/Page"
-
-import { SettingsMenu } from "./SettingsMenu"
+import { SettingsMenu } from "#shared/settings"
 
 export default function Settings(): ReactElement {
   return (
