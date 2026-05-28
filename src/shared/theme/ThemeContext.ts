@@ -1,6 +1,7 @@
 import { createContext } from "react"
 
-import { lightColors } from "./colors"
+import { lightColors } from "../design/foundations/colors"
+
 import { RESOLVED_THEME, THEME_PREFERENCE } from "./constants"
 import { type ThemeContextValue, type ThemePreference } from "./types"
 

@@ -1,6 +1,7 @@
 import { type ColorSchemeName } from "react-native"
 
-import { darkColors, lightColors } from "./colors"
+import { darkColors, lightColors } from "../design/foundations/colors"
+
 import { PREFERENCE_CYCLE, RESOLVED_THEME, THEME_PREFERENCE } from "./constants"
 import {
   type ResolvedTheme,

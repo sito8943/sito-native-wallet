@@ -1,4 +1,6 @@
-const colors = {
+import { type ThemeColors } from "../../theme/types"
+
+export const lightColors: ThemeColors = {
   background: "#f5f8fc",
   surface: "#ffffff",
   border: "#d6e0eb",
@@ -11,4 +13,15 @@ const colors = {
   primary: "#041e42",
 }
 
-export default colors
+export const darkColors: ThemeColors = {
+  background: "#020b16",
+  surface: "#061a33",
+  border: "#163b63",
+  textStrong: "#f5f8fc",
+  textMuted: "#c1d0e0",
+  textSubtle: "#90a5bf",
+  textInverted: "#ffffff",
+  positive: "#4caf50",
+  negative: "#ef5350",
+  primary: "#3b82f6",
+}

@@ -32,6 +32,7 @@ const createStyles = (colors: ThemeColors) => ({
   bullet: {
     borderRadius: radius.full,
     borderWidth: 1,
+    borderColor: colors.border,
     height: spacing.sm,
     width: spacing.sm,
   },
