@@ -14,14 +14,14 @@ export const lightColors: ThemeColors = {
 }
 
 export const darkColors: ThemeColors = {
-  background: "#021327",
-  surface: "#041e42",
-  border: "#0a2f66",
+  background: "#020b16",
+  surface: "#061a33",
+  border: "#163b63",
   textStrong: "#f5f8fc",
   textMuted: "#c1d0e0",
   textSubtle: "#90a5bf",
   textInverted: "#ffffff",
   positive: "#4caf50",
   negative: "#ef5350",
-  primary: "#0a2f66",
+  primary: "#3b82f6",
 }
