@@ -1,0 +1,95 @@
+import { type ReactElement } from "react"
+import { Pressable, StyleSheet, View } from "react-native"
+
+import Card from "#design/elements/Card"
+import Typography from "#design/elements/Typography"
+import { spacing } from "#design/foundations"
+
+import { sortOptions, typeOptions } from "./constants"
+import FilterChip from "./FilterChip"
+import { type TransactionsFiltersPropsType } from "./types"
+
+export default function TransactionsFilters({
+  accounts,
+  preferences,
+  resetPreferences,
+  setAccountId,
+  setSortOrder,
+  setTypeFilter,
+}: TransactionsFiltersPropsType): ReactElement {
+  return (
+    <Card>
+      <View style={styles.header}>
+        <Typography variant="title">Saved view</Typography>
+        <Pressable onPress={resetPreferences}>
+          <Typography variant="subtle">Reset</Typography>
+        </Pressable>
+      </View>
+
+      <View style={styles.section}>
+        <Typography variant="label">Type</Typography>
+        <View style={styles.options}>
+          {typeOptions.map((option) => (
+            <FilterChip
+              key={option.value}
+              isActive={preferences.typeFilter === option.value}
+              label={option.label}
+              onPress={() => setTypeFilter(option.value)}
+            />
+          ))}
+        </View>
+      </View>
+
+      <View style={styles.section}>
+        <Typography variant="label">Sort</Typography>
+        <View style={styles.options}>
+          {sortOptions.map((option) => (
+            <FilterChip
+              key={option.value}
+              isActive={preferences.sortOrder === option.value}
+              label={option.label}
+              onPress={() => setSortOrder(option.value)}
+            />
+          ))}
+        </View>
+      </View>
+
+      <View style={styles.section}>
+        <Typography variant="label">Account</Typography>
+        <View style={styles.options}>
+          <FilterChip
+            isActive={preferences.accountId === null}
+            label="All accounts"
+            onPress={() => setAccountId(null)}
+          />
+
+          {accounts.map((account) => (
+            <FilterChip
+              key={account.id}
+              isActive={preferences.accountId === account.id}
+              label={account.name}
+              onPress={() => setAccountId(account.id)}
+            />
+          ))}
+        </View>
+      </View>
+    </Card>
+  )
+}
+
+const styles = StyleSheet.create({
+  header: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  section: {
+    gap: spacing.xs,
+    marginTop: spacing.md,
+  },
+  options: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: spacing.xs,
+  },
+})
