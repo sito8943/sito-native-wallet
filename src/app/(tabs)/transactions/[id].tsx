@@ -14,7 +14,10 @@ export default function TransactionDetails(): ReactElement {
   if (transaction === undefined) {
     return (
       <Page centered>
-        <Typography variant={TYPOGRAPHY_VARIANT.BODY_STRONG} tone={TYPOGRAPHY_TONE.MUTED}>
+        <Typography
+          variant={TYPOGRAPHY_VARIANT.BODY_STRONG}
+          tone={TYPOGRAPHY_TONE.MUTED}
+        >
           Transaction not found
         </Typography>
       </Page>

@@ -19,7 +19,8 @@ export default function TransactionTypeBadge({
 }: TransactionTypeBadgeProps): ReactElement {
   const colors = useThemeColors()
 
-  const tone = type === TRANSACTION_TYPE.INCOME ? colors.positive : colors.negative
+  const tone =
+    type === TRANSACTION_TYPE.INCOME ? colors.positive : colors.negative
 
   return (
     <View
@@ -37,7 +38,10 @@ export default function TransactionTypeBadge({
         />
       )}
       {showText && (
-        <Typography variant={TYPOGRAPHY_VARIANT.CAPTION} tone={TYPOGRAPHY_TONE.INVERTED}>
+        <Typography
+          variant={TYPOGRAPHY_VARIANT.CAPTION}
+          tone={TYPOGRAPHY_TONE.INVERTED}
+        >
           {type}
         </Typography>
       )}

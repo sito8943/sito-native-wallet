@@ -7,10 +7,7 @@ import {
   type ViewStyle,
 } from "react-native"
 
-import {
-  type ICON_BUTTON_SIZE,
-  type ICON_BUTTON_VARIANT,
-} from "./constants"
+import { type ICON_BUTTON_SIZE, type ICON_BUTTON_VARIANT } from "./constants"
 
 export type IconButtonVariant =
   (typeof ICON_BUTTON_VARIANT)[keyof typeof ICON_BUTTON_VARIANT]

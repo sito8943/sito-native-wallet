@@ -34,10 +34,7 @@ export default function SubscriptionDetails(): ReactElement {
       <Typography variant={TYPOGRAPHY_VARIANT.TITLE} style={styles.heading}>
         Renewal
       </Typography>
-      <Typography
-        variant={TYPOGRAPHY_VARIANT.BODY}
-        style={styles.row}
-      >
+      <Typography variant={TYPOGRAPHY_VARIANT.BODY} style={styles.row}>
         Next renewal: {renewalDate}
       </Typography>
       <Typography variant={TYPOGRAPHY_VARIANT.BODY} style={styles.row}>

@@ -49,7 +49,9 @@ export default function Profile(): ReactElement {
               >
                 <Typography
                   variant={TYPOGRAPHY_VARIANT.LABEL}
-                  tone={active ? TYPOGRAPHY_TONE.INVERTED : TYPOGRAPHY_TONE.DEFAULT}
+                  tone={
+                    active ? TYPOGRAPHY_TONE.INVERTED : TYPOGRAPHY_TONE.DEFAULT
+                  }
                 >
                   {option.label}
                 </Typography>

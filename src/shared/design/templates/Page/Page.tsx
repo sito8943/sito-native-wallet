@@ -1,10 +1,5 @@
 import { type ReactElement, type ReactNode } from "react"
-import {
-  ScrollView,
-  type StyleProp,
-  View,
-  type ViewStyle,
-} from "react-native"
+import { ScrollView, type StyleProp, View, type ViewStyle } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
 import { spacing } from "#design/foundations"

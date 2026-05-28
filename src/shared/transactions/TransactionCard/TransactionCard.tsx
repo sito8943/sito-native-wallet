@@ -19,7 +19,9 @@ export default function TransactionCard({
   const styles = useThemedStyles(createStyles)
   const type = getTransactionType(transaction)
   const amountStyle =
-    type === TRANSACTION_TYPE.INCOME ? styles.amountPositive : styles.amountNegative
+    type === TRANSACTION_TYPE.INCOME
+      ? styles.amountPositive
+      : styles.amountNegative
 
   const content = (
     <Card key={transaction.id} style={styles.card}>
@@ -38,11 +40,17 @@ export default function TransactionCard({
             </View>
             <Typography>{transaction.description}</Typography>
           </View>
-          <Typography variant={TYPOGRAPHY_VARIANT.CAPTION} tone={TYPOGRAPHY_TONE.SUBTLE}>
+          <Typography
+            variant={TYPOGRAPHY_VARIANT.CAPTION}
+            tone={TYPOGRAPHY_TONE.SUBTLE}
+          >
             {transaction.date}
           </Typography>
         </View>
-        <Typography variant={TYPOGRAPHY_VARIANT.BODY_STRONG} style={amountStyle}>
+        <Typography
+          variant={TYPOGRAPHY_VARIANT.BODY_STRONG}
+          style={amountStyle}
+        >
           {transaction.amount.toFixed(2)} {transaction.account.currency.symbol}
         </Typography>
       </View>
