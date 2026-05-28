@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: spacing.md,
     marginVertical: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.sm,
     borderRadius: radius.lg,
     ...shadows.card,
   },

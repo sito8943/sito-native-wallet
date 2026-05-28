@@ -3,8 +3,10 @@ import { Pressable, StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
-import { spacing } from "#design/foundations"
+import { radius, spacing } from "#design/foundations"
 import { CategoryBullet } from "#shared/categories"
+
+import { useThemeColors } from "#shared/theme"
 
 import { getTransactionType } from "../Transaction"
 import { TransactionTypeBadge } from "../TransactionTypeBadge"
@@ -15,30 +17,40 @@ export default function TransactionCard({
   onPress,
   transaction,
 }: TransactionCardPropsType): ReactElement {
+  const colors = useThemeColors()
+  const type = getTransactionType(transaction)
   const content = (
-    <Card key={transaction.id}>
+    <Card key={transaction.id} style={styles.card}>
       <View style={styles.header}>
+        <TransactionTypeBadge type={type} filled={false} showText={false} />
         <View style={styles.titleGroup}>
-          <Typography variant="title">{transaction.description}</Typography>
+          <View style={styles.summaryGroup}>
+            <View style={styles.categories}>
+              {transaction.categories.map((category, i) => (
+                <CategoryBullet
+                  key={category.id}
+                  color={category.color}
+                  style={i > 0 ? styles.category : undefined}
+                />
+              ))}
+            </View>
+            <Typography>{transaction.description}</Typography>
+          </View>
           <Typography variant="caption" tone="subtle">
             {transaction.date}
           </Typography>
         </View>
-        <TransactionTypeBadge type={getTransactionType(transaction)} />
-      </View>
-
-      <Typography variant="bodyStrong" style={styles.amount}>
-        {transaction.amount.toFixed(2)} {transaction.account.currency.symbol}
-      </Typography>
-
-      <Typography variant="caption" tone="muted" style={styles.account}>
-        {transaction.account.name}
-      </Typography>
-
-      <View style={styles.categories}>
-        {transaction.categories.map((category) => (
-          <CategoryBullet key={category.id} category={category} />
-        ))}
+        <Typography
+          variant="bodyStrong"
+          style={[
+            styles.amount,
+            {
+              color: type ? colors.positive : colors.negative,
+            },
+          ]}
+        >
+          {transaction.amount.toFixed(2)} {transaction.account.currency.symbol}
+        </Typography>
       </View>
     </Card>
   )
@@ -51,6 +63,10 @@ export default function TransactionCard({
 }
 
 const styles = StyleSheet.create({
+  card: {
+    padding: spacing.xs,
+    borderRadius: radius.md,
+  },
   header: {
     alignItems: "flex-start",
     flexDirection: "row",
@@ -61,16 +77,17 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: spacing.xxs,
   },
-  amount: {
-    marginTop: spacing.sm,
+  summaryGroup: {
+    flexDirection: "row",
+    gap: spacing.xs,
+    alignItems: "center",
   },
-  account: {
-    marginTop: spacing.xxs,
-  },
+  amount: {},
   categories: {
     flexDirection: "row",
-    flexWrap: "wrap",
-    gap: spacing.sm,
-    marginTop: spacing.sm,
+    marginTop: -spacing.xxs,
+  },
+  category: {
+    marginLeft: -spacing.xxs,
   },
 })

@@ -12,7 +12,7 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
     amount: 2150,
     account: INITIAL_ACCOUNTS[0],
     categories: [salary],
-    date: "2026-05-24",
+    date: "2026/05/24",
   },
   {
     id: "2",
@@ -20,7 +20,7 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
     amount: 54.12,
     account: INITIAL_ACCOUNTS[0],
     categories: [food, home],
-    date: "2026-05-23",
+    date: "2026/05/23",
   },
   {
     id: "3",
@@ -28,7 +28,7 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
     amount: 8.4,
     account: INITIAL_ACCOUNTS[1],
     categories: [transport],
-    date: "2026-05-22",
+    date: "2026/05/22",
   },
   {
     id: "4",
@@ -36,6 +36,6 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
     amount: 200,
     account: INITIAL_ACCOUNTS[2],
     categories: [transport],
-    date: "2026-05-20",
+    date: "2026/05/20",
   },
 ]

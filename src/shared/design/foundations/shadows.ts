@@ -4,7 +4,7 @@ const shadows = {
   card:
     Platform.select({
       android: {
-        elevation: 4,
+        elevation: 2,
       },
       ios: {
         shadowColor: "#000",

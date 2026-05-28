@@ -4,8 +4,6 @@ import { StyleSheet, View } from "react-native"
 import { radius, spacing } from "#design/foundations"
 import { useThemeColors } from "#shared/theme"
 
-import Typography from "../Typography"
-
 import { type BadgeProps } from "./types"
 
 export default function Badge({
@@ -27,13 +25,7 @@ export default function Badge({
     },
   })
 
-  return (
-    <View style={[styles.badge, toneStyles[tone], style]}>
-      <Typography variant="caption" tone="inverted">
-        {children}
-      </Typography>
-    </View>
-  )
+  return <View style={[styles.badge, toneStyles[tone], style]}>{children}</View>
 }
 
 const styles = StyleSheet.create({
