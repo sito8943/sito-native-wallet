@@ -1,15 +1,29 @@
-import { useState } from "react"
+import { useManager } from "#shared/manager"
+import { useClientStore } from "#shared/storage"
 
-import { INITIAL_SUBSCRIPTION_PROVIDERS } from "../demoData"
+import { type AddSubscriptionProviderDto } from "../dtos"
 
 import { type UseSubscriptionProvidersState } from "./types"
 
 export default function useSubscriptionProviders(): UseSubscriptionProvidersState {
-  const [state] = useState<UseSubscriptionProvidersState>({
-    data: INITIAL_SUBSCRIPTION_PROVIDERS,
-    error: null,
-    isLoading: false,
-  })
+  const client = useManager().SubscriptionProviders
+  const { items, error, isLoading } = useClientStore(client)
 
-  return state
+  return {
+    data: items,
+    error,
+    isLoading,
+    addSubscriptionProvider: (input: AddSubscriptionProviderDto) => {
+      client.add(input)
+    },
+    updateSubscriptionProvider: (
+      id: string,
+      input: AddSubscriptionProviderDto,
+    ) => {
+      client.update(id, input)
+    },
+    removeSubscriptionProvider: (id: string) => {
+      client.remove(id)
+    },
+  }
 }

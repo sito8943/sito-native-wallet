@@ -20,7 +20,7 @@ export default function Layout(): ReactElement {
       <Stack.Screen name="accounts" options={{ headerShown: false }} />
       <Stack.Screen
         name="subscription-providers"
-        options={{ title: "Subscription Providers" }}
+        options={{ headerShown: false }}
       />
     </Stack>
   )

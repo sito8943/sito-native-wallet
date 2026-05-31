@@ -8,4 +8,6 @@ export {
   toNewCurrencyRoute,
   toCategoryDetailsRoute,
   toNewCategoryRoute,
+  toSubscriptionProviderDetailsRoute,
+  toNewSubscriptionProviderRoute,
 } from "./routes"

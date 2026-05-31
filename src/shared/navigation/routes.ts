@@ -30,3 +30,11 @@ export const toCategoryDetailsRoute = (id: string): Href => ({
   pathname: "/settings/categories/[id]" as const,
   params: { id } satisfies DetailRouteParams,
 })
+
+export const toNewSubscriptionProviderRoute = (): Href =>
+  "/settings/subscription-providers/new"
+
+export const toSubscriptionProviderDetailsRoute = (id: string): Href => ({
+  pathname: "/settings/subscription-providers/[id]" as const,
+  params: { id } satisfies DetailRouteParams,
+})
