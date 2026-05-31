@@ -16,7 +16,7 @@ export default function Layout(): ReactElement {
       <Stack.Screen name="index" options={{ title: "Settings" }} />
       <Stack.Screen name="profile" options={{ title: "Profile" }} />
       <Stack.Screen name="categories" options={{ title: "Categories" }} />
-      <Stack.Screen name="currencies" options={{ title: "Currencies" }} />
+      <Stack.Screen name="currencies" options={{ headerShown: false }} />
       <Stack.Screen name="accounts" options={{ headerShown: false }} />
       <Stack.Screen
         name="subscription-providers"

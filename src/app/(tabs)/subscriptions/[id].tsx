@@ -58,11 +58,11 @@ export default function SubscriptionDetails(): ReactElement {
 
 const styles = {
   heading: {
-    marginHorizontal: spacing.md,
-    marginTop: spacing.sm,
+    marginHorizontal: spacing[4],
+    marginTop: spacing[3],
   },
   row: {
-    marginHorizontal: spacing.md,
-    marginTop: spacing.xxs,
+    marginHorizontal: spacing[4],
+    marginTop: spacing[1],
   },
 }

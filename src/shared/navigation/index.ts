@@ -4,4 +4,6 @@ export {
   toAccountDetailsRoute,
   toTransactionDetailsRoute,
   toSubscriptionDetailsRoute,
+  toCurrencyDetailsRoute,
+  toNewCurrencyRoute,
 } from "./routes"

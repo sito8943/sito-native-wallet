@@ -24,14 +24,14 @@ export default function SettingsMenu(): ReactElement {
                   <Icon
                     icon={item.icon}
                     color={colors.textStrong}
-                    size={spacing.lg}
+                    size={spacing[5]}
                   />
                   <Typography>{item.label}</Typography>
                 </View>
                 <Icon
                   icon={APP_ICONS.chevronRight}
                   color={colors.textMuted}
-                  size={spacing.md}
+                  size={spacing[4]}
                 />
               </View>
             </Card>
@@ -51,6 +51,6 @@ const styles = StyleSheet.create({
   left: {
     alignItems: "center",
     flexDirection: "row",
-    gap: spacing.md,
+    gap: spacing[4],
   },
 })

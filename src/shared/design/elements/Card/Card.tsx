@@ -15,9 +15,9 @@ export default function Card({ children, style }: CardProps): ReactElement {
 const createStyles = (colors: ThemeColors) => ({
   container: {
     backgroundColor: colors.surface,
-    marginHorizontal: spacing.md,
-    marginVertical: spacing.xs,
-    padding: spacing.sm,
+    marginHorizontal: spacing[4],
+    marginVertical: spacing[2],
+    padding: spacing[3],
     borderRadius: radius.lg,
     ...shadows.card,
   },

@@ -2,7 +2,12 @@ import { type ReactElement } from "react"
 import { View } from "react-native"
 
 import Typography from "#design/elements/Typography"
-import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import {
+  borderWidth,
+  radius,
+  spacing,
+  TYPOGRAPHY_VARIANT,
+} from "#design/foundations"
 import { useThemedStyles, type ThemeColors } from "#shared/theme"
 
 import { type CategoryBulletProps } from "./types"
@@ -27,13 +32,13 @@ const createStyles = (colors: ThemeColors) => ({
     alignItems: "center" as const,
     borderColor: colors.border,
     flexDirection: "row" as const,
-    gap: spacing.xs,
+    gap: spacing[2],
   },
   bullet: {
     borderRadius: radius.full,
-    borderWidth: 1,
+    borderWidth: borderWidth.thin,
     borderColor: colors.border,
-    height: spacing.sm,
-    width: spacing.sm,
+    height: spacing[3],
+    width: spacing[3],
   },
 })

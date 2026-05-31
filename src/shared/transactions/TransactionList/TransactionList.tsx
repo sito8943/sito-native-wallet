@@ -38,10 +38,10 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   content: {
-    paddingVertical: spacing.xs,
+    paddingVertical: spacing[2],
   },
   emptyMessage: {
-    marginHorizontal: spacing.md,
-    marginTop: spacing.md,
+    marginHorizontal: spacing[4],
+    marginTop: spacing[4],
   },
 })

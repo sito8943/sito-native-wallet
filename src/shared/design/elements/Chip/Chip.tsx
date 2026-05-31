@@ -2,7 +2,12 @@ import { type ReactElement } from "react"
 import { Pressable } from "react-native"
 
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
-import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import {
+  borderWidth,
+  radius,
+  spacing,
+  TYPOGRAPHY_VARIANT,
+} from "#design/foundations"
 import { useThemedStyles, type ThemeColors } from "#shared/theme"
 
 import { type ChipProps } from "./types"
@@ -33,9 +38,9 @@ export default function Chip({
 const createStyles = (colors: ThemeColors) => ({
   chip: {
     borderRadius: radius.full,
-    borderWidth: 1,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
+    borderWidth: borderWidth.thin,
+    paddingHorizontal: spacing[3],
+    paddingVertical: spacing[2],
   },
   chipActive: {
     backgroundColor: colors.primary,

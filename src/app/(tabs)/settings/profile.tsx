@@ -3,7 +3,12 @@ import { Pressable, View } from "react-native"
 
 import Card from "#design/elements/Card"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
-import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import {
+  borderWidth,
+  radius,
+  spacing,
+  TYPOGRAPHY_VARIANT,
+} from "#design/foundations"
 import Page from "#design/templates/Page"
 import {
   THEME_PREFERENCE,
@@ -64,20 +69,20 @@ export default function Profile(): ReactElement {
 
 const createStyles = (colors: ThemeColors) => ({
   copy: {
-    gap: spacing.xs,
-    marginBottom: spacing.md,
+    gap: spacing[2],
+    marginBottom: spacing[4],
   },
   segments: {
     flexDirection: "row" as const,
-    gap: spacing.sm,
+    gap: spacing[3],
   },
   segment: {
     alignItems: "center" as const,
     borderRadius: radius.full,
-    borderWidth: 1,
+    borderWidth: borderWidth.thin,
     flex: 1,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
+    paddingHorizontal: spacing[3],
+    paddingVertical: spacing[2],
   },
   segmentActive: {
     backgroundColor: colors.primary,

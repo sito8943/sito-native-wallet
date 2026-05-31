@@ -16,7 +16,7 @@ import { getContainerStyle, getIconColor } from "./utils"
 export default function IconButton({
   accessibilityLabel,
   disabled = false,
-  hitSlop = spacing.xs,
+  hitSlop = spacing[2],
   icon,
   iconStyle,
   size = ICON_BUTTON_SIZE.MD,
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   content: {
     alignItems: "center",
     flexDirection: "row",
-    gap: spacing.xs,
+    gap: spacing[2],
     justifyContent: "center",
   },
 })

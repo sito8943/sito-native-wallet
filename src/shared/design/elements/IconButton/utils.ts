@@ -1,3 +1,4 @@
+import { borderWidth } from "#design/foundations"
 import { type useThemeColors } from "#shared/theme"
 
 import { ICON_BUTTON_VARIANT } from "./constants"
@@ -41,7 +42,10 @@ export const getContainerStyle = ({
       backgroundColor:
         variant === ICON_BUTTON_VARIANT.FILLED ? colors.border : "transparent",
       borderColor: colors.border,
-      borderWidth: variant === ICON_BUTTON_VARIANT.OUTLINED ? 1 : 0,
+      borderWidth:
+        variant === ICON_BUTTON_VARIANT.OUTLINED
+          ? borderWidth.thin
+          : borderWidth.none,
     }
   }
 
@@ -49,7 +53,7 @@ export const getContainerStyle = ({
     return {
       backgroundColor: colors.primary,
       borderColor: colors.primary,
-      borderWidth: 0,
+      borderWidth: borderWidth.none,
     }
   }
 
@@ -57,13 +61,13 @@ export const getContainerStyle = ({
     return {
       backgroundColor: "transparent",
       borderColor: colors.primary,
-      borderWidth: 1,
+      borderWidth: borderWidth.thin,
     }
   }
 
   return {
     backgroundColor: "transparent",
     borderColor: "transparent",
-    borderWidth: 0,
+    borderWidth: borderWidth.none,
   }
 }

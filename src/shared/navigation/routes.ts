@@ -16,3 +16,10 @@ export const toSubscriptionDetailsRoute = (id: string): Href => ({
   pathname: "/subscriptions/[id]" as const,
   params: { id } satisfies DetailRouteParams,
 })
+
+export const toNewCurrencyRoute = (): Href => "/settings/currencies/new"
+
+export const toCurrencyDetailsRoute = (id: string): Href => ({
+  pathname: "/settings/currencies/[id]" as const,
+  params: { id } satisfies DetailRouteParams,
+})
