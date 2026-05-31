@@ -1,9 +1,9 @@
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
-import Card from "#design/elements/Card"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { TYPOGRAPHY_VARIANT } from "#design/foundations"
+import EntityCard from "#design/patterns/EntityCard"
 
 import { CategoryBullet } from "../CategoryBullet"
 
@@ -11,9 +11,11 @@ import { type CategoryCardProps } from "./types"
 
 export default function CategoryCard({
   category,
+  actions,
+  onPress,
 }: CategoryCardProps): ReactElement {
   return (
-    <Card>
+    <EntityCard actions={actions} entity={category} onPress={onPress}>
       <View style={styles.row}>
         <CategoryBullet {...category} />
         <Typography
@@ -23,7 +25,7 @@ export default function CategoryCard({
           {category.type}
         </Typography>
       </View>
-    </Card>
+    </EntityCard>
   )
 }
 

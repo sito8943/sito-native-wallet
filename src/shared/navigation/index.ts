@@ -6,4 +6,6 @@ export {
   toSubscriptionDetailsRoute,
   toCurrencyDetailsRoute,
   toNewCurrencyRoute,
+  toCategoryDetailsRoute,
+  toNewCategoryRoute,
 } from "./routes"

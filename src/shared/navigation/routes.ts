@@ -23,3 +23,10 @@ export const toCurrencyDetailsRoute = (id: string): Href => ({
   pathname: "/settings/currencies/[id]" as const,
   params: { id } satisfies DetailRouteParams,
 })
+
+export const toNewCategoryRoute = (): Href => "/settings/categories/new"
+
+export const toCategoryDetailsRoute = (id: string): Href => ({
+  pathname: "/settings/categories/[id]" as const,
+  params: { id } satisfies DetailRouteParams,
+})

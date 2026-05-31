@@ -1,0 +1,31 @@
+import {
+  type TransactionCategory,
+  type TransactionType,
+} from "../TransactionCategory"
+
+import { TRANSACTION_TYPES } from "./constants"
+
+const isCategory = (value: unknown): value is TransactionCategory => {
+  if (typeof value !== "object" || value === null) {
+    return false
+  }
+
+  const candidate = value as Record<string, unknown>
+
+  return (
+    typeof candidate.id === "string" &&
+    typeof candidate.name === "string" &&
+    typeof candidate.color === "string" &&
+    TRANSACTION_TYPES.includes(candidate.type as TransactionType)
+  )
+}
+
+export const parseStoredCategories = (
+  value: unknown,
+): TransactionCategory[] => {
+  if (!Array.isArray(value)) {
+    return []
+  }
+
+  return value.filter(isCategory)
+}
