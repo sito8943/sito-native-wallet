@@ -5,7 +5,10 @@ import { useThemeColors } from "./useThemePreference"
 
 type StylesFactory<T> = (colors: ThemeColors) => T
 
-const cache = new WeakMap<ThemeColors, WeakMap<StylesFactory<unknown>, unknown>>()
+const cache = new WeakMap<
+  ThemeColors,
+  WeakMap<StylesFactory<unknown>, unknown>
+>()
 
 export const useThemedStyles = <T extends StyleSheet.NamedStyles<T>>(
   factory: StylesFactory<T>,

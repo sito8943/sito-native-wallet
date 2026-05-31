@@ -8,8 +8,7 @@ import { type TypographyTone } from "#design/elements/Typography"
 
 import { type BUTTON_VARIANT } from "./constants"
 
-export type ButtonVariant =
-  (typeof BUTTON_VARIANT)[keyof typeof BUTTON_VARIANT]
+export type ButtonVariant = (typeof BUTTON_VARIANT)[keyof typeof BUTTON_VARIANT]
 
 export type ButtonColors = {
   backgroundColor: string

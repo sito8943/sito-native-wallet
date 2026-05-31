@@ -1,10 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useEffect, useState } from "react"
 
-import {
-  type UseStoredStateOptions,
-  type UseStoredStateResult,
-} from "./types"
+import { type UseStoredStateOptions, type UseStoredStateResult } from "./types"
 import { toError } from "./utils"
 
 export default function useStoredState<T>({

@@ -22,7 +22,9 @@ export default function CategoryBullet({
   return (
     <View style={[styles.container, style]}>
       {color && <View style={[styles.bullet, { backgroundColor: color }]} />}
-      {name && <Typography variant={TYPOGRAPHY_VARIANT.CAPTION}>{name}</Typography>}
+      {name && (
+        <Typography variant={TYPOGRAPHY_VARIANT.CAPTION}>{name}</Typography>
+      )}
     </View>
   )
 }

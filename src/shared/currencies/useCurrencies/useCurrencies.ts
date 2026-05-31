@@ -5,10 +5,7 @@ import { createId, useStoredState } from "#shared/storage"
 import { INITIAL_CURRENCIES } from "../demoData"
 import { type AddCurrencyDto } from "../dtos"
 
-import {
-  CURRENCIES_ERROR_MESSAGE,
-  CURRENCIES_STORAGE_KEY,
-} from "./constants"
+import { CURRENCIES_ERROR_MESSAGE, CURRENCIES_STORAGE_KEY } from "./constants"
 import { type UseCurrenciesState } from "./types"
 import { parseStoredCurrencies } from "./utils"
 

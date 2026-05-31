@@ -15,7 +15,9 @@ export default function AccountCard({
     <Card>
       <View style={styles.header}>
         <View style={styles.copy}>
-          <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>{account.name}</Typography>
+          <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
+            {account.name}
+          </Typography>
           <Typography variant={TYPOGRAPHY_VARIANT.CAPTION}>
             {account.currency.name} · {account.currency.symbol}
           </Typography>

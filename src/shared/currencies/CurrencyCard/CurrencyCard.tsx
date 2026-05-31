@@ -13,8 +13,12 @@ export default function CurrencyCard({
   return (
     <Card>
       <View style={styles.row}>
-        <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>{currency.name}</Typography>
-        <Typography variant={TYPOGRAPHY_VARIANT.SUBTLE}>{currency.symbol}</Typography>
+        <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
+          {currency.name}
+        </Typography>
+        <Typography variant={TYPOGRAPHY_VARIANT.SUBTLE}>
+          {currency.symbol}
+        </Typography>
       </View>
     </Card>
   )
