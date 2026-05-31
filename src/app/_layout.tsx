@@ -1,6 +1,8 @@
+import * as NavigationBar from "expo-navigation-bar"
 import { Stack } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import { useEffect, type ReactElement } from "react"
+import { Platform } from "react-native"
 
 import {
   INITIAL_SUBSCRIPTIONS,
@@ -14,6 +16,17 @@ import {
 
 function RootNavigator(): ReactElement {
   const { resolvedTheme } = useThemePreference()
+  const isDark = resolvedTheme === RESOLVED_THEME.DARK
+
+  // Android nav bar icons don't follow the app theme on their own. With
+  // edge-to-edge only the button style is settable (background is a no-op).
+  useEffect(() => {
+    if (Platform.OS !== "android") {
+      return
+    }
+
+    void NavigationBar.setButtonStyleAsync(isDark ? "light" : "dark")
+  }, [isDark])
 
   useEffect(() => {
     void notifyUpcomingRenewal(INITIAL_SUBSCRIPTIONS)
@@ -26,9 +39,7 @@ function RootNavigator(): ReactElement {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
 
-      <StatusBar
-        style={resolvedTheme === RESOLVED_THEME.DARK ? "light" : "dark"}
-      />
+      <StatusBar style={isDark ? "light" : "dark"} />
     </>
   )
 }
