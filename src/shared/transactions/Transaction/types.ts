@@ -1,11 +1,15 @@
-import { type Account } from "#shared/accounts"
-import { type TransactionCategory } from "#shared/categories"
+import {
+  type CommonAccountDto,
+  type CommonTransactionCategoryDto,
+} from "../dtos"
 
+// Resolved transaction for display: relations are common DTOs built from the
+// live account/categories. The persisted record keeps only their ids.
 export type Transaction = {
   id: string
   description: string
   amount: number
-  account: Account
-  categories: TransactionCategory[]
   date: string
+  account: CommonAccountDto
+  categories: CommonTransactionCategoryDto[]
 }

@@ -1,9 +1,9 @@
 import { type ReactElement } from "react"
-import { Pressable, View } from "react-native"
+import { View } from "react-native"
 
-import Card from "#design/elements/Card"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import EntityCard from "#design/patterns/EntityCard"
 import { CategoryBullet, TRANSACTION_TYPE } from "#shared/categories"
 import { useThemedStyles, type ThemeColors } from "#shared/theme"
 
@@ -13,6 +13,7 @@ import { TransactionTypeBadge } from "../TransactionTypeBadge"
 import { type TransactionCardProps } from "./types"
 
 export default function TransactionCard({
+  actions,
   onPress,
   transaction,
 }: TransactionCardProps): ReactElement {
@@ -23,8 +24,13 @@ export default function TransactionCard({
       ? styles.amountPositive
       : styles.amountNegative
 
-  const content = (
-    <Card key={transaction.id} style={styles.card}>
+  return (
+    <EntityCard
+      actions={actions}
+      entity={transaction}
+      style={styles.card}
+      onPress={onPress === undefined ? undefined : () => onPress(transaction)}
+    >
       <View style={styles.header}>
         <TransactionTypeBadge type={type} filled={false} showText={false} />
         <View style={styles.titleGroup}>
@@ -51,17 +57,11 @@ export default function TransactionCard({
           variant={TYPOGRAPHY_VARIANT.BODY_STRONG}
           style={amountStyle}
         >
-          {transaction.amount.toFixed(2)} {transaction.account.currency.symbol}
+          {transaction.amount.toFixed(2)} {transaction.account.currencySymbol}
         </Typography>
       </View>
-    </Card>
+    </EntityCard>
   )
-
-  if (onPress === undefined) {
-    return content
-  }
-
-  return <Pressable onPress={() => onPress(transaction)}>{content}</Pressable>
 }
 
 const createStyles = (colors: ThemeColors) => ({

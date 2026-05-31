@@ -1,14 +1,14 @@
 import { useMemo } from "react"
 
-import { INITIAL_ACCOUNTS } from "#shared/accounts"
+import { useAccounts } from "#shared/accounts"
 import { useStoredState } from "#shared/storage"
 
-import { INITIAL_TRANSACTIONS } from "../demoData"
 import {
   type TransactionSortOrder,
   type TransactionsPreferences,
   type TransactionTypeFilter,
 } from "../TransactionsPreferences"
+import { useTransactions } from "../useTransactions"
 
 import {
   DEFAULT_TRANSACTIONS_PREFERENCES,
@@ -18,10 +18,14 @@ import { type UseFilteredTransactionsState } from "./types"
 import { applyTransactionsPreferences, parseStoredPreferences } from "./utils"
 
 export default function useFilteredTransactions(): UseFilteredTransactionsState {
+  const { data: accounts } = useAccounts()
+  const { data: transactions, isLoading: isLoadingTransactions } =
+    useTransactions()
+
   const {
     data: preferences,
     error,
-    isLoading,
+    isLoading: isLoadingPreferences,
     setData: setPreferences,
   } = useStoredState<TransactionsPreferences>({
     errorMessage: "Unable to persist transaction preferences.",
@@ -30,16 +34,18 @@ export default function useFilteredTransactions(): UseFilteredTransactionsState 
     storageKey: TRANSACTIONS_PREFERENCES_STORAGE_KEY,
   })
 
+  const isLoading = isLoadingPreferences || isLoadingTransactions
+
   const data = useMemo(() => {
     if (isLoading) {
       return null
     }
 
-    return applyTransactionsPreferences(INITIAL_TRANSACTIONS, preferences)
-  }, [isLoading, preferences])
+    return applyTransactionsPreferences(transactions, preferences)
+  }, [isLoading, transactions, preferences])
 
   return {
-    accounts: INITIAL_ACCOUNTS,
+    accounts: accounts ?? [],
     data,
     error,
     isLoading,

@@ -1,6 +1,11 @@
 import { CategoryClient } from "#shared/categories"
 import { CurrencyClient } from "#shared/currencies"
 import { SubscriptionProviderClient } from "#shared/subscriptionProviders"
+// Deep path on purpose: the #shared/transactions barrel pulls in the
+// transaction hooks (which import the accounts/categories barrels and the
+// Manager), creating an eval-time import cycle. The client folder has no such
+// dependency.
+import { TransactionClient } from "#shared/transactions/TransactionClient"
 
 // Single facade over every entity client. The app never touches storage or a
 // service directly — it always goes through manager.<Entity>.<method>().
@@ -9,6 +14,7 @@ export class Manager {
   #categories?: CategoryClient
   #currencies?: CurrencyClient
   #subscriptionProviders?: SubscriptionProviderClient
+  #transactions?: TransactionClient
 
   public get Categories(): CategoryClient {
     return (this.#categories ??= new CategoryClient())
@@ -20,6 +26,10 @@ export class Manager {
 
   public get SubscriptionProviders(): SubscriptionProviderClient {
     return (this.#subscriptionProviders ??= new SubscriptionProviderClient())
+  }
+
+  public get Transactions(): TransactionClient {
+    return (this.#transactions ??= new TransactionClient())
   }
 }
 

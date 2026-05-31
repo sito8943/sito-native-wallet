@@ -1,4 +1,6 @@
 import { TransactionCard } from "./TransactionCard"
+import { TransactionClient } from "./TransactionClient"
+import { TransactionForm } from "./TransactionForm"
 import { TransactionList } from "./TransactionList"
 import { TransactionsFilters } from "./TransactionsFilters"
 import { TransactionTypeBadge } from "./TransactionTypeBadge"
@@ -7,6 +9,8 @@ import { useTransactions } from "./useTransactions"
 
 export {
   TransactionCard,
+  TransactionClient,
+  TransactionForm,
   TransactionsFilters,
   TransactionList,
   TransactionTypeBadge,
@@ -14,7 +18,9 @@ export {
   useTransactions,
 }
 export type { Transaction } from "./Transaction"
+export type { AddTransactionDto } from "./dtos"
 export type { TransactionCardProps } from "./TransactionCard"
+export type { TransactionFormProps } from "./TransactionForm"
 export type { TransactionListProps } from "./TransactionList"
 export type {
   TransactionSortOrder,

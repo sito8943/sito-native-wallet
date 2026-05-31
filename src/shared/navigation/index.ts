@@ -3,6 +3,7 @@ export type { DetailRouteParams } from "./params"
 export {
   toAccountDetailsRoute,
   toTransactionDetailsRoute,
+  toNewTransactionRoute,
   toSubscriptionDetailsRoute,
   toCurrencyDetailsRoute,
   toNewCurrencyRoute,

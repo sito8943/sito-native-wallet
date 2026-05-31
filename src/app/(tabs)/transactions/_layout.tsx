@@ -19,7 +19,8 @@ export default function Layout(): ReactElement {
           title: "Transactions",
         }}
       />
-      <Stack.Screen name="[id]" options={{ title: "Transaction details" }} />
+      <Stack.Screen name="new" options={{ title: "New transaction" }} />
+      <Stack.Screen name="[id]" options={{ title: "Edit transaction" }} />
     </Stack>
   )
 }

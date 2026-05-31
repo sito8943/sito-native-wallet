@@ -12,6 +12,7 @@ export default function TransactionList({
   data,
   emptyMessage = "No transactions available.",
   onPress,
+  actionsFor,
 }: TransactionListProps): ReactElement {
   return (
     <ScrollView style={styles.list} contentContainerStyle={styles.content}>
@@ -20,6 +21,7 @@ export default function TransactionList({
           <TransactionCard
             key={transaction.id}
             transaction={transaction}
+            actions={actionsFor?.(transaction)}
             onPress={onPress}
           />
         ))

@@ -1,2 +1,2 @@
 export type { Transaction } from "./types"
-export { getTransactionType, sortByDate } from "./utils"
+export { getTransactionType, resolveTransactions, sortByDate } from "./utils"
