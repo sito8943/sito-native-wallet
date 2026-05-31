@@ -110,9 +110,13 @@ export default function CurrencyForm({
 
 const styles = {
   container: {
+    gap: spacing[4],
     paddingVertical: spacing[3],
+    paddingHorizontal: spacing[4],
   },
   actions: {
+    flexDirection: "row" as const,
+    gap: spacing[4],
     marginTop: spacing[4],
   },
 }

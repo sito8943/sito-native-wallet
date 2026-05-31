@@ -10,6 +10,7 @@ const spacing = {
   8: 32,
   10: 40,
   12: 48,
+  24: 96,
 }
 
 export default spacing

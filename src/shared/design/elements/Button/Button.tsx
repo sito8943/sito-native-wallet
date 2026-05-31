@@ -3,7 +3,11 @@ import { ActivityIndicator, Pressable, View } from "react-native"
 
 import Typography from "#design/elements/Typography"
 import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
-import { useThemeColors, useThemedStyles, type ThemeColors } from "#shared/theme"
+import {
+  useThemeColors,
+  useThemedStyles,
+  type ThemeColors,
+} from "#shared/theme"
 
 import { BUTTON_VARIANT } from "./constants"
 import { type ButtonProps } from "./types"
@@ -42,7 +46,9 @@ export default function Button({
       {...props}
     >
       <View style={styles.content}>
-        {loading && <ActivityIndicator color={colors.textInverted} size="small" />}
+        {loading && (
+          <ActivityIndicator color={colors.textInverted} size="small" />
+        )}
         <Typography variant={TYPOGRAPHY_VARIANT.BODY_STRONG} tone={tone}>
           {label}
         </Typography>
@@ -54,13 +60,11 @@ export default function Button({
 const createStyles = (_colors: ThemeColors) => ({
   base: {
     alignItems: "center" as const,
-    borderRadius: radius.md,
+    borderRadius: radius.full,
     justifyContent: "center" as const,
-    marginHorizontal: spacing[4],
-    marginVertical: spacing[2],
     minHeight: spacing[12],
-    paddingHorizontal: spacing[4],
-    paddingVertical: spacing[3],
+    paddingHorizontal: spacing[5],
+    paddingVertical: spacing[1],
   },
   content: {
     alignItems: "center" as const,

@@ -9,7 +9,11 @@ import {
   typography,
   TYPOGRAPHY_VARIANT,
 } from "#design/foundations"
-import { useThemeColors, useThemedStyles, type ThemeColors } from "#shared/theme"
+import {
+  useThemeColors,
+  useThemedStyles,
+  type ThemeColors,
+} from "#shared/theme"
 
 import { type TextFieldProps } from "./types"
 
@@ -60,8 +64,6 @@ export default TextField
 const createStyles = (colors: ThemeColors) => ({
   container: {
     gap: spacing[1],
-    marginHorizontal: spacing[4],
-    marginVertical: spacing[2],
   },
   input: {
     backgroundColor: colors.surface,
@@ -74,7 +76,7 @@ const createStyles = (colors: ThemeColors) => ({
     paddingVertical: spacing[2],
   },
   multiline: {
-    minHeight: 88,
+    minHeight: spacing[24],
     paddingTop: spacing[2],
     textAlignVertical: "top" as const,
   },
