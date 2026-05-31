@@ -1,27 +1,28 @@
+import { THEME_COLOR } from "../../theme/constants"
 import { type ThemeColors } from "../../theme/types"
 
 export const lightColors: ThemeColors = {
-  background: "#f5f8fc",
-  surface: "#ffffff",
-  border: "#d6e0eb",
-  textStrong: "#041e42",
-  textMuted: "#4f627d",
-  textSubtle: "#74839a",
-  textInverted: "#ffffff",
-  positive: "#2e7d32",
-  negative: "#c62828",
-  primary: "#041e42",
+  [THEME_COLOR.BACKGROUND]: "#f5f8fc",
+  [THEME_COLOR.SURFACE]: "#ffffff",
+  [THEME_COLOR.BORDER]: "#d6e0eb",
+  [THEME_COLOR.TEXT_STRONG]: "#041e42",
+  [THEME_COLOR.TEXT_MUTED]: "#4f627d",
+  [THEME_COLOR.TEXT_SUBTLE]: "#74839a",
+  [THEME_COLOR.TEXT_INVERTED]: "#ffffff",
+  [THEME_COLOR.POSITIVE]: "#2e7d32",
+  [THEME_COLOR.NEGATIVE]: "#c62828",
+  [THEME_COLOR.PRIMARY]: "#041e42",
 }
 
 export const darkColors: ThemeColors = {
-  background: "#020b16",
-  surface: "#061a33",
-  border: "#163b63",
-  textStrong: "#f5f8fc",
-  textMuted: "#c1d0e0",
-  textSubtle: "#90a5bf",
-  textInverted: "#ffffff",
-  positive: "#4caf50",
-  negative: "#ef5350",
-  primary: "#3b82f6",
+  [THEME_COLOR.BACKGROUND]: "#020b16",
+  [THEME_COLOR.SURFACE]: "#061a33",
+  [THEME_COLOR.BORDER]: "#163b63",
+  [THEME_COLOR.TEXT_STRONG]: "#f5f8fc",
+  [THEME_COLOR.TEXT_MUTED]: "#c1d0e0",
+  [THEME_COLOR.TEXT_SUBTLE]: "#90a5bf",
+  [THEME_COLOR.TEXT_INVERTED]: "#ffffff",
+  [THEME_COLOR.POSITIVE]: "#4caf50",
+  [THEME_COLOR.NEGATIVE]: "#ef5350",
+  [THEME_COLOR.PRIMARY]: "#3b82f6",
 }

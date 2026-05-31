@@ -1,17 +1,19 @@
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
-import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
 import { TYPOGRAPHY_VARIANT } from "#design/foundations"
+import EntityCard from "#design/patterns/EntityCard"
 
 import { type CurrencyCardProps } from "./types"
 
 export default function CurrencyCard({
   currency,
+  actions,
+  onPress,
 }: CurrencyCardProps): ReactElement {
   return (
-    <Card>
+    <EntityCard actions={actions} entity={currency} onPress={onPress}>
       <View style={styles.row}>
         <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
           {currency.name}
@@ -20,7 +22,7 @@ export default function CurrencyCard({
           {currency.symbol}
         </Typography>
       </View>
-    </Card>
+    </EntityCard>
   )
 }
 

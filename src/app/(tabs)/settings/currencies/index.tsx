@@ -1,26 +1,36 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
-import { Pressable, View } from "react-native"
+import { View } from "react-native"
 
+import { ConfirmationDialog } from "#design/patterns/Dialog"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
-import { CurrencyCard, useCurrencies } from "#shared/currencies"
+import { type Currency, CurrencyCard, useCurrencies } from "#shared/currencies"
+import { useDeleteDialog } from "#shared/dialogs"
 import { toCurrencyDetailsRoute, toNewCurrencyRoute } from "#shared/navigation"
 
 export default function Currencies(): ReactElement {
   const router = useRouter()
-  const { data } = useCurrencies()
+  const { data, removeCurrency } = useCurrencies()
+
+  const deleteDialog = useDeleteDialog<Currency>({
+    onConfirm: (currency) => {
+      removeCurrency(currency.id)
+    },
+    title: "Delete currency",
+    message: "This currency will be removed permanently.",
+  })
 
   return (
     <View style={{ flex: 1 }}>
       <Page scroll>
         {data.map((currency) => (
-          <Pressable
+          <CurrencyCard
             key={currency.id}
+            actions={[deleteDialog.action(currency)]}
+            currency={currency}
             onPress={() => router.push(toCurrencyDetailsRoute(currency.id))}
-          >
-            <CurrencyCard currency={currency} />
-          </Pressable>
+          />
         ))}
       </Page>
       <FAB
@@ -28,6 +38,7 @@ export default function Currencies(): ReactElement {
         icon="plus"
         onPress={() => router.push(toNewCurrencyRoute())}
       />
+      <ConfirmationDialog {...deleteDialog} confirmLabel="Delete" />
     </View>
   )
 }
