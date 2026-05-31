@@ -1,9 +1,10 @@
 import { CurrencyCard } from "./CurrencyCard"
+import { CurrencyClient } from "./CurrencyClient"
 import { CurrencyForm } from "./CurrencyForm"
 import { useCurrencies } from "./useCurrencies"
 
 export { INITIAL_CURRENCIES } from "./demoData"
-export { CurrencyCard, CurrencyForm, useCurrencies }
+export { CurrencyCard, CurrencyClient, CurrencyForm, useCurrencies }
 export type { Currency } from "./Currency"
 export type { CurrencyCardProps } from "./CurrencyCard"
 export type { CurrencyFormProps } from "./CurrencyForm"
