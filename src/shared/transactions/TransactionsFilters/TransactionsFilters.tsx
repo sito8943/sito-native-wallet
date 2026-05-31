@@ -1,11 +1,11 @@
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
-import Accordion from "#design/elements/Accordion"
 import Card from "#design/elements/Card"
 import Chip from "#design/elements/Chip"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import Accordion from "#design/patterns/Accordion"
 
 import {
   TRANSACTION_SORT_ORDER,
