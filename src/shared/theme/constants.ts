@@ -24,6 +24,7 @@ export const THEME_COLOR = {
   POSITIVE: "positive",
   NEGATIVE: "negative",
   PRIMARY: "primary",
+  OVERLAY: "overlay",
 } as const
 
 export const PREFERENCE_CYCLE: Record<ThemePreference, ThemePreference> = {

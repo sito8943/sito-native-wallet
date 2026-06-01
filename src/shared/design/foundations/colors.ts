@@ -12,6 +12,7 @@ export const lightColors: ThemeColors = {
   [THEME_COLOR.POSITIVE]: "#2e7d32",
   [THEME_COLOR.NEGATIVE]: "#c62828",
   [THEME_COLOR.PRIMARY]: "#041e42",
+  [THEME_COLOR.OVERLAY]: "rgba(4, 30, 66, 0.4)",
 }
 
 export const darkColors: ThemeColors = {
@@ -25,4 +26,5 @@ export const darkColors: ThemeColors = {
   [THEME_COLOR.POSITIVE]: "#4caf50",
   [THEME_COLOR.NEGATIVE]: "#ef5350",
   [THEME_COLOR.PRIMARY]: "#3b82f6",
+  [THEME_COLOR.OVERLAY]: "rgba(0, 0, 0, 0.6)",
 }
