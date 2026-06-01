@@ -2,6 +2,7 @@ import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 import { View } from "react-native"
 
+import { APP_ICONS } from "#design/elements/Icon"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
@@ -39,7 +40,7 @@ export default function Categories(): ReactElement {
       </Page>
       <FAB
         accessibilityLabel="Add category"
-        icon="plus"
+        icon={APP_ICONS.add}
         onPress={() => router.push(toNewCategoryRoute())}
       />
       <ConfirmationDialog {...deleteDialog} confirmLabel="Delete" />

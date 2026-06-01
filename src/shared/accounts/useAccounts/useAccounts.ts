@@ -1,15 +1,26 @@
-import { useState } from "react"
+import { useManager } from "#shared/manager"
+import { useClientStore } from "#shared/storage"
 
-import { INITIAL_ACCOUNTS } from "../demoData"
+import { type AddAccountDto } from "../dtos"
 
 import { type UseAccountsState } from "./types"
 
 export default function useAccounts(): UseAccountsState {
-  const [state] = useState<UseAccountsState>({
-    data: INITIAL_ACCOUNTS,
-    error: null,
-    isLoading: false,
-  })
+  const client = useManager().Accounts
+  const { items, error, isLoading } = useClientStore(client)
 
-  return state
+  return {
+    data: items,
+    error,
+    isLoading,
+    addAccount: (input: AddAccountDto) => {
+      client.add(input)
+    },
+    updateAccount: (id: string, input: AddAccountDto) => {
+      client.update(id, input)
+    },
+    removeAccount: (id: string) => {
+      client.remove(id)
+    },
+  }
 }

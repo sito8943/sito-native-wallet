@@ -2,6 +2,7 @@ import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 import { View } from "react-native"
 
+import { APP_ICONS } from "#design/elements/Icon"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import FAB from "#design/patterns/FAB"
@@ -78,7 +79,7 @@ export default function Transactions(): ReactElement {
       </Page>
       <FAB
         accessibilityLabel="Add transaction"
-        icon="plus"
+        icon={APP_ICONS.add}
         onPress={() => router.push(toNewTransactionRoute())}
       />
       <ConfirmationDialog {...deleteDialog} confirmLabel="Delete" />

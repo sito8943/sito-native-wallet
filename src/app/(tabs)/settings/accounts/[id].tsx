@@ -1,11 +1,15 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
+import { View } from "react-native"
 
+import { APP_ICONS } from "#design/elements/Icon"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import { AccountCard, useAccounts } from "#shared/accounts"
 import {
+  toEditAccountRoute,
   toTransactionDetailsRoute,
   useDetailRouteParams,
 } from "#shared/navigation"
@@ -35,20 +39,27 @@ export default function AccountDetails(): ReactElement {
   }
 
   return (
-    <Page>
-      <AccountCard account={account} />
+    <View style={{ flex: 1 }}>
+      <Page>
+        <AccountCard account={account} />
 
-      <Typography variant={TYPOGRAPHY_VARIANT.TITLE} style={styles.heading}>
-        Transactions ({accountTransactions.length})
-      </Typography>
+        <Typography variant={TYPOGRAPHY_VARIANT.TITLE} style={styles.heading}>
+          Transactions ({accountTransactions.length})
+        </Typography>
 
-      <TransactionList
-        data={accountTransactions}
-        onPress={(transaction) =>
-          router.push(toTransactionDetailsRoute(transaction.id))
-        }
+        <TransactionList
+          data={accountTransactions}
+          onPress={(transaction) =>
+            router.push(toTransactionDetailsRoute(transaction.id))
+          }
+        />
+      </Page>
+      <FAB
+        accessibilityLabel="Edit account"
+        icon={APP_ICONS.edit}
+        onPress={() => router.push(toEditAccountRoute(account.id))}
       />
-    </Page>
+    </View>
   )
 }
 

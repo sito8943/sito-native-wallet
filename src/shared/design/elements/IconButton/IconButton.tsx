@@ -1,7 +1,7 @@
-import { FontAwesome } from "@expo/vector-icons"
 import { type ReactElement } from "react"
 import { Pressable, StyleSheet, View } from "react-native"
 
+import Icon from "#design/elements/Icon"
 import { radius, spacing } from "#design/foundations"
 import { useThemeColors } from "#shared/theme"
 
@@ -52,9 +52,9 @@ export default function IconButton({
       {...props}
     >
       <View style={styles.content}>
-        <FontAwesome
+        <Icon
           color={iconColor}
-          name={icon}
+          icon={icon}
           size={resolvedSize.iconSize}
           style={iconStyle}
         />

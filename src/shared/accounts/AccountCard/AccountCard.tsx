@@ -5,6 +5,8 @@ import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 
+import { ACCOUNT_TYPE_LABEL } from "../Account"
+
 import { type AccountCardProps } from "./types"
 
 export default function AccountCard({
@@ -19,7 +21,8 @@ export default function AccountCard({
             {account.name}
           </Typography>
           <Typography variant={TYPOGRAPHY_VARIANT.CAPTION}>
-            {account.currency.name} · {account.currency.symbol}
+            {ACCOUNT_TYPE_LABEL[account.type]} · {account.currency.name} ·{" "}
+            {account.currency.symbol}
           </Typography>
         </View>
 

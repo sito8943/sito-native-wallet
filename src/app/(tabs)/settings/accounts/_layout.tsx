@@ -19,7 +19,9 @@ export default function Layout(): ReactElement {
           title: "Accounts",
         }}
       />
+      <Stack.Screen name="new" options={{ title: "New account" }} />
       <Stack.Screen name="[id]" options={{ title: "Account details" }} />
+      <Stack.Screen name="edit/[id]" options={{ title: "Edit account" }} />
     </Stack>
   )
 }

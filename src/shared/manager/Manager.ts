@@ -1,3 +1,7 @@
+// Deep path on purpose: the #shared/accounts barrel pulls in useAccounts (which
+// imports the Manager), creating an eval-time import cycle. The client folder
+// has no such dependency.
+import { AccountClient } from "#shared/accounts/AccountClient"
 import { CategoryClient } from "#shared/categories"
 import { CurrencyClient } from "#shared/currencies"
 import { SubscriptionProviderClient } from "#shared/subscriptionProviders"
@@ -11,10 +15,15 @@ import { TransactionClient } from "#shared/transactions/TransactionClient"
 // service directly — it always goes through manager.<Entity>.<method>().
 // Clients are created lazily so this module has no eval-time dependency on them.
 export class Manager {
+  #accounts?: AccountClient
   #categories?: CategoryClient
   #currencies?: CurrencyClient
   #subscriptionProviders?: SubscriptionProviderClient
   #transactions?: TransactionClient
+
+  public get Accounts(): AccountClient {
+    return (this.#accounts ??= new AccountClient())
+  }
 
   public get Categories(): CategoryClient {
     return (this.#categories ??= new CategoryClient())

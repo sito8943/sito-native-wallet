@@ -7,6 +7,13 @@ export const toAccountDetailsRoute = (id: string): Href => ({
   params: { id } satisfies DetailRouteParams,
 })
 
+export const toNewAccountRoute = (): Href => "/settings/accounts/new"
+
+export const toEditAccountRoute = (id: string): Href => ({
+  pathname: "/settings/accounts/edit/[id]" as const,
+  params: { id } satisfies DetailRouteParams,
+})
+
 export const toNewTransactionRoute = (): Href => "/transactions/new"
 
 export const toTransactionDetailsRoute = (id: string): Href => ({

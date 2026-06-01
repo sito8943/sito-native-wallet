@@ -1,11 +1,7 @@
-import type FontAwesome5 from "@expo/vector-icons/FontAwesome5"
-import { type ComponentProps, type ReactNode } from "react"
-import {
-  type PressableProps,
-  type StyleProp,
-  type TextStyle,
-  type ViewStyle,
-} from "react-native"
+import { type ReactNode } from "react"
+import { type PressableProps, type StyleProp, type ViewStyle } from "react-native"
+
+import { type AppIcon, type IconProps } from "#design/elements/Icon"
 
 import { type ICON_BUTTON_SIZE, type ICON_BUTTON_VARIANT } from "./constants"
 
@@ -18,8 +14,8 @@ export type IconButtonSize =
 export type IconButtonProps = Omit<PressableProps, "children" | "style"> & {
   accessibilityLabel: string
   disabled?: boolean
-  icon: ComponentProps<typeof FontAwesome5>["name"]
-  iconStyle?: StyleProp<TextStyle>
+  icon: AppIcon
+  iconStyle?: IconProps["style"]
   size?: IconButtonSize
   style?: StyleProp<ViewStyle>
   variant?: IconButtonVariant

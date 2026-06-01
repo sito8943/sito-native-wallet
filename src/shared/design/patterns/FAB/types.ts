@@ -1,7 +1,6 @@
-import type FontAwesome5 from "@expo/vector-icons/FontAwesome5"
-import { type ComponentProps } from "react"
 import { type StyleProp, type ViewStyle } from "react-native"
 
+import { type AppIcon } from "#design/elements/Icon"
 import {
   type IconButtonSize,
   type IconButtonVariant,
@@ -13,7 +12,7 @@ export type FabPosition = (typeof FAB_POSITION)[keyof typeof FAB_POSITION]
 
 export type FABProps = {
   accessibilityLabel: string
-  icon: ComponentProps<typeof FontAwesome5>["name"]
+  icon: AppIcon
   onPress: () => void
   disabled?: boolean
   label?: string
