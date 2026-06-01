@@ -1,20 +1,8 @@
+import { isCurrency } from "#shared/currencies/Currency"
+
 import { type Account, type AccountType } from "../Account"
 
 import { ACCOUNT_TYPES } from "./constants"
-
-const isCurrency = (value: unknown): boolean => {
-  if (typeof value !== "object" || value === null) {
-    return false
-  }
-
-  const candidate = value as Record<string, unknown>
-
-  return (
-    typeof candidate.id === "string" &&
-    typeof candidate.name === "string" &&
-    typeof candidate.symbol === "string"
-  )
-}
 
 const isAccount = (value: unknown): value is Account => {
   if (typeof value !== "object" || value === null) {
