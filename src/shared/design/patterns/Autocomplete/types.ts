@@ -11,6 +11,11 @@ type AutocompleteBaseProps = {
   options: AutocompleteOption[]
   error?: string
   containerStyle?: StyleProp<ViewStyle>
+  // Debounce the query before it drives filtering / onSearch. Use when the
+  // option list is fetched from an API.
+  debounceMs?: number
+  // Fired with the debounced query, e.g. to fetch matching options.
+  onSearch?: (query: string) => void
 }
 
 // Single or multiple selection, keyed by option id to match form DTOs.

@@ -26,6 +26,7 @@ export default function Page({
     return (
       <SafeAreaView style={[styles.page, style]}>
         <ScrollView
+          keyboardShouldPersistTaps="handled"
           contentContainerStyle={[
             styles.content,
             centered && styles.centeredContent,

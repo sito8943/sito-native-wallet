@@ -20,6 +20,7 @@ import {
   faRepeat,
   faStore,
   faXmark,
+  faCheck,
 } from "@fortawesome/free-solid-svg-icons"
 
 export const APP_ICONS: Record<string, IconProp> = {
@@ -42,4 +43,5 @@ export const APP_ICONS: Record<string, IconProp> = {
   subscriptions: faRepeat,
   subscriptionProviders: faStore,
   close: faXmark,
+  check: faCheck,
 }
