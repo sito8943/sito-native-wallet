@@ -19,7 +19,6 @@
     "start": "expo start"
   },
   "dependencies": {
-    "@expo/vector-icons": "^15.1.1",
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "@fortawesome/react-native-fontawesome": "^1.0.0",
@@ -28,8 +27,8 @@
     "expo": "~54.0.33",
     "expo-constants": "~18.0.13",
     "expo-linking": "~8.0.12",
-    "expo-notifications": "~0.32.17",
     "expo-navigation-bar": "~5.0.10",
+    "expo-notifications": "~0.32.17",
     "expo-router": "~6.0.23",
     "expo-status-bar": "~3.0.9",
     "react": "19.1.0",
@@ -46,7 +45,6 @@
     "@christopherjbaker/eslint-config": "^3.1.4",
     "@types/react": "~19.1.0",
     "eslint": "^9.39.4",
-    "eslint-config-expo": "~10.0.0",
     "knip": "^6.14.1",
     "prettier": "^3.8.3",
     "typescript": "~5.9.2"
