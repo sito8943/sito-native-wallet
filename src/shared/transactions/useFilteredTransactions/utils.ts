@@ -54,7 +54,7 @@ export const applyTransactionsPreferences = (
   return sorted
 }
 
-export const parseTransactionsPreferences = (
+const parseTransactionsPreferences = (
   value: unknown,
 ): TransactionsPreferences => {
   if (!value || typeof value !== "object") {

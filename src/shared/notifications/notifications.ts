@@ -3,7 +3,7 @@ import { Platform } from "react-native"
 
 let configured: boolean | null = null
 
-export async function configureNotifications(): Promise<boolean> {
+async function configureNotifications(): Promise<boolean> {
   if (configured !== null) return configured
 
   const { status } = await Notifications.requestPermissionsAsync()

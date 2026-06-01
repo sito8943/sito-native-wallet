@@ -1,11 +1,24 @@
-// Relative import to the demoData file (not the #shared/currencies barrel) on
-// purpose: the barrel pulls in useCurrencies -> Manager -> AccountClient ->
-// this file, an eval-time cycle that leaves INITIAL_CURRENCIES undefined.
-import { INITIAL_CURRENCIES } from "../currencies/demoData"
+import { type Currency } from "#shared/currencies"
 
 import { ACCOUNT_TYPE, type Account } from "./Account"
 
-const [euro, dollar] = INITIAL_CURRENCIES
+// Self-contained seed: the accounts modlet defines its own currency snapshots
+// (ids matching the currencies store) rather than importing currencies' runtime
+// data. Keeps the modlet a black box and avoids the Manager import cycle. The
+// Currency type import is erased at build time, so it pulls in no runtime code.
+const euro: Currency = {
+  id: "eur",
+  name: "Euro",
+  symbol: "€",
+  description: "European Union currency",
+}
+
+const dollar: Currency = {
+  id: "usd",
+  name: "US Dollar",
+  symbol: "$",
+  description: "United States currency",
+}
 
 export const INITIAL_ACCOUNTS: Account[] = [
   {

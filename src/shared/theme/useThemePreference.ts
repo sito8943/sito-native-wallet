@@ -28,5 +28,3 @@ export const useThemePreference = (): UseThemePreferenceResult => {
 }
 
 export const useThemeColors = (): ThemeColors => useThemeContext().colors
-
-export const useThemeValue = (): ThemeContextValue => useThemeContext()
