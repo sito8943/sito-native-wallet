@@ -10,3 +10,13 @@ export const KEYBOARD_EVENT = {
   SHOW: "keyboardDidShow",
   HIDE: "keyboardDidHide",
 } as const
+
+// Swipe-to-close gesture thresholds.
+// Drag must move down past this before the gesture takes over (lets taps pass).
+export const SWIPE_ACTIVATE_OFFSET = spacing[2]
+// Release past this drag distance closes the sheet.
+export const SWIPE_CLOSE_DISTANCE = spacing[24]
+// ...or a fast enough downward flick (px per ms) closes it regardless.
+export const SWIPE_CLOSE_VELOCITY = 1.2
+// Duration of the slide-out before onClose fires.
+export const SWIPE_CLOSE_DURATION = 200

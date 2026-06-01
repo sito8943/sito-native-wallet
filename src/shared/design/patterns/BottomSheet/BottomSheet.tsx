@@ -1,5 +1,5 @@
 import { type ReactElement } from "react"
-import { Modal, Pressable, StyleSheet, View } from "react-native"
+import { Animated, Modal, Pressable, StyleSheet, View } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import Typography from "#design/elements/Typography"
@@ -9,6 +9,7 @@ import { useThemedStyles, type ThemeColors } from "#shared/theme"
 import { SHEET_MAX_HEIGHT, SHEET_PADDING_BOTTOM } from "./constants"
 import { type BottomSheetProps } from "./types"
 import { useKeyboardHeight } from "./useKeyboardHeight"
+import { useSwipeToClose } from "./useSwipeToClose"
 
 // Bottom-anchored Modal surface. Lives in its own native hierarchy, so opening
 // it never re-renders or steals focus from the screen behind it. Tapping the
@@ -22,6 +23,7 @@ export default function BottomSheet({
   const styles = useThemedStyles(createStyles)
   const insets = useSafeAreaInsets()
   const keyboardHeight = useKeyboardHeight()
+  const { translateY, panHandlers } = useSwipeToClose(open, onClose)
 
   // With the keyboard up it already covers the nav-bar inset, so drop the
   // extra bottom padding and lift the whole sheet by the keyboard height.
@@ -31,6 +33,7 @@ export default function BottomSheet({
       keyboardHeight > 0
         ? SHEET_PADDING_BOTTOM
         : SHEET_PADDING_BOTTOM + insets.bottom,
+    transform: [{ translateY }],
   }
 
   return (
@@ -48,13 +51,17 @@ export default function BottomSheet({
           style={styles.backdrop}
           onPress={onClose}
         />
-        <Pressable style={[styles.sheet, sheetStyle]}>
-          <View style={styles.handle} />
+        <Animated.View style={[styles.sheet, sheetStyle]}>
+          {/* Only the handle grip is draggable, so any list in `children`
+              keeps its own scroll. Padding gives the 4px bar a real target. */}
+          <View style={styles.grip} {...panHandlers}>
+            <View style={styles.handle} />
+          </View>
           {title !== undefined && (
             <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>{title}</Typography>
           )}
           {children}
-        </Pressable>
+        </Animated.View>
       </View>
     </Modal>
   )
@@ -79,8 +86,11 @@ const createStyles = (colors: ThemeColors) => ({
     paddingHorizontal: spacing[5],
     paddingTop: spacing[3],
   },
+  grip: {
+    alignItems: "center" as const,
+    paddingVertical: spacing[3],
+  },
   handle: {
-    alignSelf: "center" as const,
     backgroundColor: colors.border,
     borderRadius: radius.full,
     height: spacing[1],
