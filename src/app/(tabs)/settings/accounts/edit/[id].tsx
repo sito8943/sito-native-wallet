@@ -66,6 +66,7 @@ export default function EditAccount(): ReactElement {
         submitLabel="Save"
         defaultValues={{
           name: account.name,
+          bankName: account.bankName,
           balance: account.balance,
           type: account.type,
           currency: account.currency,

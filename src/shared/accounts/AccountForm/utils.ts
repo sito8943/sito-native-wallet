@@ -5,9 +5,16 @@ import { type AccountFormValues } from "./types"
 
 export const toFormValues = (dto?: AddAccountDto): AccountFormValues =>
   dto === undefined
-    ? { name: "", balance: "", type: ACCOUNT_TYPE.CASH, currencyId: "" }
+    ? {
+        name: "",
+        bankName: "",
+        balance: "",
+        type: ACCOUNT_TYPE.CASH,
+        currencyId: "",
+      }
     : {
         name: dto.name,
+        bankName: dto.bankName ?? "",
         balance: String(dto.balance),
         type: dto.type,
         currencyId: dto.currency.id,

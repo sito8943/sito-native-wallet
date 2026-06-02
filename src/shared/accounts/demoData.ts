@@ -1,6 +1,6 @@
 import { type Currency } from "#shared/currencies"
 
-import { ACCOUNT_TYPE, type Account } from "./Account"
+import { ACCOUNT_BANK_NAME, ACCOUNT_TYPE, type Account } from "./Account"
 
 // Self-contained seed: the accounts modlet defines its own currency snapshots
 // (ids matching the currencies store) rather than importing currencies' runtime
@@ -24,6 +24,7 @@ export const INITIAL_ACCOUNTS: Account[] = [
   {
     id: "main",
     name: "Main account",
+    bankName: ACCOUNT_BANK_NAME.CAIXA,
     balance: 2487.48,
     type: ACCOUNT_TYPE.DIGITAL,
     currency: euro,
@@ -31,6 +32,7 @@ export const INITIAL_ACCOUNTS: Account[] = [
   {
     id: "travel",
     name: "Travel card",
+    bankName: ACCOUNT_BANK_NAME.REVOLUT,
     balance: 420.35,
     type: ACCOUNT_TYPE.DIGITAL,
     currency: euro,
@@ -38,6 +40,7 @@ export const INITIAL_ACCOUNTS: Account[] = [
   {
     id: "savings",
     name: "Savings jar",
+    bankName: ACCOUNT_BANK_NAME.BPA,
     balance: 1200,
     type: ACCOUNT_TYPE.CASH,
     currency: dollar,

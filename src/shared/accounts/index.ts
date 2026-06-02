@@ -4,9 +4,14 @@ import { useAccounts } from "./useAccounts"
 
 export { default as AccountSelector } from "./AccountSelector"
 export { INITIAL_ACCOUNTS } from "./demoData"
-export { ACCOUNT_TYPE, ACCOUNT_TYPE_LABEL } from "./Account"
+export {
+  ACCOUNT_BANK_NAME,
+  ACCOUNT_BANK_OPTIONS,
+  ACCOUNT_TYPE,
+  ACCOUNT_TYPE_LABEL,
+} from "./Account"
 export { AccountCard, AccountForm, useAccounts }
-export type { Account, AccountType } from "./Account"
+export type { Account, AccountBankName, AccountType } from "./Account"
 export type { AccountCardProps } from "./AccountCard"
 export type { AccountSelectorProps } from "./AccountSelector"
 export type { AccountFormProps } from "./AccountForm"

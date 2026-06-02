@@ -10,7 +10,11 @@ import { spacing } from "#design/foundations"
 import Autocomplete from "#design/patterns/Autocomplete"
 import { useCurrencies } from "#shared/currencies"
 
-import { ACCOUNT_TYPE, ACCOUNT_TYPE_LABEL } from "../Account"
+import {
+  ACCOUNT_BANK_OPTIONS,
+  ACCOUNT_TYPE,
+  ACCOUNT_TYPE_LABEL,
+} from "../Account"
 import { type AddAccountDto } from "../dtos"
 
 import { ACCOUNT_FIELD_LIMITS } from "./constants"
@@ -39,6 +43,7 @@ export default function AccountForm({
 
   const submit = (values: AccountFormValues): void => {
     const currency = currencies.find((item) => item.id === values.currencyId)
+    const bankName = values.bankName.trim()
 
     if (currency === undefined) {
       return
@@ -46,6 +51,7 @@ export default function AccountForm({
 
     onSubmit({
       name: values.name,
+      ...(bankName !== "" ? { bankName } : {}),
       balance: parseBalance(values.balance),
       type: values.type,
       currency,
@@ -121,6 +127,22 @@ export default function AccountForm({
               />
             </View>
           </View>
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="bankName"
+        render={({ field: { onChange, value } }) => (
+          <Autocomplete
+            label="Bank"
+            placeholder="Select bank"
+            options={ACCOUNT_BANK_OPTIONS}
+            value={value === "" ? null : value}
+            onChange={(next) => {
+              onChange(next ?? "")
+            }}
+          />
         )}
       />
 
