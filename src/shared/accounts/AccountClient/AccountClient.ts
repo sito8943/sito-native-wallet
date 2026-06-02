@@ -24,4 +24,18 @@ export default class AccountClient extends StorageClient<Account> {
   public update = (id: string, input: AddAccountDto): void => {
     this.patch(id, input)
   }
+
+  // Applies a signed delta to an account balance. No-op if the account is
+  // gone. Rounds to cents to avoid float drift across many transactions.
+  public adjustBalance = (id: string, delta: number): void => {
+    const account = this.getAll().find((item) => item.id === id)
+
+    if (account === undefined) {
+      return
+    }
+
+    this.patch(id, {
+      balance: Math.round((account.balance + delta) * 100) / 100,
+    })
+  }
 }

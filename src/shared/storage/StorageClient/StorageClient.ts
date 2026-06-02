@@ -81,8 +81,14 @@ export default abstract class StorageClient<
     )
   }
 
-  public remove = (id: string): void => {
+  // Deletion split out so subclasses can override the public `remove` to add
+  // side effects (e.g. balance updates) while still reusing the commit path.
+  protected delete(id: string): void {
     this.commit(this.state.items.filter((item) => item.id !== id))
+  }
+
+  public remove = (id: string): void => {
+    this.delete(id)
   }
 
   private commit(items: T[]): void {

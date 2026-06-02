@@ -38,7 +38,12 @@ export class Manager {
   }
 
   public get Transactions(): TransactionClient {
-    return (this.#transactions ??= new TransactionClient())
+    // Injected with the accounts + categories clients: persisting a transaction
+    // keeps the owning account's balance in sync (the local-first backend).
+    return (this.#transactions ??= new TransactionClient(
+      this.Accounts,
+      this.Categories,
+    ))
   }
 }
 

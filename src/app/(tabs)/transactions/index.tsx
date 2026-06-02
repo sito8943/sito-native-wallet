@@ -4,26 +4,21 @@ import { View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
-import { ConfirmationDialog } from "#design/patterns/Dialog"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import { AccountSelector } from "#shared/accounts"
-import { useDeleteDialog } from "#shared/dialogs"
 import {
   toNewTransactionRoute,
   toTransactionDetailsRoute,
 } from "#shared/navigation"
 import {
-  type Transaction,
   TransactionList,
   TransactionsFilters,
   useFilteredTransactions,
-  useTransactions,
 } from "#shared/transactions"
 
 export default function Transactions(): ReactElement {
   const router = useRouter()
-  const { removeTransaction } = useTransactions()
   const {
     accounts,
     data,
@@ -34,14 +29,6 @@ export default function Transactions(): ReactElement {
     setSortOrder,
     setTypeFilter,
   } = useFilteredTransactions()
-
-  const deleteDialog = useDeleteDialog<Transaction>({
-    onConfirm: (transaction) => {
-      removeTransaction(transaction.id)
-    },
-    title: "Delete transaction",
-    message: "This transaction will be removed permanently.",
-  })
 
   return (
     <View style={{ flex: 1 }}>
@@ -66,7 +53,6 @@ export default function Transactions(): ReactElement {
 
         <TransactionList
           data={data ?? undefined}
-          actionsFor={(transaction) => [deleteDialog.action(transaction)]}
           emptyMessage={
             isLoading
               ? "Loading saved transaction view..."
@@ -82,7 +68,6 @@ export default function Transactions(): ReactElement {
         icon={APP_ICONS.add}
         onPress={() => router.push(toNewTransactionRoute())}
       />
-      <ConfirmationDialog {...deleteDialog} confirmLabel="Delete" />
     </View>
   )
 }
