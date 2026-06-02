@@ -1,9 +1,10 @@
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
-import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
-import { TYPOGRAPHY_VARIANT } from "#design/foundations"
+import Typography from "#design/elements/Typography"
+import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import EntityCard from "#design/patterns/EntityCard"
+import { TransactionTypeBadge } from "#shared/transactions/TransactionTypeBadge"
 
 import { CategoryBullet } from "../CategoryBullet"
 
@@ -16,23 +17,47 @@ export default function CategoryCard({
 }: CategoryCardProps): ReactElement {
   return (
     <EntityCard actions={actions} entity={category} onPress={onPress}>
-      <View style={styles.row}>
-        <CategoryBullet {...category} />
-        <Typography
-          variant={TYPOGRAPHY_VARIANT.LABEL}
-          tone={TYPOGRAPHY_TONE.MUTED}
-        >
-          {category.type}
-        </Typography>
+      <View style={styles.container}>
+        <View style={styles.copy}>
+          <View style={styles.header}>
+            <CategoryBullet color={category.color} style={styles.marker} />
+            <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
+              {category.name}
+            </Typography>
+          </View>
+          {category.description && (
+            <Typography variant={TYPOGRAPHY_VARIANT.BODY}>
+              {category.description}
+            </Typography>
+          )}
+        </View>
+        <TransactionTypeBadge
+          type={category.type}
+          filled={false}
+          showText={false}
+        />
       </View>
     </EntityCard>
   )
 }
 
 const styles = StyleSheet.create({
-  row: {
-    alignItems: "center",
-    flexDirection: "row",
+  container: {
+    alignItems: "flex-start" as const,
+    flexDirection: "row" as const,
     justifyContent: "space-between",
+    width: "100%",
+  },
+  copy: {
+    flexDirection: "column" as const,
+  },
+  header: {
+    alignItems: "center" as const,
+    flexDirection: "row" as const,
+    gap: spacing(2),
+    justifyContent: "flex-start" as const,
+  },
+  marker: {
+    marginTop: -spacing(1),
   },
 })

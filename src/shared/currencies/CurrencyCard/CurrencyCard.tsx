@@ -1,8 +1,13 @@
 import { type ReactElement } from "react"
 import { View } from "react-native"
 
-import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
-import { borderWidth, radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import Typography from "#design/elements/Typography"
+import {
+  borderWidth,
+  radius,
+  spacing,
+  TYPOGRAPHY_VARIANT,
+} from "#design/foundations"
 import EntityCard from "#design/patterns/EntityCard"
 
 import { type ThemeColors, useThemedStyles } from "#shared/theme"
@@ -24,7 +29,7 @@ export default function CurrencyCard({
             {currency.name}
           </Typography>
           {currency.description && (
-            <Typography variant={TYPOGRAPHY_VARIANT.BODY} tone={TYPOGRAPHY_TONE.SUBTLE}>
+            <Typography variant={TYPOGRAPHY_VARIANT.BODY}>
               {currency.description}
             </Typography>
           )}

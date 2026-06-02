@@ -6,6 +6,7 @@ import { type TransactionType } from "#shared/categories"
 export type CommonTransactionCategoryDto = {
   id: string
   name: string
+  description?: string
   color: string
   type: TransactionType
 }

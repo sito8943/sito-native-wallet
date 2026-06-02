@@ -15,12 +15,14 @@ export const CATEGORY_PALETTE = [
 
 export const EMPTY_CATEGORY: AddCategoryDto = {
   name: "",
+  description: "",
   color: CATEGORY_PALETTE[0],
   type: TRANSACTION_TYPE.EXPENSE,
 }
 
 export const CATEGORY_FIELD_LIMITS = {
   NAME: 30,
+  DESCRIPTION: 120,
 } as const
 
 // Accepts #rgb or #rrggbb (case-insensitive).

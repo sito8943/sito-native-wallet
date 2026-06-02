@@ -69,6 +69,7 @@ export default function EditCategory(): ReactElement {
         submitLabel="Save"
         defaultValues={{
           name: category.name,
+          description: category.description,
           color: category.color,
           type: category.type,
         }}

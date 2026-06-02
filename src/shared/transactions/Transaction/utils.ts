@@ -31,6 +31,7 @@ const toCommonCategory = (
 ): CommonTransactionCategoryDto => ({
   id: category.id,
   name: category.name,
+  description: category.description,
   color: category.color,
   type: category.type,
 })

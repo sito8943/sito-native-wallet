@@ -32,7 +32,13 @@ export default function CategoryForm({
   })
 
   const submit = (values: AddCategoryDto): void => {
-    onSubmit({ ...values, color: normalizeHexColor(values.color) })
+    const description = values.description?.trim()
+
+    onSubmit({
+      ...values,
+      ...(description ? { description } : {}),
+      color: normalizeHexColor(values.color),
+    })
   }
 
   return (
@@ -84,6 +90,29 @@ export default function CategoryForm({
               />
             </View>
           </View>
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="description"
+        rules={{
+          maxLength: {
+            value: CATEGORY_FIELD_LIMITS.DESCRIPTION,
+            message: `Max ${CATEGORY_FIELD_LIMITS.DESCRIPTION} characters`,
+          },
+        }}
+        render={({ field: { onChange, onBlur, value }, fieldState }) => (
+          <TextField
+            label="Description"
+            placeholder="Optional"
+            multiline
+            maxLength={CATEGORY_FIELD_LIMITS.DESCRIPTION}
+            value={value ?? ""}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            error={fieldState.error?.message}
+          />
         )}
       />
 

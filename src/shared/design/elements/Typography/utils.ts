@@ -13,9 +13,15 @@ export const resolveToneColor = (
   if (tone === TYPOGRAPHY_TONE.SUBTLE) return colors.textSubtle
   if (tone === TYPOGRAPHY_TONE.INVERTED) return colors.textInverted
 
-  const isMutedVariant =
+  if (variant === TYPOGRAPHY_VARIANT.BODY) return colors.textMuted
+
+  const isSubtleVariant =
     variant === TYPOGRAPHY_VARIANT.CAPTION ||
-    variant === TYPOGRAPHY_VARIANT.LABEL ||
     variant === TYPOGRAPHY_VARIANT.SUBTLE
-  return isMutedVariant ? colors.textMuted : colors.textStrong
+
+  if (isSubtleVariant) return colors.textSubtle
+
+  if (variant === TYPOGRAPHY_VARIANT.LABEL) return colors.textMuted
+
+  return colors.textStrong
 }
