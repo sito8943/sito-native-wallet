@@ -1,6 +1,6 @@
 import { type ReactElement, type ReactNode } from "react"
 import { ScrollView, type StyleProp, View, type ViewStyle } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { type Edge, SafeAreaView } from "react-native-safe-area-context"
 
 import { spacing } from "#design/foundations"
 import { useThemedStyles, type ThemeColors } from "#shared/theme"
@@ -9,22 +9,30 @@ export type PageProps = {
   children: ReactNode
   scroll?: boolean
   centered?: boolean
+  // Most screens sit under a navigator header that already provides the top
+  // safe-area inset, so adding it again here just leaves a dead gap. Headerless
+  // screens (e.g. Home) opt back in with `topInset`.
+  topInset?: boolean
   style?: StyleProp<ViewStyle>
   contentContainerStyle?: StyleProp<ViewStyle>
 }
+
+const BASE_EDGES: Edge[] = ["left", "right", "bottom"]
 
 export default function Page({
   children,
   scroll = false,
   centered = false,
+  topInset = false,
   style,
   contentContainerStyle,
 }: PageProps): ReactElement {
   const styles = useThemedStyles(createStyles)
+  const edges: Edge[] = topInset ? ["top", ...BASE_EDGES] : BASE_EDGES
 
   if (scroll) {
     return (
-      <SafeAreaView style={[styles.page, style]}>
+      <SafeAreaView edges={edges} style={[styles.page, style]}>
         <ScrollView
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={[
@@ -40,7 +48,7 @@ export default function Page({
   }
 
   return (
-    <SafeAreaView style={[styles.page, style]}>
+    <SafeAreaView edges={edges} style={[styles.page, style]}>
       <View
         style={[
           styles.content,

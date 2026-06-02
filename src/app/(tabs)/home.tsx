@@ -5,7 +5,7 @@ import Page from "#design/templates/Page"
 
 export default function Home(): ReactElement {
   return (
-    <Page scroll>
+    <Page scroll topInset>
       <Typography>Home</Typography>
     </Page>
   )
