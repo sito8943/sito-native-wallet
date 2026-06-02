@@ -1,5 +1,5 @@
 import { useMemo, type ReactElement } from "react"
-import { Controller, useForm } from "react-hook-form"
+import { Controller, useForm, useWatch } from "react-hook-form"
 import { StyleSheet, View } from "react-native"
 
 import Button, { BUTTON_VARIANT } from "#design/elements/Button"
@@ -32,6 +32,9 @@ export default function AccountForm({
     defaultValues: toFormValues(defaultValues),
   })
 
+  const type = useWatch({ control, name: "type" })
+  const showBankField = type === ACCOUNT_TYPE.DIGITAL
+
   const currencyOptions = useMemo(
     () =>
       currencies.map((currency) => ({
@@ -51,7 +54,9 @@ export default function AccountForm({
 
     onSubmit({
       name: values.name,
-      ...(bankName !== "" ? { bankName } : {}),
+      ...(bankName !== "" && values.type === ACCOUNT_TYPE.DIGITAL
+        ? { bankName }
+        : {}),
       balance: parseBalance(values.balance),
       type: values.type,
       currency,
@@ -88,13 +93,13 @@ export default function AccountForm({
         control={control}
         name="balance"
         rules={{
-          required: "Balance is required",
           validate: (value) => isValidBalance(value) || "Enter a valid amount",
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <TextField
             label="Balance"
             placeholder="0.00"
+            defaultValue="0"
             keyboardType="decimal-pad"
             value={value}
             onChangeText={onChange}
@@ -130,21 +135,23 @@ export default function AccountForm({
         )}
       />
 
-      <Controller
-        control={control}
-        name="bankName"
-        render={({ field: { onChange, value } }) => (
-          <Autocomplete
-            label="Bank"
-            placeholder="Select bank"
-            options={ACCOUNT_BANK_OPTIONS}
-            value={value === "" ? null : value}
-            onChange={(next) => {
-              onChange(next ?? "")
-            }}
-          />
-        )}
-      />
+      {showBankField && (
+        <Controller
+          control={control}
+          name="bankName"
+          render={({ field: { onChange, value } }) => (
+            <Autocomplete
+              label="Bank"
+              placeholder="Select bank"
+              options={ACCOUNT_BANK_OPTIONS}
+              value={value === "" ? null : value}
+              onChange={(next) => {
+                onChange(next ?? "")
+              }}
+            />
+          )}
+        />
+      )}
 
       <Controller
         control={control}

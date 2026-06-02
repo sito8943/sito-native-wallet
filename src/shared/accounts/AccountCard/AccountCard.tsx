@@ -1,17 +1,12 @@
 import { type ReactElement } from "react"
 import { Pressable, StyleSheet, View } from "react-native"
-import Svg, {
-  Defs,
-  LinearGradient as SvgLinearGradient,
-  Rect,
-  Stop,
-} from "react-native-svg"
 
 import Card from "#design/elements/Card"
+import LinearGradient from "#design/elements/LinearGradient"
 import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 
-import { ACCOUNT_TYPE_LABEL } from "../Account"
+import { ACCOUNT_TYPE, ACCOUNT_TYPE_LABEL } from "../Account"
 
 import { type AccountCardProps } from "./types"
 import { getAccountCardTheme } from "./utils"
@@ -22,7 +17,8 @@ export default function AccountCard({
 }: AccountCardProps): ReactElement {
   const theme = getAccountCardTheme(account.bankName)
   const isGradient = theme.mode === "gradient"
-  const gradientId = `account-card-${account.id}`
+  const showBankName =
+    account.bankName !== undefined && account.type === ACCOUNT_TYPE.DIGITAL
   const meta = [
     ACCOUNT_TYPE_LABEL[account.type],
     account.currency.name,
@@ -40,9 +36,10 @@ export default function AccountCard({
       ]}
     >
       {isGradient && (
-        <Svg style={StyleSheet.absoluteFill}>
-          <Rect width="100%" height="100%" fill={`url(#${gradientId})`} />
-        </Svg>
+        <LinearGradient
+          colors={[theme.accentSoft, theme.background]}
+          style={StyleSheet.absoluteFill}
+        />
       )}
 
       <View style={styles.content}>
@@ -59,7 +56,7 @@ export default function AccountCard({
             ]}
           >
             <View style={styles.copy}>
-              {account.bankName !== undefined && (
+              {showBankName && (
                 <Typography
                   variant={TYPOGRAPHY_VARIANT.CAPTION}
                   style={{ color: theme.subtleText }}

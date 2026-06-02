@@ -20,9 +20,13 @@ export const toFormValues = (dto?: AddAccountDto): AccountFormValues =>
         currencyId: dto.currency.id,
       }
 
-export const parseBalance = (value: string): number => Number(value.trim())
+// Empty balance is allowed and assumed to be 0.
+export const parseBalance = (value: string): number => {
+  const trimmed = value.trim()
+  return trimmed === "" ? 0 : Number(trimmed)
+}
 
 export const isValidBalance = (value: string): boolean => {
   const trimmed = value.trim()
-  return trimmed !== "" && Number.isFinite(Number(trimmed))
+  return trimmed === "" || Number.isFinite(Number(trimmed))
 }
