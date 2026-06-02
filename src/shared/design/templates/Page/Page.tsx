@@ -13,22 +13,32 @@ export type PageProps = {
   // safe-area inset, so adding it again here just leaves a dead gap. Headerless
   // screens (e.g. Home) opt back in with `topInset`.
   topInset?: boolean
+  // Off by default so content flows edge-to-edge under the tab bar. Screens
+  // with no tab bar (or that need the home-indicator clearance) opt in.
+  bottomInset?: boolean
   style?: StyleProp<ViewStyle>
   contentContainerStyle?: StyleProp<ViewStyle>
 }
-
-const BASE_EDGES: Edge[] = ["left", "right", "bottom"]
 
 export default function Page({
   children,
   scroll = false,
   centered = false,
   topInset = false,
+  bottomInset = false,
   style,
   contentContainerStyle,
 }: PageProps): ReactElement {
   const styles = useThemedStyles(createStyles)
-  const edges: Edge[] = topInset ? ["top", ...BASE_EDGES] : BASE_EDGES
+  const edges: Edge[] = ["left", "right"]
+
+  if (topInset) {
+    edges.push("top")
+  }
+
+  if (bottomInset) {
+    edges.push("bottom")
+  }
 
   if (scroll) {
     return (
