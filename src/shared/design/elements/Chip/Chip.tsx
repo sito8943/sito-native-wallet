@@ -39,8 +39,8 @@ const createStyles = (colors: ThemeColors) => ({
   chip: {
     borderRadius: radius.full,
     borderWidth: borderWidth.thin,
-    paddingHorizontal: spacing[3],
-    paddingVertical: spacing[2],
+    paddingHorizontal: spacing(3),
+    paddingVertical: spacing(2),
   },
   chipActive: {
     backgroundColor: colors.primary,

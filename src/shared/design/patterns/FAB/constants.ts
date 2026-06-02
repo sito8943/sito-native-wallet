@@ -7,5 +7,5 @@ export const FAB_POSITION = {
   TOP_LEFT: "top-left",
 } as const
 
-export const EDGE_VERTICAL_GAP = spacing[1]
-export const EDGE_HORIZONTAL_GAP = spacing[4]
+export const EDGE_VERTICAL_GAP = spacing(1)
+export const EDGE_HORIZONTAL_GAP = spacing(4)

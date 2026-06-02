@@ -65,7 +65,7 @@ export default function AccountDetails(): ReactElement {
 
 const styles = {
   heading: {
-    marginHorizontal: spacing[4],
-    marginTop: spacing[3],
+    marginHorizontal: spacing(4),
+    marginTop: spacing(3),
   },
 }

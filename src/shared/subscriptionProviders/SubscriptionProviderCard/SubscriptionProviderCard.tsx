@@ -34,6 +34,6 @@ export default function SubscriptionProviderCard({
 const styles = StyleSheet.create({
   copy: {
     flex: 1,
-    gap: spacing[1],
+    gap: spacing(1),
   },
 })

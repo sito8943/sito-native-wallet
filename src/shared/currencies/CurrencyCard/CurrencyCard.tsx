@@ -1,9 +1,11 @@
 import { type ReactElement } from "react"
-import { StyleSheet, View } from "react-native"
+import { View } from "react-native"
 
-import Typography from "#design/elements/Typography"
-import { TYPOGRAPHY_VARIANT } from "#design/foundations"
+import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
+import { borderWidth, radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import EntityCard from "#design/patterns/EntityCard"
+
+import { type ThemeColors, useThemedStyles } from "#shared/theme"
 
 import { type CurrencyCardProps } from "./types"
 
@@ -12,13 +14,22 @@ export default function CurrencyCard({
   actions,
   onPress,
 }: CurrencyCardProps): ReactElement {
+  const styles = useThemedStyles(createStyles)
+
   return (
     <EntityCard actions={actions} entity={currency} onPress={onPress}>
       <View style={styles.row}>
-        <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
-          {currency.name}
-        </Typography>
-        <Typography variant={TYPOGRAPHY_VARIANT.SUBTLE}>
+        <View>
+          <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
+            {currency.name}
+          </Typography>
+          {currency.description && (
+            <Typography variant={TYPOGRAPHY_VARIANT.BODY} tone={TYPOGRAPHY_TONE.SUBTLE}>
+              {currency.description}
+            </Typography>
+          )}
+        </View>
+        <Typography variant={TYPOGRAPHY_VARIANT.SUBTLE} style={styles.symbol}>
           {currency.symbol}
         </Typography>
       </View>
@@ -26,10 +37,18 @@ export default function CurrencyCard({
   )
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: ThemeColors) => ({
   row: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    alignItems: "flex-start" as const,
+    flexDirection: "row" as const,
+    justifyContent: "space-between" as const,
+  },
+  symbol: {
+    backgroundColor: colors.background,
+    borderColor: colors.border,
+    borderRadius: radius.full,
+    borderWidth: borderWidth.thin,
+    paddingHorizontal: spacing(2),
+    paddingTop: spacing(0.5),
   },
 })

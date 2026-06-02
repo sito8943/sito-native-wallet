@@ -85,15 +85,15 @@ const styles = StyleSheet.create({
   headerContent: {
     alignItems: "center",
     flexDirection: "row",
-    gap: spacing[3],
+    gap: spacing(3),
   },
   section: {
-    gap: spacing[2],
-    marginTop: spacing[4],
+    gap: spacing(2),
+    marginTop: spacing(4),
   },
   options: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: spacing[2],
+    gap: spacing(2),
   },
 })

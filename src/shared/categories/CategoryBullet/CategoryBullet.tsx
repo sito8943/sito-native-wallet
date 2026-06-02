@@ -34,13 +34,13 @@ const createStyles = (colors: ThemeColors) => ({
     alignItems: "center" as const,
     borderColor: colors.border,
     flexDirection: "row" as const,
-    gap: spacing[2],
+    gap: spacing(2),
   },
   bullet: {
     borderRadius: radius.full,
     borderWidth: borderWidth.thin,
     borderColor: colors.border,
-    height: spacing[3],
-    width: spacing[3],
+    height: spacing(3),
+    width: spacing(3),
   },
 })

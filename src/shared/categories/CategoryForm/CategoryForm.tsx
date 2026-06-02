@@ -154,27 +154,27 @@ export default function CategoryForm({
 
 const styles = StyleSheet.create({
   container: {
-    gap: spacing[4],
-    paddingHorizontal: spacing[4],
-    paddingVertical: spacing[3],
+    gap: spacing(4),
+    paddingHorizontal: spacing(4),
+    paddingVertical: spacing(3),
   },
   field: {
-    gap: spacing[2],
+    gap: spacing(2),
   },
   options: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: spacing[2],
+    gap: spacing(2),
   },
   swatch: {
     borderRadius: radius.full,
     borderWidth: 3,
-    height: spacing[8],
-    width: spacing[8],
+    height: spacing(8),
+    width: spacing(8),
   },
   actions: {
     flexDirection: "row",
-    gap: spacing[4],
-    marginTop: spacing[4],
+    gap: spacing(4),
+    marginTop: spacing(4),
   },
 })

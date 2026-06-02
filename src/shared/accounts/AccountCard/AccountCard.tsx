@@ -44,11 +44,11 @@ const styles = StyleSheet.create({
   header: {
     alignItems: "center",
     flexDirection: "row",
-    gap: spacing[3],
+    gap: spacing(3),
     justifyContent: "space-between",
   },
   copy: {
     flex: 1,
-    gap: spacing[1],
+    gap: spacing(1),
   },
 })

@@ -187,7 +187,7 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
           <Pressable
             accessibilityLabel="Clear selection"
             accessibilityRole="button"
-            hitSlop={spacing[2]}
+            hitSlop={spacing(2)}
             onPress={handleClear}
           >
             <Icon
@@ -245,7 +245,7 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
 
 const createStyles = (colors: ThemeColors) => ({
   container: {
-    gap: spacing[1],
+    gap: spacing(1),
   },
   trigger: {
     alignItems: "center" as const,
@@ -254,11 +254,11 @@ const createStyles = (colors: ThemeColors) => ({
     borderRadius: radius.md,
     borderWidth: borderWidth.thin,
     flexDirection: "row" as const,
-    gap: spacing[2],
+    gap: spacing(2),
     justifyContent: "space-between" as const,
-    minHeight: spacing[12],
-    paddingHorizontal: spacing[3],
-    paddingVertical: spacing[2],
+    minHeight: spacing(12),
+    paddingHorizontal: spacing(3),
+    paddingVertical: spacing(2),
   },
   triggerError: {
     borderColor: colors.negative,
@@ -272,13 +272,13 @@ const createStyles = (colors: ThemeColors) => ({
   chips: {
     flexDirection: "row" as const,
     flexWrap: "wrap" as const,
-    gap: spacing[2],
+    gap: spacing(2),
   },
   chip: {
     backgroundColor: colors.primary,
     borderRadius: radius.full,
-    paddingHorizontal: spacing[3],
-    paddingVertical: spacing[1],
+    paddingHorizontal: spacing(3),
+    paddingVertical: spacing(1),
   },
   search: {
     backgroundColor: colors.background,
@@ -287,8 +287,8 @@ const createStyles = (colors: ThemeColors) => ({
     borderWidth: borderWidth.thin,
     color: colors.textStrong,
     fontSize: typography[TYPOGRAPHY_VARIANT.BODY].fontSize,
-    paddingHorizontal: spacing[3],
-    paddingVertical: spacing[2],
+    paddingHorizontal: spacing(3),
+    paddingVertical: spacing(2),
   },
   list: {
     maxHeight: LIST_MAX_HEIGHT,
@@ -299,11 +299,11 @@ const createStyles = (colors: ThemeColors) => ({
     borderBottomWidth: borderWidth.thin,
     flexDirection: "row" as const,
     justifyContent: "space-between" as const,
-    paddingHorizontal: spacing[1],
-    paddingVertical: spacing[3],
+    paddingHorizontal: spacing(1),
+    paddingVertical: spacing(3),
   },
   empty: {
-    paddingVertical: spacing[4],
+    paddingVertical: spacing(4),
     textAlign: "center" as const,
   },
   error: {

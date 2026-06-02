@@ -25,7 +25,7 @@ export default function Layout(): ReactElement {
           title: "Home",
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <Icon icon={APP_ICONS.home} color={color} size={spacing[5]} />
+            <Icon icon={APP_ICONS.home} color={color} size={spacing(5)} />
           ),
         }}
       />
@@ -38,7 +38,7 @@ export default function Layout(): ReactElement {
             <Icon
               icon={APP_ICONS.transactions}
               color={color}
-              size={spacing[5]}
+              size={spacing(5)}
             />
           ),
         }}
@@ -52,7 +52,7 @@ export default function Layout(): ReactElement {
             <Icon
               icon={APP_ICONS.subscriptions}
               color={color}
-              size={spacing[5]}
+              size={spacing(5)}
             />
           ),
         }}
@@ -63,7 +63,7 @@ export default function Layout(): ReactElement {
           title: "Settings",
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <Icon icon={APP_ICONS.settings} color={color} size={spacing[5]} />
+            <Icon icon={APP_ICONS.settings} color={color} size={spacing(5)} />
           ),
         }}
       />

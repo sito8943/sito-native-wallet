@@ -40,10 +40,10 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   content: {
-    paddingVertical: spacing[2],
+    paddingVertical: spacing(2),
   },
   emptyMessage: {
-    marginHorizontal: spacing[4],
-    marginTop: spacing[4],
+    marginHorizontal: spacing(4),
+    marginTop: spacing(4),
   },
 })

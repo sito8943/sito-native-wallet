@@ -6,9 +6,8 @@ import Icon from "#design/elements/Icon"
 import { spacing } from "#design/foundations"
 import { THEME_COLOR, useThemeColors } from "#shared/theme"
 
+import { ACTION_ICON_SIZE } from "./constants"
 import { type EntityCardProps } from "./types"
-
-const ACTION_ICON_SIZE = spacing[4]
 
 // Wraps Card with a content area + a row of inline action buttons. Each action
 // receives the entity, so deletes/edits work without leaving the list.
@@ -24,7 +23,7 @@ export default function EntityCard<T>({
 
   return (
     <Card style={style}>
-      <View style={styles.row}>
+      <View style={styles.column}>
         <Pressable
           disabled={onPress === undefined}
           style={styles.content}
@@ -41,8 +40,7 @@ export default function EntityCard<T>({
                 accessibilityLabel={action.accessibilityLabel}
                 accessibilityRole="button"
                 disabled={action.disabled}
-                hitSlop={spacing[2]}
-                style={styles.action}
+                hitSlop={spacing(2)}
                 onPress={() => {
                   action.onPress(entity)
                 }}
@@ -66,20 +64,18 @@ export default function EntityCard<T>({
 }
 
 const styles = StyleSheet.create({
-  row: {
-    alignItems: "center",
-    flexDirection: "row",
-    gap: spacing[2],
+  column: {
+    flexDirection: "column",
+    gap: spacing(4),
+    padding: spacing(1),
   },
   content: {
     flex: 1,
   },
   actions: {
     alignItems: "center",
+    justifyContent: "flex-end",
     flexDirection: "row",
-    gap: spacing[1],
-  },
-  action: {
-    padding: spacing[2],
+    gap: spacing(1),
   },
 })

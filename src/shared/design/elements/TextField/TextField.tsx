@@ -63,7 +63,7 @@ export default TextField
 
 const createStyles = (colors: ThemeColors) => ({
   container: {
-    gap: spacing[1],
+    gap: spacing(1),
   },
   input: {
     backgroundColor: colors.surface,
@@ -72,12 +72,12 @@ const createStyles = (colors: ThemeColors) => ({
     borderWidth: borderWidth.thin,
     color: colors.textStrong,
     fontSize: typography[TYPOGRAPHY_VARIANT.BODY].fontSize,
-    paddingHorizontal: spacing[3],
-    paddingVertical: spacing[2],
+    paddingHorizontal: spacing(3),
+    paddingVertical: spacing(2),
   },
   multiline: {
-    minHeight: spacing[24],
-    paddingTop: spacing[2],
+    minHeight: spacing(24),
+    paddingTop: spacing(2),
     textAlignVertical: "top" as const,
   },
   inputError: {

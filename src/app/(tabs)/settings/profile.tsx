@@ -71,20 +71,20 @@ export default function Profile(): ReactElement {
 
 const createStyles = (colors: ThemeColors) => ({
   copy: {
-    gap: spacing[2],
-    marginBottom: spacing[4],
+    gap: spacing(2),
+    marginBottom: spacing(4),
   },
   segments: {
     flexDirection: "row" as const,
-    gap: spacing[3],
+    gap: spacing(3),
   },
   segment: {
     alignItems: "center" as const,
     borderRadius: radius.full,
     borderWidth: borderWidth.thin,
     flex: 1,
-    paddingHorizontal: spacing[3],
-    paddingVertical: spacing[2],
+    paddingHorizontal: spacing(3),
+    paddingVertical: spacing(2),
   },
   segmentActive: {
     backgroundColor: colors.primary,

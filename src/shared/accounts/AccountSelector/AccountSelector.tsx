@@ -41,11 +41,11 @@ const styles = StyleSheet.create({
     flexGrow: 0,
   },
   content: {
-    gap: spacing[2],
+    gap: spacing(2),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingHorizontal: spacing[4],
-    paddingVertical: spacing[2],
+    paddingHorizontal: spacing(4),
+    paddingVertical: spacing(2),
   },
 })

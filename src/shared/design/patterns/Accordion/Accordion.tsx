@@ -40,7 +40,7 @@ const createStyles = (colors: ThemeColors) => ({
   header: {
     alignItems: "center" as const,
     flexDirection: "row" as const,
-    gap: spacing[3],
+    gap: spacing(3),
     justifyContent: "space-between" as const,
   },
   headerContent: {
@@ -50,6 +50,6 @@ const createStyles = (colors: ThemeColors) => ({
     color: colors.textMuted,
   },
   body: {
-    marginTop: spacing[3],
+    marginTop: spacing(3),
   },
 })

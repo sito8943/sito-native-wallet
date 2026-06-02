@@ -49,7 +49,7 @@ export default function ConfirmationDialog({
 const styles = StyleSheet.create({
   actions: {
     flexDirection: "row",
-    gap: spacing[3],
+    gap: spacing(3),
     justifyContent: "flex-end",
   },
 })

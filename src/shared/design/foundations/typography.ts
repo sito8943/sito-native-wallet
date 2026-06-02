@@ -12,30 +12,30 @@ export const TYPOGRAPHY_VARIANT = {
 
 const typography = {
   [TYPOGRAPHY_VARIANT.DISPLAY]: {
-    fontSize: spacing[6],
+    fontSize: spacing(6),
     fontWeight: "700",
   },
   [TYPOGRAPHY_VARIANT.TITLE]: {
-    fontSize: spacing[5],
+    fontSize: spacing(5),
     fontWeight: "700",
   },
   [TYPOGRAPHY_VARIANT.BODY]: {
-    fontSize: spacing[4],
+    fontSize: spacing(4),
   },
   [TYPOGRAPHY_VARIANT.BODY_STRONG]: {
-    fontSize: spacing[4],
+    fontSize: spacing(4),
     fontWeight: "700",
   },
   [TYPOGRAPHY_VARIANT.CAPTION]: {
-    fontSize: spacing[3],
+    fontSize: spacing(3),
   },
   [TYPOGRAPHY_VARIANT.LABEL]: {
-    fontSize: spacing[3],
+    fontSize: spacing(3),
     fontWeight: "700",
     textTransform: "uppercase",
   },
   [TYPOGRAPHY_VARIANT.SUBTLE]: {
-    fontSize: spacing[3],
+    fontSize: spacing(3),
     fontWeight: "700",
   },
 } as const

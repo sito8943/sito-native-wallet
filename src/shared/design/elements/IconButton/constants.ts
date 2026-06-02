@@ -19,18 +19,18 @@ export const BUTTON_SIZES: Record<
   { iconSize: number; minSize: number; padding: number }
 > = {
   [ICON_BUTTON_SIZE.SM]: {
-    iconSize: spacing[3],
-    minSize: spacing[8],
-    padding: spacing[2],
+    iconSize: spacing(3),
+    minSize: spacing(8),
+    padding: spacing(2),
   },
   [ICON_BUTTON_SIZE.MD]: {
-    iconSize: spacing[3],
-    minSize: spacing[10],
-    padding: spacing[3],
+    iconSize: spacing(3),
+    minSize: spacing(10),
+    padding: spacing(3),
   },
   [ICON_BUTTON_SIZE.LG]: {
-    iconSize: spacing[4],
-    minSize: spacing[12],
-    padding: spacing[4],
+    iconSize: spacing(4),
+    minSize: spacing(12),
+    padding: spacing(4),
   },
 }

@@ -66,31 +66,31 @@ export default function TransactionCard({
 
 const createStyles = (colors: ThemeColors) => ({
   card: {
-    padding: spacing[2],
+    padding: spacing(2),
     borderRadius: radius.md,
   },
   header: {
     alignItems: "flex-start" as const,
     flexDirection: "row" as const,
-    gap: spacing[3],
+    gap: spacing(3),
     justifyContent: "space-between" as const,
   },
   titleGroup: {
     flex: 1,
-    gap: spacing[1],
+    gap: spacing(1),
   },
   summaryGroup: {
     flexDirection: "row" as const,
-    gap: spacing[2],
+    gap: spacing(2),
     alignItems: "center" as const,
   },
   amountPositive: { color: colors.positive },
   amountNegative: { color: colors.negative },
   categories: {
     flexDirection: "row" as const,
-    marginTop: -spacing[1],
+    marginTop: -spacing(1),
   },
   category: {
-    marginLeft: -spacing[1],
+    marginLeft: -spacing(1),
   },
 })

@@ -62,14 +62,14 @@ const createStyles = (_colors: ThemeColors) => ({
     alignItems: "center" as const,
     borderRadius: radius.full,
     justifyContent: "center" as const,
-    minHeight: spacing[12],
-    paddingHorizontal: spacing[5],
-    paddingVertical: spacing[1],
+    minHeight: spacing(12),
+    paddingHorizontal: spacing(5),
+    paddingVertical: spacing(1),
   },
   content: {
     alignItems: "center" as const,
     flexDirection: "row" as const,
-    gap: spacing[2],
+    gap: spacing(2),
     justifyContent: "center" as const,
   },
 })

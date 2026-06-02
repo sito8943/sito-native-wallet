@@ -40,13 +40,13 @@ const createStyles = (colors: ThemeColors) => ({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     flex: 1,
     justifyContent: "center" as const,
-    padding: spacing[6],
+    padding: spacing(6),
   },
   card: {
     backgroundColor: colors.surface,
     borderRadius: radius.lg,
-    gap: spacing[4],
-    padding: spacing[5],
+    gap: spacing(4),
+    padding: spacing(5),
     width: "100%" as const,
   },
 })
