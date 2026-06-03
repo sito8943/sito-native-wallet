@@ -3,6 +3,7 @@ import { type ReactElement } from "react"
 import { View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
+import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
@@ -11,7 +12,6 @@ import {
   type TransactionCategory,
   useCategories,
 } from "#shared/categories"
-import { useDeleteDialog } from "#design/interactions"
 import { toCategoryDetailsRoute, toNewCategoryRoute } from "#shared/navigation"
 
 export default function Categories(): ReactElement {

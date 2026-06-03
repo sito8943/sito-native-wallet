@@ -121,7 +121,7 @@ const mockTransaction: Transaction = {
   ],
 }
 
-jest.mock("#shared/manager", () => ({
+jest.mock("#shared/data", () => ({
   useManager: () => ({
     Accounts: accountsClient,
     Categories: categoriesClient,

@@ -26,7 +26,7 @@ const mockFragment = Fragment
 const mockText = Text
 const mockView = View
 
-jest.mock("#shared/theme", () => ({
+jest.mock("#design/theme", () => ({
   RESOLVED_THEME: {
     LIGHT: "light",
     DARK: "dark",

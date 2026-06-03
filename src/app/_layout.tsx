@@ -5,14 +5,14 @@ import { useEffect, type ReactElement } from "react"
 import { Platform } from "react-native"
 
 import {
-  INITIAL_SUBSCRIPTIONS,
-  notifyUpcomingRenewal,
-} from "#shared/subscriptions"
-import {
   RESOLVED_THEME,
   ThemeProvider,
   useThemePreference,
 } from "#design/theme"
+import {
+  INITIAL_SUBSCRIPTIONS,
+  notifyUpcomingRenewal,
+} from "#shared/subscriptions"
 
 function RootNavigator(): ReactElement {
   const { resolvedTheme } = useThemePreference()

@@ -4,11 +4,11 @@ import { View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
+import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import { AccountSelector } from "#shared/accounts"
-import { useDeleteDialog } from "#design/interactions"
 import {
   toNewTransactionRoute,
   toTransactionDetailsRoute,
