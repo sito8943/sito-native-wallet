@@ -1,13 +1,9 @@
 import { type ReactElement } from "react"
 import { View } from "react-native"
 
+import Icon, { APP_ICONS } from "#design/elements/Icon"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
-import {
-  borderWidth,
-  radius,
-  spacing,
-  TYPOGRAPHY_VARIANT,
-} from "#design/foundations"
+import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useThemedStyles, type ThemeColors } from "#design/theme"
 
 import { type AutoBadgeProps } from "./types"
@@ -16,30 +12,32 @@ import { type AutoBadgeProps } from "./types"
 // adjustments. Online, the backend sets `auto`; offline we set it on generated
 // records — this just renders the indicator.
 export default function AutoBadge({
-  label = "Auto",
+  showLabel = true,
 }: AutoBadgeProps): ReactElement {
   const styles = useThemedStyles(createStyles)
 
   return (
     <View style={styles.badge}>
-      <Typography
-        variant={TYPOGRAPHY_VARIANT.CAPTION}
-        tone={TYPOGRAPHY_TONE.SUBTLE}
-      >
-        {label}
-      </Typography>
+      <Icon style={styles.icon} icon={APP_ICONS.prefabs} />
+      {showLabel && (
+        <Typography
+          variant={TYPOGRAPHY_VARIANT.CAPTION}
+          tone={TYPOGRAPHY_TONE.SUBTLE}
+        >
+          Automatically generated
+        </Typography>
+      )}
     </View>
   )
 }
 
 const createStyles = (colors: ThemeColors) => ({
+  icon: {
+    color: colors.primary,
+  },
   badge: {
-    alignSelf: "flex-start" as const,
-    backgroundColor: colors.background,
-    borderColor: colors.border,
-    borderRadius: radius.full,
-    borderWidth: borderWidth.thin,
-    paddingHorizontal: spacing(2),
-    paddingVertical: spacing(0.5),
+    alignSelf: "center" as const,
+    flexDirection: "row" as const,
+    gap: spacing(1),
   },
 })

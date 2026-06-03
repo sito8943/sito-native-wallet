@@ -1,3 +1,3 @@
 export type AutoBadgeProps = {
-  label?: string
+  showLabel?: boolean
 }

@@ -46,14 +46,21 @@ export default function TransactionCard({
               ))}
             </View>
             <Typography>{transaction.description}</Typography>
-            {transaction.auto === true && <AutoBadge />}
           </View>
-          <Typography
-            variant={TYPOGRAPHY_VARIANT.CAPTION}
-            tone={TYPOGRAPHY_TONE.SUBTLE}
-          >
-            {transaction.date}
-          </Typography>
+          <View style={styles.footer}>
+            {transaction.auto === true && (
+              <>
+                <AutoBadge />
+                <Typography variant={TYPOGRAPHY_VARIANT.BODY}>·</Typography>
+              </>
+            )}
+            <Typography
+              variant={TYPOGRAPHY_VARIANT.CAPTION}
+              tone={TYPOGRAPHY_TONE.SUBTLE}
+            >
+              {transaction.date}
+            </Typography>
+          </View>
         </View>
         <Typography
           variant={TYPOGRAPHY_VARIANT.BODY_STRONG}
@@ -84,6 +91,11 @@ const createStyles = (colors: ThemeColors) => ({
   summaryGroup: {
     flexDirection: "row" as const,
     gap: spacing(2),
+    alignItems: "center" as const,
+  },
+  footer: {
+    flexDirection: "row" as const,
+    gap: spacing(1),
     alignItems: "center" as const,
   },
   amountPositive: { color: colors.positive },
