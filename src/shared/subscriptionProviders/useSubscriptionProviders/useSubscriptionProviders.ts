@@ -3,14 +3,24 @@ import { useClientStore } from "#shared/data/storage"
 
 import { type AddSubscriptionProviderDto } from "../dtos"
 
-import { type UseSubscriptionProvidersState } from "./types"
+import {
+  type UseSubscriptionProvidersOptions,
+  type UseSubscriptionProvidersState,
+} from "./types"
 
-export default function useSubscriptionProviders(): UseSubscriptionProvidersState {
+export default function useSubscriptionProviders(
+  options: UseSubscriptionProvidersOptions = {},
+): UseSubscriptionProvidersState {
+  const { filters, query } = options
   const client = useManager().SubscriptionProviders
-  const { items, error, isLoading } = useClientStore(client)
+  const { error, isLoading } = useClientStore(client)
+
+  // The client owns filter matching; pageSize 0 = full list by default.
+  const result = client.list({ pageSize: 0, ...query }, filters)
 
   return {
-    data: items,
+    data: result.items,
+    result,
     error,
     isLoading,
     addSubscriptionProvider: (input: AddSubscriptionProviderDto) => {

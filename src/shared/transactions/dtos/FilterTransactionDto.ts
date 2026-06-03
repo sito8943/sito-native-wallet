@@ -1,5 +1,5 @@
-import { type BaseFilterDto, type RangeValue } from "#shared/data"
 import { type TransactionType } from "#shared/categories"
+import { type BaseFilterDto, type RangeValue } from "#shared/data"
 
 // Mirrors the web wallet's FilterTransactionDto (ids are strings here). Ranges
 // use RangeValue<start,end> so a future ApiClient encodes them as >= / <=, the

@@ -1,6 +1,6 @@
 export { useManager } from "./useManager"
 export { todayStamp } from "./time"
-export { SORT_ORDER, DEFAULT_PAGE_SIZE, applyQuery } from "./query"
+export { SORT_ORDER, DEFAULT_PAGE_SIZE, applyQuery, textIncludes } from "./query"
 export type { QueryParam, QueryResult, SortOrder } from "./query"
 export {
   SOFT_DELETE_SCOPE,

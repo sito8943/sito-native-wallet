@@ -3,14 +3,21 @@ import { useClientStore } from "#shared/data/storage"
 
 import { type AddCurrencyDto } from "../dtos"
 
-import { type UseCurrenciesState } from "./types"
+import { type UseCurrenciesOptions, type UseCurrenciesState } from "./types"
 
-export default function useCurrencies(): UseCurrenciesState {
+export default function useCurrencies(
+  options: UseCurrenciesOptions = {},
+): UseCurrenciesState {
+  const { filters, query } = options
   const client = useManager().Currencies
-  const { items, error, isLoading } = useClientStore(client)
+  const { error, isLoading } = useClientStore(client)
+
+  // The client owns filter matching; pageSize 0 = full list by default.
+  const result = client.list({ pageSize: 0, ...query }, filters)
 
   return {
-    data: items,
+    data: result.items,
+    result,
     error,
     isLoading,
     addCurrency: (input: AddCurrencyDto) => {

@@ -58,11 +58,12 @@ export default abstract class StorageClient<
   public getById = (id: string): T | undefined =>
     this.state.items.find((item) => item.id === id)
 
-  // List with filter (predicate) + sort + pagination, returning the backend's
-  // QueryResult shape. Locally an in-memory pass via applyQuery; an ApiClient
-  // overrides it to send the query/filters as a request. The predicate is the
-  // entity-specific filter translation, built by the subclass or hook.
-  public list = (
+  // Generic list engine: filter (predicate) + sort + pagination, returning the
+  // backend's QueryResult shape. Subclasses expose a public `list(params,
+  // filters)` that translates their FilterDto into the predicate and calls
+  // this — keeping filter translation on the client (the seam an ApiClient
+  // overrides to send the query/filters as a real request).
+  protected runQuery = (
     params: QueryParam<T> = {},
     predicate?: (item: T) => boolean,
   ): QueryResult<T> => applyQuery(this.state.items, params, predicate)

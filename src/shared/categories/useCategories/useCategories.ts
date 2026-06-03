@@ -8,15 +8,17 @@ import { type UseCategoriesOptions, type UseCategoriesState } from "./types"
 export default function useCategories(
   options: UseCategoriesOptions = {},
 ): UseCategoriesState {
-  const { includeSystem = true } = options
+  const { includeSystem = true, filters, query } = options
   const client = useManager().Categories
-  const { items, error, isLoading } = useClientStore(client)
-  const data = includeSystem
-    ? items
-    : items.filter((category) => category.system !== true)
+  const { error, isLoading } = useClientStore(client)
+
+  // The client owns filter matching (incl. the includeSystem rule); pageSize 0
+  // keeps the full list unless a query opts into pagination.
+  const result = client.list({ pageSize: 0, ...query }, filters, includeSystem)
 
   return {
-    data,
+    data: result.items,
+    result,
     error,
     isLoading,
     addCategory: (input: AddCategoryDto) => {

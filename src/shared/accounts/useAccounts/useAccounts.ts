@@ -3,14 +3,21 @@ import { useClientStore } from "#shared/data/storage"
 
 import { type AddAccountDto } from "../dtos"
 
-import { type UseAccountsState } from "./types"
+import { type UseAccountsOptions, type UseAccountsState } from "./types"
 
-export default function useAccounts(): UseAccountsState {
+export default function useAccounts(
+  options: UseAccountsOptions = {},
+): UseAccountsState {
+  const { filters, query } = options
   const client = useManager().Accounts
-  const { items, error, isLoading } = useClientStore(client)
+  const { error, isLoading } = useClientStore(client)
+
+  // The client owns filter matching; pageSize 0 = full list by default.
+  const result = client.list({ pageSize: 0, ...query }, filters)
 
   return {
-    data: items,
+    data: result.items,
+    result,
     error,
     isLoading,
     addAccount: (input: AddAccountDto) => {

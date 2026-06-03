@@ -1,3 +1,8 @@
+import {
+  textIncludes,
+  type QueryParam,
+  type QueryResult,
+} from "#shared/data"
 import { createId, StorageClient } from "#shared/data/storage"
 // Deep, type-only import: the live TransactionClient is injected lazily by the
 // Manager (a thunk), so this never imports the transactions barrel — that would
@@ -6,10 +11,18 @@ import { type TransactionClient } from "#shared/transactions/TransactionClient"
 
 import { type Account } from "../Account"
 import { INITIAL_ACCOUNTS } from "../demoData"
-import { type AddAccountDto } from "../dtos"
+import { type AddAccountDto, type FilterAccountDto } from "../dtos"
 
 import { ACCOUNTS_ERROR_MESSAGE, ACCOUNTS_STORAGE_KEY } from "./constants"
 import { parseStoredAccounts } from "./utils"
+
+// Filter translation lives on the client (the seam an ApiClient overrides).
+const matchesAccountFilter =
+  (filters: FilterAccountDto) =>
+  (account: Account): boolean =>
+    textIncludes(account.name, filters.name) &&
+    (filters.currencyId === undefined ||
+      account.currency.id === filters.currencyId)
 
 export default class AccountClient extends StorageClient<Account> {
   readonly #getTransactions: () => TransactionClient
@@ -40,6 +53,15 @@ export default class AccountClient extends StorageClient<Account> {
   public update = (id: string, input: AddAccountDto): void => {
     this.patch(id, input)
   }
+
+  public list = (
+    params: QueryParam<Account> = {},
+    filters?: FilterAccountDto,
+  ): QueryResult<Account> =>
+    this.runQuery(
+      params,
+      filters === undefined ? undefined : matchesAccountFilter(filters),
+    )
 
   // Applies a signed delta to an account balance. No-op if the account is
   // gone. Rounds to cents to avoid float drift across many transactions.

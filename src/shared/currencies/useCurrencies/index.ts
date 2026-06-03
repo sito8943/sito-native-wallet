@@ -1,4 +1,4 @@
 import useCurrencies from "./useCurrencies"
 
 export { useCurrencies }
-export type { UseCurrenciesState } from "./types"
+export type { UseCurrenciesOptions, UseCurrenciesState } from "./types"

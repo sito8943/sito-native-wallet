@@ -1,11 +1,22 @@
+import {
+  textIncludes,
+  type QueryParam,
+  type QueryResult,
+} from "#shared/data"
 import { createId, StorageClient } from "#shared/data/storage"
 
 import { ADJUSTMENT_CATEGORIES, INITIAL_CATEGORIES } from "../demoData"
-import { type AddCategoryDto } from "../dtos"
+import { type AddCategoryDto, type FilterCategoryDto } from "../dtos"
 import { type TransactionCategory } from "../TransactionCategory"
 
 import { CATEGORIES_ERROR_MESSAGE, CATEGORIES_STORAGE_KEY } from "./constants"
 import { parseStoredCategories } from "./utils"
+
+const matchesCategoryFilter =
+  (filters: FilterCategoryDto) =>
+  (category: TransactionCategory): boolean =>
+    textIncludes(category.name, filters.name) &&
+    (filters.type === undefined || category.type === filters.type)
 
 export default class CategoryClient extends StorageClient<TransactionCategory> {
   constructor() {
@@ -27,6 +38,24 @@ export default class CategoryClient extends StorageClient<TransactionCategory> {
 
   public update = (id: string, input: AddCategoryDto): void => {
     this.patch(id, input)
+  }
+
+  // includeSystem defaults to true; management/list views pass false to hide
+  // the system (adjustment) categories the user can't edit by hand.
+  public list = (
+    params: QueryParam<TransactionCategory> = {},
+    filters?: FilterCategoryDto,
+    includeSystem = true,
+  ): QueryResult<TransactionCategory> => {
+    const matchesFilter =
+      filters === undefined ? undefined : matchesCategoryFilter(filters)
+
+    return this.runQuery(
+      params,
+      (category) =>
+        (includeSystem || category.system !== true) &&
+        (matchesFilter === undefined || matchesFilter(category)),
+    )
   }
 
   // Find-or-create the system adjustment categories (mirrors the backend
