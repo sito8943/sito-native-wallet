@@ -6,14 +6,18 @@ import Card from "#design/elements/Card"
 import Chip from "#design/elements/Chip"
 import Icon, { APP_ICONS } from "#design/elements/Icon"
 import IconButton from "#design/elements/IconButton"
+import LinearGradient from "#design/elements/LinearGradient"
 import TextField from "#design/elements/TextField"
 import Typography from "#design/elements/Typography"
 import Accordion from "#design/patterns/Accordion"
 import Autocomplete from "#design/patterns/Autocomplete"
 import BottomSheet from "#design/patterns/BottomSheet"
+import DeleteButton from "#design/patterns/DeleteButton"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import EntityCard from "#design/patterns/EntityCard"
 import FAB from "#design/patterns/FAB"
+import Form from "#design/patterns/Form"
+import PrefabCard from "#design/patterns/PrefabCard"
 import Page from "#design/templates/Page"
 
 import Dialog from "./patterns/Dialog/Dialog"
@@ -176,5 +180,37 @@ describe("Shared design smoke tests", () => {
     )
 
     expect(getByText("Page content")).toBeTruthy()
+  })
+
+  it("renders DeleteButton", () => {
+    const { getByText } = render(<DeleteButton onPress={noop} />)
+    expect(getByText("Delete")).toBeTruthy()
+  })
+
+  it("renders Form", () => {
+    const { getByText } = render(
+      <Form submitLabel="Save" onSubmit={noop}>
+        <Text>Form field</Text>
+      </Form>,
+    )
+
+    expect(getByText("Form field")).toBeTruthy()
+    expect(getByText("Save")).toBeTruthy()
+  })
+
+  it("renders PrefabCard", () => {
+    const { getByText } = render(
+      <PrefabCard selected={false} onPress={noop}>
+        <Text>Prefab row</Text>
+      </PrefabCard>,
+    )
+
+    expect(getByText("Prefab row")).toBeTruthy()
+  })
+
+  it("renders LinearGradient", () => {
+    expect(() =>
+      render(<LinearGradient colors={["#000000", "#ffffff"]} />),
+    ).not.toThrow()
   })
 })

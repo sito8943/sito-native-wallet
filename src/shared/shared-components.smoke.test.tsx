@@ -2,6 +2,7 @@ import { render } from "@testing-library/react-native"
 
 import {
   type Account,
+  AccountAdjustBalanceSheet,
   AccountCard,
   AccountForm,
   AccountSelector,
@@ -182,6 +183,19 @@ describe("Shared feature component smoke tests", () => {
     )
 
     expect(getByText("All accounts")).toBeTruthy()
+  })
+
+  it("renders AccountAdjustBalanceSheet", () => {
+    expect(() =>
+      render(
+        <AccountAdjustBalanceSheet
+          account={mockAccounts[0]}
+          open
+          onClose={noop}
+          onSubmit={noop}
+        />,
+      ),
+    ).not.toThrow()
   })
 
   it("renders CategoryBullet", () => {
