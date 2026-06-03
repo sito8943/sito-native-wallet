@@ -1,4 +1,4 @@
-import { todayStamp } from "#shared/time"
+import { todayStamp } from "#shared/data"
 
 import { type AddTransactionDto } from "../dtos"
 

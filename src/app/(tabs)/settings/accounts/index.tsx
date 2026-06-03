@@ -13,8 +13,8 @@ import {
   useAdjustBalanceSheet,
 } from "#shared/accounts"
 import { ADJUSTMENT_CATEGORY_ID } from "#shared/categories"
+import { todayStamp } from "#shared/data"
 import { toAccountDetailsRoute, toNewAccountRoute } from "#shared/navigation"
-import { todayStamp } from "#shared/time"
 import { useTransactions } from "#shared/transactions"
 
 export default function Accounts(): ReactElement {
