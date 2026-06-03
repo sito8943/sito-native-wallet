@@ -8,18 +8,24 @@ import { useClientStore } from "#shared/data/storage"
 import { type AddTransactionDto } from "../dtos"
 import { resolveTransactions } from "../Transaction"
 
-import { type UseTransactionsState } from "./types"
+import { type UseTransactionsOptions, type UseTransactionsState } from "./types"
 
-export default function useTransactions(): UseTransactionsState {
+export default function useTransactions(
+  options: UseTransactionsOptions = {},
+): UseTransactionsState {
+  const { accountId } = options
   const client = useManager().Transactions
   const { items, error, isLoading } = useClientStore(client)
   const { data: accounts } = useAccounts()
   const { data: categories } = useCategories()
 
-  const data = useMemo(
-    () => resolveTransactions(items, accounts ?? [], categories),
-    [items, accounts, categories],
-  )
+  const data = useMemo(() => {
+    const resolved = resolveTransactions(items, accounts ?? [], categories)
+
+    return accountId === undefined
+      ? resolved
+      : resolved.filter((transaction) => transaction.account.id === accountId)
+  }, [items, accounts, categories, accountId])
 
   return {
     data,

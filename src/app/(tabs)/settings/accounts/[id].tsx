@@ -1,13 +1,13 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
-import { View } from "react-native"
+import { ActivityIndicator, StyleSheet, View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
-import { AccountCard, useAccounts } from "#shared/accounts"
+import { AccountCard, useAccount } from "#shared/accounts"
 import {
   toAccountTransactionDetailsRoute,
   toEditAccountRoute,
@@ -18,14 +18,18 @@ import { TransactionList, useTransactions } from "#shared/transactions"
 export default function AccountDetails(): ReactElement {
   const router = useRouter()
   const { id } = useDetailRouteParams()
-  const { data: accounts } = useAccounts()
-  const { data: transactions } = useTransactions()
+  const { data: account, isLoading } = useAccount(id)
+  const { data: transactions } = useTransactions({ accountId: id })
 
-  const account = accounts?.find((item) => item.id === id)
-  const accountTransactions =
-    transactions?.filter((transaction) => transaction.account.id === id) ?? []
+  if (isLoading) {
+    return (
+      <Page centered>
+        <ActivityIndicator />
+      </Page>
+    )
+  }
 
-  if (account === undefined) {
+  if (account === null) {
     return (
       <Page centered>
         <Typography
@@ -39,7 +43,7 @@ export default function AccountDetails(): ReactElement {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.screen}>
       <Page>
         <AccountCard account={account} />
 
@@ -54,11 +58,11 @@ export default function AccountDetails(): ReactElement {
         )}
 
         <Typography variant={TYPOGRAPHY_VARIANT.TITLE} style={styles.heading}>
-          Transactions ({accountTransactions.length})
+          Transactions ({transactions.length})
         </Typography>
 
         <TransactionList
-          data={accountTransactions}
+          data={transactions}
           onPress={(transaction) =>
             router.push(toAccountTransactionDetailsRoute(transaction.id))
           }
@@ -73,7 +77,10 @@ export default function AccountDetails(): ReactElement {
   )
 }
 
-const styles = {
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
   description: {
     marginHorizontal: spacing(4),
     marginTop: spacing(1),
@@ -82,4 +89,4 @@ const styles = {
     marginHorizontal: spacing(4),
     marginTop: spacing(3),
   },
-}
+})

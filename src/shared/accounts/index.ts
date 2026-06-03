@@ -1,5 +1,6 @@
 import { AccountCard } from "./AccountCard"
 import { AccountForm } from "./AccountForm"
+import { useAccount } from "./useAccount"
 import { useAccounts } from "./useAccounts"
 import { useAdjustBalanceAction } from "./useAdjustBalanceAction"
 import { useAdjustBalanceSheet } from "./useAdjustBalanceSheet"
@@ -17,6 +18,7 @@ export {
 export {
   AccountCard,
   AccountForm,
+  useAccount,
   useAccounts,
   useAdjustBalanceAction,
   useAdjustBalanceSheet,
@@ -32,3 +34,4 @@ export type { AccountSelectorProps } from "./AccountSelector"
 export type { AccountFormProps } from "./AccountForm"
 export type { AddAccountDto } from "./dtos"
 export type { UseAccountsState } from "./useAccounts"
+export type { UseAccountState } from "./useAccount"

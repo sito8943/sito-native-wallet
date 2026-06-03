@@ -44,6 +44,12 @@ export default abstract class StorageClient<
 
   public getAll = (): T[] => this.state.items
 
+  // Selects one record by id. Locally this is an in-memory lookup; a future
+  // ApiClient would override it to hit GET /<resource>/:id. Keeping selection
+  // on the client (not in the hook) means the swap won't touch hooks or views.
+  public getById = (id: string): T | undefined =>
+    this.state.items.find((item) => item.id === id)
+
   // Loads from disk once. Seeds initial value on first launch.
   public hydrate = async (): Promise<void> => {
     if (this.hydration !== null) {

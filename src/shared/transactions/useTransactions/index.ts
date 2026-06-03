@@ -1,4 +1,4 @@
 import useTransactions from "./useTransactions"
 
 export { useTransactions }
-export type { UseTransactionsState } from "./types"
+export type { UseTransactionsOptions, UseTransactionsState } from "./types"
