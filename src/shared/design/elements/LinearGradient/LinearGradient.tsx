@@ -1,10 +1,11 @@
 import { useId, type ReactElement } from "react"
 import { View } from "react-native"
-import Svg, {
+import {
   Defs,
   LinearGradient as SvgLinearGradient,
   Rect,
   Stop,
+  Svg,
 } from "react-native-svg"
 
 import { type LinearGradientProps } from "./types"

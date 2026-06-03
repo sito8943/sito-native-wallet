@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router"
-import { type ReactElement, useState } from "react"
+import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
@@ -10,7 +10,7 @@ import {
   AccountAdjustBalanceSheet,
   AccountCard,
   useAccounts,
-  useAdjustBalanceAction,
+  useAdjustBalanceSheet,
 } from "#shared/accounts"
 import { ADJUSTMENT_CATEGORY_ID } from "#shared/categories"
 import { toAccountDetailsRoute, toNewAccountRoute } from "#shared/navigation"
@@ -21,19 +21,16 @@ export default function Accounts(): ReactElement {
   const router = useRouter()
   const { data } = useAccounts()
   const { addTransaction } = useTransactions()
-  const [adjusting, setAdjusting] = useState<Account | null>(null)
-  const { action: adjustAction } = useAdjustBalanceAction({
-    onPress: setAdjusting,
-  })
 
   // Records the difference as a system adjustment transaction, which moves the
-  // balance to the target through the normal transaction → balance flow.
-  const adjustBalance = (newBalance: number, description?: string): void => {
-    if (adjusting === null) {
-      return
-    }
-
-    const delta = Math.round((newBalance - adjusting.balance) * 100) / 100
+  // balance to the target through the normal transaction → balance flow. This
+  // is the domain-crossing bit, so it lives in the screen (above both domains).
+  const onAdjust = (
+    account: Account,
+    newBalance: number,
+    description?: string,
+  ): void => {
+    const delta = Math.round((newBalance - account.balance) * 100) / 100
     if (delta === 0) {
       return
     }
@@ -42,7 +39,7 @@ export default function Accounts(): ReactElement {
       description: description ?? "Balance adjustment",
       amount: Math.abs(delta),
       date: todayStamp(),
-      accountId: adjusting.id,
+      accountId: account.id,
       categoryIds: [
         delta > 0
           ? ADJUSTMENT_CATEGORY_ID.INCOME
@@ -50,6 +47,10 @@ export default function Accounts(): ReactElement {
       ],
     })
   }
+
+  const { action: adjustAction, sheetProps } = useAdjustBalanceSheet({
+    onAdjust,
+  })
 
   return (
     <View style={styles.fill}>
@@ -70,12 +71,7 @@ export default function Accounts(): ReactElement {
         icon={APP_ICONS.add}
         onPress={() => router.push(toNewAccountRoute())}
       />
-      <AccountAdjustBalanceSheet
-        account={adjusting}
-        open={adjusting !== null}
-        onClose={() => setAdjusting(null)}
-        onSubmit={adjustBalance}
-      />
+      <AccountAdjustBalanceSheet {...sheetProps} />
     </View>
   )
 }

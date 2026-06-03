@@ -12,7 +12,9 @@ import { type UseAdjustBalanceActionProps } from "./types"
 // the adjust sheet) and composes it into the card's actions.
 export default function useAdjustBalanceAction({
   onPress,
-}: UseAdjustBalanceActionProps): { action: (account: Account) => Action<Account> } {
+}: UseAdjustBalanceActionProps): {
+  action: (account: Account) => Action<Account>
+} {
   const action = useCallback(
     (account: Account): Action<Account> => ({
       id: ACTION_ID.ADJUST_BALANCE,

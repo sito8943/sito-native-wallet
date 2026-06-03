@@ -2,6 +2,7 @@ import { AccountCard } from "./AccountCard"
 import { AccountForm } from "./AccountForm"
 import { useAccounts } from "./useAccounts"
 import { useAdjustBalanceAction } from "./useAdjustBalanceAction"
+import { useAdjustBalanceSheet } from "./useAdjustBalanceSheet"
 
 export { default as AccountAdjustBalanceSheet } from "./AccountAdjustBalanceSheet"
 export type { AccountAdjustBalanceSheetProps } from "./AccountAdjustBalanceSheet"
@@ -13,8 +14,18 @@ export {
   ACCOUNT_TYPE,
   ACCOUNT_TYPE_LABEL,
 } from "./Account"
-export { AccountCard, AccountForm, useAccounts, useAdjustBalanceAction }
+export {
+  AccountCard,
+  AccountForm,
+  useAccounts,
+  useAdjustBalanceAction,
+  useAdjustBalanceSheet,
+}
 export type { UseAdjustBalanceActionProps } from "./useAdjustBalanceAction"
+export type {
+  UseAdjustBalanceSheetProps,
+  UseAdjustBalanceSheetState,
+} from "./useAdjustBalanceSheet"
 export type { Account, AccountBankName, AccountType } from "./Account"
 export type { AccountCardProps } from "./AccountCard"
 export type { AccountSelectorProps } from "./AccountSelector"
