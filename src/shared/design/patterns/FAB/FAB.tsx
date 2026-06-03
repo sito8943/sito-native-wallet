@@ -64,5 +64,6 @@ const styles = StyleSheet.create({
   extended: {
     alignSelf: "flex-start",
     paddingHorizontal: spacing(5),
+    paddingVertical: spacing(2),
   },
 })
