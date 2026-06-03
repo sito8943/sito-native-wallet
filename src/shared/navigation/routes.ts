@@ -21,6 +21,13 @@ export const toTransactionDetailsRoute = (id: string): Href => ({
   params: { id } satisfies DetailRouteParams,
 })
 
+// Transaction detail inside the accounts stack — keeps the back button within
+// the settings/accounts navigator instead of jumping to the transactions tab.
+export const toAccountTransactionDetailsRoute = (id: string): Href => ({
+  pathname: "/settings/accounts/transactions/[id]" as const,
+  params: { id } satisfies DetailRouteParams,
+})
+
 export const toSubscriptionDetailsRoute = (id: string): Href => ({
   pathname: "/subscriptions/[id]" as const,
   params: { id } satisfies DetailRouteParams,

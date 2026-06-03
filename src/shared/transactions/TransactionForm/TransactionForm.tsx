@@ -19,6 +19,7 @@ export default function TransactionForm({
   submitLabel,
   onSubmit,
   onDelete,
+  auto = false,
 }: TransactionFormProps): ReactElement {
   const { data: accounts } = useAccounts()
   const { data: categories } = useCategories()
@@ -35,15 +36,18 @@ export default function TransactionForm({
     [accounts],
   )
 
+  // System categories (e.g. balance adjustment) aren't pickable for manual
+  // transactions, but an auto transaction owns one — keep it in the options so
+  // its locked value resolves to a label instead of an empty chip.
   const categoryOptions = useMemo(
     () =>
       categories
-        .filter((category) => category.system !== true)
+        .filter((category) => auto || category.system !== true)
         .map((category) => ({
           id: category.id,
           label: category.name,
         })),
-    [categories],
+    [categories, auto],
   )
 
   const submit = (values: TransactionFormValues): void => {
@@ -162,6 +166,7 @@ export default function TransactionForm({
             options={categoryOptions}
             value={value}
             onChange={onChange}
+            disabled={auto}
             error={fieldState.error?.message}
           />
         )}

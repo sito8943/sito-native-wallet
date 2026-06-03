@@ -24,13 +24,15 @@ export default function TransactionCard({
     type === TRANSACTION_TYPE.INCOME
       ? styles.amountPositive
       : styles.amountNegative
+  const handlePress =
+    onPress === undefined ? undefined : () => onPress(transaction)
 
   return (
     <EntityCard
       actions={actions}
       entity={transaction}
       style={styles.card}
-      onPress={onPress === undefined ? undefined : () => onPress(transaction)}
+      onPress={handlePress}
     >
       <View style={styles.header}>
         <TransactionTypeBadge type={type} filled={false} showText={false} />

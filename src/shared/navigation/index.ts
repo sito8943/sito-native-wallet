@@ -5,6 +5,7 @@ export {
   toNewAccountRoute,
   toEditAccountRoute,
   toTransactionDetailsRoute,
+  toAccountTransactionDetailsRoute,
   toNewTransactionRoute,
   toSubscriptionDetailsRoute,
   toCurrencyDetailsRoute,

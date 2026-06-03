@@ -27,6 +27,7 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
     placeholder = "Select",
     options,
     error,
+    disabled = false,
     containerStyle,
     debounceMs = DEFAULT_DEBOUNCE_MS,
     onSearch,
@@ -79,6 +80,10 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
   const isSelected = (id: string): boolean => selectedIds.includes(id)
 
   const handleOpen = (): void => {
+    if (disabled) {
+      return
+    }
+
     setOpen(true)
   }
 
@@ -109,7 +114,7 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
     props.onChange(null)
   }
 
-  const showClear = !props.multiple && props.value !== null
+  const showClear = !disabled && !props.multiple && props.value !== null
   const singleLabel =
     !props.multiple && props.value !== null ? optionLabel(props.value) : ""
   const hasValue = selectedIds.length > 0
@@ -156,7 +161,13 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
 
       <Pressable
         accessibilityRole="button"
-        style={[styles.trigger, error !== undefined && styles.triggerError]}
+        accessibilityState={{ disabled }}
+        disabled={disabled}
+        style={[
+          styles.trigger,
+          error !== undefined && styles.triggerError,
+          disabled && styles.triggerDisabled,
+        ]}
         onPress={handleOpen}
       >
         <View style={styles.triggerContent}>
@@ -262,6 +273,10 @@ const createStyles = (colors: ThemeColors) => ({
   },
   triggerError: {
     borderColor: colors.negative,
+  },
+  triggerDisabled: {
+    backgroundColor: colors.background,
+    opacity: 0.6,
   },
   triggerContent: {
     flex: 1,

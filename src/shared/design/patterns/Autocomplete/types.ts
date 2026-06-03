@@ -10,6 +10,9 @@ type AutocompleteBaseProps = {
   placeholder?: string
   options: AutocompleteOption[]
   error?: string
+  // Locks the field: shows the current value but blocks opening, searching and
+  // clearing. Used for values the user may view but not change.
+  disabled?: boolean
   containerStyle?: StyleProp<ViewStyle>
   // Debounce the query before it drives filtering / onSearch. Use when the
   // option list is fetched from an API.

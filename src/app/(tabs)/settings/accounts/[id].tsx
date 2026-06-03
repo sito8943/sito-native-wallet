@@ -9,8 +9,8 @@ import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import { AccountCard, useAccounts } from "#shared/accounts"
 import {
+  toAccountTransactionDetailsRoute,
   toEditAccountRoute,
-  toTransactionDetailsRoute,
   useDetailRouteParams,
 } from "#shared/navigation"
 import { TransactionList, useTransactions } from "#shared/transactions"
@@ -60,7 +60,7 @@ export default function AccountDetails(): ReactElement {
         <TransactionList
           data={accountTransactions}
           onPress={(transaction) =>
-            router.push(toTransactionDetailsRoute(transaction.id))
+            router.push(toAccountTransactionDetailsRoute(transaction.id))
           }
         />
       </Page>

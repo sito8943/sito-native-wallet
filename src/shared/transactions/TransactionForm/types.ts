@@ -5,6 +5,10 @@ export type TransactionFormProps = {
   submitLabel: string
   onSubmit: (values: AddTransactionDto) => void
   onDelete?: () => void
+  // Auto (system-generated) transactions, e.g. balance adjustments. Still
+  // editable so a mistake can be corrected, but their system category is shown
+  // and locked — it can't be reassigned.
+  auto?: boolean
 }
 
 // Form state keeps amount as text for friendlier numeric input; it is parsed to

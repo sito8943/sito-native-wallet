@@ -22,7 +22,10 @@ export class Manager {
   #transactions?: TransactionClient
 
   public get Accounts(): AccountClient {
-    return (this.#accounts ??= new AccountClient())
+    // Lazy thunk for Transactions: creating an account records an initial
+    // transaction, but the dependency is resolved at call time to avoid a
+    // construction cycle (Transactions also needs Accounts).
+    return (this.#accounts ??= new AccountClient(() => this.Transactions))
   }
 
   public get Categories(): CategoryClient {

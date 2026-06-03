@@ -22,6 +22,10 @@ export default function Layout(): ReactElement {
       <Stack.Screen name="new" options={{ title: "New account" }} />
       <Stack.Screen name="[id]" options={{ title: "Account details" }} />
       <Stack.Screen name="edit/[id]" options={{ title: "Edit account" }} />
+      <Stack.Screen
+        name="transactions/[id]"
+        options={{ title: "Transaction" }}
+      />
     </Stack>
   )
 }

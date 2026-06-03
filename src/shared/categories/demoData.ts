@@ -58,11 +58,17 @@ const adjustmentExpense: TransactionCategory = {
   auto: true,
 }
 
+// The system adjustment categories, also used for find-or-create (the local
+// backend re-creates them if missing before recording an auto transaction).
+export const ADJUSTMENT_CATEGORIES: TransactionCategory[] = [
+  adjustmentIncome,
+  adjustmentExpense,
+]
+
 export const INITIAL_CATEGORIES: TransactionCategory[] = [
   salary,
   food,
   transport,
   home,
-  adjustmentIncome,
-  adjustmentExpense,
+  ...ADJUSTMENT_CATEGORIES,
 ]

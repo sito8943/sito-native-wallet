@@ -1,6 +1,6 @@
 import { createId, StorageClient } from "#shared/data/storage"
 
-import { INITIAL_CATEGORIES } from "../demoData"
+import { ADJUSTMENT_CATEGORIES, INITIAL_CATEGORIES } from "../demoData"
 import { type AddCategoryDto } from "../dtos"
 import { type TransactionCategory } from "../TransactionCategory"
 
@@ -27,5 +27,15 @@ export default class CategoryClient extends StorageClient<TransactionCategory> {
 
   public update = (id: string, input: AddCategoryDto): void => {
     this.patch(id, input)
+  }
+
+  // Find-or-create the system adjustment categories (mirrors the backend
+  // creating its auto category on demand). Called before recording an auto
+  // transaction so its category always exists.
+  public ensureAdjustmentCategories = (): void => {
+    const existing = new Set(this.getAll().map((category) => category.id))
+    this.insertMany(
+      ADJUSTMENT_CATEGORIES.filter((category) => !existing.has(category.id)),
+    )
   }
 }

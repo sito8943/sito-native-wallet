@@ -90,6 +90,9 @@ export default class TransactionClient extends StorageClient<StoredTransaction> 
       return
     }
 
+    // The auto category must exist for the sign/type to resolve correctly.
+    this.#categories.ensureAdjustmentCategories()
+
     this.add({
       description: description ?? "Balance adjustment",
       amount: Math.abs(delta),
