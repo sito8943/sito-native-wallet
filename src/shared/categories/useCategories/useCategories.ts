@@ -3,14 +3,20 @@ import { useClientStore } from "#shared/data/storage"
 
 import { type AddCategoryDto } from "../dtos"
 
-import { type UseCategoriesState } from "./types"
+import { type UseCategoriesOptions, type UseCategoriesState } from "./types"
 
-export default function useCategories(): UseCategoriesState {
+export default function useCategories(
+  options: UseCategoriesOptions = {},
+): UseCategoriesState {
+  const { includeSystem = true } = options
   const client = useManager().Categories
   const { items, error, isLoading } = useClientStore(client)
+  const data = includeSystem
+    ? items
+    : items.filter((category) => category.system !== true)
 
   return {
-    data: items,
+    data,
     error,
     isLoading,
     addCategory: (input: AddCategoryDto) => {

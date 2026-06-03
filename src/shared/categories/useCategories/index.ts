@@ -1,4 +1,4 @@
 import useCategories from "./useCategories"
 
 export { useCategories }
-export type { UseCategoriesState } from "./types"
+export type { UseCategoriesOptions, UseCategoriesState } from "./types"

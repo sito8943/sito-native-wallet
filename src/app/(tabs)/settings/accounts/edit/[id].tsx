@@ -5,13 +5,13 @@ import { ActivityIndicator, Alert } from "react-native"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Page from "#design/templates/Page"
-import { type AddAccountDto, AccountForm, useAccounts } from "#shared/accounts"
+import { type AddAccountDto, AccountForm, useAccount } from "#shared/accounts"
 import { useDetailRouteParams } from "#shared/navigation"
 
 export default function EditAccount(): ReactElement {
   const router = useRouter()
   const { id } = useDetailRouteParams()
-  const { data, isLoading, updateAccount, removeAccount } = useAccounts()
+  const { data: account, isLoading, update, remove } = useAccount(id)
 
   if (isLoading) {
     return (
@@ -21,9 +21,7 @@ export default function EditAccount(): ReactElement {
     )
   }
 
-  const account = data?.find((item) => item.id === id)
-
-  if (account === undefined) {
+  if (account === null) {
     return (
       <Page centered>
         <Typography
@@ -37,7 +35,7 @@ export default function EditAccount(): ReactElement {
   }
 
   const handleSubmit = (values: AddAccountDto): void => {
-    updateAccount(account.id, values)
+    update(values)
     router.back()
   }
 
@@ -51,7 +49,7 @@ export default function EditAccount(): ReactElement {
           text: "Delete",
           style: "destructive",
           onPress: () => {
-            removeAccount(account.id)
+            remove()
             // Pop past the now-deleted account detail back to the list.
             router.dismissAll()
           },

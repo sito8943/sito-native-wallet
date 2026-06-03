@@ -8,14 +8,14 @@ import Page from "#design/templates/Page"
 import {
   type AddCategoryDto,
   CategoryForm,
-  useCategories,
+  useCategory,
 } from "#shared/categories"
 import { useDetailRouteParams } from "#shared/navigation"
 
 export default function EditCategory(): ReactElement {
   const router = useRouter()
   const { id } = useDetailRouteParams()
-  const { data, isLoading, updateCategory, removeCategory } = useCategories()
+  const { data: category, isLoading, update, remove } = useCategory(id)
 
   if (isLoading) {
     return (
@@ -25,9 +25,7 @@ export default function EditCategory(): ReactElement {
     )
   }
 
-  const category = data.find((item) => item.id === id)
-
-  if (category === undefined) {
+  if (category === null) {
     return (
       <Page centered>
         <Typography
@@ -41,7 +39,7 @@ export default function EditCategory(): ReactElement {
   }
 
   const handleSubmit = (values: AddCategoryDto): void => {
-    updateCategory(category.id, values)
+    update(values)
     router.back()
   }
 
@@ -55,7 +53,7 @@ export default function EditCategory(): ReactElement {
           text: "Delete",
           style: "destructive",
           onPress: () => {
-            removeCategory(category.id)
+            remove()
             router.back()
           },
         },

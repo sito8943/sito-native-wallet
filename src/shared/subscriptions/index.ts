@@ -1,9 +1,10 @@
 import { SubscriptionCard } from "./SubscriptionCard"
+import { useSubscription } from "./useSubscription"
 import { useSubscriptions } from "./useSubscriptions"
 
 export { INITIAL_SUBSCRIPTIONS } from "./demoData"
 export { notifyUpcomingRenewal } from "./notifyUpcomingRenewal"
-export { SubscriptionCard, useSubscriptions }
+export { SubscriptionCard, useSubscription, useSubscriptions }
 export type {
   Subscription,
   SubscriptionStatus,
@@ -18,3 +19,4 @@ export {
 } from "./Subscription"
 export type { SubscriptionCardProps } from "./SubscriptionCard"
 export type { UseSubscriptionsState } from "./useSubscriptions"
+export type { UseSubscriptionState } from "./useSubscription"

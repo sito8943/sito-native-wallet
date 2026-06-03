@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
-import { View } from "react-native"
+import { StyleSheet, View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
 import { useDeleteDialog } from "#design/interactions"
@@ -16,7 +16,8 @@ import { toCategoryDetailsRoute, toNewCategoryRoute } from "#shared/navigation"
 
 export default function Categories(): ReactElement {
   const router = useRouter()
-  const { data, removeCategory } = useCategories()
+  // System categories (balance adjustment) aren't user-managed — hide them.
+  const { data, removeCategory } = useCategories({ includeSystem: false })
 
   const deleteDialog = useDeleteDialog<TransactionCategory>({
     onConfirm: (category) => {
@@ -27,18 +28,16 @@ export default function Categories(): ReactElement {
   })
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.screen}>
       <Page scroll>
-        {data
-          .filter((category) => category.system !== true)
-          .map((category) => (
-            <CategoryCard
-              key={category.id}
-              actions={[deleteDialog.action(category)]}
-              category={category}
-              onPress={() => router.push(toCategoryDetailsRoute(category.id))}
-            />
-          ))}
+        {data.map((category) => (
+          <CategoryCard
+            key={category.id}
+            actions={[deleteDialog.action(category)]}
+            category={category}
+            onPress={() => router.push(toCategoryDetailsRoute(category.id))}
+          />
+        ))}
       </Page>
       <FAB
         accessibilityLabel="Add category"
@@ -49,3 +48,9 @@ export default function Categories(): ReactElement {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
+})

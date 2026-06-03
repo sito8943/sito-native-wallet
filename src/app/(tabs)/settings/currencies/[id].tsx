@@ -8,14 +8,14 @@ import Page from "#design/templates/Page"
 import {
   type AddCurrencyDto,
   CurrencyForm,
-  useCurrencies,
+  useCurrency,
 } from "#shared/currencies"
 import { useDetailRouteParams } from "#shared/navigation"
 
 export default function EditCurrency(): ReactElement {
   const router = useRouter()
   const { id } = useDetailRouteParams()
-  const { data, isLoading, updateCurrency, removeCurrency } = useCurrencies()
+  const { data: currency, isLoading, update, remove } = useCurrency(id)
 
   if (isLoading) {
     return (
@@ -25,9 +25,7 @@ export default function EditCurrency(): ReactElement {
     )
   }
 
-  const currency = data.find((item) => item.id === id)
-
-  if (currency === undefined) {
+  if (currency === null) {
     return (
       <Page centered>
         <Typography
@@ -41,7 +39,7 @@ export default function EditCurrency(): ReactElement {
   }
 
   const handleSubmit = (values: AddCurrencyDto): void => {
-    updateCurrency(currency.id, values)
+    update(values)
     router.back()
   }
 
@@ -55,7 +53,7 @@ export default function EditCurrency(): ReactElement {
           text: "Delete",
           style: "destructive",
           onPress: () => {
-            removeCurrency(currency.id)
+            remove()
             router.back()
           },
         },

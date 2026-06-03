@@ -4,15 +4,13 @@ import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Page from "#design/templates/Page"
 import { useDetailRouteParams } from "#shared/navigation"
-import { SubscriptionCard, useSubscriptions } from "#shared/subscriptions"
+import { SubscriptionCard, useSubscription } from "#shared/subscriptions"
 
 export default function SubscriptionDetails(): ReactElement {
   const { id } = useDetailRouteParams()
-  const { data } = useSubscriptions()
+  const { data: subscription } = useSubscription(id)
 
-  const subscription = data?.find((item) => item.id === id)
-
-  if (subscription === undefined) {
+  if (subscription === null) {
     return (
       <Page centered>
         <Typography

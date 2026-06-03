@@ -9,18 +9,14 @@ import { useDetailRouteParams } from "#shared/navigation"
 import {
   type AddSubscriptionProviderDto,
   SubscriptionProviderForm,
-  useSubscriptionProviders,
+  useSubscriptionProvider,
 } from "#shared/subscriptionProviders"
 
 export default function EditSubscriptionProvider(): ReactElement {
   const router = useRouter()
   const { id } = useDetailRouteParams()
-  const {
-    data,
-    isLoading,
-    updateSubscriptionProvider,
-    removeSubscriptionProvider,
-  } = useSubscriptionProviders()
+  const { data: provider, isLoading, update, remove } =
+    useSubscriptionProvider(id)
 
   if (isLoading) {
     return (
@@ -30,9 +26,7 @@ export default function EditSubscriptionProvider(): ReactElement {
     )
   }
 
-  const provider = data.find((item) => item.id === id)
-
-  if (provider === undefined) {
+  if (provider === null) {
     return (
       <Page centered>
         <Typography
@@ -46,7 +40,7 @@ export default function EditSubscriptionProvider(): ReactElement {
   }
 
   const handleSubmit = (values: AddSubscriptionProviderDto): void => {
-    updateSubscriptionProvider(provider.id, values)
+    update(values)
     router.back()
   }
 
@@ -60,7 +54,7 @@ export default function EditSubscriptionProvider(): ReactElement {
           text: "Delete",
           style: "destructive",
           onPress: () => {
-            removeSubscriptionProvider(provider.id)
+            remove()
             router.back()
           },
         },
