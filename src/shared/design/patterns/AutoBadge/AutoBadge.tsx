@@ -2,7 +2,12 @@ import { type ReactElement } from "react"
 import { View } from "react-native"
 
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
-import { borderWidth, radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import {
+  borderWidth,
+  radius,
+  spacing,
+  TYPOGRAPHY_VARIANT,
+} from "#design/foundations"
 import { useThemedStyles, type ThemeColors } from "#design/theme"
 
 import { type AutoBadgeProps } from "./types"
