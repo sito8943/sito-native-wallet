@@ -1,4 +1,4 @@
-import { useManager } from "#shared/manager"
+import { useManager } from "#shared/data"
 import { useClientStore } from "#shared/storage"
 
 import { type AddCurrencyDto } from "../dtos"

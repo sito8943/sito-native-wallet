@@ -1,1 +1,0 @@
-export { useManager } from "./useManager"
