@@ -34,5 +34,12 @@ export default function useTransactions(): UseTransactionsState {
     removeTransaction: (id: string) => {
       client.remove(id)
     },
+    adjustBalance: (
+      accountId: string,
+      newBalance: number,
+      description?: string,
+    ) => {
+      client.adjustBalance(accountId, newBalance, description)
+    },
   }
 }

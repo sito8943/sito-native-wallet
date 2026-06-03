@@ -1,5 +1,5 @@
 export { useManager } from "./useManager"
-export { todayStamp } from "./todayStamp"
+export { todayStamp } from "./time"
 export {
   SOFT_DELETE_SCOPE,
   type DeleteDto,

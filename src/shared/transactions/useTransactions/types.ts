@@ -8,4 +8,10 @@ export type UseTransactionsState = {
   addTransaction: (input: AddTransactionDto) => void
   updateTransaction: (id: string, input: AddTransactionDto) => void
   removeTransaction: (id: string) => void
+  // Adjusts an account's balance by recording a system adjustment transaction.
+  adjustBalance: (
+    accountId: string,
+    newBalance: number,
+    description?: string,
+  ) => void
 }

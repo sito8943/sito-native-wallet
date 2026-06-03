@@ -4,8 +4,12 @@
 // instances by the Manager, so we only need their types.
 import { type AccountClient } from "#shared/accounts/AccountClient"
 import { type CategoryClient } from "#shared/categories/CategoryClient"
-import { TRANSACTION_TYPE } from "#shared/categories/TransactionCategory"
+import {
+  ADJUSTMENT_CATEGORY_ID,
+  TRANSACTION_TYPE,
+} from "#shared/categories/TransactionCategory"
 import { createId, StorageClient } from "#shared/data/storage"
+import { todayStamp } from "#shared/data/time"
 
 import { INITIAL_TRANSACTIONS } from "../demoData"
 import { type AddTransactionDto } from "../dtos"
@@ -62,6 +66,42 @@ export default class TransactionClient extends StorageClient<StoredTransaction> 
     if (previous !== undefined) {
       this.#applyToBalance(previous, -1)
     }
+  }
+
+  // Backend-owned operation (mirrors the API's adjust-balance endpoint): record
+  // the difference to the target as a system transaction, which moves the
+  // account balance through the normal transaction flow.
+  public adjustBalance = (
+    accountId: string,
+    newBalance: number,
+    description?: string,
+  ): void => {
+    const account = this.#accounts
+      .getAll()
+      .find((item) => item.id === accountId)
+
+    if (account === undefined) {
+      return
+    }
+
+    const delta = Math.round((newBalance - account.balance) * 100) / 100
+
+    if (delta === 0) {
+      return
+    }
+
+    this.add({
+      description: description ?? "Balance adjustment",
+      amount: Math.abs(delta),
+      date: todayStamp(),
+      accountId,
+      auto: true,
+      categoryIds: [
+        delta > 0
+          ? ADJUSTMENT_CATEGORY_ID.INCOME
+          : ADJUSTMENT_CATEGORY_ID.EXPENSE,
+      ],
+    })
   }
 
   // Income adds, expense subtracts; `direction` flips the sign to undo.
