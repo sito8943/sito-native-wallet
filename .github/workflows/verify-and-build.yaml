@@ -53,3 +53,5 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}

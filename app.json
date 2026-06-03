@@ -3,20 +3,26 @@
     "name": "SitoWallet",
     "slug": "SitoWallet",
     "version": "1.0.0",
+    "scheme": "sitowallet",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "plugins": ["expo-router", "expo-notifications"],
+    "experiments": {
+      "typedRoutes": true
+    },
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "bundleIdentifier": "dev.sito8943.wallet",
       "supportsTablet": true
     },
     "android": {
+      "package": "dev.sito8943.wallet",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -26,6 +32,13 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "8de18508-0729-4428-b2e1-c86ba4d25eaf"
+      }
+    },
+    "owner": "sito8943"
   }
 }
