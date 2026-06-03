@@ -7,7 +7,7 @@ import IconButton, {
   ICON_BUTTON_VARIANT,
 } from "#design/elements/IconButton"
 import Typography, { TYPOGRAPHY_VARIANT } from "#design/elements/Typography"
-import { shadows } from "#design/foundations"
+import { shadows, spacing } from "#design/foundations"
 import { useThemeColors } from "#shared/theme"
 
 import { FAB_POSITION } from "./constants"
@@ -63,5 +63,6 @@ const styles = StyleSheet.create({
   },
   extended: {
     alignSelf: "flex-start",
+    paddingHorizontal: spacing(5),
   },
 })

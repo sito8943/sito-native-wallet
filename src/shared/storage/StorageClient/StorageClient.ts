@@ -73,6 +73,16 @@ export default abstract class StorageClient<
     this.commit([...this.state.items, item])
   }
 
+  // Adds several items in a single commit (one persist + one notify) — used by
+  // bulk flows like prefab pickers.
+  protected insertMany(items: T[]): void {
+    if (items.length === 0) {
+      return
+    }
+
+    this.commit([...this.state.items, ...items])
+  }
+
   protected patch(id: string, partial: Partial<T>): void {
     this.commit(
       this.state.items.map((item) =>

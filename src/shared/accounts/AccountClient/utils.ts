@@ -14,7 +14,8 @@ const isAccount = (value: unknown): value is Account => {
   return (
     typeof candidate.id === "string" &&
     typeof candidate.name === "string" &&
-    (candidate.bankName === undefined || typeof candidate.bankName === "string") &&
+    (candidate.bankName === undefined ||
+      typeof candidate.bankName === "string") &&
     typeof candidate.balance === "number" &&
     ACCOUNT_TYPES.includes(candidate.type as AccountType) &&
     isCurrency(candidate.currency)

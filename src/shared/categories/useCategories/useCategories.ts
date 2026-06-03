@@ -16,6 +16,9 @@ export default function useCategories(): UseCategoriesState {
     addCategory: (input: AddCategoryDto) => {
       client.add(input)
     },
+    addCategories: (inputs: AddCategoryDto[]) => {
+      client.addMany(inputs)
+    },
     updateCategory: (id: string, input: AddCategoryDto) => {
       client.update(id, input)
     },

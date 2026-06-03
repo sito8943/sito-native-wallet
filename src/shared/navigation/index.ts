@@ -9,8 +9,10 @@ export {
   toSubscriptionDetailsRoute,
   toCurrencyDetailsRoute,
   toNewCurrencyRoute,
+  toCurrencyPrefabsRoute,
   toCategoryDetailsRoute,
   toNewCategoryRoute,
+  toCategoryPrefabsRoute,
   toSubscriptionProviderDetailsRoute,
   toNewSubscriptionProviderRoute,
 } from "./routes"

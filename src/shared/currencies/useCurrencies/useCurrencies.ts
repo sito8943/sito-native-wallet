@@ -16,6 +16,9 @@ export default function useCurrencies(): UseCurrenciesState {
     addCurrency: (input: AddCurrencyDto) => {
       client.add(input)
     },
+    addCurrencies: (inputs: AddCurrencyDto[]) => {
+      client.addMany(inputs)
+    },
     updateCurrency: (id: string, input: AddCurrencyDto) => {
       client.update(id, input)
     },

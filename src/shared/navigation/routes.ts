@@ -28,12 +28,16 @@ export const toSubscriptionDetailsRoute = (id: string): Href => ({
 
 export const toNewCurrencyRoute = (): Href => "/settings/currencies/new"
 
+export const toCurrencyPrefabsRoute = (): Href => "/settings/currencies/prefabs"
+
 export const toCurrencyDetailsRoute = (id: string): Href => ({
   pathname: "/settings/currencies/[id]" as const,
   params: { id } satisfies DetailRouteParams,
 })
 
 export const toNewCategoryRoute = (): Href => "/settings/categories/new"
+
+export const toCategoryPrefabsRoute = (): Href => "/settings/categories/prefabs"
 
 export const toCategoryDetailsRoute = (id: string): Href => ({
   pathname: "/settings/categories/[id]" as const,

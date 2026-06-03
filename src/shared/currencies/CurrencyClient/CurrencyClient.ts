@@ -21,6 +21,10 @@ export default class CurrencyClient extends StorageClient<Currency> {
     this.insert({ id: createId(), ...input })
   }
 
+  public addMany = (inputs: AddCurrencyDto[]): void => {
+    this.insertMany(inputs.map((input) => ({ id: createId(), ...input })))
+  }
+
   public update = (id: string, input: AddCurrencyDto): void => {
     this.patch(id, input)
   }

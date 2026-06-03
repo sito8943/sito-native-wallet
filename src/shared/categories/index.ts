@@ -5,6 +5,8 @@ import { CategoryForm } from "./CategoryForm"
 import { useCategories } from "./useCategories"
 
 export { INITIAL_CATEGORIES } from "./demoData"
+export { CATEGORY_PREFABS } from "./prefabs"
+export type { CategoryPrefab } from "./types"
 export {
   CategoryBullet,
   CategoryCard,

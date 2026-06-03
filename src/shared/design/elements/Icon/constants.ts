@@ -21,6 +21,7 @@ import {
   faStore,
   faXmark,
   faCheck,
+  faWandMagicSparkles,
 } from "@fortawesome/free-solid-svg-icons"
 
 export const APP_ICONS: Record<string, IconProp> = {
@@ -44,4 +45,5 @@ export const APP_ICONS: Record<string, IconProp> = {
   subscriptionProviders: faStore,
   close: faXmark,
   check: faCheck,
+  prefabs: faWandMagicSparkles,
 }

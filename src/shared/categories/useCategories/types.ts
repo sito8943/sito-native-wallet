@@ -6,6 +6,7 @@ export type UseCategoriesState = {
   error: Error | null
   isLoading: boolean
   addCategory: (input: AddCategoryDto) => void
+  addCategories: (inputs: AddCategoryDto[]) => void
   updateCategory: (id: string, input: AddCategoryDto) => void
   removeCategory: (id: string) => void
 }
