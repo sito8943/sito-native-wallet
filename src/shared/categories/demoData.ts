@@ -45,6 +45,7 @@ const adjustmentIncome: TransactionCategory = {
   color: "#607d8b",
   type: TRANSACTION_TYPE.INCOME,
   system: true,
+  auto: true,
 }
 
 const adjustmentExpense: TransactionCategory = {
@@ -54,6 +55,7 @@ const adjustmentExpense: TransactionCategory = {
   color: "#607d8b",
   type: TRANSACTION_TYPE.EXPENSE,
   system: true,
+  auto: true,
 }
 
 export const INITIAL_CATEGORIES: TransactionCategory[] = [

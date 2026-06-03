@@ -12,4 +12,5 @@ export type Transaction = {
   date: string
   account: CommonAccountDto
   categories: CommonTransactionCategoryDto[]
+  auto?: boolean
 }

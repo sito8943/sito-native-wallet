@@ -48,6 +48,7 @@ const resolveTransaction = (
     description: stored.description,
     amount: stored.amount,
     date: stored.date,
+    auto: stored.auto,
     account: account ? toCommonAccount(account) : MISSING_ACCOUNT,
     categories: stored.categoryIds
       .map((id) => categories.find((category) => category.id === id))

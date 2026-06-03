@@ -11,7 +11,8 @@ const isStoredTransaction = (value: unknown): value is StoredTransaction => {
     typeof candidate.id === "string" &&
     typeof candidate.amount === "number" &&
     typeof candidate.accountId === "string" &&
-    Array.isArray(candidate.categoryIds)
+    Array.isArray(candidate.categoryIds) &&
+    (candidate.auto === undefined || typeof candidate.auto === "boolean")
   )
 }
 

@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native"
 
 import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import AutoBadge from "#design/patterns/AutoBadge"
 import EntityCard from "#design/patterns/EntityCard"
 import { TransactionTypeBadge } from "#shared/transactions/TransactionTypeBadge"
 
@@ -30,6 +31,7 @@ export default function CategoryCard({
               {category.description}
             </Typography>
           )}
+          {category.auto === true && <AutoBadge />}
         </View>
         <TransactionTypeBadge
           type={category.type}

@@ -40,6 +40,7 @@ export default function Accounts(): ReactElement {
       amount: Math.abs(delta),
       date: todayStamp(),
       accountId: account.id,
+      auto: true,
       categoryIds: [
         delta > 0
           ? ADJUSTMENT_CATEGORY_ID.INCOME

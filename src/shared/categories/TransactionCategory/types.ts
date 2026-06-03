@@ -14,4 +14,6 @@ export type TransactionCategory = Partial<Timestamps> & {
   // System categories (e.g. balance adjustments) are seeded, not user-managed:
   // hidden from the category list and the transaction form picker.
   system?: boolean
+  // Marks system-generated categories (shown with an Auto indicator).
+  auto?: boolean
 }
