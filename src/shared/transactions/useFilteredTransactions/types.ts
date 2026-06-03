@@ -1,5 +1,7 @@
 import { type Account } from "#shared/accounts"
+import { type QueryParam } from "#shared/data"
 
+import { type FilterTransactionDto } from "../dtos"
 import { type Transaction } from "../Transaction"
 import {
   type TransactionSortOrder,
@@ -13,6 +15,9 @@ export type UseFilteredTransactionsState = {
   error: Error | null
   isLoading: boolean
   preferences: TransactionsPreferences
+  // Preferences mapped to the generic filter/query contract for the list hooks.
+  filters: FilterTransactionDto
+  query: QueryParam<Transaction>
   resetPreferences: () => void
   setAccountId: (accountId: string | null) => void
   setSortOrder: (sortOrder: TransactionSortOrder) => void

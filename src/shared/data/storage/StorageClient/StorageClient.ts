@@ -1,5 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
+// Deep path on purpose: importing the #shared/data barrel here would close the
+// Manager import cycle (barrel → useManager → Manager → clients → this).
+import {
+  applyQuery,
+  type QueryParam,
+  type QueryResult,
+} from "#shared/data/query"
+
 import { SEED_TIMESTAMP } from "./constants"
 import {
   type ClientState,
@@ -49,6 +57,15 @@ export default abstract class StorageClient<
   // on the client (not in the hook) means the swap won't touch hooks or views.
   public getById = (id: string): T | undefined =>
     this.state.items.find((item) => item.id === id)
+
+  // List with filter (predicate) + sort + pagination, returning the backend's
+  // QueryResult shape. Locally an in-memory pass via applyQuery; an ApiClient
+  // overrides it to send the query/filters as a request. The predicate is the
+  // entity-specific filter translation, built by the subclass or hook.
+  public list = (
+    params: QueryParam<T> = {},
+    predicate?: (item: T) => boolean,
+  ): QueryResult<T> => applyQuery(this.state.items, params, predicate)
 
   // Loads from disk once. Seeds initial value on first launch.
   public hydrate = async (): Promise<void> => {

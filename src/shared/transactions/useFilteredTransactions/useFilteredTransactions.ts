@@ -1,9 +1,13 @@
 import { useMemo } from "react"
 
 import { useAccounts } from "#shared/accounts"
+import { SORT_ORDER } from "#shared/data"
 import { useStoredState } from "#shared/data/storage"
 
+import { type FilterTransactionDto } from "../dtos"
 import {
+  TRANSACTION_SORT_ORDER,
+  TRANSACTION_TYPE_FILTER,
   type TransactionSortOrder,
   type TransactionsPreferences,
   type TransactionTypeFilter,
@@ -44,12 +48,33 @@ export default function useFilteredTransactions(): UseFilteredTransactionsState 
     return applyTransactionsPreferences(transactions, preferences)
   }, [isLoading, transactions, preferences])
 
+  // The stored preferences mapped onto the generic filter/query contract, so
+  // the list hooks (useTransactionsList / useInfiniteTransactions) consume them
+  // the same way they would consume API-driven filters.
+  const filters: FilterTransactionDto = {
+    accountId: preferences.accountId ?? undefined,
+    type:
+      preferences.typeFilter === TRANSACTION_TYPE_FILTER.ALL
+        ? undefined
+        : preferences.typeFilter,
+  }
+
+  const query = {
+    sortingBy: "date" as const,
+    sortingOrder:
+      preferences.sortOrder === TRANSACTION_SORT_ORDER.OLDEST
+        ? SORT_ORDER.ASC
+        : SORT_ORDER.DESC,
+  }
+
   return {
     accounts: accounts ?? [],
     data,
     error,
     isLoading,
     preferences,
+    filters,
+    query,
     resetPreferences: () => {
       setPreferences(DEFAULT_TRANSACTIONS_PREFERENCES)
     },

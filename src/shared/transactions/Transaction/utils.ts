@@ -8,6 +8,7 @@ import {
 import {
   type CommonAccountDto,
   type CommonTransactionCategoryDto,
+  type FilterTransactionDto,
 } from "../dtos"
 import { type StoredTransaction } from "../TransactionClient"
 
@@ -19,6 +20,70 @@ export const sortByDate = (transactions: Transaction[]): Transaction[] =>
 
 export const getTransactionType = (transaction: Transaction): TransactionType =>
   transaction.categories[0]?.type ?? TRANSACTION_TYPE.EXPENSE
+
+// Translates a FilterTransactionDto into a predicate over a resolved
+// transaction. Lives here (not in the client) because filtering touches joined
+// fields (type, category) that only exist after resolution. A future ApiClient
+// sends these filters to the server instead of matching in memory.
+export const matchesTransactionFilter =
+  (filters: FilterTransactionDto) =>
+  (transaction: Transaction): boolean => {
+    if (
+      filters.accountId !== undefined &&
+      transaction.account.id !== filters.accountId
+    ) {
+      return false
+    }
+
+    if (
+      filters.type !== undefined &&
+      getTransactionType(transaction) !== filters.type
+    ) {
+      return false
+    }
+
+    if (
+      filters.category !== undefined &&
+      filters.category.length > 0 &&
+      !transaction.categories.some((category) =>
+        filters.category?.includes(category.id),
+      )
+    ) {
+      return false
+    }
+
+    if (filters.amount !== undefined) {
+      const { start, end } = filters.amount
+      if (start != null && transaction.amount < start) {
+        return false
+      }
+      if (end != null && transaction.amount > end) {
+        return false
+      }
+    }
+
+    if (filters.date !== undefined) {
+      const { start, end } = filters.date
+      if (start != null && transaction.date < start) {
+        return false
+      }
+      if (end != null && transaction.date > end) {
+        return false
+      }
+    }
+
+    if (
+      filters.description !== undefined &&
+      filters.description.trim() !== "" &&
+      !transaction.description
+        .toLowerCase()
+        .includes(filters.description.trim().toLowerCase())
+    ) {
+      return false
+    }
+
+    return true
+  }
 
 const toCommonAccount = (account: Account): CommonAccountDto => ({
   id: account.id,
