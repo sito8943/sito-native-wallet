@@ -5,9 +5,8 @@ import { View, StyleSheet } from "react-native"
 import Icon, { APP_ICONS } from "#design/elements/Icon"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
-import { TRANSACTION_TYPE } from "#shared/categories"
-
 import { useThemeColors } from "#design/theme"
+import { TRANSACTION_TYPE } from "#shared/categories"
 
 import { type TransactionTypeBadgeProps } from "./types"
 

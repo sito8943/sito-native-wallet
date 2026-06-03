@@ -6,7 +6,7 @@ import Icon from "#design/elements/Icon"
 import LinearGradient from "#design/elements/LinearGradient"
 import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
-import { useThemeColors, useThemePreference } from "#shared/theme"
+import { useThemeColors, useThemePreference } from "#design/theme"
 
 import { ACCOUNT_TYPE, ACCOUNT_TYPE_LABEL } from "../Account"
 

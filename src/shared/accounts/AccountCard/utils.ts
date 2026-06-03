@@ -1,4 +1,4 @@
-import { type ResolvedTheme, type ThemeColors } from "#shared/theme"
+import { type ResolvedTheme, type ThemeColors } from "#design/theme"
 
 import { ACCOUNT_BANK_NAME } from "../Account"
 

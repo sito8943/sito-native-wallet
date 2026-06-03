@@ -3,10 +3,10 @@ import { type ReactElement } from "react"
 import { View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
+import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
-import { useDeleteDialog } from "#design/interactions"
 import {
   toNewSubscriptionProviderRoute,
   toSubscriptionProviderDetailsRoute,

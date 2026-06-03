@@ -3,11 +3,11 @@ import { type ReactElement } from "react"
 import { View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
+import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import { type Currency, CurrencyCard, useCurrencies } from "#shared/currencies"
-import { useDeleteDialog } from "#design/interactions"
 import { toCurrencyDetailsRoute, toNewCurrencyRoute } from "#shared/navigation"
 
 export default function Currencies(): ReactElement {

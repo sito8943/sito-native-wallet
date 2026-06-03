@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View } from "react-native"
 import Card from "#design/elements/Card"
 import Icon, { APP_ICONS } from "#design/elements/Icon"
 import { radius, spacing } from "#design/foundations"
-import { useThemeColors } from "#shared/theme"
+import { useThemeColors } from "#design/theme"
 
 import { type PrefabCardProps } from "./types"
 

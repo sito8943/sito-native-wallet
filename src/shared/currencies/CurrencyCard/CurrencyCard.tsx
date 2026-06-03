@@ -10,7 +10,7 @@ import {
 } from "#design/foundations"
 import EntityCard from "#design/patterns/EntityCard"
 
-import { type ThemeColors, useThemedStyles } from "#shared/theme"
+import { type ThemeColors, useThemedStyles } from "#design/theme"
 
 import { type CurrencyCardProps } from "./types"
 

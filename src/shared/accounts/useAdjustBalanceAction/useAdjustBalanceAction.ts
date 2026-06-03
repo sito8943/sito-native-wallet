@@ -1,7 +1,7 @@
 import { useCallback } from "react"
 
 import { APP_ICONS } from "#design/elements/Icon"
-import { type Action, ACTION_ID } from "#shared/actions"
+import { type Action, ACTION_ID } from "#design/interactions"
 
 import { type Account } from "../Account"
 
