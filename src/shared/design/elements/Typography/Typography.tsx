@@ -2,7 +2,7 @@ import { type ReactElement } from "react"
 import { StyleSheet, Text } from "react-native"
 
 import { typography, TYPOGRAPHY_VARIANT } from "#design/foundations"
-import { useThemeColors } from "#shared/theme"
+import { useThemeColors } from "#design/theme"
 
 import { TYPOGRAPHY_TONE } from "./constants"
 import { type TypographyProps } from "./types"

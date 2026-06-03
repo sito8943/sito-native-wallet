@@ -1,6 +1,6 @@
 import { type IconProp } from "@fortawesome/fontawesome-svg-core"
 
-import { type ThemeColorName } from "#shared/theme"
+import { type ThemeColorName } from "#design/theme"
 
 // Entity-aware action descriptor. onPress receives the row it operates on, so
 // the same descriptor works for any item in a list. Mirrors ActionType from

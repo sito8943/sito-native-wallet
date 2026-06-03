@@ -3,7 +3,7 @@ import { Modal, Pressable } from "react-native"
 
 import Typography from "#design/elements/Typography"
 import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
-import { useThemedStyles, type ThemeColors } from "#shared/theme"
+import { useThemedStyles, type ThemeColors } from "#design/theme"
 
 import { type DialogProps } from "./types"
 

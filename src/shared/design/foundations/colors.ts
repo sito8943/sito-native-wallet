@@ -1,5 +1,5 @@
-import { THEME_COLOR } from "../../theme/constants"
-import { type ThemeColors } from "../../theme/types"
+import { THEME_COLOR } from "../theme/constants"
+import { type ThemeColors } from "../theme/types"
 
 export const lightColors: ThemeColors = {
   [THEME_COLOR.BACKGROUND]: "#f5f8fc",

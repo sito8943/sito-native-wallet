@@ -8,7 +8,7 @@ import {
   spacing,
   TYPOGRAPHY_VARIANT,
 } from "#design/foundations"
-import { useThemedStyles, type ThemeColors } from "#shared/theme"
+import { useThemedStyles, type ThemeColors } from "#design/theme"
 
 import { type ChipProps } from "./types"
 

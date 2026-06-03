@@ -6,7 +6,7 @@ import Card from "#design/elements/Card"
 import Icon, { APP_ICONS } from "#design/elements/Icon"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
-import { useThemeColors } from "#shared/theme"
+import { useThemeColors } from "#design/theme"
 
 import { settingsMenuItems } from "./items"
 

@@ -13,7 +13,7 @@ import {
   useThemeColors,
   useThemedStyles,
   type ThemeColors,
-} from "#shared/theme"
+} from "#design/theme"
 
 import { type TextFieldProps } from "./types"
 

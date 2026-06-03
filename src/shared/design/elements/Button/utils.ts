@@ -1,6 +1,6 @@
 import { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { borderWidth } from "#design/foundations"
-import { type ThemeColors } from "#shared/theme"
+import { type ThemeColors } from "#design/theme"
 
 import { BUTTON_VARIANT } from "./constants"
 import { type ButtonColors, type ButtonVariant } from "./types"

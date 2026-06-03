@@ -1,5 +1,5 @@
 import { borderWidth } from "#design/foundations"
-import { type useThemeColors } from "#shared/theme"
+import { type useThemeColors } from "#design/theme"
 
 import { ICON_BUTTON_VARIANT } from "./constants"
 import { type IconButtonVariant } from "./types"

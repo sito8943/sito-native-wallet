@@ -1,7 +1,7 @@
 import { Stack } from "expo-router"
 import { type ReactElement } from "react"
 
-import { useThemeColors } from "#shared/theme"
+import { useThemeColors } from "#design/theme"
 
 export default function Layout(): ReactElement {
   const colors = useThemeColors()
