@@ -8,7 +8,7 @@ import { ConfirmationDialog } from "#design/patterns/Dialog"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import { AccountSelector } from "#shared/accounts"
-import { useDeleteDialog } from "#shared/dialogs"
+import { useDeleteDialog } from "#design/interactions"
 import {
   toNewTransactionRoute,
   toTransactionDetailsRoute,

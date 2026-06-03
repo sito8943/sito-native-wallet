@@ -7,7 +7,7 @@ import { ConfirmationDialog } from "#design/patterns/Dialog"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import { type Currency, CurrencyCard, useCurrencies } from "#shared/currencies"
-import { useDeleteDialog } from "#shared/dialogs"
+import { useDeleteDialog } from "#design/interactions"
 import { toCurrencyDetailsRoute, toNewCurrencyRoute } from "#shared/navigation"
 
 export default function Currencies(): ReactElement {
