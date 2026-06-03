@@ -1,10 +1,11 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
-import { View } from "react-native"
+import { StyleSheet, View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
 import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
+import EntityList from "#design/patterns/EntityList"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import {
@@ -30,18 +31,21 @@ export default function SubscriptionProviders(): ReactElement {
   })
 
   return (
-    <View style={{ flex: 1 }}>
-      <Page scroll>
-        {data.map((provider) => (
-          <SubscriptionProviderCard
-            key={provider.id}
-            actions={[deleteDialog.action(provider)]}
-            provider={provider}
-            onPress={() =>
-              router.push(toSubscriptionProviderDetailsRoute(provider.id))
-            }
-          />
-        ))}
+    <View style={styles.screen}>
+      <Page>
+        <EntityList
+          data={data}
+          emptyMessage="No subscription providers yet."
+          renderItem={(provider) => (
+            <SubscriptionProviderCard
+              actions={[deleteDialog.action(provider)]}
+              provider={provider}
+              onPress={() =>
+                router.push(toSubscriptionProviderDetailsRoute(provider.id))
+              }
+            />
+          )}
+        />
       </Page>
       <FAB
         accessibilityLabel="Add subscription provider"
@@ -52,3 +56,9 @@ export default function SubscriptionProviders(): ReactElement {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
+})

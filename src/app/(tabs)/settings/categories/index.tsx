@@ -5,6 +5,7 @@ import { StyleSheet, View } from "react-native"
 import { APP_ICONS } from "#design/elements/Icon"
 import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
+import EntityList from "#design/patterns/EntityList"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import {
@@ -29,15 +30,18 @@ export default function Categories(): ReactElement {
 
   return (
     <View style={styles.screen}>
-      <Page scroll>
-        {data.map((category) => (
-          <CategoryCard
-            key={category.id}
-            actions={[deleteDialog.action(category)]}
-            category={category}
-            onPress={() => router.push(toCategoryDetailsRoute(category.id))}
-          />
-        ))}
+      <Page>
+        <EntityList
+          data={data}
+          emptyMessage="No categories yet."
+          renderItem={(category) => (
+            <CategoryCard
+              actions={[deleteDialog.action(category)]}
+              category={category}
+              onPress={() => router.push(toCategoryDetailsRoute(category.id))}
+            />
+          )}
+        />
       </Page>
       <FAB
         accessibilityLabel="Add category"

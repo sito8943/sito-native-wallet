@@ -1,10 +1,11 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
-import { View } from "react-native"
+import { StyleSheet, View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
 import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
+import EntityList from "#design/patterns/EntityList"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import { type Currency, CurrencyCard, useCurrencies } from "#shared/currencies"
@@ -23,16 +24,19 @@ export default function Currencies(): ReactElement {
   })
 
   return (
-    <View style={{ flex: 1 }}>
-      <Page scroll>
-        {data.map((currency) => (
-          <CurrencyCard
-            key={currency.id}
-            actions={[deleteDialog.action(currency)]}
-            currency={currency}
-            onPress={() => router.push(toCurrencyDetailsRoute(currency.id))}
-          />
-        ))}
+    <View style={styles.screen}>
+      <Page>
+        <EntityList
+          data={data}
+          emptyMessage="No currencies yet."
+          renderItem={(currency) => (
+            <CurrencyCard
+              actions={[deleteDialog.action(currency)]}
+              currency={currency}
+              onPress={() => router.push(toCurrencyDetailsRoute(currency.id))}
+            />
+          )}
+        />
       </Page>
       <FAB
         accessibilityLabel="Add currency"
@@ -43,3 +47,9 @@ export default function Currencies(): ReactElement {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
+})

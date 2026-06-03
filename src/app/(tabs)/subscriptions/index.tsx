@@ -1,6 +1,7 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 
+import EntityList from "#design/patterns/EntityList"
 import Page from "#design/templates/Page"
 import { toSubscriptionDetailsRoute } from "#shared/navigation"
 import { SubscriptionCard, useSubscriptions } from "#shared/subscriptions"
@@ -10,16 +11,19 @@ export default function Subscriptions(): ReactElement {
   const { data } = useSubscriptions()
 
   return (
-    <Page scroll>
-      {data?.map((subscription) => (
-        <SubscriptionCard
-          key={subscription.id}
-          subscription={subscription}
-          onPress={(selected) =>
-            router.push(toSubscriptionDetailsRoute(selected.id))
-          }
-        />
-      ))}
+    <Page>
+      <EntityList
+        data={data}
+        emptyMessage="No subscriptions yet."
+        renderItem={(subscription) => (
+          <SubscriptionCard
+            subscription={subscription}
+            onPress={(selected) =>
+              router.push(toSubscriptionDetailsRoute(selected.id))
+            }
+          />
+        )}
+      />
     </Page>
   )
 }

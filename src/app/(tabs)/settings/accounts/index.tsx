@@ -3,6 +3,7 @@ import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
+import EntityList from "#design/patterns/EntityList"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import {
@@ -29,17 +30,20 @@ export default function Accounts(): ReactElement {
 
   return (
     <View style={styles.fill}>
-      <Page scroll>
-        {data?.map((account) => (
-          <AccountCard
-            key={account.id}
-            account={account}
-            actions={[adjustAction(account)]}
-            onPress={(selectedAccount) =>
-              router.push(toAccountDetailsRoute(selectedAccount.id))
-            }
-          />
-        ))}
+      <Page>
+        <EntityList
+          data={data}
+          emptyMessage="No accounts yet."
+          renderItem={(account) => (
+            <AccountCard
+              account={account}
+              actions={[adjustAction(account)]}
+              onPress={(selectedAccount) =>
+                router.push(toAccountDetailsRoute(selectedAccount.id))
+              }
+            />
+          )}
+        />
       </Page>
       <FAB
         accessibilityLabel="Add account"
