@@ -3,7 +3,7 @@ import { ScrollView, type StyleProp, View, type ViewStyle } from "react-native"
 import { type Edge, SafeAreaView } from "react-native-safe-area-context"
 
 import { spacing } from "#design/foundations"
-import { useThemedStyles, type ThemeColors } from "#shared/theme"
+import { useThemedStyles, type ThemeColors } from "#design/theme"
 
 export type PageProps = {
   children: ReactNode

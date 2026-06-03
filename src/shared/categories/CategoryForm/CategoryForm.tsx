@@ -8,7 +8,8 @@ import Typography from "#design/elements/Typography"
 import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import DeleteButton from "#design/patterns/DeleteButton"
 import Form from "#design/patterns/Form"
-import { THEME_COLOR, useThemeColors } from "#shared/theme"
+
+import { THEME_COLOR, useThemeColors } from "#design/theme"
 
 import { type AddCategoryDto } from "../dtos"
 import { TRANSACTION_TYPE } from "../TransactionCategory"

@@ -8,7 +8,7 @@ import IconButton, {
 } from "#design/elements/IconButton"
 import Typography, { TYPOGRAPHY_VARIANT } from "#design/elements/Typography"
 import { shadows, spacing } from "#design/foundations"
-import { useThemeColors } from "#shared/theme"
+import { useThemeColors } from "#design/theme"
 
 import { FAB_POSITION } from "./constants"
 import { type FABProps } from "./types"

@@ -3,7 +3,7 @@ import { type ReactElement } from "react"
 
 import Icon, { APP_ICONS } from "#design/elements/Icon"
 import { spacing } from "#design/foundations"
-import { useThemeColors } from "#shared/theme"
+import { useThemeColors } from "#design/theme"
 
 export default function Layout(): ReactElement {
   const colors = useThemeColors()

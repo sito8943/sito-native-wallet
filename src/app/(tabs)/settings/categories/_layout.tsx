@@ -4,8 +4,8 @@ import { Pressable } from "react-native"
 
 import Icon, { APP_ICONS } from "#design/elements/Icon"
 import { spacing } from "#design/foundations"
+import { useThemeColors } from "#design/theme"
 import { toCategoryPrefabsRoute } from "#shared/navigation"
-import { useThemeColors } from "#shared/theme"
 
 export default function Layout(): ReactElement {
   const colors = useThemeColors()

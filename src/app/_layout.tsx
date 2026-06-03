@@ -12,7 +12,7 @@ import {
   RESOLVED_THEME,
   ThemeProvider,
   useThemePreference,
-} from "#shared/theme"
+} from "#design/theme"
 
 function RootNavigator(): ReactElement {
   const { resolvedTheme } = useThemePreference()

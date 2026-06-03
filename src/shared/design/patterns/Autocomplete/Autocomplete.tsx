@@ -16,7 +16,7 @@ import {
   useThemeColors,
   useThemedStyles,
   type ThemeColors,
-} from "#shared/theme"
+} from "#design/theme"
 
 import { DEFAULT_DEBOUNCE_MS, ICON_SIZE, LIST_MAX_HEIGHT } from "./constants"
 import { type AutocompleteOption, type AutocompleteProps } from "./types"

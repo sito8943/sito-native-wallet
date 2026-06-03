@@ -7,7 +7,7 @@ import {
   useThemeColors,
   useThemedStyles,
   type ThemeColors,
-} from "#shared/theme"
+} from "#design/theme"
 
 import { BUTTON_VARIANT } from "./constants"
 import { type ButtonProps } from "./types"

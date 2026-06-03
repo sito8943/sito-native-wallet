@@ -4,7 +4,7 @@ import {
   ICON_BUTTON_VARIANT,
   type IconButtonVariant,
 } from "#design/elements/IconButton"
-import { type useThemeColors } from "#shared/theme"
+import { type useThemeColors } from "#design/theme"
 
 import {
   EDGE_HORIZONTAL_GAP,

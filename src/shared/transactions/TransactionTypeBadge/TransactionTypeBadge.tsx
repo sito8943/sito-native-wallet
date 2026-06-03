@@ -7,7 +7,7 @@ import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { TRANSACTION_TYPE } from "#shared/categories"
 
-import { useThemeColors } from "#shared/theme"
+import { useThemeColors } from "#design/theme"
 
 import { type TransactionTypeBadgeProps } from "./types"
 

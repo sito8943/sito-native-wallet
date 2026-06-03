@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View } from "react-native"
 import Card from "#design/elements/Card"
 import Icon from "#design/elements/Icon"
 import { spacing } from "#design/foundations"
-import { THEME_COLOR, useThemeColors } from "#shared/theme"
+import { THEME_COLOR, useThemeColors } from "#design/theme"
 
 import { ACTION_ICON_SIZE } from "./constants"
 import { type EntityCardProps } from "./types"

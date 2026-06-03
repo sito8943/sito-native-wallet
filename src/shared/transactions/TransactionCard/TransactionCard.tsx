@@ -5,7 +5,7 @@ import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import EntityCard from "#design/patterns/EntityCard"
 import { CategoryBullet, TRANSACTION_TYPE } from "#shared/categories"
-import { useThemedStyles, type ThemeColors } from "#shared/theme"
+import { useThemedStyles, type ThemeColors } from "#design/theme"
 
 import { getTransactionType } from "../Transaction"
 import { TransactionTypeBadge } from "../TransactionTypeBadge"

@@ -1,7 +1,7 @@
 import { useCallback } from "react"
 
 import { APP_ICONS } from "#design/elements/Icon"
-import { THEME_COLOR } from "#shared/theme"
+import { THEME_COLOR } from "#design/theme"
 
 import { ACTION_ID } from "../constants"
 import { type Action } from "../types"
