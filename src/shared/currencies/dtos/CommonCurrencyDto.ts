@@ -1,4 +1,4 @@
-import { type BaseCommonEntityDto } from "#shared/dtos"
+import { type BaseCommonEntityDto } from "#shared/data"
 
 export type CommonCurrencyDto = BaseCommonEntityDto & {
   name: string

@@ -1,5 +1,5 @@
 import { TYPOGRAPHY_VARIANT } from "#design/foundations"
-import { type ThemeColors } from "#shared/theme"
+import { type ThemeColors } from "#design/theme"
 
 import { TYPOGRAPHY_TONE } from "./constants"
 import { type TypographyProps } from "./types"

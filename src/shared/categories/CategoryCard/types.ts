@@ -1,4 +1,4 @@
-import { type Action } from "#shared/actions"
+import { type Action } from "#design/interactions"
 
 import { type TransactionCategory } from "../TransactionCategory"
 

@@ -3,7 +3,7 @@ import { Pressable, View } from "react-native"
 
 import Icon, { APP_ICONS } from "#design/elements/Icon"
 import { spacing } from "#design/foundations"
-import { useThemedStyles, type ThemeColors } from "#shared/theme"
+import { useThemedStyles, type ThemeColors } from "#design/theme"
 
 import { type AccordionProps } from "./types"
 

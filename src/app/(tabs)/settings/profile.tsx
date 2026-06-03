@@ -16,7 +16,7 @@ import {
   useThemePreference,
   type ThemeColors,
   type ThemePreference,
-} from "#shared/theme"
+} from "#design/theme"
 
 const OPTIONS: Array<{ label: string; value: ThemePreference }> = [
   { label: "Light", value: THEME_PREFERENCE.LIGHT },

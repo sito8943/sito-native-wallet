@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react"
 
-import { useDeleteAction } from "#shared/actions"
+import { useDeleteAction } from "../useDeleteAction"
 
 import { useDialog } from "../useDialog"
 

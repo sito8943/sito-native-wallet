@@ -2,7 +2,7 @@ import { type ReactElement } from "react"
 import { View } from "react-native"
 
 import { radius, shadows, spacing } from "#design/foundations"
-import { useThemedStyles, type ThemeColors } from "#shared/theme"
+import { useThemedStyles, type ThemeColors } from "#design/theme"
 
 import { type CardProps } from "./types"
 

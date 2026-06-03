@@ -2,7 +2,7 @@ import { useMemo } from "react"
 
 import { useAccounts } from "#shared/accounts"
 import { useCategories } from "#shared/categories"
-import { useManager } from "#shared/manager"
+import { useManager } from "#shared/data"
 import { useClientStore } from "#shared/storage"
 
 import { type AddTransactionDto } from "../dtos"

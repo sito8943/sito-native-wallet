@@ -1,4 +1,4 @@
-import { type BaseFilterDto } from "#shared/dtos"
+import { type BaseFilterDto } from "#shared/data"
 
 export type FilterCurrencyDto = BaseFilterDto & {
   name?: string

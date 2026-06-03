@@ -7,7 +7,7 @@ import Chip from "#design/elements/Chip"
 import TextField from "#design/elements/TextField"
 import Typography from "#design/elements/Typography"
 import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
-import { THEME_COLOR, useThemeColors } from "#shared/theme"
+import { THEME_COLOR, useThemeColors } from "#design/theme"
 
 import { type AddCategoryDto } from "../dtos"
 import { TRANSACTION_TYPE } from "../TransactionCategory"

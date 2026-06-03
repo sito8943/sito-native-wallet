@@ -1,4 +1,4 @@
-import { type DeleteDto } from "#shared/dtos"
+import { type DeleteDto } from "#shared/data"
 
 export type UpdateCurrencyDto = DeleteDto & {
   name: string

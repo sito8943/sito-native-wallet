@@ -1,1 +1,0 @@
-export { useDeleteDialog } from "./useDeleteDialog"

@@ -11,7 +11,7 @@ import {
   type TransactionCategory,
   useCategories,
 } from "#shared/categories"
-import { useDeleteDialog } from "#shared/dialogs"
+import { useDeleteDialog } from "#design/interactions"
 import { toCategoryDetailsRoute, toNewCategoryRoute } from "#shared/navigation"
 
 export default function Categories(): ReactElement {

@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, View } from "react-native"
 
 import Icon from "#design/elements/Icon"
 import { radius, spacing } from "#design/foundations"
-import { useThemeColors } from "#shared/theme"
+import { useThemeColors } from "#design/theme"
 
 import {
   BUTTON_SIZES,
