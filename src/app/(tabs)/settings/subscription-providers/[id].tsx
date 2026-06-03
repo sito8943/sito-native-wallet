@@ -15,8 +15,12 @@ import {
 export default function EditSubscriptionProvider(): ReactElement {
   const router = useRouter()
   const { id } = useDetailRouteParams()
-  const { data: provider, isLoading, update, remove } =
-    useSubscriptionProvider(id)
+  const {
+    data: provider,
+    isLoading,
+    update,
+    remove,
+  } = useSubscriptionProvider(id)
 
   if (isLoading) {
     return (

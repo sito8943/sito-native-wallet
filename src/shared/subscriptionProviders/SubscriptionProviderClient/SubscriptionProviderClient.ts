@@ -1,8 +1,4 @@
-import {
-  textIncludes,
-  type QueryParam,
-  type QueryResult,
-} from "#shared/data"
+import { textIncludes, type QueryParam, type QueryResult } from "#shared/data"
 import { createId, StorageClient } from "#shared/data/storage"
 
 import { INITIAL_SUBSCRIPTION_PROVIDERS } from "../demoData"

@@ -2,23 +2,12 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "jsx": "react-native",
-    "types": [
-      "jest"
-    ],
+    "types": ["jest"],
     "paths": {
-      "#design/*": [
-        "./src/shared/design/*/index.ts"
-      ],
-      "#shared/*": [
-        "./src/shared/*/index.ts"
-      ]
+      "#design/*": ["./src/shared/design/*/index.ts"],
+      "#shared/*": ["./src/shared/*/index.ts"]
     },
     "strict": true
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }

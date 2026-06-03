@@ -5,10 +5,7 @@ import { useCategories } from "#shared/categories"
 import { applyQuery, SORT_ORDER, useManager } from "#shared/data"
 import { useClientStore } from "#shared/data/storage"
 
-import {
-  matchesTransactionFilter,
-  resolveTransactions,
-} from "../Transaction"
+import { matchesTransactionFilter, resolveTransactions } from "../Transaction"
 
 import {
   type UseTransactionsListProps,
