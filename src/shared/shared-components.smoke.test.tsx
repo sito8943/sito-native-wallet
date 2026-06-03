@@ -39,12 +39,18 @@ import {
   TRANSACTION_TYPE_FILTER,
 } from "#shared/transactions/TransactionsPreferences"
 
+const ts = {
+  createdAt: "2026-01-01T00:00:00.000Z",
+  updatedAt: "2026-01-01T00:00:00.000Z",
+}
+
 const mockCurrencies: Currency[] = [
   {
     id: "usd",
     name: "US Dollar",
     symbol: "$",
     description: "Primary currency",
+    ...ts,
   },
 ]
 
@@ -55,6 +61,7 @@ const mockAccounts: Account[] = [
     balance: 1520.25,
     type: "digital",
     currency: mockCurrencies[0],
+    ...ts,
   },
 ]
 
@@ -64,12 +71,14 @@ const mockCategories: TransactionCategory[] = [
     name: "Food",
     color: "#ef6c00",
     type: "expense",
+    ...ts,
   },
   {
     id: "salary",
     name: "Salary",
     color: "#2e7d32",
     type: "income",
+    ...ts,
   },
 ]
 
@@ -84,6 +93,7 @@ const mockSubscriptionProvider: SubscriptionProvider = {
   name: "Netflix",
   description: "Streaming service",
   website: "https://netflix.com",
+  ...ts,
 }
 
 const noop = (): void => undefined

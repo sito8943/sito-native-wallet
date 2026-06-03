@@ -1,9 +1,11 @@
+import { type Timestamps } from "#shared/data/storage"
+
 import { type TRANSACTION_TYPE } from "./constants"
 
 export type TransactionType =
   (typeof TRANSACTION_TYPE)[keyof typeof TRANSACTION_TYPE]
 
-export type TransactionCategory = {
+export type TransactionCategory = Partial<Timestamps> & {
   id: string
   name: string
   description?: string

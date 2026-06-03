@@ -1,19 +1,21 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
+import { SEED_TIMESTAMP } from "./constants"
 import {
   type ClientState,
   type ReactiveStore,
   type StorageClientConfig,
+  type Timestamps,
 } from "./types"
-
-const toError = (error: unknown, fallback: string): Error =>
-  error instanceof Error ? error : new Error(fallback)
+import { nowIso, toError } from "./utils"
 
 // Reactive AsyncStorage-backed CRUD store. In-memory cache is the single
 // source of truth; subscribers re-render on change; disk persists in the
-// background. Subclasses add entity-specific methods on top of insert/patch.
+// background. createdAt/updatedAt are owned here: stamped on insert, bumped on
+// patch — subclasses never set them. Subclasses add entity-specific methods on
+// top of insert/patch.
 export default abstract class StorageClient<
-  T extends { id: string },
+  T extends { id: string } & Partial<Timestamps>,
 > implements ReactiveStore<T> {
   private state: ClientState<T>
   private readonly listeners = new Set<() => void>()
@@ -22,7 +24,11 @@ export default abstract class StorageClient<
 
   constructor(config: StorageClientConfig<T>) {
     this.config = config
-    this.state = { items: config.initialValue, isLoading: true, error: null }
+    this.state = {
+      items: config.initialValue.map((seed) => this.ensureTimestamps(seed)),
+      isLoading: true,
+      error: null,
+    }
   }
 
   public subscribe = (listener: () => void): (() => void) => {
@@ -50,7 +56,10 @@ export default abstract class StorageClient<
 
         if (cached !== null) {
           this.setState({
-            items: this.config.parse(JSON.parse(cached)),
+            // Backfill timestamps for data persisted before they existed.
+            items: this.config
+              .parse(JSON.parse(cached))
+              .map((item) => this.ensureTimestamps(item)),
             isLoading: false,
           })
           return
@@ -70,7 +79,7 @@ export default abstract class StorageClient<
   }
 
   protected insert(item: T): void {
-    this.commit([...this.state.items, item])
+    this.commit([...this.state.items, this.stampNew(item)])
   }
 
   // Adds several items in a single commit (one persist + one notify) — used by
@@ -80,15 +89,31 @@ export default abstract class StorageClient<
       return
     }
 
-    this.commit([...this.state.items, ...items])
+    this.commit([
+      ...this.state.items,
+      ...items.map((item) => this.stampNew(item)),
+    ])
   }
 
   protected patch(id: string, partial: Partial<T>): void {
+    const updatedAt = nowIso()
     this.commit(
       this.state.items.map((item) =>
-        item.id === id ? { ...item, ...partial } : item,
+        item.id === id ? { ...item, ...partial, updatedAt } : item,
       ),
     )
+  }
+
+  // Fresh records get both timestamps set to now.
+  private stampNew(item: T): T {
+    const now = nowIso()
+    return { ...item, createdAt: now, updatedAt: now }
+  }
+
+  // Seeds and data persisted before timestamps existed get backfilled.
+  private ensureTimestamps(item: T): T {
+    const createdAt = item.createdAt ?? SEED_TIMESTAMP
+    return { ...item, createdAt, updatedAt: item.updatedAt ?? createdAt }
   }
 
   // Deletion split out so subclasses can override the public `remove` to add
