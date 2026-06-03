@@ -34,10 +34,11 @@ export default function CategoryForm({
   })
 
   const submit = (values: AddCategoryDto): void => {
-    const description = values.description?.trim()
+    const { description: rawDescription, ...rest } = values
+    const description = rawDescription?.trim()
 
     onSubmit({
-      ...values,
+      ...rest,
       ...(description ? { description } : {}),
       color: normalizeHexColor(values.color),
     })

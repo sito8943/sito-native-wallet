@@ -1,4 +1,4 @@
-import { createId, StorageClient } from "#shared/storage"
+import { createId, StorageClient } from "#shared/data/storage"
 
 import { type Currency } from "../Currency"
 import { INITIAL_CURRENCIES } from "../demoData"

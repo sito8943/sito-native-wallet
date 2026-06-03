@@ -1,7 +1,7 @@
 import { useMemo, type ReactElement, type ReactNode } from "react"
 import { useColorScheme } from "react-native"
 
-import { useStoredState } from "#shared/storage"
+import { useStoredState } from "#shared/data/storage"
 
 import { THEME_PREFERENCE, THEME_PREFERENCE_STORAGE_KEY } from "./constants"
 import { ThemeContext } from "./ThemeContext"

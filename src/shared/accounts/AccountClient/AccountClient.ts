@@ -1,4 +1,4 @@
-import { createId, StorageClient } from "#shared/storage"
+import { createId, StorageClient } from "#shared/data/storage"
 
 import { type Account } from "../Account"
 import { INITIAL_ACCOUNTS } from "../demoData"

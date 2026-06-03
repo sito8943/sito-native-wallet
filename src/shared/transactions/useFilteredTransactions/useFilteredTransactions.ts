@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 
 import { useAccounts } from "#shared/accounts"
-import { useStoredState } from "#shared/storage"
+import { useStoredState } from "#shared/data/storage"
 
 import {
   type TransactionSortOrder,

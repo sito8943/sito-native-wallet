@@ -1,4 +1,4 @@
-import { createId, StorageClient } from "#shared/storage"
+import { createId, StorageClient } from "#shared/data/storage"
 
 import { INITIAL_CATEGORIES } from "../demoData"
 import { type AddCategoryDto } from "../dtos"

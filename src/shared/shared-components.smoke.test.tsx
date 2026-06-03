@@ -129,9 +129,10 @@ jest.mock("#shared/data", () => ({
     SubscriptionProviders: subscriptionProvidersClient,
     Transactions: transactionsClient,
   }),
+  todayStamp: () => "2026/01/01",
 }))
 
-jest.mock("#shared/storage", () => ({
+jest.mock("#shared/data/storage", () => ({
   useStoredState: jest.fn(),
   createId: jest.fn(),
   StorageClient: jest.fn(),
@@ -191,7 +192,7 @@ describe("Shared feature component smoke tests", () => {
 
   it("renders CategoryCard", () => {
     const { getByText } = render(<CategoryCard category={mockCategories[0]} />)
-    expect(getByText("expense")).toBeTruthy()
+    expect(getByText("Food")).toBeTruthy()
   })
 
   it("renders CategoryForm", () => {

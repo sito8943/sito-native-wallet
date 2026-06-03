@@ -5,7 +5,7 @@
 import { type AccountClient } from "#shared/accounts/AccountClient"
 import { type CategoryClient } from "#shared/categories/CategoryClient"
 import { TRANSACTION_TYPE } from "#shared/categories/TransactionCategory"
-import { createId, StorageClient } from "#shared/storage"
+import { createId, StorageClient } from "#shared/data/storage"
 
 import { INITIAL_TRANSACTIONS } from "../demoData"
 import { type AddTransactionDto } from "../dtos"
