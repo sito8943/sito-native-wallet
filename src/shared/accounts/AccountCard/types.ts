@@ -1,7 +1,10 @@
+import { type Action } from "#shared/actions"
+
 import { type Account } from "../Account"
 
 export type AccountCardProps = {
   account: Account
+  actions?: Array<Action<Account>>
   onPress?: (account: Account) => void
 }
 

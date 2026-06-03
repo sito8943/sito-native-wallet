@@ -1,0 +1,1 @@
+export const ADJUST_DESCRIPTION_LIMIT = 60

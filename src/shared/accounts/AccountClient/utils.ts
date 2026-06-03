@@ -14,6 +14,8 @@ const isAccount = (value: unknown): value is Account => {
   return (
     typeof candidate.id === "string" &&
     typeof candidate.name === "string" &&
+    (candidate.description === undefined ||
+      typeof candidate.description === "string") &&
     (candidate.bankName === undefined ||
       typeof candidate.bankName === "string") &&
     typeof candidate.balance === "number" &&

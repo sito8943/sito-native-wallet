@@ -7,6 +7,7 @@ export const toFormValues = (dto?: AddAccountDto): AccountFormValues =>
   dto === undefined
     ? {
         name: "",
+        description: "",
         bankName: "",
         balance: "",
         type: ACCOUNT_TYPE.CASH,
@@ -14,6 +15,7 @@ export const toFormValues = (dto?: AddAccountDto): AccountFormValues =>
       }
     : {
         name: dto.name,
+        description: dto.description ?? "",
         bankName: dto.bankName ?? "",
         balance: String(dto.balance),
         type: dto.type,

@@ -5,6 +5,7 @@ import { type AddAccountDto } from "../dtos"
 // until submit maps it back to the full Currency on the DTO.
 export type AccountFormValues = {
   name: string
+  description: string
   bankName: string
   balance: string
   type: AccountType

@@ -9,4 +9,7 @@ export type TransactionCategory = {
   description?: string
   color: string
   type: TransactionType
+  // System categories (e.g. balance adjustments) are seeded, not user-managed:
+  // hidden from the category list and the transaction form picker.
+  system?: boolean
 }

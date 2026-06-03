@@ -1,10 +1,9 @@
 import { type ReactElement } from "react"
 import { Controller, useForm } from "react-hook-form"
-import { View } from "react-native"
 
-import Button, { BUTTON_VARIANT } from "#design/elements/Button"
 import TextField from "#design/elements/TextField"
-import { spacing } from "#design/foundations"
+import DeleteButton from "#design/patterns/DeleteButton"
+import Form from "#design/patterns/Form"
 
 import { type AddCurrencyDto } from "../dtos"
 
@@ -22,7 +21,13 @@ export default function CurrencyForm({
   })
 
   return (
-    <View style={styles.container}>
+    <Form
+      submitLabel={submitLabel}
+      onSubmit={handleSubmit(onSubmit)}
+      extraActions={
+        onDelete !== undefined ? <DeleteButton onPress={onDelete} /> : undefined
+      }
+    >
       <Controller
         control={control}
         name="name"
@@ -92,31 +97,6 @@ export default function CurrencyForm({
           />
         )}
       />
-
-      <View style={styles.actions}>
-        <Button label={submitLabel} onPress={handleSubmit(onSubmit)} />
-
-        {onDelete !== undefined && (
-          <Button
-            label="Delete"
-            variant={BUTTON_VARIANT.DANGER}
-            onPress={onDelete}
-          />
-        )}
-      </View>
-    </View>
+    </Form>
   )
-}
-
-const styles = {
-  container: {
-    gap: spacing(4),
-    paddingVertical: spacing(3),
-    paddingHorizontal: spacing(4),
-  },
-  actions: {
-    flexDirection: "row" as const,
-    gap: spacing(4),
-    marginTop: spacing(4),
-  },
 }

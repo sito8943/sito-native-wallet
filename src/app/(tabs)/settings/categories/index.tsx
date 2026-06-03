@@ -29,14 +29,16 @@ export default function Categories(): ReactElement {
   return (
     <View style={{ flex: 1 }}>
       <Page scroll>
-        {data.map((category) => (
-          <CategoryCard
-            key={category.id}
-            actions={[deleteDialog.action(category)]}
-            category={category}
-            onPress={() => router.push(toCategoryDetailsRoute(category.id))}
-          />
-        ))}
+        {data
+          .filter((category) => category.system !== true)
+          .map((category) => (
+            <CategoryCard
+              key={category.id}
+              actions={[deleteDialog.action(category)]}
+              category={category}
+              onPress={() => router.push(toCategoryDetailsRoute(category.id))}
+            />
+          ))}
       </Page>
       <FAB
         accessibilityLabel="Add category"

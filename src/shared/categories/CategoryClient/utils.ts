@@ -18,6 +18,8 @@ const isCategory = (value: unknown): value is TransactionCategory => {
     (candidate.description === undefined ||
       typeof candidate.description === "string") &&
     typeof candidate.color === "string" &&
+    (candidate.system === undefined ||
+      typeof candidate.system === "boolean") &&
     TRANSACTION_TYPES.includes(candidate.type as TransactionType)
   )
 }

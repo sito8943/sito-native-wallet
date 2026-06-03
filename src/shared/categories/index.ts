@@ -14,7 +14,7 @@ export {
   CategoryForm,
   useCategories,
 }
-export { TRANSACTION_TYPE } from "./TransactionCategory"
+export { ADJUSTMENT_CATEGORY_ID, TRANSACTION_TYPE } from "./TransactionCategory"
 export type {
   TransactionCategory,
   TransactionType,

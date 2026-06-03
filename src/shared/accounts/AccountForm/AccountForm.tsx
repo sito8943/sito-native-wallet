@@ -2,12 +2,13 @@ import { useMemo, type ReactElement } from "react"
 import { Controller, useForm, useWatch } from "react-hook-form"
 import { StyleSheet, View } from "react-native"
 
-import Button, { BUTTON_VARIANT } from "#design/elements/Button"
 import Chip from "#design/elements/Chip"
 import TextField from "#design/elements/TextField"
 import Typography, { TYPOGRAPHY_VARIANT } from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 import Autocomplete from "#design/patterns/Autocomplete"
+import DeleteButton from "#design/patterns/DeleteButton"
+import Form from "#design/patterns/Form"
 import { useCurrencies } from "#shared/currencies"
 
 import {
@@ -47,6 +48,7 @@ export default function AccountForm({
   const submit = (values: AccountFormValues): void => {
     const currency = currencies.find((item) => item.id === values.currencyId)
     const bankName = values.bankName.trim()
+    const description = values.description.trim()
 
     if (currency === undefined) {
       return
@@ -54,6 +56,7 @@ export default function AccountForm({
 
     onSubmit({
       name: values.name,
+      ...(description !== "" ? { description } : {}),
       ...(bankName !== "" && values.type === ACCOUNT_TYPE.DIGITAL
         ? { bankName }
         : {}),
@@ -64,7 +67,13 @@ export default function AccountForm({
   }
 
   return (
-    <View style={styles.container}>
+    <Form
+      submitLabel={submitLabel}
+      onSubmit={handleSubmit(submit)}
+      extraActions={
+        onDelete !== undefined ? <DeleteButton onPress={onDelete} /> : undefined
+      }
+    >
       <Controller
         control={control}
         name="name"
@@ -81,6 +90,29 @@ export default function AccountForm({
             placeholder="Main account"
             autoCapitalize="words"
             maxLength={ACCOUNT_FIELD_LIMITS.NAME}
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            error={fieldState.error?.message}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="description"
+        rules={{
+          maxLength: {
+            value: ACCOUNT_FIELD_LIMITS.DESCRIPTION,
+            message: `Max ${ACCOUNT_FIELD_LIMITS.DESCRIPTION} characters`,
+          },
+        }}
+        render={({ field: { onChange, onBlur, value }, fieldState }) => (
+          <TextField
+            label="Description"
+            placeholder="Optional note"
+            multiline
+            maxLength={ACCOUNT_FIELD_LIMITS.DESCRIPTION}
             value={value}
             onChangeText={onChange}
             onBlur={onBlur}
@@ -171,27 +203,11 @@ export default function AccountForm({
         )}
       />
 
-      <View style={styles.actions}>
-        <Button label={submitLabel} onPress={handleSubmit(submit)} />
-
-        {onDelete !== undefined && (
-          <Button
-            label="Delete"
-            variant={BUTTON_VARIANT.DANGER}
-            onPress={onDelete}
-          />
-        )}
-      </View>
-    </View>
+    </Form>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: spacing(4),
-    paddingHorizontal: spacing(4),
-    paddingVertical: spacing(3),
-  },
   field: {
     gap: spacing(2),
   },
@@ -199,10 +215,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: spacing(2),
-  },
-  actions: {
-    flexDirection: "row",
-    gap: spacing(4),
-    marginTop: spacing(4),
   },
 })

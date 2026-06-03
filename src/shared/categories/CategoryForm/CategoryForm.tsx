@@ -2,11 +2,12 @@ import { type ReactElement } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { Pressable, StyleSheet, View } from "react-native"
 
-import Button, { BUTTON_VARIANT } from "#design/elements/Button"
 import Chip from "#design/elements/Chip"
 import TextField from "#design/elements/TextField"
 import Typography from "#design/elements/Typography"
 import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import DeleteButton from "#design/patterns/DeleteButton"
+import Form from "#design/patterns/Form"
 import { THEME_COLOR, useThemeColors } from "#shared/theme"
 
 import { type AddCategoryDto } from "../dtos"
@@ -42,7 +43,13 @@ export default function CategoryForm({
   }
 
   return (
-    <View style={styles.container}>
+    <Form
+      submitLabel={submitLabel}
+      onSubmit={handleSubmit(submit)}
+      extraActions={
+        onDelete !== undefined ? <DeleteButton onPress={onDelete} /> : undefined
+      }
+    >
       <Controller
         control={control}
         name="name"
@@ -166,27 +173,11 @@ export default function CategoryForm({
         }}
       />
 
-      <View style={styles.actions}>
-        <Button label={submitLabel} onPress={handleSubmit(submit)} />
-
-        {onDelete !== undefined && (
-          <Button
-            label="Delete"
-            variant={BUTTON_VARIANT.DANGER}
-            onPress={onDelete}
-          />
-        )}
-      </View>
-    </View>
+    </Form>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: spacing(4),
-    paddingHorizontal: spacing(4),
-    paddingVertical: spacing(3),
-  },
   field: {
     gap: spacing(2),
   },
@@ -200,10 +191,5 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     height: spacing(8),
     width: spacing(8),
-  },
-  actions: {
-    flexDirection: "row",
-    gap: spacing(4),
-    marginTop: spacing(4),
   },
 })

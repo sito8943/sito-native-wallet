@@ -1,4 +1,5 @@
 import {
+  ADJUSTMENT_CATEGORY_ID,
   TRANSACTION_TYPE,
   type TransactionCategory,
 } from "./TransactionCategory"
@@ -35,9 +36,31 @@ const home: TransactionCategory = {
   type: TRANSACTION_TYPE.EXPENSE,
 }
 
+// System categories backing balance adjustments. Seeded, hidden from the
+// category list and the transaction picker, and used by sign of the delta.
+const adjustmentIncome: TransactionCategory = {
+  id: ADJUSTMENT_CATEGORY_ID.INCOME,
+  name: "Balance adjustment",
+  description: "Automatic balance increase",
+  color: "#607d8b",
+  type: TRANSACTION_TYPE.INCOME,
+  system: true,
+}
+
+const adjustmentExpense: TransactionCategory = {
+  id: ADJUSTMENT_CATEGORY_ID.EXPENSE,
+  name: "Balance adjustment",
+  description: "Automatic balance decrease",
+  color: "#607d8b",
+  type: TRANSACTION_TYPE.EXPENSE,
+  system: true,
+}
+
 export const INITIAL_CATEGORIES: TransactionCategory[] = [
   salary,
   food,
   transport,
   home,
+  adjustmentIncome,
+  adjustmentExpense,
 ]

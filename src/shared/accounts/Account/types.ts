@@ -9,6 +9,7 @@ export type AccountBankName =
 export type Account = {
   id: string
   name: string
+  description?: string
   bankName?: string
   balance: number
   type: AccountType

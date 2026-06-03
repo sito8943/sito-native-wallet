@@ -1,11 +1,10 @@
 import { useMemo, type ReactElement } from "react"
 import { Controller, useForm } from "react-hook-form"
-import { StyleSheet, View } from "react-native"
 
-import Button, { BUTTON_VARIANT } from "#design/elements/Button"
 import TextField from "#design/elements/TextField"
-import { spacing } from "#design/foundations"
 import Autocomplete from "#design/patterns/Autocomplete"
+import DeleteButton from "#design/patterns/DeleteButton"
+import Form from "#design/patterns/Form"
 import { useAccounts } from "#shared/accounts"
 import { useCategories } from "#shared/categories"
 
@@ -38,10 +37,12 @@ export default function TransactionForm({
 
   const categoryOptions = useMemo(
     () =>
-      categories.map((category) => ({
-        id: category.id,
-        label: category.name,
-      })),
+      categories
+        .filter((category) => category.system !== true)
+        .map((category) => ({
+          id: category.id,
+          label: category.name,
+        })),
     [categories],
   )
 
@@ -56,7 +57,13 @@ export default function TransactionForm({
   }
 
   return (
-    <View style={styles.container}>
+    <Form
+      submitLabel={submitLabel}
+      onSubmit={handleSubmit(submit)}
+      extraActions={
+        onDelete !== undefined ? <DeleteButton onPress={onDelete} /> : undefined
+      }
+    >
       <Controller
         control={control}
         name="description"
@@ -160,30 +167,6 @@ export default function TransactionForm({
         )}
       />
 
-      <View style={styles.actions}>
-        <Button label={submitLabel} onPress={handleSubmit(submit)} />
-
-        {onDelete !== undefined && (
-          <Button
-            label="Delete"
-            variant={BUTTON_VARIANT.DANGER}
-            onPress={onDelete}
-          />
-        )}
-      </View>
-    </View>
+    </Form>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    gap: spacing(4),
-    paddingHorizontal: spacing(4),
-    paddingVertical: spacing(3),
-  },
-  actions: {
-    flexDirection: "row",
-    gap: spacing(4),
-    marginTop: spacing(4),
-  },
-})
