@@ -1,4 +1,4 @@
-import { type ImportPreviewDto } from "#shared/dtos"
+import { type ImportPreviewDto } from "#shared/data"
 
 import { type CurrencyDto } from "./CurrencyDto"
 
