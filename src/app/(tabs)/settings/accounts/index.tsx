@@ -10,8 +10,8 @@ import {
   AccountAdjustBalanceSheet,
   AccountCard,
   useAccounts,
+  useAdjustBalanceAction,
 } from "#shared/accounts"
-import { type Action, ACTION_ID } from "#shared/actions"
 import { ADJUSTMENT_CATEGORY_ID } from "#shared/categories"
 import { toAccountDetailsRoute, toNewAccountRoute } from "#shared/navigation"
 import { todayStamp } from "#shared/time"
@@ -22,13 +22,9 @@ export default function Accounts(): ReactElement {
   const { data } = useAccounts()
   const { addTransaction } = useTransactions()
   const [adjusting, setAdjusting] = useState<Account | null>(null)
-
-  const adjustAction: Action<Account> = {
-    id: ACTION_ID.ADJUST_BALANCE,
-    icon: APP_ICONS.adjustBalance,
-    accessibilityLabel: "Adjust balance",
-    onPress: (account) => setAdjusting(account),
-  }
+  const { action: adjustAction } = useAdjustBalanceAction({
+    onPress: setAdjusting,
+  })
 
   // Records the difference as a system adjustment transaction, which moves the
   // balance to the target through the normal transaction → balance flow.
@@ -62,7 +58,7 @@ export default function Accounts(): ReactElement {
           <AccountCard
             key={account.id}
             account={account}
-            actions={[adjustAction]}
+            actions={[adjustAction(account)]}
             onPress={(selectedAccount) =>
               router.push(toAccountDetailsRoute(selectedAccount.id))
             }
