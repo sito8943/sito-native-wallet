@@ -1,4 +1,4 @@
-import { type Action } from "#shared/actions"
+import { type Action } from "../types"
 
 export type UseDeleteDialogProps<T> = {
   onConfirm: (entity: T) => void

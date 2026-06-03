@@ -1,7 +1,7 @@
 import { type ReactNode } from "react"
 import { type StyleProp, type ViewStyle } from "react-native"
 
-import { type Action } from "#shared/actions"
+import { type Action } from "#design/interactions"
 
 export type EntityCardProps<T> = {
   entity: T
