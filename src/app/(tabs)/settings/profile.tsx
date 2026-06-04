@@ -17,29 +17,47 @@ import {
   type ThemeColors,
   type ThemePreference,
 } from "#design/theme"
+import { LANGUAGE, useI18n, type Language } from "#shared/i18n"
 
-const OPTIONS: Array<{ label: string; value: ThemePreference }> = [
-  { label: "Light", value: THEME_PREFERENCE.LIGHT },
-  { label: "Dark", value: THEME_PREFERENCE.DARK },
-  { label: "System", value: THEME_PREFERENCE.SYSTEM },
+const APPEARANCE_OPTIONS: Array<{
+  labelKey:
+    | "profile.appearance.light"
+    | "profile.appearance.dark"
+    | "profile.appearance.system"
+  value: ThemePreference
+}> = [
+  { labelKey: "profile.appearance.light", value: THEME_PREFERENCE.LIGHT },
+  { labelKey: "profile.appearance.dark", value: THEME_PREFERENCE.DARK },
+  { labelKey: "profile.appearance.system", value: THEME_PREFERENCE.SYSTEM },
+]
+
+const LANGUAGE_OPTIONS: Array<{
+  labelKey: "profile.language.english" | "profile.language.spanish"
+  value: Language
+}> = [
+  { labelKey: "profile.language.english", value: LANGUAGE.EN },
+  { labelKey: "profile.language.spanish", value: LANGUAGE.ES },
 ]
 
 export default function Profile(): ReactElement {
   const styles = useThemedStyles(createStyles)
   const { preference, setPreference } = useThemePreference()
+  const { language, setLanguage, t } = useI18n()
 
   return (
     <Page scroll>
       <Card>
         <View style={styles.copy}>
-          <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>Appearance</Typography>
+          <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
+            {t("profile.appearance.title")}
+          </Typography>
           <Typography tone={TYPOGRAPHY_TONE.MUTED}>
-            Choose how SitoWallet looks. System follows your device setting.
+            {t("profile.appearance.description")}
           </Typography>
         </View>
 
         <View style={styles.segments}>
-          {OPTIONS.map((option) => {
+          {APPEARANCE_OPTIONS.map((option) => {
             const active = preference === option.value
             return (
               <Pressable
@@ -58,7 +76,45 @@ export default function Profile(): ReactElement {
                     active ? TYPOGRAPHY_TONE.INVERTED : TYPOGRAPHY_TONE.DEFAULT
                   }
                 >
-                  {option.label}
+                  {t(option.labelKey)}
+                </Typography>
+              </Pressable>
+            )
+          })}
+        </View>
+      </Card>
+
+      <Card>
+        <View style={styles.copy}>
+          <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
+            {t("profile.language.title")}
+          </Typography>
+          <Typography tone={TYPOGRAPHY_TONE.MUTED}>
+            {t("profile.language.description")}
+          </Typography>
+        </View>
+
+        <View style={styles.segments}>
+          {LANGUAGE_OPTIONS.map((option) => {
+            const active = language === option.value
+            return (
+              <Pressable
+                key={option.value}
+                onPress={() => {
+                  setLanguage(option.value)
+                }}
+                style={[
+                  styles.segment,
+                  active ? styles.segmentActive : styles.segmentInactive,
+                ]}
+              >
+                <Typography
+                  variant={TYPOGRAPHY_VARIANT.LABEL}
+                  tone={
+                    active ? TYPOGRAPHY_TONE.INVERTED : TYPOGRAPHY_TONE.DEFAULT
+                  }
+                >
+                  {t(option.labelKey)}
                 </Typography>
               </Pressable>
             )

@@ -9,6 +9,7 @@ import {
   ThemeProvider,
   useThemePreference,
 } from "#design/theme"
+import { LanguageProvider } from "#shared/i18n"
 import {
   INITIAL_SUBSCRIPTIONS,
   notifyUpcomingRenewal,
@@ -46,8 +47,10 @@ function RootNavigator(): ReactElement {
 
 export default function Layout(): ReactElement {
   return (
-    <ThemeProvider>
-      <RootNavigator />
-    </ThemeProvider>
+    <LanguageProvider>
+      <ThemeProvider>
+        <RootNavigator />
+      </ThemeProvider>
+    </LanguageProvider>
   )
 }

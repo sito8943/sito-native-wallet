@@ -4,9 +4,11 @@ import { type ReactElement } from "react"
 import Icon, { APP_ICONS } from "#design/elements/Icon"
 import { spacing } from "#design/foundations"
 import { useThemeColors } from "#design/theme"
+import { useI18n } from "#shared/i18n"
 
 export default function Layout(): ReactElement {
   const colors = useThemeColors()
+  const { t } = useI18n()
 
   return (
     <Tabs
@@ -22,7 +24,7 @@ export default function Layout(): ReactElement {
       <Tabs.Screen
         name="home"
         options={{
-          title: "Home",
+          title: t("nav.home"),
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon icon={APP_ICONS.home} color={color} size={spacing(5)} />
@@ -32,7 +34,7 @@ export default function Layout(): ReactElement {
       <Tabs.Screen
         name="transactions"
         options={{
-          title: "Transactions",
+          title: t("nav.transactions"),
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon
@@ -46,7 +48,7 @@ export default function Layout(): ReactElement {
       <Tabs.Screen
         name="subscriptions"
         options={{
-          title: "Subscriptions",
+          title: t("nav.subscriptions"),
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon
@@ -60,7 +62,7 @@ export default function Layout(): ReactElement {
       <Tabs.Screen
         name="settings"
         options={{
-          title: "Settings",
+          title: t("nav.settings"),
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon icon={APP_ICONS.settings} color={color} size={spacing(5)} />

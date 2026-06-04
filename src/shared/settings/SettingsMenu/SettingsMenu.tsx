@@ -7,16 +7,18 @@ import Icon, { APP_ICONS } from "#design/elements/Icon"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 import { useThemeColors } from "#design/theme"
+import { useI18n } from "#shared/i18n"
 
 import { settingsMenuItems } from "./items"
 
 export default function SettingsMenu(): ReactElement {
   const colors = useThemeColors()
+  const { t } = useI18n()
 
   return (
     <>
       {settingsMenuItems.map((item) => (
-        <Link key={item.label} href={item.href} asChild>
+        <Link key={item.labelKey} href={item.href} asChild>
           <Pressable>
             <Card>
               <View style={styles.row}>
@@ -26,7 +28,7 @@ export default function SettingsMenu(): ReactElement {
                     color={colors.textStrong}
                     size={spacing(5)}
                   />
-                  <Typography>{item.label}</Typography>
+                  <Typography>{t(item.labelKey)}</Typography>
                 </View>
                 <Icon
                   icon={APP_ICONS.chevronRight}

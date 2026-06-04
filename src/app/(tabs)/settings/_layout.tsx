@@ -2,9 +2,11 @@ import { Stack } from "expo-router"
 import { type ReactElement } from "react"
 
 import { useThemeColors } from "#design/theme"
+import { useI18n } from "#shared/i18n"
 
 export default function Layout(): ReactElement {
   const colors = useThemeColors()
+  const { t } = useI18n()
 
   return (
     <Stack
@@ -13,8 +15,11 @@ export default function Layout(): ReactElement {
         headerTintColor: colors.textStrong,
       }}
     >
-      <Stack.Screen name="index" options={{ title: "Settings" }} />
-      <Stack.Screen name="profile" options={{ title: "Profile" }} />
+      <Stack.Screen name="index" options={{ title: t("settings.title") }} />
+      <Stack.Screen
+        name="profile"
+        options={{ title: t("settings.profile.title") }}
+      />
       <Stack.Screen name="categories" options={{ headerShown: false }} />
       <Stack.Screen name="currencies" options={{ headerShown: false }} />
       <Stack.Screen name="accounts" options={{ headerShown: false }} />
