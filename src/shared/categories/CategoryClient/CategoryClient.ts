@@ -32,7 +32,7 @@ export default class CategoryClient extends StorageClient<TransactionCategory> {
     this.insertMany(inputs.map((input) => ({ id: createId(), ...input })))
   }
 
-  public update = (id: string, input: AddCategoryDto): void => {
+  public update = (id: number, input: AddCategoryDto): void => {
     this.patch(id, input)
   }
 

@@ -11,7 +11,7 @@ export const toFormValues = (dto?: AddAccountDto): AccountFormValues =>
         bankName: "",
         balance: "",
         type: ACCOUNT_TYPE.CASH,
-        currencyId: "",
+        currencyId: 0,
       }
     : {
         name: dto.name,

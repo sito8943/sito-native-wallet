@@ -7,7 +7,7 @@ import { type ThemeColorName } from "#design/theme"
 // @sito/dashboard, trimmed for RN (no tooltip/multiple/sticky). icon is an
 // APP_ICONS value, rendered through our Icon element; color is a THEME_COLOR.
 export type Action<T> = {
-  id: string
+  id: number
   icon: IconProp
   accessibilityLabel: string
   onPress: (entity: T) => void

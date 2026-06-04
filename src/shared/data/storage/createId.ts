@@ -1,2 +1,2 @@
-export const createId = (): string =>
-  `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`
+export const createId = (): number =>
+  Date.now() * 1000 + Math.floor(Math.random() * 1000)

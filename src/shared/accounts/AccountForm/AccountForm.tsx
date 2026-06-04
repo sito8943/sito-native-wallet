@@ -44,6 +44,8 @@ export default function AccountForm({
       })),
     [currencies],
   )
+  const selectedBankOptionId = (bankName: string): number =>
+    ACCOUNT_BANK_OPTIONS.find((option) => option.label === bankName)?.id ?? 0
 
   const submit = (values: AccountFormValues): void => {
     const currency = currencies.find((item) => item.id === values.currencyId)
@@ -176,9 +178,12 @@ export default function AccountForm({
               label="Bank"
               placeholder="Select bank"
               options={ACCOUNT_BANK_OPTIONS}
-              value={value === "" ? null : value}
+              value={selectedBankOptionId(value)}
               onChange={(next) => {
-                onChange(next ?? "")
+                onChange(
+                  ACCOUNT_BANK_OPTIONS.find((option) => option.id === next)
+                    ?.label ?? "",
+                )
               }}
             />
           )}
@@ -194,10 +199,8 @@ export default function AccountForm({
             label="Currency"
             placeholder="Search currencies"
             options={currencyOptions}
-            value={value === "" ? null : value}
-            onChange={(next) => {
-              onChange(next ?? "")
-            }}
+            value={value}
+            onChange={onChange}
             error={fieldState.error?.message}
           />
         )}

@@ -7,7 +7,7 @@ import { type UseCurrencyState } from "./types"
 
 // Selects one currency by id through the client's getById and binds its
 // mutations. The view doesn't list all currencies and filter in render.
-export default function useCurrency(id: string): UseCurrencyState {
+export default function useCurrency(id: number): UseCurrencyState {
   const client = useManager().Currencies
   const { error, isLoading } = useClientStore(client)
   const currency = client.getById(id) ?? null

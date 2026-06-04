@@ -13,7 +13,7 @@ export type TransactionSortOrder =
   (typeof TRANSACTION_SORT_ORDER)[keyof typeof TRANSACTION_SORT_ORDER]
 
 export type TransactionsPreferences = {
-  accountId: string | null
+  accountId: number
   sortOrder: TransactionSortOrder
   typeFilter: TransactionTypeFilter
 }

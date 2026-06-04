@@ -145,10 +145,8 @@ export default function TransactionForm({
             label="Account"
             placeholder="Search accounts"
             options={accountOptions}
-            value={value === "" ? null : value}
-            onChange={(next) => {
-              onChange(next ?? "")
-            }}
+            value={value}
+            onChange={onChange}
             error={fieldState.error?.message}
           />
         )}

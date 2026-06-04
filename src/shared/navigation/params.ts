@@ -1,3 +1,3 @@
 export type DetailRouteParams = {
-  id: string
+  id: number
 }

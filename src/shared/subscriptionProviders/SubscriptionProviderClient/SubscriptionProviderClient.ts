@@ -33,7 +33,7 @@ export default class SubscriptionProviderClient extends StorageClient<Subscripti
     this.insert({ id: createId(), ...input })
   }
 
-  public update = (id: string, input: AddSubscriptionProviderDto): void => {
+  public update = (id: number, input: AddSubscriptionProviderDto): void => {
     this.patch(id, input)
   }
 

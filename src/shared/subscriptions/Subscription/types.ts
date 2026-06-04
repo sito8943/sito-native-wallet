@@ -14,7 +14,7 @@ export type SubscriptionBillingUnit =
   (typeof SUBSCRIPTION_BILLING_UNIT)[keyof typeof SUBSCRIPTION_BILLING_UNIT]
 
 export type Subscription = {
-  id: string
+  id: number
   name: string
   amount: number
   currency: Currency

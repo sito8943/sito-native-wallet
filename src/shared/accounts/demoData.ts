@@ -7,14 +7,14 @@ import { ACCOUNT_BANK_NAME, ACCOUNT_TYPE, type Account } from "./Account"
 // data. Keeps the modlet a black box and avoids the Manager import cycle. The
 // Currency type import is erased at build time, so it pulls in no runtime code.
 const euro: Currency = {
-  id: "eur",
+  id: 1,
   name: "Euro",
   symbol: "€",
   description: "European Union currency",
 }
 
 const dollar: Currency = {
-  id: "usd",
+  id: 2,
   name: "US Dollar",
   symbol: "$",
   description: "United States currency",
@@ -22,7 +22,7 @@ const dollar: Currency = {
 
 export const INITIAL_ACCOUNTS: Account[] = [
   {
-    id: "main",
+    id: 1,
     name: "Main account",
     bankName: ACCOUNT_BANK_NAME.CAIXA,
     balance: 2487.48,
@@ -30,7 +30,7 @@ export const INITIAL_ACCOUNTS: Account[] = [
     currency: euro,
   },
   {
-    id: "travel",
+    id: 2,
     name: "Travel card",
     bankName: ACCOUNT_BANK_NAME.REVOLUT,
     balance: 420.35,
@@ -38,7 +38,7 @@ export const INITIAL_ACCOUNTS: Account[] = [
     currency: euro,
   },
   {
-    id: "savings",
+    id: 3,
     name: "Savings jar",
     bankName: ACCOUNT_BANK_NAME.BPA,
     balance: 1200,

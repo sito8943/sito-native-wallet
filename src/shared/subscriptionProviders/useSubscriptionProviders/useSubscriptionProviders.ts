@@ -27,12 +27,12 @@ export default function useSubscriptionProviders(
       client.add(input)
     },
     updateSubscriptionProvider: (
-      id: string,
+      id: number,
       input: AddSubscriptionProviderDto,
     ) => {
       client.update(id, input)
     },
-    removeSubscriptionProvider: (id: string) => {
+    removeSubscriptionProvider: (id: number) => {
       client.remove(id)
     },
   }

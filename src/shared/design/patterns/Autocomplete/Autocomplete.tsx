@@ -43,12 +43,12 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
   const [query, setQuery] = useState("")
   const [debouncedQuery, setDebouncedQuery] = useState("")
 
-  const optionLabel = (id: string): string =>
+  const optionLabel = (id: number): string =>
     options.find((option) => option.id === id)?.label ?? ""
 
   const selectedIds = useMemo(
     () =>
-      props.multiple ? props.value : props.value === null ? [] : [props.value],
+      props.multiple ? props.value : props.value === 0 ? [] : [props.value],
     [props.multiple, props.value],
   )
 
@@ -81,7 +81,7 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
     [options, debouncedQuery],
   )
 
-  const isSelected = (id: string): boolean => selectedIds.includes(id)
+  const isSelected = (id: number): boolean => selectedIds.includes(id)
 
   const handleOpen = (): void => {
     if (disabled) {
@@ -96,7 +96,7 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
     setQuery("")
   }
 
-  const handleSelect = (id: string): void => {
+  const handleSelect = (id: number): void => {
     if (props.multiple) {
       props.onChange(
         isSelected(id)
@@ -115,12 +115,12 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
       return
     }
 
-    props.onChange(null)
+    props.onChange(0)
   }
 
-  const showClear = !disabled && !props.multiple && props.value !== null
+  const showClear = !disabled && !props.multiple && props.value !== 0
   const singleLabel =
-    !props.multiple && props.value !== null ? optionLabel(props.value) : ""
+    !props.multiple && props.value !== 0 ? optionLabel(props.value) : ""
   const hasValue = selectedIds.length > 0
 
   const renderOption = ({
@@ -239,7 +239,7 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
         <FlatList
           data={suggestions}
           keyboardShouldPersistTaps="handled"
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={renderOption}
           style={styles.list}
           ListEmptyComponent={

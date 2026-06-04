@@ -21,7 +21,7 @@ export const toFormValues = (
         description: "",
         amount: "",
         date: todayStamp(),
-        accountId: "",
+        accountId: 0,
         categoryIds: [],
       }
     : { ...dto, amount: `${dto.amount}` }

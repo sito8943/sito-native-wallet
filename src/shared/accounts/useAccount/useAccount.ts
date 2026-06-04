@@ -9,7 +9,7 @@ import { type UseAccountState } from "./types"
 // mutations, so detail/edit views don't list every account and filter in
 // render. Locally getById is an in-memory lookup; a future ApiClient would make
 // it a real GET /accounts/:id without changing this hook or its views.
-export default function useAccount(id: string): UseAccountState {
+export default function useAccount(id: number): UseAccountState {
   const client = useManager().Accounts
   // Subscribe to the store so the view re-renders on changes; the actual
   // selection is the client's responsibility, not the hook's. getById is a

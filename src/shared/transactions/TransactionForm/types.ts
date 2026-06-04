@@ -17,6 +17,6 @@ export type TransactionFormValues = {
   description: string
   amount: string
   date: string
-  accountId: string
-  categoryIds: string[]
+  accountId: number
+  categoryIds: number[]
 }

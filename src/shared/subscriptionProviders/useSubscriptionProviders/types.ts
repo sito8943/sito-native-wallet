@@ -18,8 +18,8 @@ export type UseSubscriptionProvidersState = {
   isLoading: boolean
   addSubscriptionProvider: (input: AddSubscriptionProviderDto) => void
   updateSubscriptionProvider: (
-    id: string,
+    id: number,
     input: AddSubscriptionProviderDto,
   ) => void
-  removeSubscriptionProvider: (id: string) => void
+  removeSubscriptionProvider: (id: number) => void
 }

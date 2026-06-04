@@ -6,7 +6,7 @@ import { type UseSubscriptionState } from "./types"
 // still a static in-memory list (no StorageClient yet), so the lookup happens
 // here; once they get a client this should delegate to client.getById like the
 // other selector hooks.
-export default function useSubscription(id: string): UseSubscriptionState {
+export default function useSubscription(id: number): UseSubscriptionState {
   const { data, error, isLoading } = useSubscriptions()
 
   return {

@@ -4,7 +4,7 @@ import { type TransactionType } from "#shared/categories"
 // send categoryIds; reads resolve them to these common DTOs from live
 // categories.
 export type CommonTransactionCategoryDto = {
-  id: string
+  id: number
   name: string
   description?: string
   color: string

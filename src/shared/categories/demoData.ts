@@ -5,7 +5,7 @@ import {
 } from "./TransactionCategory"
 
 const salary: TransactionCategory = {
-  id: "salary",
+  id: 2,
   name: "Salary",
   description: "Recurring income from work",
   color: "#2e7d32",
@@ -13,7 +13,7 @@ const salary: TransactionCategory = {
 }
 
 const food: TransactionCategory = {
-  id: "food",
+  id: 3,
   name: "Food",
   description: "Groceries, restaurants and snacks",
   color: "#ef6c00",
@@ -21,7 +21,7 @@ const food: TransactionCategory = {
 }
 
 const transport: TransactionCategory = {
-  id: "transport",
+  id: 4,
   name: "Transport",
   description: "Trips, tickets and commuting",
   color: "#1565c0",
@@ -29,7 +29,7 @@ const transport: TransactionCategory = {
 }
 
 const home: TransactionCategory = {
-  id: "home",
+  id: 5,
   name: "Home",
   description: "Rent, utilities and household costs",
   color: "#6a1b9a",

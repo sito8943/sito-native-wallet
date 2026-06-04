@@ -19,7 +19,7 @@ export type UseFilteredTransactionsState = {
   filters: FilterTransactionDto
   query: QueryParam<Transaction>
   resetPreferences: () => void
-  setAccountId: (accountId: string | null) => void
+  setAccountId: (accountId: number) => void
   setSortOrder: (sortOrder: TransactionSortOrder) => void
   setTypeFilter: (typeFilter: TransactionTypeFilter) => void
 }

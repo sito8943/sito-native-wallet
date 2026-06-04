@@ -52,7 +52,7 @@ export default function useFilteredTransactions(): UseFilteredTransactionsState 
   // the list hooks (useTransactionsList / useInfiniteTransactions) consume them
   // the same way they would consume API-driven filters.
   const filters: FilterTransactionDto = {
-    accountId: preferences.accountId ?? undefined,
+    accountId: preferences.accountId > 0 ? preferences.accountId : undefined,
     type:
       preferences.typeFilter === TRANSACTION_TYPE_FILTER.ALL
         ? undefined

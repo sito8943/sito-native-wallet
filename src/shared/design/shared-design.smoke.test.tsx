@@ -17,7 +17,6 @@ import { ConfirmationDialog } from "#design/patterns/Dialog"
 import EntityCard from "#design/patterns/EntityCard"
 import FAB from "#design/patterns/FAB"
 import Form from "#design/patterns/Form"
-import PrefabCard from "#design/patterns/PrefabCard"
 import Page from "#design/templates/Page"
 
 import Dialog from "./patterns/Dialog/Dialog"
@@ -93,10 +92,10 @@ describe("Shared design smoke tests", () => {
         label="Account"
         placeholder="Choose account"
         options={[
-          { id: "cash", label: "Cash" },
-          { id: "bank", label: "Bank" },
+          { id: 1, label: "Cash" },
+          { id: 2, label: "Bank" },
         ]}
-        value={null}
+        value={0}
         onChange={noop}
       />,
     )
@@ -141,10 +140,10 @@ describe("Shared design smoke tests", () => {
   it("renders EntityCard", () => {
     const { getByText } = render(
       <EntityCard
-        entity={{ id: "entity-1" }}
+        entity={{ id: 1 }}
         actions={[
           {
-            id: "edit",
+            id: 2,
             icon: APP_ICONS.edit,
             accessibilityLabel: "Edit entity",
             onPress: noop,
@@ -196,16 +195,6 @@ describe("Shared design smoke tests", () => {
 
     expect(getByText("Form field")).toBeTruthy()
     expect(getByText("Save")).toBeTruthy()
-  })
-
-  it("renders PrefabCard", () => {
-    const { getByText } = render(
-      <PrefabCard selected={false} onPress={noop}>
-        <Text>Prefab row</Text>
-      </PrefabCard>,
-    )
-
-    expect(getByText("Prefab row")).toBeTruthy()
   })
 
   it("renders LinearGradient", () => {

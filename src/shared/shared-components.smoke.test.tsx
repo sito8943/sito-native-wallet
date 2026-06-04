@@ -8,6 +8,7 @@ import {
   AccountSelector,
 } from "#shared/accounts"
 import {
+  TRANSACTION_TYPE,
   type TransactionCategory,
   CategoryBullet,
   CategoryCard,
@@ -46,7 +47,7 @@ const ts = {
 
 const mockCurrencies: Currency[] = [
   {
-    id: "usd",
+    id: 1,
     name: "US Dollar",
     symbol: "$",
     description: "Primary currency",
@@ -56,7 +57,7 @@ const mockCurrencies: Currency[] = [
 
 const mockAccounts: Account[] = [
   {
-    id: "main",
+    id: 1,
     name: "Main account",
     balance: 1520.25,
     type: "digital",
@@ -67,23 +68,23 @@ const mockAccounts: Account[] = [
 
 const mockCategories: TransactionCategory[] = [
   {
-    id: "food",
+    id: 2,
     name: "Food",
     color: "#ef6c00",
-    type: "expense",
+    type: TRANSACTION_TYPE.EXPENSE,
     ...ts,
   },
   {
-    id: "salary",
+    id: 3,
     name: "Salary",
     color: "#2e7d32",
-    type: "income",
+    type: TRANSACTION_TYPE.INCOME,
     ...ts,
   },
 ]
 
 const mockSubscriptionProvider: SubscriptionProvider = {
-  id: "netflix",
+  id: 1,
   name: "Netflix",
   description: "Streaming service",
   website: "https://netflix.com",
@@ -92,11 +93,11 @@ const mockSubscriptionProvider: SubscriptionProvider = {
 
 const noop = (..._args: unknown[]): void => undefined
 
-const createClient = <T extends { id: string }>(
-  id: string,
+const createClient = <T extends { id: number }>(
+  id: number,
   items: T[],
 ): {
-  id: string
+  id: number
   list: (..._args: unknown[]) => {
     sort: null
     order: "asc"
@@ -106,7 +107,7 @@ const createClient = <T extends { id: string }>(
     totalPages: number
     items: T[]
   }
-  getById: (entityId: string) => T | undefined
+  getById: (entityId: number) => T | undefined
   add: typeof noop
   addMany: typeof noop
   update: typeof noop
@@ -123,8 +124,7 @@ const createClient = <T extends { id: string }>(
     totalPages: items.length === 0 ? 0 : 1,
     items,
   }),
-  getById: (entityId: string) =>
-    items.find((item) => item.id === entityId),
+  getById: (entityId: number) => items.find((item) => item.id === entityId),
   add: noop,
   addMany: noop,
   update: noop,
@@ -133,7 +133,7 @@ const createClient = <T extends { id: string }>(
 })
 
 const mockSubscription: Subscription = {
-  id: "subscription-1",
+  id: 1,
   name: "Netflix Premium",
   amount: 17.99,
   currency: mockCurrencies[0],
@@ -147,35 +147,32 @@ const mockSubscription: Subscription = {
 }
 
 const mockTransaction: Transaction = {
-  id: "transaction-1",
+  id: 1,
   description: "Groceries",
   amount: 42.35,
   date: "2026/06/02",
   account: {
-    id: "main",
+    id: 1,
     name: "Main account",
     currencySymbol: "$",
   },
   categories: [
     {
-      id: "food",
+      id: 2,
       name: "Food",
       color: "#ef6c00",
-      type: "expense",
+      type: TRANSACTION_TYPE.EXPENSE,
     },
   ],
 }
 
-const mockAccountsClient = createClient("accounts-client", mockAccounts)
-const mockCategoriesClient = createClient("categories-client", mockCategories)
-const mockCurrenciesClient = createClient("currencies-client", mockCurrencies)
-const mockSubscriptionProvidersClient = createClient(
-  "subscription-providers-client",
-  [mockSubscriptionProvider],
-)
-const mockTransactionsClient = createClient("transactions-client", [
-  mockTransaction,
+const mockAccountsClient = createClient(101, mockAccounts)
+const mockCategoriesClient = createClient(102, mockCategories)
+const mockCurrenciesClient = createClient(103, mockCurrencies)
+const mockSubscriptionProvidersClient = createClient(104, [
+  mockSubscriptionProvider,
 ])
+const mockTransactionsClient = createClient(105, [mockTransaction])
 
 jest.mock("#shared/data", () => ({
   useManager: () => ({
@@ -192,21 +189,21 @@ jest.mock("#shared/data/storage", () => ({
   useStoredState: jest.fn(),
   createId: jest.fn(),
   StorageClient: jest.fn(),
-  useClientStore: (store: { id: string }) => {
+  useClientStore: (store: { id: number }) => {
     switch (store.id) {
-      case "accounts-client":
+      case 101:
         return { items: mockAccounts, error: null, isLoading: false }
-      case "categories-client":
+      case 102:
         return { items: mockCategories, error: null, isLoading: false }
-      case "currencies-client":
+      case 103:
         return { items: mockCurrencies, error: null, isLoading: false }
-      case "subscription-providers-client":
+      case 104:
         return {
           items: [mockSubscriptionProvider],
           error: null,
           isLoading: false,
         }
-      case "transactions-client":
+      case 105:
         return { items: [mockTransaction], error: null, isLoading: false }
       default:
         return { items: [], error: null, isLoading: false }
@@ -232,7 +229,7 @@ describe("Shared feature component smoke tests", () => {
     const { getByText } = render(
       <AccountSelector
         accounts={mockAccounts}
-        selectedId={null}
+        selectedId={0}
         onSelect={noop}
       />,
     )
@@ -336,15 +333,17 @@ describe("Shared feature component smoke tests", () => {
   })
 
   it("renders TransactionTypeBadge", () => {
-    const { getByText } = render(<TransactionTypeBadge type="income" />)
-    expect(getByText("income")).toBeTruthy()
+    const { getByText } = render(
+      <TransactionTypeBadge type={TRANSACTION_TYPE.INCOME} />,
+    )
+    expect(getByText(String(TRANSACTION_TYPE.INCOME))).toBeTruthy()
   })
 
   it("renders TransactionsFilters", () => {
     const { getByText } = render(
       <TransactionsFilters
         preferences={{
-          accountId: null,
+          accountId: 0,
           sortOrder: TRANSACTION_SORT_ORDER.NEWEST,
           typeFilter: TRANSACTION_TYPE_FILTER.ALL,
         }}

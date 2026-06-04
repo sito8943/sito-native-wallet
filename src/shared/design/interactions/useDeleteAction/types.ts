@@ -4,7 +4,7 @@ import { type ThemeColorName } from "#design/theme"
 
 export type UseDeleteActionProps<T> = {
   onPress: (entity: T) => void
-  id?: string
+  id?: number
   icon?: IconProp
   accessibilityLabel?: string
   color?: ThemeColorName

@@ -6,7 +6,7 @@ import {
 // Resolved transaction for display: relations are common DTOs built from the
 // live account/categories. The persisted record keeps only their ids.
 export type Transaction = {
-  id: string
+  id: number
   description: string
   amount: number
   date: string

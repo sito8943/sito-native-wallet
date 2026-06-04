@@ -8,7 +8,11 @@ import { radius, spacing } from "#design/foundations"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import { type ThemeColors, useThemedStyles } from "#design/theme"
-import { CATEGORY_PREFABS, CategoryCard, useCategories } from "#shared/categories"
+import {
+  CATEGORY_PREFABS,
+  CategoryCard,
+  useCategories,
+} from "#shared/categories"
 
 export default function CategoryPrefabs(): ReactElement {
   const router = useRouter()
@@ -64,13 +68,13 @@ export default function CategoryPrefabs(): ReactElement {
             </Typography>
           </View>
         ) : (
-          available.map((prefab) => (
+          available.map((prefab, index) => (
             <View
               key={prefab.key}
               style={[selected.has(prefab.key) && styles.selected]}
             >
               <CategoryCard
-                category={{ ...prefab, id: prefab.key }}
+                category={{ ...prefab, id: index + 1 }}
                 onPress={() => toggle(prefab.key)}
                 style={styles.card}
               />

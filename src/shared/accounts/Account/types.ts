@@ -8,7 +8,7 @@ export type AccountBankName =
   (typeof ACCOUNT_BANK_NAME)[keyof typeof ACCOUNT_BANK_NAME]
 
 export type Account = Partial<Timestamps> & {
-  id: string
+  id: number
   name: string
   description?: string
   bankName?: string

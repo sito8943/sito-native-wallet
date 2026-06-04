@@ -3,7 +3,7 @@ import { type Transaction } from "../Transaction"
 
 export type UseTransactionsOptions = {
   // Restrict `data` to one account. Omit for every transaction.
-  accountId?: string
+  accountId?: number
 }
 
 export type UseTransactionsState = {
@@ -11,11 +11,11 @@ export type UseTransactionsState = {
   error: Error | null
   isLoading: boolean
   addTransaction: (input: AddTransactionDto) => void
-  updateTransaction: (id: string, input: AddTransactionDto) => void
-  removeTransaction: (id: string) => void
+  updateTransaction: (id: number, input: AddTransactionDto) => void
+  removeTransaction: (id: number) => void
   // Adjusts an account's balance by recording a system adjustment transaction.
   adjustBalance: (
-    accountId: string,
+    accountId: number,
     newBalance: number,
     description?: string,
   ) => void

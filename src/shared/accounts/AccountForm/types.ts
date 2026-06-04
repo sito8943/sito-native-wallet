@@ -9,7 +9,7 @@ export type AccountFormValues = {
   bankName: string
   balance: string
   type: AccountType
-  currencyId: string
+  currencyId: number
 }
 
 export type AccountFormProps = {

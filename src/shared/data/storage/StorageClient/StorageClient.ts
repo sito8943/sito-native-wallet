@@ -23,7 +23,7 @@ import { nowIso, toError } from "./utils"
 // patch — subclasses never set them. Subclasses add entity-specific methods on
 // top of insert/patch.
 export default abstract class StorageClient<
-  T extends { id: string } & Partial<Timestamps>,
+  T extends { id: number } & Partial<Timestamps>,
 > implements ReactiveStore<T> {
   private state: ClientState<T>
   private readonly listeners = new Set<() => void>()
@@ -55,7 +55,7 @@ export default abstract class StorageClient<
   // Selects one record by id. Locally this is an in-memory lookup; a future
   // ApiClient would override it to hit GET /<resource>/:id. Keeping selection
   // on the client (not in the hook) means the swap won't touch hooks or views.
-  public getById = (id: string): T | undefined =>
+  public getById = (id: number): T | undefined =>
     this.state.items.find((item) => item.id === id)
 
   // Generic list engine: filter (predicate) + sort + pagination, returning the
@@ -119,7 +119,7 @@ export default abstract class StorageClient<
     ])
   }
 
-  protected patch(id: string, partial: Partial<T>): void {
+  protected patch(id: number, partial: Partial<T>): void {
     const updatedAt = nowIso()
     this.commit(
       this.state.items.map((item) =>
@@ -142,11 +142,11 @@ export default abstract class StorageClient<
 
   // Deletion split out so subclasses can override the public `remove` to add
   // side effects (e.g. balance updates) while still reusing the commit path.
-  protected delete(id: string): void {
+  protected delete(id: number): void {
     this.commit(this.state.items.filter((item) => item.id !== id))
   }
 
-  public remove = (id: string): void => {
+  public remove = (id: number): void => {
     this.delete(id)
   }
 

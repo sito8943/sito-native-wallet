@@ -26,10 +26,10 @@ export default function useCurrencies(
     addCurrencies: (inputs: AddCurrencyDto[]) => {
       client.addMany(inputs)
     },
-    updateCurrency: (id: string, input: AddCurrencyDto) => {
+    updateCurrency: (id: number, input: AddCurrencyDto) => {
       client.update(id, input)
     },
-    removeCurrency: (id: string) => {
+    removeCurrency: (id: number) => {
       client.remove(id)
     },
   }

@@ -27,10 +27,10 @@ export default function useCategories(
     addCategories: (inputs: AddCategoryDto[]) => {
       client.addMany(inputs)
     },
-    updateCategory: (id: string, input: AddCategoryDto) => {
+    updateCategory: (id: number, input: AddCategoryDto) => {
       client.update(id, input)
     },
-    removeCategory: (id: string) => {
+    removeCategory: (id: number) => {
       client.remove(id)
     },
   }

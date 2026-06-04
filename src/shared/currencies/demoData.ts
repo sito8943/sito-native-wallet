@@ -1,14 +1,14 @@
 import { type Currency } from "./Currency"
 
 const euro: Currency = {
-  id: "eur",
+  id: 1,
   name: "Euro",
   symbol: "€",
   description: "European Union currency",
 }
 
 const dollar: Currency = {
-  id: "usd",
+  id: 2,
   name: "US Dollar",
   symbol: "$",
   description: "United States currency",

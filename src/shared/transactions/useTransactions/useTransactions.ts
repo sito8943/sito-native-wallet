@@ -34,14 +34,14 @@ export default function useTransactions(
     addTransaction: (input: AddTransactionDto) => {
       client.add(input)
     },
-    updateTransaction: (id: string, input: AddTransactionDto) => {
+    updateTransaction: (id: number, input: AddTransactionDto) => {
       client.update(id, input)
     },
-    removeTransaction: (id: string) => {
+    removeTransaction: (id: number) => {
       client.remove(id)
     },
     adjustBalance: (
-      accountId: string,
+      accountId: number,
       newBalance: number,
       description?: string,
     ) => {

@@ -37,7 +37,7 @@ export const applyTransactionsPreferences = (
 ): Transaction[] => {
   const filtered = transactions.filter((transaction) => {
     const matchesAccount =
-      preferences.accountId === null ||
+      preferences.accountId === 0 ||
       transaction.account.id === preferences.accountId
 
     return (
@@ -63,9 +63,9 @@ const parseTransactionsPreferences = (
 
   const candidate = value as Record<string, unknown>
   const accountId =
-    typeof candidate.accountId === "string" && candidate.accountId.length > 0
+    typeof candidate.accountId === "number" && candidate.accountId > 0
       ? candidate.accountId
-      : null
+      : 0
   const sortOrder: TransactionSortOrder =
     candidate.sortOrder === TRANSACTION_SORT_ORDER.OLDEST
       ? TRANSACTION_SORT_ORDER.OLDEST
@@ -87,10 +87,10 @@ export const parseStoredPreferences = (
   const parsed = parseTransactionsPreferences(value)
 
   if (
-    parsed.accountId !== null &&
+    parsed.accountId !== 0 &&
     !INITIAL_ACCOUNTS.some((account) => account.id === parsed.accountId)
   ) {
-    return { ...parsed, accountId: null }
+    return { ...parsed, accountId: 0 }
   }
 
   return parsed

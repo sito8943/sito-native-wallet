@@ -20,9 +20,9 @@ export default function AccountSelector({
       style={styles.scroll}
     >
       <Chip
-        active={selectedId === null}
+        active={selectedId === 0}
         label={allLabel}
-        onPress={() => onSelect(null)}
+        onPress={() => onSelect(0)}
       />
       {accounts.map((account) => (
         <Chip

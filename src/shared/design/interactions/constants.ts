@@ -1,5 +1,5 @@
 export const ACTION_ID = {
-  DELETE: "delete",
-  EDIT: "edit",
-  ADJUST_BALANCE: "adjust-balance",
+  DELETE: 1,
+  EDIT: 2,
+  ADJUST_BALANCE: 3,
 } as const

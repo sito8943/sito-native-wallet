@@ -6,7 +6,7 @@ export type TransactionType =
   (typeof TRANSACTION_TYPE)[keyof typeof TRANSACTION_TYPE]
 
 export type TransactionCategory = Partial<Timestamps> & {
-  id: string
+  id: number
   name: string
   description?: string
   color: string

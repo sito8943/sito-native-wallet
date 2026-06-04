@@ -5,9 +5,9 @@ import { type BaseFilterDto, type RangeValue } from "#shared/data"
 // use RangeValue<start,end> so a future ApiClient encodes them as >= / <=, the
 // same way the web's parseQueries does.
 export type FilterTransactionDto = BaseFilterDto & {
-  accountId?: string
+  accountId?: number
   type?: TransactionType
-  category?: string[]
+  category?: number[]
   amount?: RangeValue<number>
   date?: RangeValue<string>
   description?: string

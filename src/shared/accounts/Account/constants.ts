@@ -13,8 +13,8 @@ export const ACCOUNT_BANK_NAME = {
 } as const
 
 export const ACCOUNT_BANK_OPTIONS = Object.values(ACCOUNT_BANK_NAME).map(
-  (bankName) => ({
-    id: bankName,
+  (bankName, index) => ({
+    id: index + 1,
     label: bankName,
   }),
 )

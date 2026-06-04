@@ -23,10 +23,10 @@ export default function useAccounts(
     addAccount: (input: AddAccountDto) => {
       client.add(input)
     },
-    updateAccount: (id: string, input: AddAccountDto) => {
+    updateAccount: (id: number, input: AddAccountDto) => {
       client.update(id, input)
     },
-    removeAccount: (id: string) => {
+    removeAccount: (id: number) => {
       client.remove(id)
     },
   }

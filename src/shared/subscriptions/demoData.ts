@@ -21,7 +21,7 @@ const daysFromNow = (n: number): string => {
 
 export const INITIAL_SUBSCRIPTIONS: Subscription[] = [
   {
-    id: "sub-netflix",
+    id: 1,
     name: "Netflix Premium",
     amount: 17.99,
     currency: euro,
@@ -34,7 +34,7 @@ export const INITIAL_SUBSCRIPTIONS: Subscription[] = [
     notificationDaysBefore: 3,
   },
   {
-    id: "sub-spotify",
+    id: 2,
     name: "Spotify Family",
     amount: 16.99,
     currency: euro,
@@ -47,7 +47,7 @@ export const INITIAL_SUBSCRIPTIONS: Subscription[] = [
     notificationDaysBefore: 3,
   },
   {
-    id: "sub-icloud",
+    id: 3,
     name: "iCloud+ 200GB",
     amount: 2.99,
     currency: euro,
@@ -60,7 +60,7 @@ export const INITIAL_SUBSCRIPTIONS: Subscription[] = [
     notificationDaysBefore: 5,
   },
   {
-    id: "sub-github",
+    id: 4,
     name: "GitHub Pro",
     amount: 4,
     currency: dollar,

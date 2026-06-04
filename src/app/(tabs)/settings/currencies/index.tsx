@@ -33,9 +33,7 @@ export default function Currencies(): ReactElement {
             <CurrencyCard
               actions={[deleteDialog.action(currency)]}
               currency={currency}
-              onPress={() =>
-                router.push(toCurrencyDetailsRoute(currency.id.toString()))
-              }
+              onPress={() => router.push(toCurrencyDetailsRoute(currency.id))}
             />
           )}
         />

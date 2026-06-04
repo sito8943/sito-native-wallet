@@ -45,7 +45,7 @@ export default class TransactionClient extends StorageClient<StoredTransaction> 
     this.#applyToBalance(stored, 1)
   }
 
-  public update = (id: string, input: AddTransactionDto): void => {
+  public update = (id: number, input: AddTransactionDto): void => {
     // Reverse the previous effect, then apply the new one — covers changes to
     // amount, type (category) and the target account in a single path.
     const previous = this.getAll().find((item) => item.id === id)
@@ -58,7 +58,7 @@ export default class TransactionClient extends StorageClient<StoredTransaction> 
     this.#applyToBalance({ id, ...input }, 1)
   }
 
-  public remove = (id: string): void => {
+  public remove = (id: number): void => {
     const previous = this.getAll().find((item) => item.id === id)
 
     this.delete(id)
@@ -72,7 +72,7 @@ export default class TransactionClient extends StorageClient<StoredTransaction> 
   // the difference to the target as a system transaction, which moves the
   // account balance through the normal transaction flow.
   public adjustBalance = (
-    accountId: string,
+    accountId: number,
     newBalance: number,
     description?: string,
   ): void => {
