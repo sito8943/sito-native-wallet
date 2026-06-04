@@ -27,7 +27,7 @@
     "@fortawesome/react-native-fontawesome": "^1.0.0",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-navigation/drawer": "^7.10.3",
-    "expo": "~54.0.33",
+    "expo": "~56.0.8",
     "expo-constants": "~18.0.13",
     "expo-linking": "~8.0.12",
     "expo-navigation-bar": "~5.0.10",
