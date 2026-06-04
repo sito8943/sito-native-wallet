@@ -3,6 +3,7 @@ import { useMemo } from "react"
 import { useAccounts } from "#shared/accounts"
 import { SORT_ORDER } from "#shared/data"
 import { useStoredState } from "#shared/data/storage"
+import { useI18n } from "#shared/i18n"
 
 import { type FilterTransactionDto } from "../dtos"
 import {
@@ -25,6 +26,7 @@ export default function useFilteredTransactions(): UseFilteredTransactionsState 
   const { data: accounts } = useAccounts()
   const { data: transactions, isLoading: isLoadingTransactions } =
     useTransactions()
+  const { t } = useI18n()
 
   const {
     data: preferences,
@@ -32,7 +34,7 @@ export default function useFilteredTransactions(): UseFilteredTransactionsState 
     isLoading: isLoadingPreferences,
     setData: setPreferences,
   } = useStoredState<TransactionsPreferences>({
-    errorMessage: "Unable to persist transaction preferences.",
+    errorMessage: t("transactions.preferences.persistError"),
     initialValue: DEFAULT_TRANSACTIONS_PREFERENCES,
     parseStoredValue: parseStoredPreferences,
     storageKey: TRANSACTIONS_PREFERENCES_STORAGE_KEY,

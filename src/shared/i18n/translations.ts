@@ -15,6 +15,8 @@ export const translations = {
     "transactions.empty.loading": "Loading saved transaction view...",
     "transactions.empty.filtered": "No transactions match your saved filters.",
     "transactions.add": "Add transaction",
+    "transactions.preferences.persistError":
+      "Unable to persist transaction preferences.",
     "transactions.preferences.error":
       "Saved preferences could not be loaded. Default filters are active.",
     "subscriptions.title": "Subscriptions",
@@ -92,6 +94,8 @@ export const translations = {
     "subscriptionProviders.new.title": "New provider",
     "subscriptionProviders.edit.title": "Edit provider",
     "subscriptionProviders.empty": "No subscription providers yet.",
+    "subscriptionProviders.error.load":
+      "Failed to load subscription providers",
     "subscriptionProviders.add": "Add subscription provider",
     "subscriptionProviders.create": "Create",
     "subscriptionProviders.save": "Save",
@@ -210,9 +214,11 @@ export const translations = {
     "profile.appearance.title": "Appearance",
     "profile.appearance.description":
       "Choose how SitoWallet looks. System follows your device setting.",
+    "profile.appearance.error": "Unable to persist theme preference.",
     "profile.appearance.light": "Light",
     "profile.appearance.dark": "Dark",
     "profile.appearance.system": "System",
+    "profile.preferences.error": "Unable to persist profile preferences.",
     "profile.language.title": "Language",
     "profile.language.description":
       "Choose the language used across the app interface.",
@@ -235,6 +241,8 @@ export const translations = {
     "transactions.empty.filtered":
       "No hay transacciones que coincidan con tus filtros guardados.",
     "transactions.add": "Anadir transaccion",
+    "transactions.preferences.persistError":
+      "No se pudieron guardar las preferencias de transacciones.",
     "transactions.preferences.error":
       "No se pudieron cargar las preferencias guardadas. Se aplican los filtros por defecto.",
     "subscriptions.title": "Suscripciones",
@@ -318,6 +326,8 @@ export const translations = {
     "subscriptionProviders.edit.title": "Editar proveedor",
     "subscriptionProviders.empty":
       "Todavia no hay proveedores de suscripciones.",
+    "subscriptionProviders.error.load":
+      "No se pudieron cargar los proveedores de suscripciones",
     "subscriptionProviders.add": "Anadir proveedor de suscripciones",
     "subscriptionProviders.create": "Crear",
     "subscriptionProviders.save": "Guardar",
@@ -440,9 +450,13 @@ export const translations = {
     "profile.appearance.title": "Apariencia",
     "profile.appearance.description":
       "Elige como se ve SitoWallet. Sistema sigue la configuracion de tu dispositivo.",
+    "profile.appearance.error":
+      "No se pudo guardar la preferencia de tema.",
     "profile.appearance.light": "Claro",
     "profile.appearance.dark": "Oscuro",
     "profile.appearance.system": "Sistema",
+    "profile.preferences.error":
+      "No se pudieron guardar las preferencias de perfil.",
     "profile.language.title": "Idioma",
     "profile.language.description":
       "Elige el idioma usado en la interfaz de la aplicacion.",

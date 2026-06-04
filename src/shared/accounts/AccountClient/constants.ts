@@ -1,4 +1,4 @@
-import { getDeviceLanguage, translate } from "#shared/i18n"
+import { getDeviceLanguage, translate } from "../../i18n/utils"
 
 import { ACCOUNT_TYPE, type AccountType } from "../Account"
 

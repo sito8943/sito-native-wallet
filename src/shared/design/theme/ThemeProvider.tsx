@@ -3,6 +3,7 @@ import { useColorScheme } from "react-native"
 
 import { useStoredState } from "#shared/data/storage"
 
+import { useI18n } from "../../i18n/useI18n"
 import { THEME_PREFERENCE, THEME_PREFERENCE_STORAGE_KEY } from "./constants"
 import { ThemeContext } from "./ThemeContext"
 import { type ThemePreference } from "./types"
@@ -19,13 +20,14 @@ type ThemeProviderProps = {
 
 export function ThemeProvider({ children }: ThemeProviderProps): ReactElement {
   const systemScheme = useColorScheme()
+  const { t } = useI18n()
 
   const {
     data: preference,
     isLoading,
     setData: setPreference,
   } = useStoredState<ThemePreference>({
-    errorMessage: "Unable to persist theme preference.",
+    errorMessage: t("profile.appearance.error"),
     initialValue: THEME_PREFERENCE.SYSTEM,
     parseStoredValue: parseThemePreference,
     storageKey: THEME_PREFERENCE_STORAGE_KEY,
