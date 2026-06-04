@@ -94,8 +94,7 @@ export const translations = {
     "subscriptionProviders.new.title": "New provider",
     "subscriptionProviders.edit.title": "Edit provider",
     "subscriptionProviders.empty": "No subscription providers yet.",
-    "subscriptionProviders.error.load":
-      "Failed to load subscription providers",
+    "subscriptionProviders.error.load": "Failed to load subscription providers",
     "subscriptionProviders.add": "Add subscription provider",
     "subscriptionProviders.create": "Create",
     "subscriptionProviders.save": "Save",
@@ -450,8 +449,7 @@ export const translations = {
     "profile.appearance.title": "Apariencia",
     "profile.appearance.description":
       "Elige como se ve SitoWallet. Sistema sigue la configuración de tu dispositivo.",
-    "profile.appearance.error":
-      "No se pudo guardar la preferencia de tema.",
+    "profile.appearance.error": "No se pudo guardar la preferencia de tema.",
     "profile.appearance.light": "Claro",
     "profile.appearance.dark": "Oscuro",
     "profile.appearance.system": "Sistema",
