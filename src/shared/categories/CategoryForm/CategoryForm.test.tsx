@@ -26,7 +26,7 @@ describe("Categories > CategoryForm", () => {
     expect(onSubmit).toHaveBeenCalledWith({
       name: "Eating out",
       color: "#123abc",
-      type: "income",
+      type: 1,
     })
     expect(queryByText("Enter a valid hex color (e.g. #2e7d32)")).toBeNull()
   })
