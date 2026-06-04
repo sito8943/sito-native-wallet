@@ -1,3 +1,4 @@
+import { type ReactNode } from "react"
 import {
   type PressableProps,
   type StyleProp,
@@ -17,8 +18,9 @@ export type ButtonColors = {
   tone: TypographyTone
 }
 
-export type ButtonProps = Omit<PressableProps, "children" | "style"> & {
-  label: string
+export type ButtonProps = Omit<PressableProps, "style"> & {
+  accessibilityLabel: string
+  children: ReactNode
   variant?: ButtonVariant
   loading?: boolean
   disabled?: boolean

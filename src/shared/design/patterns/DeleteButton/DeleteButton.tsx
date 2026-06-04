@@ -17,11 +17,13 @@ export default function DeleteButton({
 
   return (
     <Button
-      label={label ?? t("common.delete")}
+      accessibilityLabel={label ?? t("common.delete")}
       variant={BUTTON_VARIANT.DANGER}
       loading={loading}
       disabled={disabled}
       onPress={onPress}
-    />
+    >
+      {label ?? t("common.delete")}
+    </Button>
   )
 }

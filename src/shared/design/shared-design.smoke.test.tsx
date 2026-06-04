@@ -26,7 +26,11 @@ const noop = (): void => undefined
 
 describe("Shared design smoke tests", () => {
   it("renders Button", () => {
-    const { getByText } = render(<Button label="Save" onPress={noop} />)
+    const { getByText } = render(
+      <Button accessibilityLabel="Save" onPress={noop}>
+        Save
+      </Button>,
+    )
     expect(getByText("Save")).toBeTruthy()
   })
 
@@ -186,7 +190,13 @@ describe("Shared design smoke tests", () => {
     const { getByText } = render(
       <Empty
         message="Nothing here yet."
-        actions={[{ label: "Create", onPress: noop }]}
+        actions={[
+          {
+            accessibilityLabel: "Create",
+            children: "Create",
+            onPress: noop,
+          },
+        ]}
       />,
     )
 

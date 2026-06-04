@@ -23,9 +23,22 @@ export default function Empty({
 
       {actions.length > 0 && (
         <View style={styles.actions}>
-          {actions.map(({ label, ...action }, index) => (
-            <Button key={`${label}-${index}`} label={label} {...action} />
-          ))}
+          {actions.map(({ children, ...action }, index) => {
+            const fallbackLabel =
+              typeof children === "string" || typeof children === "number"
+                ? String(children)
+                : `empty-action-${index + 1}`
+
+            return (
+              <Button
+                key={fallbackLabel}
+                accessibilityLabel={action.accessibilityLabel ?? fallbackLabel}
+                {...action}
+              >
+                {children}
+              </Button>
+            )
+          })}
         </View>
       )}
     </View>

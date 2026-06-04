@@ -5,7 +5,11 @@ import Button from "./Button"
 describe("Design > Elements > Button", () => {
   it("calls onPress when the user presses it", async () => {
     const onPress = jest.fn()
-    const { getByText } = render(<Button label="Save" onPress={onPress} />)
+    const { getByText } = render(
+      <Button accessibilityLabel="Save" onPress={onPress}>
+        Save
+      </Button>,
+    )
 
     await userEvent.press(getByText("Save"))
 
@@ -15,7 +19,9 @@ describe("Design > Elements > Button", () => {
   it("blocks presses while loading", async () => {
     const onPress = jest.fn()
     const { getByText } = render(
-      <Button label="Save" loading onPress={onPress} />,
+      <Button accessibilityLabel="Save" loading onPress={onPress}>
+        Save
+      </Button>,
     )
 
     await userEvent.press(getByText("Save"))

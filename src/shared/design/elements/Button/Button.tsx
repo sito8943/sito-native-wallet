@@ -1,4 +1,4 @@
-import { type ReactElement } from "react"
+import { type ReactElement, type ReactNode } from "react"
 import { ActivityIndicator, Pressable, View } from "react-native"
 
 import Typography from "#design/elements/Typography"
@@ -14,7 +14,7 @@ import { type ButtonProps } from "./types"
 import { getButtonColors } from "./utils"
 
 export default function Button({
-  label,
+  children,
   variant = BUTTON_VARIANT.PRIMARY,
   loading = false,
   disabled = false,
@@ -28,6 +28,14 @@ export default function Button({
     variant,
   )
   const isDisabled = disabled || loading
+  const renderContent = (content: ReactNode): ReactElement | ReactNode =>
+    typeof content === "string" || typeof content === "number" ? (
+      <Typography variant={TYPOGRAPHY_VARIANT.BODY_STRONG} tone={tone}>
+        {content}
+      </Typography>
+    ) : (
+      content
+    )
 
   return (
     <Pressable
@@ -49,9 +57,7 @@ export default function Button({
         {loading && (
           <ActivityIndicator color={colors.textInverted} size="small" />
         )}
-        <Typography variant={TYPOGRAPHY_VARIANT.BODY_STRONG} tone={tone}>
-          {label}
-        </Typography>
+        {renderContent(children)}
       </View>
     </Pressable>
   )

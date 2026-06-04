@@ -252,7 +252,9 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
         />
 
         {props.multiple && (
-          <Button label={t("common.done")} onPress={handleClose} />
+          <Button accessibilityLabel={t("common.done")} onPress={handleClose}>
+            {t("common.done")}
+          </Button>
         )}
       </BottomSheet>
     </View>

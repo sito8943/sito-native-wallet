@@ -107,14 +107,21 @@ export default function SubscriptionProviderForm({
       />
 
       <View style={styles.actions}>
-        <Button label={submitLabel} onPress={handleSubmit(onSubmit)} />
+        <Button
+          accessibilityLabel={submitLabel}
+          onPress={handleSubmit(onSubmit)}
+        >
+          {submitLabel}
+        </Button>
 
         {onDelete !== undefined && (
           <Button
-            label={t("common.delete")}
+            accessibilityLabel={t("common.delete")}
             variant={BUTTON_VARIANT.DANGER}
             onPress={onDelete}
-          />
+          >
+            {t("common.delete")}
+          </Button>
         )}
       </View>
     </View>

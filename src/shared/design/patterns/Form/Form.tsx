@@ -24,11 +24,13 @@ export default function Form({
 
       <View style={styles.actions}>
         <Button
-          label={submitLabel}
+          accessibilityLabel={submitLabel}
           loading={submitLoading}
           disabled={submitDisabled}
           onPress={onSubmit}
-        />
+        >
+          {submitLabel}
+        </Button>
 
         {extraActions}
       </View>

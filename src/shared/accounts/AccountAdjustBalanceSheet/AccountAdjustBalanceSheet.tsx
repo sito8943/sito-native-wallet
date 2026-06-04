@@ -141,9 +141,11 @@ export default function AccountAdjustBalanceSheet({
         />
 
         <Button
-          label={t("accounts.adjust.continue")}
+          accessibilityLabel={t("accounts.adjust.continue")}
           onPress={handleSubmit(review)}
-        />
+        >
+          {t("accounts.adjust.continue")}
+        </Button>
       </>
     )
   }
@@ -180,12 +182,19 @@ export default function AccountAdjustBalanceSheet({
           {t("accounts.adjust.confirmMessage")}
         </Typography>
 
-        <Button label={t("accounts.adjust.confirmAction")} onPress={confirm} />
         <Button
-          label={t("accounts.adjust.back")}
+          accessibilityLabel={t("accounts.adjust.confirmAction")}
+          onPress={confirm}
+        >
+          {t("accounts.adjust.confirmAction")}
+        </Button>
+        <Button
+          accessibilityLabel={t("accounts.adjust.back")}
           variant={BUTTON_VARIANT.OUTLINED}
           onPress={() => setPending(null)}
-        />
+        >
+          {t("accounts.adjust.back")}
+        </Button>
       </>
     )
   }

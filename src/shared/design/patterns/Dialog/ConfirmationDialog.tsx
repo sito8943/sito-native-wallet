@@ -33,17 +33,21 @@ export default function ConfirmationDialog({
       )}
       <View style={styles.actions}>
         <Button
+          accessibilityLabel={cancelLabel ?? t("common.cancel")}
           disabled={isLoading}
-          label={cancelLabel ?? t("common.cancel")}
           variant={BUTTON_VARIANT.OUTLINED}
           onPress={handleClose}
-        />
+        >
+          {cancelLabel ?? t("common.cancel")}
+        </Button>
         <Button
-          label={confirmLabel ?? t("common.confirm")}
+          accessibilityLabel={confirmLabel ?? t("common.confirm")}
           loading={isLoading}
           variant={BUTTON_VARIANT.DANGER}
           onPress={handleSubmit}
-        />
+        >
+          {confirmLabel ?? t("common.confirm")}
+        </Button>
       </View>
     </Dialog>
   )
