@@ -1,7 +1,4 @@
-import {
-  useStoredState,
-  type UseStoredStateResult,
-} from "#shared/data/storage"
+import { useStoredState, type UseStoredStateResult } from "#shared/data/storage"
 
 import {
   PROFILE_PREFERENCES_ERROR_MESSAGE,
