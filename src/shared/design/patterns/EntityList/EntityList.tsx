@@ -9,7 +9,7 @@ import { type EntityListProps } from "./types"
 // Generic virtualized list (FlatList): only renders what's on screen and drives
 // infinite pagination via onEndReached. Each screen passes its own card through
 // renderItem; the scroll container, empty state and header are shared.
-export default function EntityList<T extends { id: string }>({
+export default function EntityList<T extends { id: number }>({
   data,
   renderItem,
   keyExtractor,
@@ -21,7 +21,7 @@ export default function EntityList<T extends { id: string }>({
   return (
     <FlatList<T>
       data={data ?? []}
-      keyExtractor={keyExtractor ?? ((item) => item.id)}
+      keyExtractor={keyExtractor ?? ((item) => item.id.toString())}
       renderItem={({ item }) => renderItem(item)}
       ListHeaderComponent={header}
       ListEmptyComponent={
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   content: {
+    gap: spacing(4),
     paddingVertical: spacing(2),
   },
   empty: {

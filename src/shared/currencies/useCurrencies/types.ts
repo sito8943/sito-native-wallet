@@ -17,6 +17,6 @@ export type UseCurrenciesState = {
   isLoading: boolean
   addCurrency: (input: AddCurrencyDto) => void
   addCurrencies: (inputs: AddCurrencyDto[]) => void
-  updateCurrency: (id: string, input: AddCurrencyDto) => void
-  removeCurrency: (id: string) => void
+  updateCurrency: (id: number, input: AddCurrencyDto) => void
+  removeCurrency: (id: number) => void
 }

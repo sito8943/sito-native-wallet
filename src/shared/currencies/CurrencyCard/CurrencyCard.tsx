@@ -17,12 +17,18 @@ import { type CurrencyCardProps } from "./types"
 export default function CurrencyCard({
   currency,
   actions,
+  style,
   onPress,
 }: CurrencyCardProps): ReactElement {
   const styles = useThemedStyles(createStyles)
 
   return (
-    <EntityCard actions={actions} entity={currency} onPress={onPress}>
+    <EntityCard
+      style={style}
+      actions={actions}
+      entity={currency}
+      onPress={onPress}
+    >
       <View style={styles.row}>
         <View>
           <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>

@@ -1,17 +1,22 @@
 import { useRouter } from "expo-router"
 import { type ReactElement, useMemo, useState } from "react"
-import { StyleSheet, View } from "react-native"
+import { View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
-import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import { radius, spacing } from "#design/foundations"
 import FAB from "#design/patterns/FAB"
-import PrefabCard from "#design/patterns/PrefabCard"
 import Page from "#design/templates/Page"
-import { CURRENCY_PREFABS, useCurrencies } from "#shared/currencies"
+import { type ThemeColors, useThemedStyles } from "#design/theme"
+import {
+  CURRENCY_PREFABS,
+  CurrencyCard,
+  useCurrencies,
+} from "#shared/currencies"
 
 export default function CurrencyPrefabs(): ReactElement {
   const router = useRouter()
+  const styles = useThemedStyles(createStyles)
   const { data, addCurrencies } = useCurrencies()
   const [selected, setSelected] = useState<Set<string>>(new Set())
 
@@ -50,7 +55,7 @@ export default function CurrencyPrefabs(): ReactElement {
 
   return (
     <View style={styles.fill}>
-      <Page scroll bottomInset>
+      <Page scroll>
         {available.length === 0 ? (
           <View style={styles.empty}>
             <Typography tone={TYPOGRAPHY_TONE.MUTED}>
@@ -58,24 +63,17 @@ export default function CurrencyPrefabs(): ReactElement {
             </Typography>
           </View>
         ) : (
-          available.map((prefab) => (
-            <PrefabCard
+          available.map((prefab, i) => (
+            <View
               key={prefab.key}
-              selected={selected.has(prefab.key)}
-              onPress={() => toggle(prefab.key)}
-              trailing={
-                <Typography variant={TYPOGRAPHY_VARIANT.SUBTLE}>
-                  {prefab.symbol}
-                </Typography>
-              }
+              style={[selected.has(prefab.key) && styles.selected]}
             >
-              <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
-                {prefab.name}
-              </Typography>
-              <Typography variant={TYPOGRAPHY_VARIANT.BODY}>
-                {prefab.description}
-              </Typography>
-            </PrefabCard>
+              <CurrencyCard
+                style={styles.card}
+                onPress={() => toggle(prefab.key)}
+                currency={{ ...prefab, id: i }}
+              />
+            </View>
           ))
         )}
       </Page>
@@ -93,11 +91,19 @@ export default function CurrencyPrefabs(): ReactElement {
   )
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: ThemeColors) => ({
   fill: {
     flex: 1,
   },
   empty: {
     padding: spacing(4),
+  },
+  selected: {
+    borderColor: colors.primary,
+    borderWidth: 1,
+    borderRadius: radius.md,
+  },
+  card: {
+    borderRadius: radius.md,
   },
 })

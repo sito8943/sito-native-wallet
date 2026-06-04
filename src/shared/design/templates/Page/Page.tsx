@@ -83,7 +83,9 @@ const createStyles = (colors: ThemeColors) => ({
   },
   content: {
     flexGrow: 1,
-    paddingVertical: spacing(2),
+    paddingHorizontal: spacing(4),
+    gap: spacing(4),
+    paddingVertical: spacing(6),
   },
   centeredContent: {
     alignItems: "center" as const,

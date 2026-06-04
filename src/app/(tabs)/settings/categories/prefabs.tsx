@@ -1,22 +1,18 @@
 import { useRouter } from "expo-router"
 import { type ReactElement, useMemo, useState } from "react"
-import { StyleSheet, View } from "react-native"
+import { View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
-import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import { radius, spacing } from "#design/foundations"
 import FAB from "#design/patterns/FAB"
-import PrefabCard from "#design/patterns/PrefabCard"
 import Page from "#design/templates/Page"
-import {
-  CATEGORY_PREFABS,
-  CategoryBullet,
-  useCategories,
-} from "#shared/categories"
-import { TransactionTypeBadge } from "#shared/transactions/TransactionTypeBadge"
+import { type ThemeColors, useThemedStyles } from "#design/theme"
+import { CATEGORY_PREFABS, CategoryCard, useCategories } from "#shared/categories"
 
 export default function CategoryPrefabs(): ReactElement {
   const router = useRouter()
+  const styles = useThemedStyles(createStyles)
   const { data, addCategories } = useCategories()
   const [selected, setSelected] = useState<Set<string>>(new Set())
 
@@ -60,7 +56,7 @@ export default function CategoryPrefabs(): ReactElement {
 
   return (
     <View style={styles.fill}>
-      <Page scroll bottomInset>
+      <Page scroll>
         {available.length === 0 ? (
           <View style={styles.empty}>
             <Typography tone={TYPOGRAPHY_TONE.MUTED}>
@@ -69,30 +65,16 @@ export default function CategoryPrefabs(): ReactElement {
           </View>
         ) : (
           available.map((prefab) => (
-            <PrefabCard
+            <View
               key={prefab.key}
-              selected={selected.has(prefab.key)}
-              onPress={() => toggle(prefab.key)}
-              trailing={
-                <TransactionTypeBadge
-                  type={prefab.type}
-                  filled={false}
-                  showText={false}
-                />
-              }
+              style={[selected.has(prefab.key) && styles.selected]}
             >
-              <View style={styles.header}>
-                <CategoryBullet color={prefab.color} />
-                <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
-                  {prefab.name}
-                </Typography>
-              </View>
-              {prefab.description !== undefined && (
-                <Typography variant={TYPOGRAPHY_VARIANT.BODY}>
-                  {prefab.description}
-                </Typography>
-              )}
-            </PrefabCard>
+              <CategoryCard
+                category={{ ...prefab, id: prefab.key }}
+                onPress={() => toggle(prefab.key)}
+                style={styles.card}
+              />
+            </View>
           ))
         )}
       </Page>
@@ -110,16 +92,19 @@ export default function CategoryPrefabs(): ReactElement {
   )
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: ThemeColors) => ({
   fill: {
     flex: 1,
   },
   empty: {
     padding: spacing(4),
   },
-  header: {
-    alignItems: "center",
-    flexDirection: "row",
-    gap: spacing(2),
+  selected: {
+    borderColor: colors.primary,
+    borderWidth: 1,
+    borderRadius: radius.md,
+  },
+  card: {
+    borderRadius: radius.md,
   },
 })

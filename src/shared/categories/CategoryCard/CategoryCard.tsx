@@ -14,10 +14,16 @@ import { type CategoryCardProps } from "./types"
 export default function CategoryCard({
   category,
   actions,
+  style,
   onPress,
 }: CategoryCardProps): ReactElement {
   return (
-    <EntityCard actions={actions} entity={category} onPress={onPress}>
+    <EntityCard
+      style={style}
+      actions={actions}
+      entity={category}
+      onPress={onPress}
+    >
       <View style={styles.container}>
         <View style={styles.copy}>
           <View style={styles.header}>

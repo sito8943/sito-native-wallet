@@ -1,7 +1,7 @@
 import { type ReactElement } from "react"
 import { type StyleProp, type ViewStyle } from "react-native"
 
-export type EntityListProps<T extends { id: string }> = {
+export type EntityListProps<T extends { id: number }> = {
   data?: T[] | null
   renderItem: (item: T) => ReactElement
   // Defaults to item.id; override for entities keyed differently.

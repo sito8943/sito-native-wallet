@@ -1,7 +1,7 @@
 import { type Timestamps } from "#shared/data/storage"
 
 export type Currency = Partial<Timestamps> & {
-  id: string
+  id: number
   name: string
   symbol: string
   description?: string
