@@ -21,7 +21,10 @@ export default function NewCategory(): ReactElement {
 
   return (
     <Page scroll>
-      <CategoryForm submitLabel={t("categories.create")} onSubmit={handleSubmit} />
+      <CategoryForm
+        submitLabel={t("categories.create")}
+        onSubmit={handleSubmit}
+      />
     </Page>
   )
 }

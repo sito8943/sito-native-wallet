@@ -21,7 +21,10 @@ export default function Layout(): ReactElement {
           title: t("transactions.title"),
         }}
       />
-      <Stack.Screen name="new" options={{ title: t("transactions.new.title") }} />
+      <Stack.Screen
+        name="new"
+        options={{ title: t("transactions.new.title") }}
+      />
       <Stack.Screen
         name="[id]"
         options={{ title: t("transactions.edit.title") }}

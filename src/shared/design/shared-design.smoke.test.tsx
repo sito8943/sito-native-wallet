@@ -17,6 +17,7 @@ import { ConfirmationDialog } from "#design/patterns/Dialog"
 import EntityCard from "#design/patterns/EntityCard"
 import FAB from "#design/patterns/FAB"
 import Form from "#design/patterns/Form"
+import Empty from "#design/templates/Empty"
 import Page from "#design/templates/Page"
 
 import Dialog from "./patterns/Dialog/Dialog"
@@ -179,6 +180,18 @@ describe("Shared design smoke tests", () => {
     )
 
     expect(getByText("Page content")).toBeTruthy()
+  })
+
+  it("renders Empty", () => {
+    const { getByText } = render(
+      <Empty
+        message="Nothing here yet."
+        actions={[{ label: "Create", onPress: noop }]}
+      />,
+    )
+
+    expect(getByText("Nothing here yet.")).toBeTruthy()
+    expect(getByText("Create")).toBeTruthy()
   })
 
   it("renders DeleteButton", () => {

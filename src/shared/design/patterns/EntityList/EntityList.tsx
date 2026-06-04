@@ -1,8 +1,8 @@
 import { type ReactElement } from "react"
 import { FlatList, StyleSheet } from "react-native"
 
-import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
+import Empty from "#design/templates/Empty"
 
 import { type EntityListProps } from "./types"
 
@@ -14,6 +14,7 @@ export default function EntityList<T extends { id: number }>({
   renderItem,
   keyExtractor,
   emptyMessage = "Nothing here yet.",
+  emptyComponent,
   header,
   onEndReached,
   contentContainerStyle,
@@ -24,11 +25,7 @@ export default function EntityList<T extends { id: number }>({
       keyExtractor={keyExtractor ?? ((item) => item.id.toString())}
       renderItem={({ item }) => renderItem(item)}
       ListHeaderComponent={header}
-      ListEmptyComponent={
-        <Typography style={styles.empty} tone={TYPOGRAPHY_TONE.MUTED}>
-          {emptyMessage}
-        </Typography>
-      }
+      ListEmptyComponent={emptyComponent ?? <Empty message={emptyMessage} />}
       style={styles.list}
       contentContainerStyle={[styles.content, contentContainerStyle]}
       onEndReached={onEndReached}
@@ -45,9 +42,5 @@ const styles = StyleSheet.create({
   content: {
     gap: spacing(4),
     paddingVertical: spacing(2),
-  },
-  empty: {
-    marginHorizontal: spacing(4),
-    marginTop: spacing(4),
   },
 })

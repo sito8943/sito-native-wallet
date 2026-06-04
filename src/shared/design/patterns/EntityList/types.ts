@@ -7,6 +7,7 @@ export type EntityListProps<T extends { id: number }> = {
   // Defaults to item.id; override for entities keyed differently.
   keyExtractor?: (item: T) => string
   emptyMessage?: string
+  emptyComponent?: ReactElement
   // Rendered above the list inside the same virtualized scroll container.
   header?: ReactElement
   // Called as the user nears the end — drives infinite pagination. Omit for a

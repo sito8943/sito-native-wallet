@@ -44,7 +44,10 @@ export default function Layout(): ReactElement {
         name="prefabs"
         options={{ title: t("currencies.prefabs.title") }}
       />
-      <Stack.Screen name="[id]" options={{ title: t("currencies.edit.title") }} />
+      <Stack.Screen
+        name="[id]"
+        options={{ title: t("currencies.edit.title") }}
+      />
     </Stack>
   )
 }

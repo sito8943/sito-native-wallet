@@ -1,30 +1,44 @@
-import { useMemo, type ReactElement } from "react"
+import {
+  useCallback,
+  useMemo,
+  type ReactElement,
+  type SetStateAction,
+} from "react"
 
-import { useStoredState } from "#shared/data/storage"
+import { useProfilePreferences } from "#shared/settings"
 
-import { LANGUAGE_STORAGE_KEY } from "./constants"
 import { I18nContext } from "./I18nContext"
 import {
   type I18nContextValue,
+  type Language,
   type LanguageProviderProps,
   type TranslationKey,
   type TranslationParams,
 } from "./types"
-import { getDeviceLanguage, parseLanguage, translate } from "./utils"
+import { translate } from "./utils"
 
 export function LanguageProvider({
   children,
 }: LanguageProviderProps): ReactElement {
   const {
-    data: language,
+    data: profile,
     isLoading,
-    setData: setLanguage,
-  } = useStoredState({
-    errorMessage: "Unable to persist language preference.",
-    initialValue: getDeviceLanguage(),
-    parseStoredValue: parseLanguage,
-    storageKey: LANGUAGE_STORAGE_KEY,
-  })
+    setData: setProfile,
+  } = useProfilePreferences()
+  const { language } = profile
+
+  const setLanguage = useCallback(
+    (nextLanguage: SetStateAction<Language>) => {
+      setProfile((current) => ({
+        ...current,
+        language:
+          typeof nextLanguage === "function"
+            ? nextLanguage(current.language)
+            : nextLanguage,
+      }))
+    },
+    [setProfile],
+  )
 
   const value = useMemo<I18nContextValue>(
     () => ({

@@ -12,10 +12,7 @@ import Form from "#design/patterns/Form"
 import { useCurrencies } from "#shared/currencies"
 import { useI18n } from "#shared/i18n"
 
-import {
-  ACCOUNT_BANK_OPTIONS,
-  ACCOUNT_TYPE,
-} from "../Account"
+import { ACCOUNT_BANK_OPTIONS, ACCOUNT_TYPE } from "../Account"
 import { type AddAccountDto } from "../dtos"
 
 import { ACCOUNT_FIELD_LIMITS } from "./constants"

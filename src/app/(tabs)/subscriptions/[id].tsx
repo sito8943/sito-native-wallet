@@ -50,10 +50,14 @@ export default function SubscriptionDetails(): ReactElement {
         {t("subscriptions.renewal.next", { date: renewalDate })}
       </Typography>
       <Typography variant={TYPOGRAPHY_VARIANT.BODY} style={styles.row}>
-        {t("subscriptions.renewal.account", { name: subscription.account.name })}
+        {t("subscriptions.renewal.account", {
+          name: subscription.account.name,
+        })}
       </Typography>
       <Typography variant={TYPOGRAPHY_VARIANT.BODY} style={styles.row}>
-        {t("subscriptions.renewal.provider", { name: subscription.provider.name })}
+        {t("subscriptions.renewal.provider", {
+          name: subscription.provider.name,
+        })}
       </Typography>
       <Typography variant={TYPOGRAPHY_VARIANT.BODY} style={styles.row}>
         {t("subscriptions.renewal.status", { status: statusLabel })}

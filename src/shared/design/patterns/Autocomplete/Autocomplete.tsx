@@ -21,14 +21,16 @@ import {
   useThemedStyles,
   type ThemeColors,
 } from "#design/theme"
+import { useI18n } from "#shared/i18n"
 
 import { DEFAULT_DEBOUNCE_MS, ICON_SIZE, LIST_MAX_HEIGHT } from "./constants"
 import { type AutocompleteOption, type AutocompleteProps } from "./types"
 
 export default function Autocomplete(props: AutocompleteProps): ReactElement {
+  const { t } = useI18n()
   const {
     label,
-    placeholder = "Select",
+    placeholder = t("autocomplete.select"),
     options,
     error,
     disabled = false,
@@ -200,7 +202,7 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
 
         {showClear ? (
           <IconButton
-            accessibilityLabel="Clear selection"
+            accessibilityLabel={t("autocomplete.clearSelection")}
             hitSlop={spacing(2)}
             icon={APP_ICONS.close}
             color={colors.textMuted}
@@ -228,7 +230,7 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
           autoCapitalize="none"
           autoCorrect={false}
           autoFocus
-          placeholder="Search"
+          placeholder={t("common.search")}
           placeholderTextColor={colors.textSubtle}
           returnKeyType="search"
           style={styles.search}
@@ -244,12 +246,14 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
           style={styles.list}
           ListEmptyComponent={
             <Typography style={styles.empty} tone={TYPOGRAPHY_TONE.MUTED}>
-              No results
+              {t("autocomplete.noResults")}
             </Typography>
           }
         />
 
-        {props.multiple && <Button label="Done" onPress={handleClose} />}
+        {props.multiple && (
+          <Button label={t("common.done")} onPress={handleClose} />
+        )}
       </BottomSheet>
     </View>
   )

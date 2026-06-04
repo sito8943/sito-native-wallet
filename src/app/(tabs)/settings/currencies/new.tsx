@@ -21,7 +21,10 @@ export default function NewCurrency(): ReactElement {
 
   return (
     <Page scroll>
-      <CurrencyForm submitLabel={t("currencies.create")} onSubmit={handleSubmit} />
+      <CurrencyForm
+        submitLabel={t("currencies.create")}
+        onSubmit={handleSubmit}
+      />
     </Page>
   )
 }

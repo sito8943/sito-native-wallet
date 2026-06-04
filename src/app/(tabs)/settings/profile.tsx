@@ -1,4 +1,4 @@
-import { type ReactElement } from "react"
+import { useMemo, type ReactElement } from "react"
 import { Pressable, View } from "react-native"
 
 import Card from "#design/elements/Card"
@@ -9,6 +9,7 @@ import {
   spacing,
   TYPOGRAPHY_VARIANT,
 } from "#design/foundations"
+import Autocomplete from "#design/patterns/Autocomplete"
 import Page from "#design/templates/Page"
 import {
   THEME_PREFERENCE,
@@ -42,7 +43,16 @@ const LANGUAGE_OPTIONS: Array<{
 export default function Profile(): ReactElement {
   const styles = useThemedStyles(createStyles)
   const { preference, setPreference } = useThemePreference()
-  const { language, setLanguage, t } = useI18n()
+  const { isLoading, language, setLanguage, t } = useI18n()
+  const languageOptions = useMemo(
+    () =>
+      LANGUAGE_OPTIONS.map((option, index) => ({
+        id: index + 1,
+        label: t(option.labelKey),
+      })),
+    [t],
+  )
+  const selectedLanguageId = language === LANGUAGE.EN ? 1 : 2
 
   return (
     <Page scroll>
@@ -94,32 +104,16 @@ export default function Profile(): ReactElement {
           </Typography>
         </View>
 
-        <View style={styles.segments}>
-          {LANGUAGE_OPTIONS.map((option) => {
-            const active = language === option.value
-            return (
-              <Pressable
-                key={option.value}
-                onPress={() => {
-                  setLanguage(option.value)
-                }}
-                style={[
-                  styles.segment,
-                  active ? styles.segmentActive : styles.segmentInactive,
-                ]}
-              >
-                <Typography
-                  variant={TYPOGRAPHY_VARIANT.LABEL}
-                  tone={
-                    active ? TYPOGRAPHY_TONE.INVERTED : TYPOGRAPHY_TONE.DEFAULT
-                  }
-                >
-                  {t(option.labelKey)}
-                </Typography>
-              </Pressable>
-            )
-          })}
-        </View>
+        <Autocomplete
+          label={t("profile.language.title")}
+          placeholder={t("profile.language.placeholder")}
+          options={languageOptions}
+          value={selectedLanguageId}
+          disabled={isLoading}
+          onChange={(optionId) => {
+            setLanguage(optionId === 1 ? LANGUAGE.EN : LANGUAGE.ES)
+          }}
+        />
       </Card>
     </Page>
   )
