@@ -18,6 +18,7 @@ export default function IconButton({
   disabled = false,
   hitSlop = spacing(2),
   icon,
+  color,
   iconStyle,
   size = ICON_BUTTON_SIZE.MD,
   style,
@@ -28,7 +29,7 @@ export default function IconButton({
   const colors = useThemeColors()
   const resolvedSize = BUTTON_SIZES[size]
   const containerStyle = getContainerStyle({ colors, disabled, variant })
-  const iconColor = getIconColor({ colors, disabled, variant })
+  const resolvedIconColor = color ?? getIconColor({ colors, disabled, variant })
 
   return (
     <Pressable
@@ -53,7 +54,7 @@ export default function IconButton({
     >
       <View style={styles.content}>
         <Icon
-          color={iconColor}
+          color={resolvedIconColor}
           icon={icon}
           size={resolvedSize.iconSize}
           style={iconStyle}

@@ -3,6 +3,10 @@ import { FlatList, Pressable, TextInput, View } from "react-native"
 
 import Button from "#design/elements/Button"
 import Icon, { APP_ICONS } from "#design/elements/Icon"
+import IconButton, {
+  ICON_BUTTON_SIZE,
+  ICON_BUTTON_VARIANT,
+} from "#design/elements/IconButton"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import {
   borderWidth,
@@ -195,18 +199,15 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
         </View>
 
         {showClear ? (
-          <Pressable
+          <IconButton
             accessibilityLabel="Clear selection"
-            accessibilityRole="button"
             hitSlop={spacing(2)}
+            icon={APP_ICONS.close}
+            color={colors.textMuted}
             onPress={handleClear}
-          >
-            <Icon
-              color={colors.textMuted}
-              icon={APP_ICONS.close}
-              size={ICON_SIZE}
-            />
-          </Pressable>
+            size={ICON_BUTTON_SIZE.LG}
+            variant={ICON_BUTTON_VARIANT.TEXT}
+          />
         ) : (
           <Icon
             color={colors.textMuted}

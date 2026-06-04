@@ -2,7 +2,10 @@ import { type ReactElement } from "react"
 import { Pressable, StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
-import Icon from "#design/elements/Icon"
+import IconButton, {
+  ICON_BUTTON_SIZE,
+  ICON_BUTTON_VARIANT,
+} from "#design/elements/IconButton"
 import LinearGradient from "#design/elements/LinearGradient"
 import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
@@ -10,7 +13,6 @@ import { useThemeColors, useThemePreference } from "#design/theme"
 
 import { ACCOUNT_TYPE, ACCOUNT_TYPE_LABEL } from "../Account"
 
-import { ACTION_ICON_SIZE } from "./constants"
 import { type AccountCardProps } from "./types"
 import { getAccountCardTheme } from "./utils"
 
@@ -116,22 +118,19 @@ export default function AccountCard({
       {visibleActions.length > 0 && (
         <View style={styles.actions}>
           {visibleActions.map((action) => (
-            <Pressable
+            <IconButton
               key={action.id}
               accessibilityLabel={action.accessibilityLabel}
-              accessibilityRole="button"
               disabled={action.disabled}
               hitSlop={spacing(2)}
+              icon={action.icon}
+              color={action.disabled === true ? theme.subtleText : theme.text}
               onPress={() => {
                 action.onPress(account)
               }}
-            >
-              <Icon
-                icon={action.icon}
-                color={action.disabled === true ? theme.subtleText : theme.text}
-                size={ACTION_ICON_SIZE}
-              />
-            </Pressable>
+              size={ICON_BUTTON_SIZE.LG}
+              variant={ICON_BUTTON_VARIANT.TEXT}
+            />
           ))}
         </View>
       )}

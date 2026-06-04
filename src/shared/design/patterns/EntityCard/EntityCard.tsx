@@ -2,11 +2,13 @@ import { type ReactElement } from "react"
 import { Pressable, StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
-import Icon from "#design/elements/Icon"
+import IconButton, {
+  ICON_BUTTON_SIZE,
+  ICON_BUTTON_VARIANT,
+} from "#design/elements/IconButton"
 import { spacing } from "#design/foundations"
 import { THEME_COLOR, useThemeColors } from "#design/theme"
 
-import { ACTION_ICON_SIZE } from "./constants"
 import { type EntityCardProps } from "./types"
 
 // Wraps Card with a content area + a row of inline action buttons. Each action
@@ -35,26 +37,23 @@ export default function EntityCard<T>({
         {visibleActions.length > 0 && (
           <View style={styles.actions}>
             {visibleActions.map((action) => (
-              <Pressable
+              <IconButton
                 key={action.id}
                 accessibilityLabel={action.accessibilityLabel}
-                accessibilityRole="button"
                 disabled={action.disabled}
                 hitSlop={spacing(2)}
+                icon={action.icon}
+                color={
+                  action.disabled === true
+                    ? colors[THEME_COLOR.TEXT_SUBTLE]
+                    : colors[action.color ?? THEME_COLOR.TEXT_MUTED]
+                }
                 onPress={() => {
                   action.onPress(entity)
                 }}
-              >
-                <Icon
-                  color={
-                    action.disabled === true
-                      ? colors[THEME_COLOR.TEXT_SUBTLE]
-                      : colors[action.color ?? THEME_COLOR.TEXT_MUTED]
-                  }
-                  icon={action.icon}
-                  size={ACTION_ICON_SIZE}
-                />
-              </Pressable>
+                size={ICON_BUTTON_SIZE.LG}
+                variant={ICON_BUTTON_VARIANT.TEXT}
+              />
             ))}
           </View>
         )}
