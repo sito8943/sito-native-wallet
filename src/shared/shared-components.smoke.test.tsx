@@ -82,12 +82,6 @@ const mockCategories: TransactionCategory[] = [
   },
 ]
 
-const accountsClient = { id: "accounts-client" }
-const categoriesClient = { id: "categories-client" }
-const currenciesClient = { id: "currencies-client" }
-const subscriptionProvidersClient = { id: "subscription-providers-client" }
-const transactionsClient = { id: "transactions-client" }
-
 const mockSubscriptionProvider: SubscriptionProvider = {
   id: "netflix",
   name: "Netflix",
@@ -96,7 +90,47 @@ const mockSubscriptionProvider: SubscriptionProvider = {
   ...ts,
 }
 
-const noop = (): void => undefined
+const noop = (..._args: unknown[]): void => undefined
+
+const createClient = <T extends { id: string }>(
+  id: string,
+  items: T[],
+): {
+  id: string
+  list: (..._args: unknown[]) => {
+    sort: null
+    order: "asc"
+    currentPage: number
+    pageSize: number
+    totalElements: number
+    totalPages: number
+    items: T[]
+  }
+  getById: (entityId: string) => T | undefined
+  add: typeof noop
+  addMany: typeof noop
+  update: typeof noop
+  remove: typeof noop
+  adjustBalance: typeof noop
+} => ({
+  id,
+  list: (..._args: unknown[]) => ({
+    sort: null,
+    order: "asc",
+    currentPage: 0,
+    pageSize: items.length,
+    totalElements: items.length,
+    totalPages: items.length === 0 ? 0 : 1,
+    items,
+  }),
+  getById: (entityId: string) =>
+    items.find((item) => item.id === entityId),
+  add: noop,
+  addMany: noop,
+  update: noop,
+  remove: noop,
+  adjustBalance: noop,
+})
 
 const mockSubscription: Subscription = {
   id: "subscription-1",
@@ -132,13 +166,24 @@ const mockTransaction: Transaction = {
   ],
 }
 
+const mockAccountsClient = createClient("accounts-client", mockAccounts)
+const mockCategoriesClient = createClient("categories-client", mockCategories)
+const mockCurrenciesClient = createClient("currencies-client", mockCurrencies)
+const mockSubscriptionProvidersClient = createClient(
+  "subscription-providers-client",
+  [mockSubscriptionProvider],
+)
+const mockTransactionsClient = createClient("transactions-client", [
+  mockTransaction,
+])
+
 jest.mock("#shared/data", () => ({
   useManager: () => ({
-    Accounts: accountsClient,
-    Categories: categoriesClient,
-    Currencies: currenciesClient,
-    SubscriptionProviders: subscriptionProvidersClient,
-    Transactions: transactionsClient,
+    Accounts: mockAccountsClient,
+    Categories: mockCategoriesClient,
+    Currencies: mockCurrenciesClient,
+    SubscriptionProviders: mockSubscriptionProvidersClient,
+    Transactions: mockTransactionsClient,
   }),
   todayStamp: () => "2026/01/01",
 }))
