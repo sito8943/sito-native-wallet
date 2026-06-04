@@ -2,9 +2,14 @@ import { useMemo, type ReactElement } from "react"
 
 import { useStoredState } from "#shared/data/storage"
 
-import { I18nContext } from "./I18nContext"
 import { LANGUAGE_STORAGE_KEY } from "./constants"
-import { type LanguageProviderProps } from "./types"
+import { I18nContext } from "./I18nContext"
+import {
+  type I18nContextValue,
+  type LanguageProviderProps,
+  type TranslationKey,
+  type TranslationParams,
+} from "./types"
 import { getDeviceLanguage, parseLanguage, translate } from "./utils"
 
 export function LanguageProvider({
@@ -21,12 +26,13 @@ export function LanguageProvider({
     storageKey: LANGUAGE_STORAGE_KEY,
   })
 
-  const value = useMemo(
+  const value = useMemo<I18nContextValue>(
     () => ({
       isLoading,
       language,
       setLanguage,
-      t: (key, params) => translate(language, key, params),
+      t: (key: TranslationKey, params?: TranslationParams) =>
+        translate(language, key, params),
     }),
     [isLoading, language, setLanguage],
   )

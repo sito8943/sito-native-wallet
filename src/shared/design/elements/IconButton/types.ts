@@ -20,6 +20,7 @@ export type IconButtonProps = Omit<PressableProps, "children" | "style"> & {
   disabled?: boolean
   icon: AppIcon
   color?: string
+  iconColor?: string
   iconStyle?: IconProps["style"]
   size?: IconButtonSize
   style?: StyleProp<ViewStyle>

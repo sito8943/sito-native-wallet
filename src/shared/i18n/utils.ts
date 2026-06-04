@@ -26,7 +26,7 @@ export const translate = (
     return template
   }
 
-  return Object.entries(params).reduce(
+  return Object.entries(params).reduce<string>(
     (message, [paramKey, value]) =>
       message.replaceAll(`{${paramKey}}`, String(value)),
     template,
