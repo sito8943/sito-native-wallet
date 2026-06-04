@@ -2,9 +2,7 @@ import { router, Stack } from "expo-router"
 import { type ReactElement } from "react"
 
 import { APP_ICONS } from "#design/elements/Icon"
-import IconButton, {
-  ICON_BUTTON_VARIANT,
-} from "#design/elements/IconButton"
+import IconButton, { ICON_BUTTON_VARIANT } from "#design/elements/IconButton"
 import { spacing } from "#design/foundations"
 import { useThemeColors } from "#design/theme"
 import { toCurrencyPrefabsRoute } from "#shared/navigation"
