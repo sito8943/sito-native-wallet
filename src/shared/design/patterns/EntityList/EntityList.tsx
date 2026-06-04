@@ -3,6 +3,7 @@ import { FlatList, StyleSheet } from "react-native"
 
 import { spacing } from "#design/foundations"
 import Empty from "#design/templates/Empty"
+import { useI18n } from "#shared/i18n"
 
 import { type EntityListProps } from "./types"
 
@@ -13,19 +14,23 @@ export default function EntityList<T extends { id: number }>({
   data,
   renderItem,
   keyExtractor,
-  emptyMessage = "Nothing here yet.",
+  emptyMessage,
   emptyComponent,
   header,
   onEndReached,
   contentContainerStyle,
 }: EntityListProps<T>): ReactElement {
+  const { t } = useI18n()
+
   return (
     <FlatList<T>
       data={data ?? []}
       keyExtractor={keyExtractor ?? ((item) => item.id.toString())}
       renderItem={({ item }) => renderItem(item)}
       ListHeaderComponent={header}
-      ListEmptyComponent={emptyComponent ?? <Empty message={emptyMessage} />}
+      ListEmptyComponent={
+        emptyComponent ?? <Empty message={emptyMessage ?? t("common.empty")} />
+      }
       style={styles.list}
       contentContainerStyle={[styles.content, contentContainerStyle]}
       onEndReached={onEndReached}

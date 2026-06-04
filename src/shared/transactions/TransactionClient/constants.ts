@@ -1,2 +1,7 @@
+import { getDeviceLanguage, translate } from "#shared/i18n"
+
 export const TRANSACTIONS_STORAGE_KEY = "transactions"
-export const TRANSACTIONS_ERROR_MESSAGE = "Failed to load transactions"
+export const TRANSACTIONS_ERROR_MESSAGE = translate(
+  getDeviceLanguage(),
+  "transactions.error.load",
+)

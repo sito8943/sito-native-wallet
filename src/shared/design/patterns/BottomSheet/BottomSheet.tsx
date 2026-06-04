@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import Typography from "#design/elements/Typography"
 import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useThemedStyles, type ThemeColors } from "#design/theme"
+import { useI18n } from "#shared/i18n"
 
 import { SHEET_MAX_HEIGHT, SHEET_PADDING_BOTTOM } from "./constants"
 import { type BottomSheetProps } from "./types"
@@ -24,6 +25,7 @@ export default function BottomSheet({
   const insets = useSafeAreaInsets()
   const keyboardHeight = useKeyboardHeight()
   const { translateY, panHandlers } = useSwipeToClose(open, onClose)
+  const { t } = useI18n()
 
   // With the keyboard up it already covers the nav-bar inset, so drop the
   // extra bottom padding and lift the whole sheet by the keyboard height.
@@ -47,7 +49,7 @@ export default function BottomSheet({
     >
       <View style={styles.root}>
         <Pressable
-          accessibilityLabel="Close"
+          accessibilityLabel={t("common.close")}
           style={styles.backdrop}
           onPress={onClose}
         />
