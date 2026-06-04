@@ -4,6 +4,7 @@ import { useColorScheme } from "react-native"
 import { useStoredState } from "#shared/data/storage"
 
 import { useI18n } from "../../i18n/useI18n"
+
 import { THEME_PREFERENCE, THEME_PREFERENCE_STORAGE_KEY } from "./constants"
 import { ThemeContext } from "./ThemeContext"
 import { type ThemePreference } from "./types"
