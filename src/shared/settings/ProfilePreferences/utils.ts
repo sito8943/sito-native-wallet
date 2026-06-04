@@ -1,4 +1,4 @@
-import { getDeviceLanguage, parseLanguage } from "../../i18n/utils"
+import { getDeviceLanguage, parseLanguage } from "#shared/i18n"
 
 import { type ProfilePreferences } from "./types"
 
