@@ -7,9 +7,11 @@ import {
   CurrencyForm,
   useCurrencies,
 } from "#shared/currencies"
+import { useI18n } from "#shared/i18n"
 
 export default function NewCurrency(): ReactElement {
   const router = useRouter()
+  const { t } = useI18n()
   const { addCurrency } = useCurrencies()
 
   const handleSubmit = (values: AddCurrencyDto): void => {
@@ -19,7 +21,7 @@ export default function NewCurrency(): ReactElement {
 
   return (
     <Page scroll>
-      <CurrencyForm submitLabel="Create" onSubmit={handleSubmit} />
+      <CurrencyForm submitLabel={t("currencies.create")} onSubmit={handleSubmit} />
     </Page>
   )
 }

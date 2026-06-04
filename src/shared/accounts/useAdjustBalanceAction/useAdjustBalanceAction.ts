@@ -2,6 +2,7 @@ import { useCallback } from "react"
 
 import { APP_ICONS } from "#design/elements/Icon"
 import { type Action, ACTION_ID } from "#design/interactions"
+import { useI18n } from "#shared/i18n"
 
 import { type Account } from "../Account"
 
@@ -15,16 +16,17 @@ export default function useAdjustBalanceAction({
 }: UseAdjustBalanceActionProps): {
   action: (account: Account) => Action<Account>
 } {
+  const { t } = useI18n()
   const action = useCallback(
     (account: Account): Action<Account> => ({
       id: ACTION_ID.ADJUST_BALANCE,
       icon: APP_ICONS.adjustBalance,
-      accessibilityLabel: "Adjust balance",
+      accessibilityLabel: t("accounts.adjust.title"),
       onPress: () => {
         onPress(account)
       },
     }),
-    [onPress],
+    [onPress, t],
   )
 
   return { action }

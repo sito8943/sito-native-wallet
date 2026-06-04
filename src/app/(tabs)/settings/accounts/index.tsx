@@ -12,11 +12,13 @@ import {
   useAccounts,
   useAdjustBalanceSheet,
 } from "#shared/accounts"
+import { useI18n } from "#shared/i18n"
 import { toAccountDetailsRoute, toNewAccountRoute } from "#shared/navigation"
 import { useTransactions } from "#shared/transactions"
 
 export default function Accounts(): ReactElement {
   const router = useRouter()
+  const { t } = useI18n()
   const { data } = useAccounts()
   const { adjustBalance } = useTransactions()
 
@@ -33,7 +35,7 @@ export default function Accounts(): ReactElement {
       <Page>
         <EntityList
           data={data}
-          emptyMessage="No accounts yet."
+          emptyMessage={t("accounts.empty")}
           renderItem={(account) => (
             <AccountCard
               account={account}
@@ -46,7 +48,7 @@ export default function Accounts(): ReactElement {
         />
       </Page>
       <FAB
-        accessibilityLabel="Add account"
+        accessibilityLabel={t("accounts.add")}
         icon={APP_ICONS.add}
         onPress={() => router.push(toNewAccountRoute())}
       />

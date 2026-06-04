@@ -5,10 +5,12 @@ import { APP_ICONS } from "#design/elements/Icon"
 import IconButton, { ICON_BUTTON_VARIANT } from "#design/elements/IconButton"
 import { spacing } from "#design/foundations"
 import { useThemeColors } from "#design/theme"
+import { useI18n } from "#shared/i18n"
 import { toCategoryPrefabsRoute } from "#shared/navigation"
 
 export default function Layout(): ReactElement {
   const colors = useThemeColors()
+  const { t } = useI18n()
 
   return (
     <Stack
@@ -20,12 +22,12 @@ export default function Layout(): ReactElement {
       <Stack.Screen
         name="index"
         options={{
-          title: "Categories",
+          title: t("categories.title"),
           headerRight: () => (
             <IconButton
-              accessibilityLabel="Add suggested categories"
+              accessibilityLabel={t("categories.addSuggested")}
               icon={APP_ICONS.prefabs}
-              color={colors.textStrong}
+              iconColor={colors.textStrong}
               hitSlop={spacing(2)}
               onPress={() => router.push(toCategoryPrefabsRoute())}
               variant={ICON_BUTTON_VARIANT.TEXT}
@@ -33,12 +35,15 @@ export default function Layout(): ReactElement {
           ),
         }}
       />
-      <Stack.Screen name="new" options={{ title: "New category" }} />
+      <Stack.Screen name="new" options={{ title: t("categories.new.title") }} />
       <Stack.Screen
         name="prefabs"
-        options={{ title: "Add suggested categories" }}
+        options={{ title: t("categories.prefabs.title") }}
       />
-      <Stack.Screen name="[id]" options={{ title: "Edit category" }} />
+      <Stack.Screen
+        name="[id]"
+        options={{ title: t("categories.edit.title") }}
+      />
     </Stack>
   )
 }

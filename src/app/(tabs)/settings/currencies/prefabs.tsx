@@ -13,10 +13,12 @@ import {
   CurrencyCard,
   useCurrencies,
 } from "#shared/currencies"
+import { useI18n } from "#shared/i18n"
 
 export default function CurrencyPrefabs(): ReactElement {
   const router = useRouter()
   const styles = useThemedStyles(createStyles)
+  const { t } = useI18n()
   const { data, addCurrencies } = useCurrencies()
   const [selected, setSelected] = useState<Set<string>>(new Set())
 
@@ -59,7 +61,7 @@ export default function CurrencyPrefabs(): ReactElement {
         {available.length === 0 ? (
           <View style={styles.empty}>
             <Typography tone={TYPOGRAPHY_TONE.MUTED}>
-              All common currencies are already added.
+              {t("currencies.prefabs.empty")}
             </Typography>
           </View>
         ) : (
@@ -80,9 +82,9 @@ export default function CurrencyPrefabs(): ReactElement {
 
       {available.length > 0 && (
         <FAB
-          accessibilityLabel="Add selected currencies"
+          accessibilityLabel={t("currencies.addCommon")}
           icon={APP_ICONS.check}
-          label={`Add ${selected.size}`}
+          label={t("currencies.prefabs.addSelected", { count: selected.size })}
           disabled={selected.size === 0}
           onPress={confirm}
         />

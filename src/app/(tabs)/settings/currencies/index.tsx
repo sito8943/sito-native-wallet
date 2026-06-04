@@ -9,18 +9,20 @@ import EntityList from "#design/patterns/EntityList"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import { type Currency, CurrencyCard, useCurrencies } from "#shared/currencies"
+import { useI18n } from "#shared/i18n"
 import { toCurrencyDetailsRoute, toNewCurrencyRoute } from "#shared/navigation"
 
 export default function Currencies(): ReactElement {
   const router = useRouter()
+  const { t } = useI18n()
   const { data, removeCurrency } = useCurrencies()
 
   const deleteDialog = useDeleteDialog<Currency>({
     onConfirm: (currency) => {
       removeCurrency(currency.id)
     },
-    title: "Delete currency",
-    message: "This currency will be removed permanently.",
+    title: t("currencies.delete.title"),
+    message: t("currencies.delete.description"),
   })
 
   return (
@@ -28,7 +30,7 @@ export default function Currencies(): ReactElement {
       <Page>
         <EntityList
           data={data}
-          emptyMessage="No currencies yet."
+          emptyMessage={t("currencies.empty")}
           renderItem={(currency) => (
             <CurrencyCard
               actions={[deleteDialog.action(currency)]}
@@ -39,11 +41,11 @@ export default function Currencies(): ReactElement {
         />
       </Page>
       <FAB
-        accessibilityLabel="Add currency"
+        accessibilityLabel={t("currencies.add")}
         icon={APP_ICONS.add}
         onPress={() => router.push(toNewCurrencyRoute())}
       />
-      <ConfirmationDialog {...deleteDialog} confirmLabel="Delete" />
+      <ConfirmationDialog {...deleteDialog} confirmLabel={t("common.delete")} />
     </View>
   )
 }

@@ -13,10 +13,12 @@ import {
   type TransactionCategory,
   useCategories,
 } from "#shared/categories"
+import { useI18n } from "#shared/i18n"
 import { toCategoryDetailsRoute, toNewCategoryRoute } from "#shared/navigation"
 
 export default function Categories(): ReactElement {
   const router = useRouter()
+  const { t } = useI18n()
   // System categories (balance adjustment) aren't user-managed — hide them.
   const { data, removeCategory } = useCategories({ includeSystem: false })
 
@@ -24,8 +26,8 @@ export default function Categories(): ReactElement {
     onConfirm: (category) => {
       removeCategory(category.id)
     },
-    title: "Delete category",
-    message: "This category will be removed permanently.",
+    title: t("categories.delete.title"),
+    message: t("categories.delete.description"),
   })
 
   return (
@@ -33,7 +35,7 @@ export default function Categories(): ReactElement {
       <Page>
         <EntityList
           data={data}
-          emptyMessage="No categories yet."
+          emptyMessage={t("categories.empty")}
           renderItem={(category) => (
             <CategoryCard
               actions={[deleteDialog.action(category)]}
@@ -44,11 +46,14 @@ export default function Categories(): ReactElement {
         />
       </Page>
       <FAB
-        accessibilityLabel="Add category"
+        accessibilityLabel={t("categories.add")}
         icon={APP_ICONS.add}
         onPress={() => router.push(toNewCategoryRoute())}
       />
-      <ConfirmationDialog {...deleteDialog} confirmLabel="Delete" />
+      <ConfirmationDialog
+        {...deleteDialog}
+        confirmLabel={t("categories.delete.confirm")}
+      />
     </View>
   )
 }

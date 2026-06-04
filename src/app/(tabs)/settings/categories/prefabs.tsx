@@ -13,10 +13,12 @@ import {
   CategoryCard,
   useCategories,
 } from "#shared/categories"
+import { useI18n } from "#shared/i18n"
 
 export default function CategoryPrefabs(): ReactElement {
   const router = useRouter()
   const styles = useThemedStyles(createStyles)
+  const { t } = useI18n()
   const { data, addCategories } = useCategories()
   const [selected, setSelected] = useState<Set<string>>(new Set())
 
@@ -64,7 +66,7 @@ export default function CategoryPrefabs(): ReactElement {
         {available.length === 0 ? (
           <View style={styles.empty}>
             <Typography tone={TYPOGRAPHY_TONE.MUTED}>
-              All suggested categories are already added.
+              {t("categories.prefabs.empty")}
             </Typography>
           </View>
         ) : (
@@ -85,9 +87,9 @@ export default function CategoryPrefabs(): ReactElement {
 
       {available.length > 0 && (
         <FAB
-          accessibilityLabel="Add selected categories"
+          accessibilityLabel={t("categories.addSuggested")}
           icon={APP_ICONS.check}
-          label={`Add ${selected.size}`}
+          label={t("categories.prefabs.addSelected", { count: selected.size })}
           disabled={selected.size === 0}
           onPress={confirm}
         />

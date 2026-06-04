@@ -6,10 +6,12 @@ import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Page from "#design/templates/Page"
 import { type AddAccountDto, AccountForm, useAccount } from "#shared/accounts"
+import { useI18n } from "#shared/i18n"
 import { useDetailRouteParams } from "#shared/navigation"
 
 export default function EditAccount(): ReactElement {
   const router = useRouter()
+  const { t } = useI18n()
   const { id } = useDetailRouteParams()
   const { data: account, isLoading, update, remove } = useAccount(id)
 
@@ -28,7 +30,7 @@ export default function EditAccount(): ReactElement {
           variant={TYPOGRAPHY_VARIANT.BODY_STRONG}
           tone={TYPOGRAPHY_TONE.MUTED}
         >
-          Account not found
+          {t("accounts.notFound")}
         </Typography>
       </Page>
     )
@@ -41,12 +43,12 @@ export default function EditAccount(): ReactElement {
 
   const handleDelete = (): void => {
     Alert.alert(
-      "Delete account",
-      `Delete "${account.name}"? This cannot be undone.`,
+      t("accounts.delete.title"),
+      t("accounts.delete.message", { name: account.name }),
       [
-        { text: "Cancel", style: "cancel" },
+        { text: t("common.cancel"), style: "cancel" },
         {
-          text: "Delete",
+          text: t("common.delete"),
           style: "destructive",
           onPress: () => {
             remove()
@@ -61,7 +63,7 @@ export default function EditAccount(): ReactElement {
   return (
     <Page scroll>
       <AccountForm
-        submitLabel="Save"
+        submitLabel={t("accounts.save")}
         defaultValues={{
           name: account.name,
           bankName: account.bankName,

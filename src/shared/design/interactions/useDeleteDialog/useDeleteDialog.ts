@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react"
+import { useI18n } from "#shared/i18n"
 
 import { useDeleteAction } from "../useDeleteAction"
 
@@ -10,9 +11,10 @@ import { type UseDeleteDialogProps, type UseDeleteDialogState } from "./types"
 // dialog (it does NOT delete); handleSubmit runs the confirmed deletion.
 export default function useDeleteDialog<T>({
   onConfirm,
-  title = "Delete",
+  title,
   message,
 }: UseDeleteDialogProps<T>): UseDeleteDialogState<T> {
+  const { t } = useI18n()
   const { open, handleOpen, handleClose } = useDialog()
   const [target, setTarget] = useState<T | null>(null)
 
@@ -38,5 +40,12 @@ export default function useDeleteDialog<T>({
     close()
   }, [close, onConfirm, target])
 
-  return { action, open, title, message, handleSubmit, handleClose: close }
+  return {
+    action,
+    open,
+    title: title ?? t("common.delete"),
+    message,
+    handleSubmit,
+    handleClose: close,
+  }
 }

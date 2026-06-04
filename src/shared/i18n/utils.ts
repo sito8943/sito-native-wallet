@@ -1,6 +1,10 @@
 import { LANGUAGE } from "./constants"
 import { translations } from "./translations"
-import { type Language, type TranslationKey } from "./types"
+import {
+  type Language,
+  type TranslationKey,
+  type TranslationParams,
+} from "./types"
 
 export const getDeviceLanguage = (): Language => {
   const locale = Intl.DateTimeFormat().resolvedOptions().locale.toLowerCase()
@@ -11,5 +15,20 @@ export const getDeviceLanguage = (): Language => {
 export const parseLanguage = (value: unknown): Language =>
   value === LANGUAGE.ES ? LANGUAGE.ES : LANGUAGE.EN
 
-export const translate = (language: Language, key: TranslationKey): string =>
-  translations[language][key] ?? translations[LANGUAGE.EN][key]
+export const translate = (
+  language: Language,
+  key: TranslationKey,
+  params?: TranslationParams,
+): string => {
+  const template = translations[language][key] ?? translations[LANGUAGE.EN][key]
+
+  if (params === undefined) {
+    return template
+  }
+
+  return Object.entries(params).reduce(
+    (message, [paramKey, value]) =>
+      message.replaceAll(`{${paramKey}}`, String(value)),
+    template,
+  )
+}

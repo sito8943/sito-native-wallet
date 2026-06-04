@@ -5,6 +5,7 @@ import { ActivityIndicator, Alert } from "react-native"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Page from "#design/templates/Page"
+import { useI18n } from "#shared/i18n"
 import { useDetailRouteParams } from "#shared/navigation"
 import {
   type AddSubscriptionProviderDto,
@@ -14,6 +15,7 @@ import {
 
 export default function EditSubscriptionProvider(): ReactElement {
   const router = useRouter()
+  const { t } = useI18n()
   const { id } = useDetailRouteParams()
   const {
     data: provider,
@@ -37,7 +39,7 @@ export default function EditSubscriptionProvider(): ReactElement {
           variant={TYPOGRAPHY_VARIANT.BODY_STRONG}
           tone={TYPOGRAPHY_TONE.MUTED}
         >
-          Subscription provider not found
+          {t("subscriptionProviders.notFound")}
         </Typography>
       </Page>
     )
@@ -50,12 +52,12 @@ export default function EditSubscriptionProvider(): ReactElement {
 
   const handleDelete = (): void => {
     Alert.alert(
-      "Delete provider",
-      `Delete "${provider.name}"? This cannot be undone.`,
+      t("subscriptionProviders.delete.title"),
+      t("subscriptionProviders.delete.message", { name: provider.name }),
       [
-        { text: "Cancel", style: "cancel" },
+        { text: t("common.cancel"), style: "cancel" },
         {
-          text: "Delete",
+          text: t("common.delete"),
           style: "destructive",
           onPress: () => {
             remove()
@@ -69,7 +71,7 @@ export default function EditSubscriptionProvider(): ReactElement {
   return (
     <Page scroll>
       <SubscriptionProviderForm
-        submitLabel="Save"
+        submitLabel={t("subscriptionProviders.save")}
         defaultValues={{
           name: provider.name,
           website: provider.website ?? "",

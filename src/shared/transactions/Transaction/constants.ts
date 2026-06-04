@@ -1,8 +1,10 @@
+import { getDeviceLanguage, translate } from "#shared/i18n"
+
 import { type CommonAccountDto } from "../dtos"
 
 // Relation snapshot used when an account was deleted but transactions remain.
-export const MISSING_ACCOUNT: CommonAccountDto = {
+export const getMissingAccount = (): CommonAccountDto => ({
   id: 0,
-  name: "Unknown account",
+  name: translate(getDeviceLanguage(), "transactions.unknownAccount"),
   currencySymbol: "",
-}
+})

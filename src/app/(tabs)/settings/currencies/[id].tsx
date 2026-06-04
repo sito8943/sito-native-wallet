@@ -10,10 +10,12 @@ import {
   CurrencyForm,
   useCurrency,
 } from "#shared/currencies"
+import { useI18n } from "#shared/i18n"
 import { useDetailRouteParams } from "#shared/navigation"
 
 export default function EditCurrency(): ReactElement {
   const router = useRouter()
+  const { t } = useI18n()
   const { id } = useDetailRouteParams()
   const { data: currency, isLoading, update, remove } = useCurrency(id)
 
@@ -32,7 +34,7 @@ export default function EditCurrency(): ReactElement {
           variant={TYPOGRAPHY_VARIANT.BODY_STRONG}
           tone={TYPOGRAPHY_TONE.MUTED}
         >
-          Currency not found
+          {t("currencies.notFound")}
         </Typography>
       </Page>
     )
@@ -45,12 +47,12 @@ export default function EditCurrency(): ReactElement {
 
   const handleDelete = (): void => {
     Alert.alert(
-      "Delete currency",
-      `Delete "${currency.name}"? This cannot be undone.`,
+      t("currencies.delete.title"),
+      t("currencies.delete.message", { name: currency.name }),
       [
-        { text: "Cancel", style: "cancel" },
+        { text: t("common.cancel"), style: "cancel" },
         {
-          text: "Delete",
+          text: t("common.delete"),
           style: "destructive",
           onPress: () => {
             remove()
@@ -64,7 +66,7 @@ export default function EditCurrency(): ReactElement {
   return (
     <Page scroll>
       <CurrencyForm
-        submitLabel="Save"
+        submitLabel={t("currencies.save")}
         defaultValues={{
           name: currency.name,
           symbol: currency.symbol,

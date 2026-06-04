@@ -10,10 +10,12 @@ import {
   CategoryForm,
   useCategory,
 } from "#shared/categories"
+import { useI18n } from "#shared/i18n"
 import { useDetailRouteParams } from "#shared/navigation"
 
 export default function EditCategory(): ReactElement {
   const router = useRouter()
+  const { t } = useI18n()
   const { id } = useDetailRouteParams()
   const { data: category, isLoading, update, remove } = useCategory(id)
 
@@ -32,7 +34,7 @@ export default function EditCategory(): ReactElement {
           variant={TYPOGRAPHY_VARIANT.BODY_STRONG}
           tone={TYPOGRAPHY_TONE.MUTED}
         >
-          Category not found
+          {t("categories.notFound")}
         </Typography>
       </Page>
     )
@@ -45,12 +47,12 @@ export default function EditCategory(): ReactElement {
 
   const handleDelete = (): void => {
     Alert.alert(
-      "Delete category",
-      `Delete "${category.name}"? This cannot be undone.`,
+      t("categories.delete.title"),
+      t("categories.delete.message", { name: category.name }),
       [
-        { text: "Cancel", style: "cancel" },
+        { text: t("common.cancel"), style: "cancel" },
         {
-          text: "Delete",
+          text: t("common.delete"),
           style: "destructive",
           onPress: () => {
             remove()
@@ -64,7 +66,7 @@ export default function EditCategory(): ReactElement {
   return (
     <Page scroll>
       <CategoryForm
-        submitLabel="Save"
+        submitLabel={t("categories.save")}
         defaultValues={{
           name: category.name,
           description: category.description,

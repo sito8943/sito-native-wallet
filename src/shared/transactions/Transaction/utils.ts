@@ -12,7 +12,7 @@ import {
 } from "../dtos"
 import { type StoredTransaction } from "../TransactionClient"
 
-import { MISSING_ACCOUNT } from "./constants"
+import { getMissingAccount } from "./constants"
 import { type Transaction } from "./types"
 
 export const sortByDate = (transactions: Transaction[]): Transaction[] =>
@@ -114,7 +114,7 @@ const resolveTransaction = (
     amount: stored.amount,
     date: stored.date,
     auto: stored.auto,
-    account: account ? toCommonAccount(account) : MISSING_ACCOUNT,
+    account: account ? toCommonAccount(account) : getMissingAccount(),
     categories: stored.categoryIds
       .map((id) => categories.find((category) => category.id === id))
       .filter(

@@ -1,5 +1,12 @@
-import { MS_PER_DAY } from "./constants"
+import { type TranslationKey } from "#shared/i18n"
+
+import { MS_PER_DAY, SUBSCRIPTION_BILLING_UNIT } from "./constants"
 import { type Subscription } from "./types"
+
+type Translate = (
+  key: TranslationKey,
+  params?: Record<string, number | string>,
+) => string
 
 export function daysUntilRenewal(subscription: Subscription): number {
   const renewal = new Date(subscription.nextRenewalAt).getTime()
@@ -16,9 +23,35 @@ export function sortByNextRenewal(
   )
 }
 
-export function formatBillingCycle(subscription: Subscription): string {
+export function formatBillingCycle(
+  subscription: Subscription,
+  t: Translate,
+): string {
   const { billingFrequency, billingUnit } = subscription
-  const unit = billingUnit.toLowerCase()
-  if (billingFrequency === 1) return `every ${unit}`
-  return `every ${billingFrequency} ${unit}s`
+  const units = {
+    [SUBSCRIPTION_BILLING_UNIT.DAY]: {
+      singular: "subscriptions.billing.unit.day",
+      plural: "subscriptions.billing.unit.days",
+    },
+    [SUBSCRIPTION_BILLING_UNIT.MONTH]: {
+      singular: "subscriptions.billing.unit.month",
+      plural: "subscriptions.billing.unit.months",
+    },
+    [SUBSCRIPTION_BILLING_UNIT.YEAR]: {
+      singular: "subscriptions.billing.unit.year",
+      plural: "subscriptions.billing.unit.years",
+    },
+  } as const
+  const unitKeys = units[billingUnit]
+
+  if (billingFrequency === 1) {
+    return t("subscriptions.billing.everyOne", {
+      unit: t(unitKeys.singular),
+    })
+  }
+
+  return t("subscriptions.billing.everyMany", {
+    count: billingFrequency,
+    unit: t(unitKeys.plural),
+  })
 }

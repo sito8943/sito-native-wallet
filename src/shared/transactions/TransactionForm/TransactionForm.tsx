@@ -7,6 +7,7 @@ import DeleteButton from "#design/patterns/DeleteButton"
 import Form from "#design/patterns/Form"
 import { useAccounts } from "#shared/accounts"
 import { useCategories } from "#shared/categories"
+import { useI18n } from "#shared/i18n"
 
 import { type AddTransactionDto } from "../dtos"
 
@@ -21,6 +22,7 @@ export default function TransactionForm({
   onDelete,
   auto = false,
 }: TransactionFormProps): ReactElement {
+  const { t } = useI18n()
   const { data: accounts } = useAccounts()
   const { data: categories } = useCategories()
   const { control, handleSubmit } = useForm<TransactionFormValues>({
@@ -72,16 +74,18 @@ export default function TransactionForm({
         control={control}
         name="description"
         rules={{
-          required: "Description is required",
+          required: t("form.validation.required.description"),
           maxLength: {
             value: TRANSACTION_FIELD_LIMITS.DESCRIPTION,
-            message: `Max ${TRANSACTION_FIELD_LIMITS.DESCRIPTION} characters`,
+            message: t("form.validation.maxCharacters", {
+              max: TRANSACTION_FIELD_LIMITS.DESCRIPTION,
+            }),
           },
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <TextField
-            label="Description"
-            placeholder="Groceries"
+            label={t("form.transaction.description")}
+            placeholder={t("form.transaction.description.placeholder")}
             maxLength={TRANSACTION_FIELD_LIMITS.DESCRIPTION}
             value={value}
             onChangeText={onChange}
@@ -95,13 +99,13 @@ export default function TransactionForm({
         control={control}
         name="amount"
         rules={{
-          required: "Amount is required",
+          required: t("form.validation.required.amount"),
           validate: (value) =>
-            isValidAmount(value) || "Enter an amount greater than 0",
+            isValidAmount(value) || t("form.validation.invalidPositiveAmount"),
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <TextField
-            label="Amount"
+            label={t("form.transaction.amount")}
             placeholder="0.00"
             keyboardType="decimal-pad"
             value={value}
@@ -116,15 +120,15 @@ export default function TransactionForm({
         control={control}
         name="date"
         rules={{
-          required: "Date is required",
+          required: t("form.validation.required.date"),
           pattern: {
             value: DATE_PATTERN,
-            message: "Use the format YYYY/MM/DD",
+            message: t("form.validation.invalidDateFormat"),
           },
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <TextField
-            label="Date"
+            label={t("form.transaction.date")}
             placeholder="2026/05/24"
             autoCapitalize="none"
             autoCorrect={false}
@@ -139,11 +143,11 @@ export default function TransactionForm({
       <Controller
         control={control}
         name="accountId"
-        rules={{ required: "Account is required" }}
+        rules={{ required: t("form.validation.required.account") }}
         render={({ field: { onChange, value }, fieldState }) => (
           <Autocomplete
-            label="Account"
-            placeholder="Search accounts"
+            label={t("form.transaction.account")}
+            placeholder={t("form.transaction.account.placeholder")}
             options={accountOptions}
             value={value}
             onChange={onChange}
@@ -155,12 +159,15 @@ export default function TransactionForm({
       <Controller
         control={control}
         name="categoryIds"
-        rules={{ validate: (value) => value.length > 0 || "Pick a category" }}
+        rules={{
+          validate: (value) =>
+            value.length > 0 || t("form.validation.pickCategory"),
+        }}
         render={({ field: { onChange, value }, fieldState }) => (
           <Autocomplete
             multiple
-            label="Categories"
-            placeholder="Search categories"
+            label={t("form.transaction.categories")}
+            placeholder={t("form.transaction.categories.placeholder")}
             options={categoryOptions}
             value={value}
             onChange={onChange}

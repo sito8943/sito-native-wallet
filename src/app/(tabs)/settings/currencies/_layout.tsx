@@ -8,10 +8,12 @@ import IconButton, {
 } from "#design/elements/IconButton"
 import { spacing } from "#design/foundations"
 import { useThemeColors } from "#design/theme"
+import { useI18n } from "#shared/i18n"
 import { toCurrencyPrefabsRoute } from "#shared/navigation"
 
 export default function Layout(): ReactElement {
   const colors = useThemeColors()
+  const { t } = useI18n()
 
   return (
     <Stack
@@ -23,12 +25,12 @@ export default function Layout(): ReactElement {
       <Stack.Screen
         name="index"
         options={{
-          title: "Currencies",
+          title: t("currencies.title"),
           headerRight: () => (
             <IconButton
-              accessibilityLabel="Add common currencies"
+              accessibilityLabel={t("currencies.addCommon")}
               icon={APP_ICONS.prefabs}
-              color={colors.textStrong}
+              iconColor={colors.textStrong}
               hitSlop={spacing(2)}
               onPress={() => router.push(toCurrencyPrefabsRoute())}
               variant={ICON_BUTTON_VARIANT.TEXT}
@@ -37,12 +39,12 @@ export default function Layout(): ReactElement {
           ),
         }}
       />
-      <Stack.Screen name="new" options={{ title: "New currency" }} />
+      <Stack.Screen name="new" options={{ title: t("currencies.new.title") }} />
       <Stack.Screen
         name="prefabs"
-        options={{ title: "Add common currencies" }}
+        options={{ title: t("currencies.prefabs.title") }}
       />
-      <Stack.Screen name="[id]" options={{ title: "Edit currency" }} />
+      <Stack.Screen name="[id]" options={{ title: t("currencies.edit.title") }} />
     </Stack>
   )
 }

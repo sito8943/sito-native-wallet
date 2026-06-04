@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, View } from "react-native"
 import Card from "#design/elements/Card"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import { useI18n } from "#shared/i18n"
 
 import { daysUntilRenewal, formatBillingCycle } from "../Subscription"
 
@@ -14,6 +15,7 @@ export default function SubscriptionCard({
   subscription,
   onPress,
 }: SubscriptionCardProps): ReactElement {
+  const { t } = useI18n()
   const days = daysUntilRenewal(subscription)
 
   const content = (
@@ -24,13 +26,13 @@ export default function SubscriptionCard({
             {subscription.name}
           </Typography>
           <Typography variant={TYPOGRAPHY_VARIANT.CAPTION}>
-            {subscription.provider.name} · {formatBillingCycle(subscription)}
+            {subscription.provider.name} · {formatBillingCycle(subscription, t)}
           </Typography>
           <Typography
             variant={TYPOGRAPHY_VARIANT.CAPTION}
             tone={TYPOGRAPHY_TONE.MUTED}
           >
-            {renewalLabel(days)}
+            {renewalLabel(days, t)}
           </Typography>
         </View>
 

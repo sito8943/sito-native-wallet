@@ -5,6 +5,7 @@ import { StyleSheet, View } from "react-native"
 import Button, { BUTTON_VARIANT } from "#design/elements/Button"
 import TextField from "#design/elements/TextField"
 import { spacing } from "#design/foundations"
+import { useI18n } from "#shared/i18n"
 
 import { type AddSubscriptionProviderDto } from "../dtos"
 
@@ -20,6 +21,7 @@ export default function SubscriptionProviderForm({
   onSubmit,
   onDelete,
 }: SubscriptionProviderFormProps): ReactElement {
+  const { t } = useI18n()
   const { control, handleSubmit } = useForm<AddSubscriptionProviderDto>({
     defaultValues: defaultValues ?? EMPTY_SUBSCRIPTION_PROVIDER,
   })
@@ -30,16 +32,18 @@ export default function SubscriptionProviderForm({
         control={control}
         name="name"
         rules={{
-          required: "Name is required",
+          required: t("form.validation.required.name"),
           maxLength: {
             value: SUBSCRIPTION_PROVIDER_FIELD_LIMITS.NAME,
-            message: `Max ${SUBSCRIPTION_PROVIDER_FIELD_LIMITS.NAME} characters`,
+            message: t("form.validation.maxCharacters", {
+              max: SUBSCRIPTION_PROVIDER_FIELD_LIMITS.NAME,
+            }),
           },
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <TextField
-            label="Name"
-            placeholder="Netflix"
+            label={t("form.subscriptionProvider.name")}
+            placeholder={t("form.subscriptionProvider.name.placeholder")}
             autoCapitalize="words"
             maxLength={SUBSCRIPTION_PROVIDER_FIELD_LIMITS.NAME}
             value={value}
@@ -56,13 +60,15 @@ export default function SubscriptionProviderForm({
         rules={{
           maxLength: {
             value: SUBSCRIPTION_PROVIDER_FIELD_LIMITS.WEBSITE,
-            message: `Max ${SUBSCRIPTION_PROVIDER_FIELD_LIMITS.WEBSITE} characters`,
+            message: t("form.validation.maxCharacters", {
+              max: SUBSCRIPTION_PROVIDER_FIELD_LIMITS.WEBSITE,
+            }),
           },
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <TextField
-            label="Website"
-            placeholder="https://netflix.com"
+            label={t("form.subscriptionProvider.website")}
+            placeholder={t("form.subscriptionProvider.website.placeholder")}
             autoCapitalize="none"
             autoCorrect={false}
             keyboardType="url"
@@ -81,13 +87,15 @@ export default function SubscriptionProviderForm({
         rules={{
           maxLength: {
             value: SUBSCRIPTION_PROVIDER_FIELD_LIMITS.DESCRIPTION,
-            message: `Max ${SUBSCRIPTION_PROVIDER_FIELD_LIMITS.DESCRIPTION} characters`,
+            message: t("form.validation.maxCharacters", {
+              max: SUBSCRIPTION_PROVIDER_FIELD_LIMITS.DESCRIPTION,
+            }),
           },
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <TextField
-            label="Description"
-            placeholder="Optional"
+            label={t("form.subscriptionProvider.description")}
+            placeholder={t("form.subscriptionProvider.description.placeholder")}
             multiline
             maxLength={SUBSCRIPTION_PROVIDER_FIELD_LIMITS.DESCRIPTION}
             value={value}
@@ -103,7 +111,7 @@ export default function SubscriptionProviderForm({
 
         {onDelete !== undefined && (
           <Button
-            label="Delete"
+            label={t("common.delete")}
             variant={BUTTON_VARIANT.DANGER}
             onPress={onDelete}
           />

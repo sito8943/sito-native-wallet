@@ -8,6 +8,7 @@ import { ConfirmationDialog } from "#design/patterns/Dialog"
 import EntityList from "#design/patterns/EntityList"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
+import { useI18n } from "#shared/i18n"
 import {
   toNewSubscriptionProviderRoute,
   toSubscriptionProviderDetailsRoute,
@@ -20,14 +21,15 @@ import {
 
 export default function SubscriptionProviders(): ReactElement {
   const router = useRouter()
+  const { t } = useI18n()
   const { data, removeSubscriptionProvider } = useSubscriptionProviders()
 
   const deleteDialog = useDeleteDialog<SubscriptionProvider>({
     onConfirm: (provider) => {
       removeSubscriptionProvider(provider.id)
     },
-    title: "Delete provider",
-    message: "This subscription provider will be removed permanently.",
+    title: t("subscriptionProviders.delete.title"),
+    message: t("subscriptionProviders.delete.description"),
   })
 
   return (
@@ -35,7 +37,7 @@ export default function SubscriptionProviders(): ReactElement {
       <Page>
         <EntityList
           data={data}
-          emptyMessage="No subscription providers yet."
+          emptyMessage={t("subscriptionProviders.empty")}
           renderItem={(provider) => (
             <SubscriptionProviderCard
               actions={[deleteDialog.action(provider)]}
@@ -48,11 +50,11 @@ export default function SubscriptionProviders(): ReactElement {
         />
       </Page>
       <FAB
-        accessibilityLabel="Add subscription provider"
+        accessibilityLabel={t("subscriptionProviders.add")}
         icon={APP_ICONS.add}
         onPress={() => router.push(toNewSubscriptionProviderRoute())}
       />
-      <ConfirmationDialog {...deleteDialog} confirmLabel="Delete" />
+      <ConfirmationDialog {...deleteDialog} confirmLabel={t("common.delete")} />
     </View>
   )
 }

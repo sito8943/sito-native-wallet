@@ -2,6 +2,7 @@ import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 
 import Page from "#design/templates/Page"
+import { useI18n } from "#shared/i18n"
 import {
   type AddSubscriptionProviderDto,
   SubscriptionProviderForm,
@@ -10,6 +11,7 @@ import {
 
 export default function NewSubscriptionProvider(): ReactElement {
   const router = useRouter()
+  const { t } = useI18n()
   const { addSubscriptionProvider } = useSubscriptionProviders()
 
   const handleSubmit = (values: AddSubscriptionProviderDto): void => {
@@ -19,7 +21,10 @@ export default function NewSubscriptionProvider(): ReactElement {
 
   return (
     <Page scroll>
-      <SubscriptionProviderForm submitLabel="Create" onSubmit={handleSubmit} />
+      <SubscriptionProviderForm
+        submitLabel={t("subscriptionProviders.create")}
+        onSubmit={handleSubmit}
+      />
     </Page>
   )
 }

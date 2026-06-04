@@ -26,7 +26,7 @@ export function LanguageProvider({
       isLoading,
       language,
       setLanguage,
-      t: (key: Parameters<typeof translate>[1]) => translate(language, key),
+      t: (key, params) => translate(language, key, params),
     }),
     [isLoading, language, setLanguage],
   )

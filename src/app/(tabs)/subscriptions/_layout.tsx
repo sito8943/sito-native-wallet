@@ -2,9 +2,11 @@ import { Stack } from "expo-router"
 import { type ReactElement } from "react"
 
 import { useThemeColors } from "#design/theme"
+import { useI18n } from "#shared/i18n"
 
 export default function Layout(): ReactElement {
   const colors = useThemeColors()
+  const { t } = useI18n()
 
   return (
     <Stack
@@ -16,10 +18,13 @@ export default function Layout(): ReactElement {
       <Stack.Screen
         name="index"
         options={{
-          title: "Subscriptions",
+          title: t("subscriptions.title"),
         }}
       />
-      <Stack.Screen name="[id]" options={{ title: "Subscription details" }} />
+      <Stack.Screen
+        name="[id]"
+        options={{ title: t("subscriptions.details.title") }}
+      />
     </Stack>
   )
 }

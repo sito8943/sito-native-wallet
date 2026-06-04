@@ -3,10 +3,16 @@ import { type ReactElement } from "react"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Page from "#design/templates/Page"
+import { useI18n } from "#shared/i18n"
 import { useDetailRouteParams } from "#shared/navigation"
-import { SubscriptionCard, useSubscription } from "#shared/subscriptions"
+import {
+  SUBSCRIPTION_STATUS,
+  SubscriptionCard,
+  useSubscription,
+} from "#shared/subscriptions"
 
 export default function SubscriptionDetails(): ReactElement {
+  const { language, t } = useI18n()
   const { id } = useDetailRouteParams()
   const { data: subscription } = useSubscription(id)
 
@@ -17,35 +23,45 @@ export default function SubscriptionDetails(): ReactElement {
           variant={TYPOGRAPHY_VARIANT.BODY_STRONG}
           tone={TYPOGRAPHY_TONE.MUTED}
         >
-          Subscription not found
+          {t("subscriptions.notFound")}
         </Typography>
       </Page>
     )
   }
 
-  const renewalDate = new Date(subscription.nextRenewalAt).toDateString()
+  const renewalDate = new Intl.DateTimeFormat(language, {
+    dateStyle: "medium",
+  }).format(new Date(subscription.nextRenewalAt))
+  const statusLabel =
+    subscription.status === SUBSCRIPTION_STATUS.ACTIVE
+      ? t("subscriptions.status.active")
+      : subscription.status === SUBSCRIPTION_STATUS.PAUSED
+        ? t("subscriptions.status.paused")
+        : t("subscriptions.status.canceled")
 
   return (
     <Page>
       <SubscriptionCard subscription={subscription} />
 
       <Typography variant={TYPOGRAPHY_VARIANT.TITLE} style={styles.heading}>
-        Renewal
+        {t("subscriptions.renewal.title")}
       </Typography>
       <Typography variant={TYPOGRAPHY_VARIANT.BODY} style={styles.row}>
-        Next renewal: {renewalDate}
+        {t("subscriptions.renewal.next", { date: renewalDate })}
       </Typography>
       <Typography variant={TYPOGRAPHY_VARIANT.BODY} style={styles.row}>
-        Account: {subscription.account.name}
+        {t("subscriptions.renewal.account", { name: subscription.account.name })}
       </Typography>
       <Typography variant={TYPOGRAPHY_VARIANT.BODY} style={styles.row}>
-        Provider: {subscription.provider.name}
+        {t("subscriptions.renewal.provider", { name: subscription.provider.name })}
       </Typography>
       <Typography variant={TYPOGRAPHY_VARIANT.BODY} style={styles.row}>
-        Status: {subscription.status}
+        {t("subscriptions.renewal.status", { status: statusLabel })}
       </Typography>
       <Typography variant={TYPOGRAPHY_VARIANT.BODY} style={styles.row}>
-        Notify {subscription.notificationDaysBefore} day(s) before
+        {t("subscriptions.renewal.notifyBefore", {
+          days: subscription.notificationDaysBefore,
+        })}
       </Typography>
     </Page>
   )

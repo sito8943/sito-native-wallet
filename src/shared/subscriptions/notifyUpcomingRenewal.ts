@@ -1,3 +1,4 @@
+import { getDeviceLanguage, translate } from "#shared/i18n"
 import { createNotification } from "#shared/notifications"
 
 import {
@@ -5,16 +6,17 @@ import {
   SUBSCRIPTION_STATUS,
   type Subscription,
 } from "./Subscription"
-
-function renewalCopy(days: number): string {
-  if (days <= 0) return "renews today"
-  if (days === 1) return "renews tomorrow"
-  return `renews in ${days} days`
-}
+import { renewalLabel } from "./SubscriptionCard/utils"
 
 export async function notifyUpcomingRenewal(
   subscriptions: Subscription[],
 ): Promise<void> {
+  const language = getDeviceLanguage()
+  const t = (
+    key: Parameters<typeof translate>[1],
+    params?: Record<string, number | string>,
+  ): string => translate(language, key, params)
+
   const candidates = subscriptions
     .filter((sub) => sub.status === SUBSCRIPTION_STATUS.ACTIVE)
     .map((sub) => ({ sub, days: daysUntilRenewal(sub) }))
@@ -26,8 +28,12 @@ export async function notifyUpcomingRenewal(
 
   const { sub, days } = next
   await createNotification({
-    title: `${sub.name} ${renewalCopy(days)}`,
+    title: `${sub.name} ${renewalLabel(days, t)}`,
     short: sub.provider.name,
-    body: `${sub.amount.toFixed(2)} ${sub.currency.symbol} on ${sub.account.name}`,
+    body: t("subscriptions.notifications.body", {
+      amount: sub.amount.toFixed(2),
+      symbol: sub.currency.symbol,
+      account: sub.account.name,
+    }),
   })
 }

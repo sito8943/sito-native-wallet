@@ -4,6 +4,7 @@ import { StyleSheet, View } from "react-native"
 import Button, { BUTTON_VARIANT } from "#design/elements/Button"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import { useI18n } from "#shared/i18n"
 
 import Dialog from "./Dialog"
 import { type ConfirmationDialogProps } from "./types"
@@ -14,10 +15,12 @@ export default function ConfirmationDialog({
   handleSubmit,
   handleClose,
   message,
-  confirmLabel = "Confirm",
-  cancelLabel = "Cancel",
+  confirmLabel,
+  cancelLabel,
   isLoading = false,
 }: ConfirmationDialogProps): ReactElement {
+  const { t } = useI18n()
+
   return (
     <Dialog open={open} title={title} onClose={handleClose}>
       {message != null && (
@@ -31,12 +34,12 @@ export default function ConfirmationDialog({
       <View style={styles.actions}>
         <Button
           disabled={isLoading}
-          label={cancelLabel}
+          label={cancelLabel ?? t("common.cancel")}
           variant={BUTTON_VARIANT.OUTLINED}
           onPress={handleClose}
         />
         <Button
-          label={confirmLabel}
+          label={confirmLabel ?? t("common.confirm")}
           loading={isLoading}
           variant={BUTTON_VARIANT.DANGER}
           onPress={handleSubmit}

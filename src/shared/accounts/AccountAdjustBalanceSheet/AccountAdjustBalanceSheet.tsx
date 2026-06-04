@@ -10,6 +10,7 @@ import Typography, {
 } from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 import BottomSheet from "#design/patterns/BottomSheet"
+import { useI18n } from "#shared/i18n"
 
 import { ADJUST_DESCRIPTION_LIMIT } from "./constants"
 import {
@@ -24,6 +25,7 @@ export default function AccountAdjustBalanceSheet({
   onClose,
   onSubmit,
 }: AccountAdjustBalanceSheetProps): ReactElement {
+  const { t } = useI18n()
   const { control, handleSubmit, reset } = useForm<AdjustFormValues>({
     defaultValues: { newBalance: "", description: "" },
   })
@@ -77,7 +79,7 @@ export default function AccountAdjustBalanceSheet({
             variant={TYPOGRAPHY_VARIANT.LABEL}
             tone={TYPOGRAPHY_TONE.MUTED}
           >
-            Current balance
+            {t("accounts.adjust.currentBalance")}
           </Typography>
           <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
             {account.balance.toFixed(2)} {account.currency.symbol}
@@ -88,21 +90,21 @@ export default function AccountAdjustBalanceSheet({
           control={control}
           name="newBalance"
           rules={{
-            required: "New balance is required",
+            required: t("accounts.adjust.validation.requiredBalance"),
             validate: (value) => {
               const trimmed = value.trim()
               if (trimmed === "" || !Number.isFinite(Number(trimmed))) {
-                return "Enter a valid amount"
+                return t("form.validation.invalidAmount")
               }
               if (Number(trimmed) === account.balance) {
-                return "Enter a balance different from the current one"
+                return t("accounts.adjust.validation.differentBalance")
               }
               return true
             },
           }}
           render={({ field: { onChange, onBlur, value }, fieldState }) => (
             <TextField
-              label="New balance"
+              label={t("accounts.adjust.newBalance")}
               placeholder="0.00"
               keyboardType="decimal-pad"
               value={value}
@@ -119,13 +121,15 @@ export default function AccountAdjustBalanceSheet({
           rules={{
             maxLength: {
               value: ADJUST_DESCRIPTION_LIMIT,
-              message: `Max ${ADJUST_DESCRIPTION_LIMIT} characters`,
+              message: t("form.validation.maxCharacters", {
+                max: ADJUST_DESCRIPTION_LIMIT,
+              }),
             },
           }}
           render={({ field: { onChange, onBlur, value }, fieldState }) => (
             <TextField
-              label="Description"
-              placeholder="Reason for the adjustment"
+              label={t("accounts.adjust.description")}
+              placeholder={t("accounts.adjust.description.placeholder")}
               multiline
               maxLength={ADJUST_DESCRIPTION_LIMIT}
               value={value}
@@ -136,7 +140,10 @@ export default function AccountAdjustBalanceSheet({
           )}
         />
 
-        <Button label="Continue" onPress={handleSubmit(review)} />
+        <Button
+          label={t("accounts.adjust.continue")}
+          onPress={handleSubmit(review)}
+        />
       </>
     )
   }
@@ -170,13 +177,12 @@ export default function AccountAdjustBalanceSheet({
           variant={TYPOGRAPHY_VARIANT.BODY}
           tone={TYPOGRAPHY_TONE.MUTED}
         >
-          This records an adjustment transaction in this account&apos;s history
-          and updates its balance. Apply it?
+          {t("accounts.adjust.confirmMessage")}
         </Typography>
 
-        <Button label="Adjust balance" onPress={confirm} />
+        <Button label={t("accounts.adjust.confirmAction")} onPress={confirm} />
         <Button
-          label="Back"
+          label={t("accounts.adjust.back")}
           variant={BUTTON_VARIANT.OUTLINED}
           onPress={() => setPending(null)}
         />
@@ -187,7 +193,11 @@ export default function AccountAdjustBalanceSheet({
   return (
     <BottomSheet
       open={open}
-      title={pending === null ? "Adjust balance" : "Confirm adjustment"}
+      title={
+        pending === null
+          ? t("accounts.adjust.title")
+          : t("accounts.adjust.confirmTitle")
+      }
       onClose={onClose}
     >
       {pending === null ? renderForm() : renderConfirm()}

@@ -7,9 +7,11 @@ import {
   CategoryForm,
   useCategories,
 } from "#shared/categories"
+import { useI18n } from "#shared/i18n"
 
 export default function NewCategory(): ReactElement {
   const router = useRouter()
+  const { t } = useI18n()
   const { addCategory } = useCategories()
 
   const handleSubmit = (values: AddCategoryDto): void => {
@@ -19,7 +21,7 @@ export default function NewCategory(): ReactElement {
 
   return (
     <Page scroll>
-      <CategoryForm submitLabel="Create" onSubmit={handleSubmit} />
+      <CategoryForm submitLabel={t("categories.create")} onSubmit={handleSubmit} />
     </Page>
   )
 }

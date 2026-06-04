@@ -6,6 +6,7 @@ import Chip from "#design/elements/Chip"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Accordion from "#design/patterns/Accordion"
+import { useI18n } from "#shared/i18n"
 
 import {
   TRANSACTION_SORT_ORDER,
@@ -20,6 +21,7 @@ export default function TransactionsFilters({
   setSortOrder,
   setTypeFilter,
 }: TransactionsFiltersProps): ReactElement {
+  const { t } = useI18n()
   const activeCount = countActiveFilters(preferences)
 
   return (
@@ -27,26 +29,30 @@ export default function TransactionsFilters({
       <Accordion
         header={
           <View style={styles.headerContent}>
-            <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>Filters</Typography>
+            <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
+              {t("transactions.filters.title")}
+            </Typography>
             {activeCount > 0 && (
               <Typography
                 variant={TYPOGRAPHY_VARIANT.CAPTION}
                 tone={TYPOGRAPHY_TONE.MUTED}
               >
-                {activeCount} active
+                {t("transactions.filters.activeCount", { count: activeCount })}
               </Typography>
             )}
           </View>
         }
       >
         <View style={styles.section}>
-          <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Type</Typography>
+          <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>
+            {t("transactions.filters.type")}
+          </Typography>
           <View style={styles.options}>
             {TYPE_OPTIONS.map((option) => (
               <Chip
                 key={option.value}
                 active={preferences.typeFilter === option.value}
-                label={option.label}
+                label={t(option.labelKey)}
                 onPress={() => setTypeFilter(option.value)}
               />
             ))}
@@ -54,13 +60,15 @@ export default function TransactionsFilters({
         </View>
 
         <View style={styles.section}>
-          <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Sort</Typography>
+          <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>
+            {t("transactions.filters.sort")}
+          </Typography>
           <View style={styles.options}>
             {SORT_OPTIONS.map((option) => (
               <Chip
                 key={option.value}
                 active={preferences.sortOrder === option.value}
-                label={option.label}
+                label={t(option.labelKey)}
                 onPress={() => setSortOrder(option.value)}
               />
             ))}
@@ -77,7 +85,7 @@ const countActiveFilters = (
   let count = 0
   if (preferences.typeFilter !== TRANSACTION_TYPE_FILTER.ALL) count++
   if (preferences.sortOrder !== TRANSACTION_SORT_ORDER.NEWEST) count++
-  if (preferences.accountId !== null) count++
+  if (preferences.accountId !== 0) count++
   return count
 }
 

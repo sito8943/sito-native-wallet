@@ -2,6 +2,7 @@ import { useCallback } from "react"
 
 import { APP_ICONS } from "#design/elements/Icon"
 import { THEME_COLOR } from "#design/theme"
+import { useI18n } from "#shared/i18n"
 
 import { ACTION_ID } from "../constants"
 import { type Action } from "../types"
@@ -14,16 +15,17 @@ export default function useDeleteAction<T>({
   onPress,
   id = ACTION_ID.DELETE,
   icon = APP_ICONS.delete,
-  accessibilityLabel = "Delete",
+  accessibilityLabel,
   color = THEME_COLOR.NEGATIVE,
   disabled = false,
   hidden = false,
 }: UseDeleteActionProps<T>): { action: (entity: T) => Action<T> } {
+  const { t } = useI18n()
   const action = useCallback(
     (entity: T): Action<T> => ({
       id,
       icon,
-      accessibilityLabel,
+      accessibilityLabel: accessibilityLabel ?? t("common.delete"),
       color,
       disabled,
       hidden,
@@ -31,7 +33,7 @@ export default function useDeleteAction<T>({
         onPress(entity)
       },
     }),
-    [accessibilityLabel, color, disabled, hidden, icon, id, onPress],
+    [accessibilityLabel, color, disabled, hidden, icon, id, onPress, t],
   )
 
   return { action }

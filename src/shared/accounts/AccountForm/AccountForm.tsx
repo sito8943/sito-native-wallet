@@ -10,11 +10,11 @@ import Autocomplete from "#design/patterns/Autocomplete"
 import DeleteButton from "#design/patterns/DeleteButton"
 import Form from "#design/patterns/Form"
 import { useCurrencies } from "#shared/currencies"
+import { useI18n } from "#shared/i18n"
 
 import {
   ACCOUNT_BANK_OPTIONS,
   ACCOUNT_TYPE,
-  ACCOUNT_TYPE_LABEL,
 } from "../Account"
 import { type AddAccountDto } from "../dtos"
 
@@ -28,6 +28,7 @@ export default function AccountForm({
   onSubmit,
   onDelete,
 }: AccountFormProps): ReactElement {
+  const { t } = useI18n()
   const { data: currencies } = useCurrencies()
   const { control, handleSubmit } = useForm<AccountFormValues>({
     defaultValues: toFormValues(defaultValues),
@@ -80,16 +81,18 @@ export default function AccountForm({
         control={control}
         name="name"
         rules={{
-          required: "Name is required",
+          required: t("form.validation.required.name"),
           maxLength: {
             value: ACCOUNT_FIELD_LIMITS.NAME,
-            message: `Max ${ACCOUNT_FIELD_LIMITS.NAME} characters`,
+            message: t("form.validation.maxCharacters", {
+              max: ACCOUNT_FIELD_LIMITS.NAME,
+            }),
           },
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <TextField
-            label="Name"
-            placeholder="Main account"
+            label={t("form.account.name")}
+            placeholder={t("form.account.name.placeholder")}
             autoCapitalize="words"
             maxLength={ACCOUNT_FIELD_LIMITS.NAME}
             value={value}
@@ -106,13 +109,15 @@ export default function AccountForm({
         rules={{
           maxLength: {
             value: ACCOUNT_FIELD_LIMITS.DESCRIPTION,
-            message: `Max ${ACCOUNT_FIELD_LIMITS.DESCRIPTION} characters`,
+            message: t("form.validation.maxCharacters", {
+              max: ACCOUNT_FIELD_LIMITS.DESCRIPTION,
+            }),
           },
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <TextField
-            label="Description"
-            placeholder="Optional note"
+            label={t("form.account.description")}
+            placeholder={t("form.account.description.placeholder")}
             multiline
             maxLength={ACCOUNT_FIELD_LIMITS.DESCRIPTION}
             value={value}
@@ -127,11 +132,12 @@ export default function AccountForm({
         control={control}
         name="balance"
         rules={{
-          validate: (value) => isValidBalance(value) || "Enter a valid amount",
+          validate: (value) =>
+            isValidBalance(value) || t("form.validation.invalidAmount"),
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <TextField
-            label="Balance"
+            label={t("form.account.balance")}
             placeholder="0.00"
             defaultValue="0"
             keyboardType="decimal-pad"
@@ -148,18 +154,20 @@ export default function AccountForm({
         name="type"
         render={({ field: { onChange, value } }) => (
           <View style={styles.field}>
-            <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Type</Typography>
+            <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>
+              {t("form.account.type")}
+            </Typography>
             <View style={styles.options}>
               <Chip
                 active={value === ACCOUNT_TYPE.CASH}
-                label={ACCOUNT_TYPE_LABEL[ACCOUNT_TYPE.CASH]}
+                label={t("form.account.type.cash")}
                 onPress={() => {
                   onChange(ACCOUNT_TYPE.CASH)
                 }}
               />
               <Chip
                 active={value === ACCOUNT_TYPE.DIGITAL}
-                label={ACCOUNT_TYPE_LABEL[ACCOUNT_TYPE.DIGITAL]}
+                label={t("form.account.type.digital")}
                 onPress={() => {
                   onChange(ACCOUNT_TYPE.DIGITAL)
                 }}
@@ -175,8 +183,8 @@ export default function AccountForm({
           name="bankName"
           render={({ field: { onChange, value } }) => (
             <Autocomplete
-              label="Bank"
-              placeholder="Select bank"
+              label={t("form.account.bank")}
+              placeholder={t("form.account.bank.placeholder")}
               options={ACCOUNT_BANK_OPTIONS}
               value={selectedBankOptionId(value)}
               onChange={(next) => {
@@ -193,11 +201,11 @@ export default function AccountForm({
       <Controller
         control={control}
         name="currencyId"
-        rules={{ required: "Currency is required" }}
+        rules={{ required: t("form.validation.required.currency") }}
         render={({ field: { onChange, value }, fieldState }) => (
           <Autocomplete
-            label="Currency"
-            placeholder="Search currencies"
+            label={t("form.account.currency")}
+            placeholder={t("form.account.currency.placeholder")}
             options={currencyOptions}
             value={value}
             onChange={onChange}

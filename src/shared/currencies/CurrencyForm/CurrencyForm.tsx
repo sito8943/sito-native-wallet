@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form"
 import TextField from "#design/elements/TextField"
 import DeleteButton from "#design/patterns/DeleteButton"
 import Form from "#design/patterns/Form"
+import { useI18n } from "#shared/i18n"
 
 import { type AddCurrencyDto } from "../dtos"
 
@@ -16,6 +17,7 @@ export default function CurrencyForm({
   onSubmit,
   onDelete,
 }: CurrencyFormProps): ReactElement {
+  const { t } = useI18n()
   const { control, handleSubmit } = useForm<AddCurrencyDto>({
     defaultValues: defaultValues ?? EMPTY_CURRENCY,
   })
@@ -32,16 +34,18 @@ export default function CurrencyForm({
         control={control}
         name="name"
         rules={{
-          required: "Name is required",
+          required: t("form.validation.required.name"),
           maxLength: {
             value: CURRENCY_FIELD_LIMITS.NAME,
-            message: `Max ${CURRENCY_FIELD_LIMITS.NAME} characters`,
+            message: t("form.validation.maxCharacters", {
+              max: CURRENCY_FIELD_LIMITS.NAME,
+            }),
           },
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <TextField
-            label="Name"
-            placeholder="Euro"
+            label={t("form.currency.name")}
+            placeholder={t("form.currency.name.placeholder")}
             autoCapitalize="words"
             maxLength={CURRENCY_FIELD_LIMITS.NAME}
             value={value}
@@ -56,15 +60,17 @@ export default function CurrencyForm({
         control={control}
         name="symbol"
         rules={{
-          required: "Symbol is required",
+          required: t("form.validation.required.symbol"),
           maxLength: {
             value: CURRENCY_FIELD_LIMITS.SYMBOL,
-            message: `Max ${CURRENCY_FIELD_LIMITS.SYMBOL} characters`,
+            message: t("form.validation.maxCharacters", {
+              max: CURRENCY_FIELD_LIMITS.SYMBOL,
+            }),
           },
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <TextField
-            label="Symbol"
+            label={t("form.currency.symbol")}
             placeholder="€"
             maxLength={CURRENCY_FIELD_LIMITS.SYMBOL}
             value={value}
@@ -81,13 +87,15 @@ export default function CurrencyForm({
         rules={{
           maxLength: {
             value: CURRENCY_FIELD_LIMITS.DESCRIPTION,
-            message: `Max ${CURRENCY_FIELD_LIMITS.DESCRIPTION} characters`,
+            message: t("form.validation.maxCharacters", {
+              max: CURRENCY_FIELD_LIMITS.DESCRIPTION,
+            }),
           },
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <TextField
-            label="Description"
-            placeholder="Optional"
+            label={t("form.currency.description")}
+            placeholder={t("form.currency.description.placeholder")}
             multiline
             maxLength={CURRENCY_FIELD_LIMITS.DESCRIPTION}
             value={value}

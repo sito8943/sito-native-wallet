@@ -10,6 +10,7 @@ import DeleteButton from "#design/patterns/DeleteButton"
 import Form from "#design/patterns/Form"
 
 import { THEME_COLOR, useThemeColors } from "#design/theme"
+import { useI18n } from "#shared/i18n"
 
 import { type AddCategoryDto } from "../dtos"
 import { TRANSACTION_TYPE } from "../TransactionCategory"
@@ -29,6 +30,7 @@ export default function CategoryForm({
   onDelete,
 }: CategoryFormProps): ReactElement {
   const colors = useThemeColors()
+  const { t } = useI18n()
   const { control, handleSubmit } = useForm<AddCategoryDto>({
     defaultValues: defaultValues ?? EMPTY_CATEGORY,
   })
@@ -56,16 +58,18 @@ export default function CategoryForm({
         control={control}
         name="name"
         rules={{
-          required: "Name is required",
+          required: t("form.validation.required.name"),
           maxLength: {
             value: CATEGORY_FIELD_LIMITS.NAME,
-            message: `Max ${CATEGORY_FIELD_LIMITS.NAME} characters`,
+            message: t("form.validation.maxCharacters", {
+              max: CATEGORY_FIELD_LIMITS.NAME,
+            }),
           },
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <TextField
-            label="Name"
-            placeholder="Groceries"
+            label={t("form.category.name")}
+            placeholder={t("form.category.name.placeholder")}
             autoCapitalize="words"
             maxLength={CATEGORY_FIELD_LIMITS.NAME}
             value={value}
@@ -81,18 +85,20 @@ export default function CategoryForm({
         name="type"
         render={({ field: { onChange, value } }) => (
           <View style={styles.field}>
-            <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Type</Typography>
+            <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>
+              {t("form.category.type")}
+            </Typography>
             <View style={styles.options}>
               <Chip
                 active={value === TRANSACTION_TYPE.EXPENSE}
-                label="Expense"
+                label={t("form.category.type.expense")}
                 onPress={() => {
                   onChange(TRANSACTION_TYPE.EXPENSE)
                 }}
               />
               <Chip
                 active={value === TRANSACTION_TYPE.INCOME}
-                label="Income"
+                label={t("form.category.type.income")}
                 onPress={() => {
                   onChange(TRANSACTION_TYPE.INCOME)
                 }}
@@ -108,13 +114,15 @@ export default function CategoryForm({
         rules={{
           maxLength: {
             value: CATEGORY_FIELD_LIMITS.DESCRIPTION,
-            message: `Max ${CATEGORY_FIELD_LIMITS.DESCRIPTION} characters`,
+            message: t("form.validation.maxCharacters", {
+              max: CATEGORY_FIELD_LIMITS.DESCRIPTION,
+            }),
           },
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => (
           <TextField
-            label="Description"
-            placeholder="Optional"
+            label={t("form.category.description")}
+            placeholder={t("form.category.description.placeholder")}
             multiline
             maxLength={CATEGORY_FIELD_LIMITS.DESCRIPTION}
             value={value ?? ""}
@@ -129,16 +137,18 @@ export default function CategoryForm({
         control={control}
         name="color"
         rules={{
-          required: "Color is required",
+          required: t("form.validation.required.color"),
           validate: (value) =>
-            isValidHexColor(value) || "Enter a valid hex color (e.g. #2e7d32)",
+            isValidHexColor(value) || t("form.validation.invalidHex"),
         }}
         render={({ field: { onChange, onBlur, value }, fieldState }) => {
           const normalized = normalizeHexColor(value).toLowerCase()
 
           return (
             <View style={styles.field}>
-              <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>Color</Typography>
+              <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>
+                {t("form.category.color")}
+              </Typography>
               <View style={styles.options}>
                 {CATEGORY_PALETTE.map((color) => (
                   <Pressable

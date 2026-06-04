@@ -10,6 +10,7 @@ import {
 } from "#shared/categories/TransactionCategory"
 import { createId, StorageClient } from "#shared/data/storage"
 import { todayStamp } from "#shared/data/time"
+import { getDeviceLanguage, translate } from "#shared/i18n"
 
 import { INITIAL_TRANSACTIONS } from "../demoData"
 import { type AddTransactionDto } from "../dtos"
@@ -94,7 +95,9 @@ export default class TransactionClient extends StorageClient<StoredTransaction> 
     this.#categories.ensureAdjustmentCategories()
 
     this.add({
-      description: description ?? "Balance adjustment",
+      description:
+        description ??
+        translate(getDeviceLanguage(), "transactions.balanceAdjustment"),
       amount: Math.abs(delta),
       date: todayStamp(),
       accountId,

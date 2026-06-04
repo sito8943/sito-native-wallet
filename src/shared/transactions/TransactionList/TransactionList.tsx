@@ -1,6 +1,7 @@
 import { type ReactElement } from "react"
 
 import EntityList from "#design/patterns/EntityList"
+import { useI18n } from "#shared/i18n"
 
 import { TransactionCard } from "../TransactionCard"
 
@@ -10,16 +11,18 @@ import { type TransactionListProps } from "./types"
 // TransactionCard. Virtualization + infinite pagination live in EntityList.
 export default function TransactionList({
   data,
-  emptyMessage = "No transactions available.",
+  emptyMessage,
   onPress,
   actionsFor,
   onEndReached,
   header,
 }: TransactionListProps): ReactElement {
+  const { t } = useI18n()
+
   return (
     <EntityList
       data={data}
-      emptyMessage={emptyMessage}
+      emptyMessage={emptyMessage ?? t("transactions.empty.default")}
       header={header}
       onEndReached={onEndReached}
       renderItem={(transaction) => (

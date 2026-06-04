@@ -5,6 +5,7 @@ import { ActivityIndicator, Alert } from "react-native"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Page from "#design/templates/Page"
+import { useI18n } from "#shared/i18n"
 
 import { type AddTransactionDto } from "../dtos"
 import { TransactionForm } from "../TransactionForm"
@@ -20,6 +21,7 @@ export default function TransactionDetailScreen({
   id,
 }: TransactionDetailScreenProps): ReactElement {
   const router = useRouter()
+  const { t } = useI18n()
   const { data, isLoading, updateTransaction, removeTransaction } =
     useTransactions()
 
@@ -40,7 +42,7 @@ export default function TransactionDetailScreen({
           variant={TYPOGRAPHY_VARIANT.BODY_STRONG}
           tone={TYPOGRAPHY_TONE.MUTED}
         >
-          Transaction not found
+          {t("transactions.notFound")}
         </Typography>
       </Page>
     )
@@ -53,12 +55,12 @@ export default function TransactionDetailScreen({
 
   const handleDelete = (): void => {
     Alert.alert(
-      "Delete transaction",
-      `Delete "${transaction.description}"? This cannot be undone.`,
+      t("transactions.delete.title"),
+      t("transactions.delete.message", { name: transaction.description }),
       [
-        { text: "Cancel", style: "cancel" },
+        { text: t("common.cancel"), style: "cancel" },
         {
-          text: "Delete",
+          text: t("common.delete"),
           style: "destructive",
           onPress: () => {
             removeTransaction(transaction.id)
@@ -72,7 +74,7 @@ export default function TransactionDetailScreen({
   return (
     <Page scroll>
       <TransactionForm
-        submitLabel="Save"
+        submitLabel={t("common.save")}
         defaultValues={{
           description: transaction.description,
           amount: transaction.amount,

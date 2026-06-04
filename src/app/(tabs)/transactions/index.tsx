@@ -8,6 +8,7 @@ import { spacing } from "#design/foundations"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import { AccountSelector } from "#shared/accounts"
+import { useI18n } from "#shared/i18n"
 import {
   toNewTransactionRoute,
   toTransactionDetailsRoute,
@@ -21,6 +22,7 @@ import {
 
 export default function Transactions(): ReactElement {
   const router = useRouter()
+  const { t } = useI18n()
   const {
     accounts,
     error,
@@ -54,7 +56,7 @@ export default function Transactions(): ReactElement {
 
       {error ? (
         <Typography tone={TYPOGRAPHY_TONE.MUTED}>
-          Saved preferences could not be loaded. Default filters are active.
+          {t("transactions.preferences.error")}
         </Typography>
       ) : null}
     </View>
@@ -68,8 +70,8 @@ export default function Transactions(): ReactElement {
           header={header}
           emptyMessage={
             isLoading
-              ? "Loading saved transaction view..."
-              : "No transactions match your saved filters."
+              ? t("transactions.empty.loading")
+              : t("transactions.empty.filtered")
           }
           onEndReached={() => {
             if (hasNextPage) {
@@ -82,7 +84,7 @@ export default function Transactions(): ReactElement {
         />
       </Page>
       <FAB
-        accessibilityLabel="Add transaction"
+        accessibilityLabel={t("transactions.add")}
         icon={APP_ICONS.add}
         onPress={() => router.push(toNewTransactionRoute())}
       />

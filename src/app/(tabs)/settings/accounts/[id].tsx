@@ -8,6 +8,7 @@ import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import { AccountCard, useAccount } from "#shared/accounts"
+import { useI18n } from "#shared/i18n"
 import {
   toAccountTransactionDetailsRoute,
   toEditAccountRoute,
@@ -17,6 +18,7 @@ import { TransactionList, useTransactions } from "#shared/transactions"
 
 export default function AccountDetails(): ReactElement {
   const router = useRouter()
+  const { t } = useI18n()
   const { id } = useDetailRouteParams()
   const { data: account, isLoading } = useAccount(id)
   const { data: transactions } = useTransactions({ accountId: id })
@@ -36,7 +38,7 @@ export default function AccountDetails(): ReactElement {
           variant={TYPOGRAPHY_VARIANT.BODY_STRONG}
           tone={TYPOGRAPHY_TONE.MUTED}
         >
-          Account not found
+          {t("accounts.notFound")}
         </Typography>
       </Page>
     )
@@ -58,18 +60,19 @@ export default function AccountDetails(): ReactElement {
         )}
 
         <Typography variant={TYPOGRAPHY_VARIANT.TITLE} style={styles.heading}>
-          Transactions ({transactions.length})
+          {t("accounts.details.transactions", { count: transactions.length })}
         </Typography>
 
         <TransactionList
           data={transactions}
+          emptyMessage={t("transactions.empty.default")}
           onPress={(transaction) =>
             router.push(toAccountTransactionDetailsRoute(transaction.id))
           }
         />
       </Page>
       <FAB
-        accessibilityLabel="Edit account"
+        accessibilityLabel={t("accounts.edit.title")}
         icon={APP_ICONS.edit}
         onPress={() => router.push(toEditAccountRoute(account.id))}
       />
