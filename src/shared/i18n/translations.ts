@@ -176,6 +176,8 @@ export const translations = {
     "transactions.notFound": "Transaction not found",
     "transactions.delete.title": "Delete transaction",
     "transactions.delete.message": 'Delete "{name}"? This cannot be undone.',
+    "transactions.delete.description":
+      "Delete this transaction? This cannot be undone.",
     "transactions.empty.default": "No transactions available.",
     "transactions.unknownAccount": "Unknown account",
     "transactions.balanceAdjustment": "Balance adjustment",
@@ -459,6 +461,8 @@ export const translations = {
     "transactions.delete.title": "Eliminar transacción",
     "transactions.delete.message":
       'Eliminar "{name}"? Esta acción no se puede deshacer.',
+    "transactions.delete.description":
+      "¿Eliminar esta transacción? Esta acción no se puede deshacer.",
     "transactions.empty.default": "No hay transacciones disponibles.",
     "transactions.unknownAccount": "Cuenta desconocida",
     "transactions.balanceAdjustment": "Ajuste de saldo",

@@ -22,6 +22,9 @@ export default function Dialog({
       animationType="fade"
       onRequestClose={onClose}
       transparent
+      // Android: draw under the system bars so the nav bar doesn't flash white.
+      navigationBarTranslucent
+      statusBarTranslucent
       visible={open}
     >
       <Pressable style={styles.backdrop} onPress={onClose}>

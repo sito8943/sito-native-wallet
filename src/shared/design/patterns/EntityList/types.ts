@@ -13,5 +13,7 @@ export type EntityListProps<T extends { id: number }> = {
   // Called as the user nears the end — drives infinite pagination. Omit for a
   // plain (non-paginated) list.
   onEndReached?: () => void
+  // Swipe-to-delete: return a per-row handler to enable it, undefined to skip.
+  onSwipeDelete?: (item: T) => (() => void) | undefined
   contentContainerStyle?: StyleProp<ViewStyle>
 }

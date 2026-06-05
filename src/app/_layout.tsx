@@ -2,7 +2,8 @@ import * as NavigationBar from "expo-navigation-bar"
 import { Stack } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import { useEffect, type ReactElement } from "react"
-import { Platform } from "react-native"
+import { Platform, StyleSheet } from "react-native"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
 
 import {
   RESOLVED_THEME,
@@ -48,10 +49,19 @@ function RootNavigator(): ReactElement {
 
 export default function Layout(): ReactElement {
   return (
-    <LanguageProvider>
-      <ThemeProvider>
-        <RootNavigator />
-      </ThemeProvider>
-    </LanguageProvider>
+    // Root wrapper required by react-native-gesture-handler.
+    <GestureHandlerRootView style={styles.root}>
+      <LanguageProvider>
+        <ThemeProvider>
+          <RootNavigator />
+        </ThemeProvider>
+      </LanguageProvider>
+    </GestureHandlerRootView>
   )
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+})

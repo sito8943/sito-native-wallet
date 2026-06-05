@@ -15,6 +15,7 @@ export default function TransactionList({
   onPress,
   actionsFor,
   onEndReached,
+  onSwipeDelete,
   header,
 }: TransactionListProps): ReactElement {
   const { t } = useI18n()
@@ -25,6 +26,7 @@ export default function TransactionList({
       emptyMessage={emptyMessage ?? t("transactions.empty.default")}
       header={header}
       onEndReached={onEndReached}
+      onSwipeDelete={onSwipeDelete}
       renderItem={(transaction) => (
         <TransactionCard
           transaction={transaction}
