@@ -1,4 +1,4 @@
-import { useState, type ReactElement } from "react"
+import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
@@ -7,20 +7,18 @@ import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import { useI18n } from "#shared/i18n"
 
-import AddCardButton from "../AddCardButton"
-import AddCardSheet from "../AddCardSheet"
 import CurrentBalanceCard from "../CurrentBalanceCard"
 import { DASHBOARD_CARD_TYPE, type DashboardCard } from "../DashboardCard"
 import TypeResumeCard from "../TypeResumeCard"
 import { useDashboard } from "../useDashboard"
 import WeeklySpentCard from "../WeeklySpentCard"
 
-// The home dashboard: renders each stored card by type, plus the add-card
-// button. Deleting routes through the shared confirmation dialog.
+// The home dashboard: renders each stored card by type. Adding is handled by
+// the floating DashboardAddFab; deleting routes through the shared
+// confirmation dialog.
 export default function DashboardGrid(): ReactElement {
   const { t } = useI18n()
-  const { data: cards, addCard, removeCard } = useDashboard()
-  const [addOpen, setAddOpen] = useState(false)
+  const { data: cards, removeCard } = useDashboard()
 
   const deleteDialog = useDeleteDialog<DashboardCard>({
     onConfirm: (card) => {
@@ -65,22 +63,6 @@ export default function DashboardGrid(): ReactElement {
         <View key={card.id}>{renderCard(card)}</View>
       ))}
 
-      <AddCardButton
-        onPress={() => {
-          setAddOpen(true)
-        }}
-      />
-
-      <AddCardSheet
-        open={addOpen}
-        onClose={() => {
-          setAddOpen(false)
-        }}
-        onSelect={(type) => {
-          addCard({ type, position: cards.length })
-          setAddOpen(false)
-        }}
-      />
       <ConfirmationDialog {...deleteDialog} confirmLabel={t("common.delete")} />
     </View>
   )
