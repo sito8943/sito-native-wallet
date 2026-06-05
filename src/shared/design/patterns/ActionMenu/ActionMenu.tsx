@@ -1,10 +1,5 @@
 import { useRef, useState, type ReactElement } from "react"
-import {
-  Modal,
-  Pressable,
-  useWindowDimensions,
-  View,
-} from "react-native"
+import { Modal, Pressable, useWindowDimensions, View } from "react-native"
 
 import Icon, { APP_ICONS } from "#design/elements/Icon"
 import IconButton, {
