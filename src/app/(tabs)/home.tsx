@@ -1,7 +1,9 @@
 import { type ReactElement } from "react"
 
 import Typography from "#design/elements/Typography"
+import { TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Page from "#design/templates/Page"
+import { DashboardGrid } from "#shared/dashboard"
 import { useI18n } from "#shared/i18n"
 
 export default function Home(): ReactElement {
@@ -9,7 +11,10 @@ export default function Home(): ReactElement {
 
   return (
     <Page scroll topInset>
-      <Typography>{t("home.title")}</Typography>
+      <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
+        {t("home.title")}
+      </Typography>
+      <DashboardGrid />
     </Page>
   )
 }

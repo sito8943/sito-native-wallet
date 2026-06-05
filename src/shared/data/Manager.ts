@@ -4,6 +4,10 @@
 import { AccountClient } from "#shared/accounts/AccountClient"
 import { CategoryClient } from "#shared/categories"
 import { CurrencyClient } from "#shared/currencies"
+// Deep path on purpose: the #shared/dashboard barrel pulls in the dashboard
+// components (which import the Manager through the data hooks), creating an
+// eval-time import cycle. The client folder has no such dependency.
+import { DashboardClient } from "#shared/dashboard/DashboardClient"
 import { SubscriptionProviderClient } from "#shared/subscriptionProviders"
 // Deep path on purpose: the #shared/transactions barrel pulls in the
 // transaction hooks (which import the accounts/categories barrels and the
@@ -18,6 +22,7 @@ export class Manager {
   #accounts?: AccountClient
   #categories?: CategoryClient
   #currencies?: CurrencyClient
+  #dashboard?: DashboardClient
   #subscriptionProviders?: SubscriptionProviderClient
   #transactions?: TransactionClient
 
@@ -34,6 +39,10 @@ export class Manager {
 
   public get Currencies(): CurrencyClient {
     return (this.#currencies ??= new CurrencyClient())
+  }
+
+  public get Dashboard(): DashboardClient {
+    return (this.#dashboard ??= new DashboardClient())
   }
 
   public get SubscriptionProviders(): SubscriptionProviderClient {

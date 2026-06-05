@@ -23,6 +23,7 @@ import {
   faCheck,
   faWandMagicSparkles,
   faScaleBalanced,
+  faFilter,
 } from "@fortawesome/free-solid-svg-icons"
 
 export const APP_ICONS: Record<string, IconProp> = {
@@ -48,4 +49,5 @@ export const APP_ICONS: Record<string, IconProp> = {
   check: faCheck,
   prefabs: faWandMagicSparkles,
   adjustBalance: faScaleBalanced,
+  filter: faFilter,
 }
