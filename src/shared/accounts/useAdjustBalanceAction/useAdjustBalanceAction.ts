@@ -19,6 +19,7 @@ export default function useAdjustBalanceAction({
   const { t } = useI18n()
   const action = useCallback(
     (account: Account): Action<Account> => ({
+      sticky: true,
       id: ACTION_ID.ADJUST_BALANCE,
       icon: APP_ICONS.adjustBalance,
       accessibilityLabel: t("accounts.adjust.title"),

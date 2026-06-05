@@ -2,14 +2,12 @@ import { type ReactElement } from "react"
 import { Pressable, StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
-import IconButton, {
-  ICON_BUTTON_SIZE,
-  ICON_BUTTON_VARIANT,
-} from "#design/elements/IconButton"
 import LinearGradient from "#design/elements/LinearGradient"
 import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import ActionMenu from "#design/patterns/ActionMenu"
 import { useThemeColors, useThemePreference } from "#design/theme"
+import { useI18n } from "#shared/i18n"
 
 import { ACCOUNT_TYPE, ACCOUNT_TYPE_LABEL } from "../Account"
 
@@ -22,12 +20,12 @@ export default function AccountCard({
   onPress,
 }: AccountCardProps): ReactElement {
   const colors = useThemeColors()
+  const { t } = useI18n()
   const { resolvedTheme } = useThemePreference()
   const theme = getAccountCardTheme(account.bankName, resolvedTheme, colors)
   const isGradient = theme.mode === "gradient"
   const hasBank = account.bankName !== undefined
   const showBankName = hasBank && account.type === ACCOUNT_TYPE.DIGITAL
-  const visibleActions = actions.filter((action) => action.hidden !== true)
   const meta = [
     ACCOUNT_TYPE_LABEL[account.type],
     account.currency.name,
@@ -115,23 +113,14 @@ export default function AccountCard({
         <Pressable onPress={() => onPress(account)}>{body}</Pressable>
       )}
 
-      {visibleActions.length > 0 && (
+      {actions.length > 0 && (
         <View style={styles.actions}>
-          {visibleActions.map((action) => (
-            <IconButton
-              key={action.id}
-              accessibilityLabel={action.accessibilityLabel}
-              disabled={action.disabled}
-              hitSlop={spacing(2)}
-              icon={action.icon}
-              color={action.disabled === true ? theme.subtleText : theme.text}
-              onPress={() => {
-                action.onPress(account)
-              }}
-              size={ICON_BUTTON_SIZE.LG}
-              variant={ICON_BUTTON_VARIANT.TEXT}
-            />
-          ))}
+          <ActionMenu
+            entity={account}
+            actions={actions}
+            color={theme.text}
+            menuLabel={t("common.moreActions")}
+          />
         </View>
       )}
     </Card>
@@ -151,14 +140,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     minHeight: spacing(40),
   },
+  // Pinned to the top-right corner, above the card body so the trigger stays
+  // tappable and the dropdown opens from the corner.
   actions: {
-    alignItems: "center",
-    flexDirection: "row",
-    gap: spacing(3),
-    justifyContent: "flex-end",
-    paddingBottom: spacing(3),
-    paddingHorizontal: spacing(4),
-    paddingTop: spacing(2),
+    position: "absolute",
+    top: spacing(2),
+    right: spacing(2),
+    zIndex: 2,
   },
   topRow: {
     marginHorizontal: -spacing(4),
@@ -180,7 +168,7 @@ const styles = StyleSheet.create({
     gap: spacing(2),
   },
   bottomRow: {
-    alignItems: "flex-end",
+    alignItems: "flex-start",
     flexDirection: "row",
     gap: spacing(4),
     justifyContent: "space-between",
