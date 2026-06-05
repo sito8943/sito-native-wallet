@@ -17,11 +17,22 @@ import {
 } from "./types"
 import { nowIso, toError } from "./utils"
 
+// Mutation expressed as a pure transform over the current item list, so it can
+// be applied optimistically to the in-memory cache AND replayed onto the disk
+// data once it loads.
+type Mutation<T> = (items: T[]) => T[]
+
 // Reactive AsyncStorage-backed CRUD store. In-memory cache is the single
 // source of truth; subscribers re-render on change; disk persists in the
 // background. createdAt/updatedAt are owned here: stamped on insert, bumped on
 // patch — subclasses never set them. Subclasses add entity-specific methods on
 // top of insert/patch.
+//
+// Writes never clobber data that hasn't loaded yet: hydration starts in the
+// constructor, and any mutation made before disk finishes loading is queued and
+// replayed onto the loaded data (and only then persisted). Otherwise an early
+// write would save the seed state over the user's real data — losing it on the
+// next launch.
 export default abstract class StorageClient<
   T extends { id: number } & Partial<Timestamps>,
 > implements ReactiveStore<T> {
@@ -29,6 +40,11 @@ export default abstract class StorageClient<
   private readonly listeners = new Set<() => void>()
   private readonly config: StorageClientConfig<T>
   private hydration: Promise<void> | null = null
+  // True once disk has loaded; until then writes can't be persisted safely.
+  private hydrated = false
+  // Mutations applied to the seed cache before disk loaded, kept so they can be
+  // replayed onto the loaded data instead of being lost (or persisted over it).
+  private readonly pending: Array<Mutation<T>> = []
 
   constructor(config: StorageClientConfig<T>) {
     this.config = config
@@ -37,6 +53,9 @@ export default abstract class StorageClient<
       isLoading: true,
       error: null,
     }
+    // Start loading immediately so the read race window is as small as possible
+    // and closes before the user can interact.
+    void this.hydrate()
   }
 
   public subscribe = (listener: () => void): (() => void) => {
@@ -68,7 +87,8 @@ export default abstract class StorageClient<
     predicate?: (item: T) => boolean,
   ): QueryResult<T> => applyQuery(this.state.items, params, predicate)
 
-  // Loads from disk once. Seeds initial value on first launch.
+  // Loads from disk once. Replays any pre-hydration writes onto the loaded data
+  // so they survive; seeds the initial value on first launch.
   public hydrate = async (): Promise<void> => {
     if (this.hydration !== null) {
       return this.hydration
@@ -78,20 +98,34 @@ export default abstract class StorageClient<
       try {
         const cached = await AsyncStorage.getItem(this.config.storageKey)
 
-        if (cached !== null) {
-          this.setState({
-            // Backfill timestamps for data persisted before they existed.
-            items: this.config
-              .parse(JSON.parse(cached))
-              .map((item) => this.ensureTimestamps(item)),
-            isLoading: false,
-          })
-          return
-        }
+        // Disk wins as the base (backfilling timestamps for data persisted
+        // before they existed); first launch falls back to the seed.
+        const base =
+          cached !== null
+            ? this.config.parse(JSON.parse(cached))
+            : this.config.initialValue
 
-        this.setState({ isLoading: false })
-        void this.persist()
+        // Replay writes that happened while disk was still loading, on top of
+        // the real data — so an early add/patch/remove isn't lost.
+        const replayed = this.pending.reduce(
+          (items, mutation) => mutation(items),
+          base.map((item) => this.ensureTimestamps(item)),
+        )
+
+        const hadPendingWrites = this.pending.length > 0
+        this.pending.length = 0
+        this.hydrated = true
+        this.setState({ items: replayed, isLoading: false })
+
+        // Persist on first launch (to seed) or when we replayed writes that
+        // were withheld from disk until now.
+        if (cached === null || hadPendingWrites) {
+          void this.persist()
+        }
       } catch (error) {
+        // Unblock writes even on failure, so the app stays usable.
+        this.hydrated = true
+        this.pending.length = 0
         this.setState({
           isLoading: false,
           error: toError(error, this.config.errorMessage),
@@ -103,7 +137,7 @@ export default abstract class StorageClient<
   }
 
   protected insert(item: T): void {
-    this.commit([...this.state.items, this.stampNew(item)])
+    this.commit((items) => [...items, this.stampNew(item)])
   }
 
   // Adds several items in a single commit (one persist + one notify) — used by
@@ -113,17 +147,16 @@ export default abstract class StorageClient<
       return
     }
 
-    this.commit([
-      ...this.state.items,
+    this.commit((current) => [
+      ...current,
       ...items.map((item) => this.stampNew(item)),
     ])
   }
 
   protected patch(id: number, partial: Partial<T>): void {
-    const updatedAt = nowIso()
-    this.commit(
-      this.state.items.map((item) =>
-        item.id === id ? { ...item, ...partial, updatedAt } : item,
+    this.commit((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, ...partial, updatedAt: nowIso() } : item,
       ),
     )
   }
@@ -143,15 +176,25 @@ export default abstract class StorageClient<
   // Deletion split out so subclasses can override the public `remove` to add
   // side effects (e.g. balance updates) while still reusing the commit path.
   protected delete(id: number): void {
-    this.commit(this.state.items.filter((item) => item.id !== id))
+    this.commit((items) => items.filter((item) => item.id !== id))
   }
 
   public remove = (id: number): void => {
     this.delete(id)
   }
 
-  private commit(items: T[]): void {
-    this.setState({ items })
+  // Applies a mutation to the in-memory cache immediately (so reads and the UI
+  // reflect it at once). If disk hasn't loaded yet, the mutation is queued for
+  // replay and NOT persisted — persisting now would save the seed state over
+  // the user's real data. Once hydrated, writes persist normally.
+  private commit(mutation: Mutation<T>): void {
+    this.setState({ items: mutation(this.state.items) })
+
+    if (!this.hydrated) {
+      this.pending.push(mutation)
+      return
+    }
+
     void this.persist()
   }
 

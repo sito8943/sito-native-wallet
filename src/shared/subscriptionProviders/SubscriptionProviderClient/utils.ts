@@ -9,7 +9,7 @@ const isSubscriptionProvider = (
 
   const candidate = value as Record<string, unknown>
 
-  return typeof candidate.id === "string" && typeof candidate.name === "string"
+  return typeof candidate.id === "number" && typeof candidate.name === "string"
 }
 
 export const parseStoredSubscriptionProviders = (

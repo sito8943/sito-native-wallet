@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { DASHBOARD_CARD_TYPE } from "../DashboardCard"
 import { INITIAL_DASHBOARD } from "../demoData"
 
+import { DASHBOARD_STORAGE_KEY } from "./constants"
 import DashboardClient from "./DashboardClient"
 
 // Exercises the store directly (fresh instance, no React, no singleton) so each
@@ -51,6 +52,38 @@ describe("Dashboard > DashboardClient", () => {
     client.updateConfig(first.id, config)
 
     expect(client.getById(first.id)?.config).toBe(config)
+  })
+
+  // Regression: a write that happens before disk finishes loading must not
+  // persist the seed state over the user's real data (which would wipe it on
+  // the next launch). The pre-hydration write replays onto the loaded data.
+  it("preserves stored data when written to before hydration completes", async () => {
+    const stored = [
+      {
+        id: 42,
+        type: DASHBOARD_CARD_TYPE.CURRENT_BALANCE,
+        title: "Saved card",
+        config: null,
+        position: 0,
+      },
+    ]
+    await AsyncStorage.setItem(DASHBOARD_STORAGE_KEY, JSON.stringify(stored))
+
+    // Construct + write synchronously, before the async hydrate read resolves.
+    const client = new DashboardClient()
+    client.add({ type: DASHBOARD_CARD_TYPE.TYPE_RESUME, position: 1 })
+
+    await client.hydrate()
+
+    const ids = client.getAll().map((card) => card.id)
+    expect(ids).toContain(42)
+    expect(client.getAll()).toHaveLength(stored.length + 1)
+
+    const persisted = JSON.parse(
+      (await AsyncStorage.getItem(DASHBOARD_STORAGE_KEY)) ?? "[]",
+    ) as Array<{ id: number }>
+    expect(persisted.map((card) => card.id)).toContain(42)
+    expect(persisted).toHaveLength(stored.length + 1)
   })
 
   it("removes a card", () => {

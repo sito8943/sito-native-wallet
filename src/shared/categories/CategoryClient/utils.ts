@@ -13,7 +13,7 @@ const isCategory = (value: unknown): value is TransactionCategory => {
   const candidate = value as Record<string, unknown>
 
   return (
-    typeof candidate.id === "string" &&
+    typeof candidate.id === "number" &&
     typeof candidate.name === "string" &&
     (candidate.description === undefined ||
       typeof candidate.description === "string") &&

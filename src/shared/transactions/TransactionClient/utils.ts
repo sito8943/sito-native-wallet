@@ -8,9 +8,9 @@ const isStoredTransaction = (value: unknown): value is StoredTransaction => {
   const candidate = value as Record<string, unknown>
 
   return (
-    typeof candidate.id === "string" &&
+    typeof candidate.id === "number" &&
     typeof candidate.amount === "number" &&
-    typeof candidate.accountId === "string" &&
+    typeof candidate.accountId === "number" &&
     Array.isArray(candidate.categoryIds) &&
     (candidate.auto === undefined || typeof candidate.auto === "boolean")
   )

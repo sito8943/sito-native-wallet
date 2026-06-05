@@ -11,7 +11,7 @@ export const isCurrency = (value: unknown): value is Currency => {
   const candidate = value as Record<string, unknown>
 
   return (
-    typeof candidate.id === "string" &&
+    typeof candidate.id === "number" &&
     typeof candidate.name === "string" &&
     typeof candidate.symbol === "string"
   )
