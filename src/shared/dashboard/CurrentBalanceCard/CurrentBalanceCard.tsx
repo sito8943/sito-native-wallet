@@ -9,7 +9,7 @@ import { useI18n } from "#shared/i18n"
 import ActiveFilters from "../ActiveFilters"
 import CardFrame from "../CardFrame"
 import { useDashboard } from "../useDashboard"
-import { formatAmount } from "../utils"
+import { formatAmount, toAccountSnapshot } from "../utils"
 
 import { type CurrentBalanceCardProps } from "./types"
 import { parseConfig } from "./utils"
@@ -26,14 +26,18 @@ export default function CurrentBalanceCard({
   const [filtersOpen, setFiltersOpen] = useState(false)
 
   const config = parseConfig(card.config)
-  const account = accounts.find((item) => item.id === config.accountId) ?? null
+  const account =
+    accounts.find((item) => item.id === config.account?.id) ?? null
 
   const noAccountLabel = t("dashboard.currentBalance.noAccount")
 
   const selectAccount = (accountId: number) => {
+    const selected = accounts.find((item) => item.id === accountId) ?? null
     updateConfig(
       card.id,
-      JSON.stringify({ accountId: accountId === 0 ? undefined : accountId }),
+      JSON.stringify({
+        account: selected ? toAccountSnapshot(selected) : null,
+      }),
     )
   }
 
@@ -74,7 +78,7 @@ export default function CurrentBalanceCard({
       >
         <AccountSelector
           accounts={accounts}
-          selectedId={config.accountId ?? 0}
+          selectedId={config.account?.id ?? 0}
           onSelect={selectAccount}
           allLabel={noAccountLabel}
         />

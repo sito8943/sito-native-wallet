@@ -11,7 +11,6 @@ import CurrentBalanceCard from "../CurrentBalanceCard"
 import { DASHBOARD_CARD_TYPE, type DashboardCard } from "../DashboardCard"
 import TypeResumeCard from "../TypeResumeCard"
 import { useDashboard } from "../useDashboard"
-import WeeklySpentCard from "../WeeklySpentCard"
 
 // The home dashboard: renders each stored card by type. Adding is handled by
 // the floating DashboardAddFab; deleting routes through the shared
@@ -42,8 +41,6 @@ export default function DashboardGrid(): ReactElement {
     switch (card.type) {
       case DASHBOARD_CARD_TYPE.CURRENT_BALANCE:
         return <CurrentBalanceCard card={card} onDelete={onDelete} />
-      case DASHBOARD_CARD_TYPE.WEEKLY_SPENT:
-        return <WeeklySpentCard card={card} onDelete={onDelete} />
       case DASHBOARD_CARD_TYPE.TYPE_RESUME:
         return <TypeResumeCard card={card} onDelete={onDelete} />
       default:

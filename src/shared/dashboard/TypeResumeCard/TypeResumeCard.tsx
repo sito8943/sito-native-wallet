@@ -15,28 +15,23 @@ import { useTransactions } from "#shared/transactions"
 import ActiveFilters from "../ActiveFilters"
 import CardFrame from "../CardFrame"
 import {
-  DEFAULT_TYPE_RESUME_CONFIG,
   TYPE_RESUME_TIME,
   type TypeResumeConfig,
   type TypeResumeTime,
 } from "../DashboardCard"
 import OptionChips from "../OptionChips"
 import { useDashboard } from "../useDashboard"
-import { formatAmount, getTimeRange, sumTransactions } from "../utils"
+import {
+  formatAmount,
+  getTimeRange,
+  sumTransactions,
+  toAccountSnapshot,
+} from "../utils"
 
 import { type TypeResumeCardProps } from "./types"
+import { parseConfig } from "./utils"
 
-const parseConfig = (raw: string | null): TypeResumeConfig => {
-  try {
-    return raw
-      ? (JSON.parse(raw) as TypeResumeConfig)
-      : DEFAULT_TYPE_RESUME_CONFIG
-  } catch {
-    return DEFAULT_TYPE_RESUME_CONFIG
-  }
-}
-
-// Total for a transaction type over a time window (week/month/year/all),
+// Total for a transaction type over a time window (day/week/month/year),
 // optionally scoped to one account.
 export default function TypeResumeCard({
   card,
@@ -53,13 +48,16 @@ export default function TypeResumeCard({
 
   const total = sumTransactions(transactions, {
     type: config.type,
-    accountId: config.accountId,
+    accountIds: config.account ? [config.account.id] : undefined,
     start: range.start,
     end: range.end,
   })
 
+  // Currency follows the scoped account, else the first account.
   const account =
-    accounts.find((item) => item.id === config.accountId) ?? accounts[0] ?? null
+    accounts.find((item) => item.id === config.account?.id) ??
+    accounts[0] ??
+    null
   const symbol = account?.currency.symbol ?? ""
 
   const typeOptions = [
@@ -67,10 +65,22 @@ export default function TypeResumeCard({
     { value: TRANSACTION_TYPE.EXPENSE, label: t("form.category.type.expense") },
   ]
   const timeOptions = [
-    { value: TYPE_RESUME_TIME.WEEK, label: t("dashboard.time.week") },
-    { value: TYPE_RESUME_TIME.MONTH, label: t("dashboard.time.month") },
-    { value: TYPE_RESUME_TIME.YEAR, label: t("dashboard.time.year") },
-    { value: TYPE_RESUME_TIME.ALL, label: t("dashboard.time.all") },
+    {
+      value: TYPE_RESUME_TIME.CURRENT_DAY,
+      label: t("dashboard.time.currentDay"),
+    },
+    {
+      value: TYPE_RESUME_TIME.CURRENT_WEEK,
+      label: t("dashboard.time.currentWeek"),
+    },
+    {
+      value: TYPE_RESUME_TIME.CURRENT_MONTH,
+      label: t("dashboard.time.currentMonth"),
+    },
+    {
+      value: TYPE_RESUME_TIME.CURRENT_YEAR,
+      label: t("dashboard.time.currentYear"),
+    },
   ]
 
   const typeLabel =
@@ -79,11 +89,8 @@ export default function TypeResumeCard({
       : t("form.category.type.expense")
   const timeLabel =
     timeOptions.find((option) => option.value === config.time)?.label ??
-    t("dashboard.time.month")
-  const accountLabel = config.accountId
-    ? (accounts.find((item) => item.id === config.accountId)?.name ??
-      t("dashboard.filter.allAccounts"))
-    : t("dashboard.filter.allAccounts")
+    t("dashboard.time.currentMonth")
+  const accountLabel = config.account?.name ?? t("dashboard.filter.allAccounts")
 
   const update = (next: TypeResumeConfig) => {
     updateConfig(card.id, JSON.stringify(next))
@@ -154,11 +161,13 @@ export default function TypeResumeCard({
           </Typography>
           <AccountSelector
             accounts={accounts}
-            selectedId={config.accountId ?? 0}
+            selectedId={config.account?.id ?? 0}
             onSelect={(accountId) => {
+              const selected =
+                accounts.find((item) => item.id === accountId) ?? null
               update({
                 ...config,
-                accountId: accountId === 0 ? undefined : accountId,
+                account: selected ? toAccountSnapshot(selected) : null,
               })
             }}
             allLabel={t("dashboard.filter.allAccounts")}

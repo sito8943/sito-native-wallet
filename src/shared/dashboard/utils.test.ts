@@ -43,11 +43,11 @@ describe("Dashboard > utils", () => {
       ).toBe(37) // 10 + 20 + 7 (excludes income 99 and May 5)
     })
 
-    it("scopes to one account when accountId is set", () => {
+    it("scopes to the given account ids", () => {
       expect(
         sumTransactions(data, {
           type: TRANSACTION_TYPE.EXPENSE,
-          accountId: 1,
+          accountIds: [1],
           start: "2026/06/01",
           end: "2026/06/30",
         }),
@@ -62,22 +62,25 @@ describe("Dashboard > utils", () => {
   describe("getTimeRange", () => {
     const june = new Date(2026, 5, 15)
 
+    it("bounds a single day", () => {
+      expect(getTimeRange(TYPE_RESUME_TIME.CURRENT_DAY, june)).toEqual({
+        start: "2026/06/15",
+        end: "2026/06/15",
+      })
+    })
+
     it("bounds the current month", () => {
-      expect(getTimeRange(TYPE_RESUME_TIME.MONTH, june)).toEqual({
+      expect(getTimeRange(TYPE_RESUME_TIME.CURRENT_MONTH, june)).toEqual({
         start: "2026/06/01",
         end: "2026/06/30",
       })
     })
 
     it("bounds the current year", () => {
-      expect(getTimeRange(TYPE_RESUME_TIME.YEAR, june)).toEqual({
+      expect(getTimeRange(TYPE_RESUME_TIME.CURRENT_YEAR, june)).toEqual({
         start: "2026/01/01",
         end: "2026/12/31",
       })
-    })
-
-    it("is unbounded for all time", () => {
-      expect(getTimeRange(TYPE_RESUME_TIME.ALL, june)).toEqual({})
     })
   })
 

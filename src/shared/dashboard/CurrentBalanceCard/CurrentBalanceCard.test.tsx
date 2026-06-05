@@ -13,7 +13,9 @@ const card: DashboardCard = {
   id: 1,
   type: DASHBOARD_CARD_TYPE.CURRENT_BALANCE,
   title: null,
-  config: JSON.stringify({ accountId: 1 }),
+  config: JSON.stringify({
+    account: { id: 1, name: "Main account", currencySymbol: "€" },
+  }),
   position: 0,
 }
 

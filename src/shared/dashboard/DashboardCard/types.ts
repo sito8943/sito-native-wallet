@@ -1,5 +1,6 @@
 import { type TransactionType } from "#shared/categories/TransactionCategory"
 import { type Timestamps } from "#shared/data/storage"
+import { type CommonAccountDto } from "#shared/transactions/dtos"
 
 import { type DASHBOARD_CARD_TYPE, type TYPE_RESUME_TIME } from "./constants"
 
@@ -20,20 +21,20 @@ export type DashboardCard = Partial<Timestamps> & {
   position: number
 }
 
-// account omitted → the single account the user must pick (no "all" total,
-// since summing across currencies is meaningless).
+// Config shapes store the account as a CommonAccountDto snapshot (keyed
+// `account`/`accounts`), matching the web wallet's persisted config so it stays
+// wire-compatible with the backend. Cards still resolve the live account by
+// `account.id` for the current balance/currency.
+
+// null account → the single account the user must pick (no "all" total, since
+// summing across currencies is meaningless).
 export type CurrentBalanceConfig = {
-  accountId?: number
+  account: CommonAccountDto | null
 }
 
-// account omitted → every account; type filters income vs expense.
-export type WeeklySpentConfig = {
-  accountId?: number
-  type: TransactionType
-}
-
+// null account → every account.
 export type TypeResumeConfig = {
-  accountId?: number
+  account: CommonAccountDto | null
   type: TransactionType
   time: TypeResumeTime
 }

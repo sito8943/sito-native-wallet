@@ -1,9 +1,14 @@
-import { type CurrentBalanceConfig } from "../DashboardCard"
+import {
+  DEFAULT_CURRENT_BALANCE_CONFIG,
+  type CurrentBalanceConfig,
+} from "../DashboardCard"
 
 export const parseConfig = (raw: string | null): CurrentBalanceConfig => {
   try {
-    return raw ? (JSON.parse(raw) as CurrentBalanceConfig) : {}
+    return raw
+      ? (JSON.parse(raw) as CurrentBalanceConfig)
+      : DEFAULT_CURRENT_BALANCE_CONFIG
   } catch {
-    return {}
+    return DEFAULT_CURRENT_BALANCE_CONFIG
   }
 }

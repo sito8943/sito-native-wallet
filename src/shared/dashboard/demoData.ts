@@ -14,24 +14,22 @@ export const INITIAL_DASHBOARD: DashboardCard[] = [
     id: 1,
     type: DASHBOARD_CARD_TYPE.CURRENT_BALANCE,
     title: null,
-    config: JSON.stringify({ accountId: 1 }),
+    // Snapshot of the seeded "Main account"; the card resolves the live balance
+    // by its id.
+    config: JSON.stringify({
+      account: { id: 1, name: "Main account", currencySymbol: "€" },
+    }),
     position: 0,
-  },
-  {
-    id: 2,
-    type: DASHBOARD_CARD_TYPE.WEEKLY_SPENT,
-    title: null,
-    config: JSON.stringify({ type: TRANSACTION_TYPE.EXPENSE }),
-    position: 1,
   },
   {
     id: 3,
     type: DASHBOARD_CARD_TYPE.TYPE_RESUME,
     title: null,
     config: JSON.stringify({
+      account: null,
       type: TRANSACTION_TYPE.INCOME,
-      time: TYPE_RESUME_TIME.MONTH,
+      time: TYPE_RESUME_TIME.CURRENT_MONTH,
     }),
-    position: 2,
+    position: 1,
   },
 ]

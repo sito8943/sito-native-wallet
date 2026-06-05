@@ -24,12 +24,12 @@ describe("Dashboard > DashboardClient", () => {
   it("adds a card with null title and config", () => {
     const client = new DashboardClient()
 
-    client.add({ type: DASHBOARD_CARD_TYPE.WEEKLY_SPENT, position: 9 })
+    client.add({ type: DASHBOARD_CARD_TYPE.TYPE_RESUME, position: 9 })
 
     const items = client.getAll()
     expect(items).toHaveLength(INITIAL_DASHBOARD.length + 1)
     const added = items.at(-1)
-    expect(added?.type).toBe(DASHBOARD_CARD_TYPE.WEEKLY_SPENT)
+    expect(added?.type).toBe(DASHBOARD_CARD_TYPE.TYPE_RESUME)
     expect(added?.title).toBeNull()
     expect(added?.config).toBeNull()
   })

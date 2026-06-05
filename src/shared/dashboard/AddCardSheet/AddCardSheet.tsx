@@ -24,10 +24,6 @@ export default function AddCardSheet({
       label: t("dashboard.type.currentBalance"),
     },
     {
-      type: DASHBOARD_CARD_TYPE.WEEKLY_SPENT,
-      label: t("dashboard.type.weeklySpent"),
-    },
-    {
       type: DASHBOARD_CARD_TYPE.TYPE_RESUME,
       label: t("dashboard.type.typeResume"),
     },
