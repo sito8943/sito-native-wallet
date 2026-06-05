@@ -44,15 +44,17 @@ export default function ActionMenu<T>({
     return null
   }
 
-  // Measure the trigger in window space so the dropdown lands right under it,
-  // right-aligned to its edge.
+  // Open right away so the dropdown never waits on layout, then measure the
+  // trigger in window space so it lands right under it, right-aligned to its
+  // edge. The menu stays invisible until anchored, avoiding a corner flash.
   const openMenu = (): void => {
+    setAnchor(null)
+    setOpen(true)
     triggerRef.current?.measureInWindow((x, y, w, h) => {
       setAnchor({
         top: y + h + spacing(1),
         right: Math.max(width - (x + w), spacing(2)),
       })
-      setOpen(true)
     })
   }
 
@@ -108,34 +110,38 @@ export default function ActionMenu<T>({
           }}
         />
 
-        {anchor !== null && (
-          <View style={[styles.menu, { top: anchor.top, right: anchor.right }]}>
-            {overflow.map((action) => {
-              const tint =
-                action.disabled === true
-                  ? colors[THEME_COLOR.TEXT_SUBTLE]
-                  : colors[action.color ?? THEME_COLOR.TEXT_STRONG]
+        <View
+          style={[
+            styles.menu,
+            anchor ?? styles.menuFallback,
+            anchor === null && styles.hidden,
+          ]}
+        >
+          {overflow.map((action) => {
+            const tint =
+              action.disabled === true
+                ? colors[THEME_COLOR.TEXT_SUBTLE]
+                : colors[action.color ?? THEME_COLOR.TEXT_STRONG]
 
-              return (
-                <Pressable
-                  key={action.id}
-                  accessibilityLabel={action.accessibilityLabel}
-                  disabled={action.disabled}
-                  style={styles.item}
-                  onPress={() => {
-                    setOpen(false)
-                    action.onPress(entity)
-                  }}
-                >
-                  <Icon icon={action.icon} color={tint} size={spacing(4)} />
-                  <Typography style={{ color: tint }}>
-                    {action.accessibilityLabel}
-                  </Typography>
-                </Pressable>
-              )
-            })}
-          </View>
-        )}
+            return (
+              <Pressable
+                key={action.id}
+                accessibilityLabel={action.accessibilityLabel}
+                disabled={action.disabled}
+                style={styles.item}
+                onPress={() => {
+                  setOpen(false)
+                  action.onPress(entity)
+                }}
+              >
+                <Icon icon={action.icon} color={tint} size={spacing(4)} />
+                <Typography style={{ color: tint }}>
+                  {action.accessibilityLabel}
+                </Typography>
+              </Pressable>
+            )
+          })}
+        </View>
       </Modal>
     </View>
   )
@@ -159,6 +165,15 @@ const createStyles = (colors: ThemeColors) => ({
     paddingVertical: spacing(1),
     position: "absolute" as const,
     ...shadows.card,
+  },
+  // Position used for the frame before the trigger is measured; paired with
+  // `hidden` so it's never actually painted off-anchor.
+  menuFallback: {
+    top: spacing(12),
+    right: spacing(2),
+  },
+  hidden: {
+    opacity: 0,
   },
   item: {
     alignItems: "center" as const,
