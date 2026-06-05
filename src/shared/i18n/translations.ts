@@ -224,6 +224,30 @@ export const translations = {
     "profile.language.placeholder": "Select language",
     "profile.language.english": "English",
     "profile.language.spanish": "Spanish",
+    "onboarding.welcome.title": "Welcome to SitoWallet",
+    "onboarding.welcome.body":
+      "Your personal assistant to organize your money, save more, and make smarter financial decisions.",
+    "onboarding.currencies.title": "Manage your currencies",
+    "onboarding.currencies.body":
+      "Add and track any currency to keep control of your finances anywhere in the world.",
+    "onboarding.accounts.title": "All your accounts in one place",
+    "onboarding.accounts.body":
+      "Record bank accounts, cash, or cryptocurrencies and get a complete view of your money.",
+    "onboarding.transactions.title": "Full control of your transactions",
+    "onboarding.transactions.body":
+      "Log income and expenses in seconds, and categorize them to know exactly where your money goes.",
+    "onboarding.subscriptions.title": "Keep your subscriptions under control",
+    "onboarding.subscriptions.body":
+      "Organize recurring payments, providers, and renewals so every charge is predictable.",
+    "onboarding.getStarted.title": "You're ready to take control",
+    "onboarding.getStarted.body":
+      "Add your first account now and start your journey to healthier finances today.",
+    "onboarding.action.back": "Back",
+    "onboarding.action.skip": "Skip",
+    "onboarding.action.next": "Next",
+    "onboarding.action.getStarted": "Get started",
+    "onboarding.progress": "{current} of {total}",
+    "onboarding.error.persist": "Unable to save onboarding progress.",
   },
   [LANGUAGE.ES]: {
     "nav.home": "Inicio",
@@ -461,5 +485,30 @@ export const translations = {
     "profile.language.placeholder": "Selecciona idioma",
     "profile.language.english": "Inglés",
     "profile.language.spanish": "Español",
+    "onboarding.welcome.title": "Bienvenido a SitoWallet",
+    "onboarding.welcome.body":
+      "Tu asistente personal para organizar tu dinero, ahorrar más y tomar decisiones financieras inteligentes.",
+    "onboarding.currencies.title": "Gestiona tus monedas",
+    "onboarding.currencies.body":
+      "Añade y controla cualquier moneda para mantener tus finanzas bajo control en cualquier parte del mundo.",
+    "onboarding.accounts.title": "Todas tus cuentas en un solo lugar",
+    "onboarding.accounts.body":
+      "Registra cuentas bancarias, efectivo o criptomonedas y obtén una visión completa de tu dinero.",
+    "onboarding.transactions.title": "Control total de tus movimientos",
+    "onboarding.transactions.body":
+      "Registra ingresos y gastos en segundos, y clasifícalos para saber exactamente adónde va tu dinero.",
+    "onboarding.subscriptions.title": "Ten tus suscripciones bajo control",
+    "onboarding.subscriptions.body":
+      "Organiza pagos recurrentes, proveedores y renovaciones para que cada cargo sea previsible.",
+    "onboarding.getStarted.title": "Listo para tomar el control",
+    "onboarding.getStarted.body":
+      "Añade tu primera cuenta ahora y comienza tu camino hacia unas finanzas más saludables hoy mismo.",
+    "onboarding.action.back": "Atrás",
+    "onboarding.action.skip": "Saltar",
+    "onboarding.action.next": "Siguiente",
+    "onboarding.action.getStarted": "Comenzar",
+    "onboarding.progress": "{current} de {total}",
+    "onboarding.error.persist":
+      "No se pudo guardar el progreso del onboarding.",
   },
 } as const
