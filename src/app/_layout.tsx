@@ -27,7 +27,18 @@ function RootNavigator(): ReactElement {
       return
     }
 
-    void NavigationBar.setButtonStyleAsync(isDark ? "light" : "dark")
+    const applyNavigationBarStyle = async (): Promise<void> => {
+      if (typeof NavigationBar.setStyle === "function") {
+        await NavigationBar.setStyle(isDark ? "light" : "dark")
+        return
+      }
+
+      if (typeof NavigationBar.setButtonStyleAsync === "function") {
+        await NavigationBar.setButtonStyleAsync(isDark ? "light" : "dark")
+      }
+    }
+
+    void applyNavigationBarStyle()
   }, [isDark])
 
   useEffect(() => {
