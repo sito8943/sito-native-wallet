@@ -3,9 +3,9 @@ import { type ReactElement } from "react"
 
 import EntityList from "#design/patterns/EntityList"
 import Page from "#design/templates/Page"
+import { SubscriptionCard, useSubscriptions } from "#features/subscriptions"
 import { useI18n } from "#shared/i18n"
 import { toSubscriptionDetailsRoute } from "#shared/navigation"
-import { SubscriptionCard, useSubscriptions } from "#shared/subscriptions"
 
 export default function Subscriptions(): ReactElement {
   const router = useRouter()

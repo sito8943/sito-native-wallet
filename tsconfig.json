@@ -5,6 +5,7 @@
     "types": ["jest"],
     "paths": {
       "#design/*": ["./src/shared/design/*/index.ts"],
+      "#features/*": ["./src/features/*/index.ts"],
       "#shared/*": ["./src/shared/*/index.ts"]
     },
     "strict": true

@@ -7,14 +7,14 @@ import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
-import { AccountCard, useAccount } from "#shared/accounts"
+import { AccountCard, useAccount } from "#features/accounts"
+import { TransactionList, useTransactions } from "#features/transactions"
 import { useI18n } from "#shared/i18n"
 import {
   toAccountTransactionDetailsRoute,
   toEditAccountRoute,
   useDetailRouteParams,
 } from "#shared/navigation"
-import { TransactionList, useTransactions } from "#shared/transactions"
 
 export default function AccountDetails(): ReactElement {
   const router = useRouter()

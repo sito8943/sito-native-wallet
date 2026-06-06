@@ -5,7 +5,7 @@ import { ActivityIndicator, Alert } from "react-native"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Page from "#design/templates/Page"
-import { type AddAccountDto, AccountForm, useAccount } from "#shared/accounts"
+import { type AddAccountDto, AccountForm, useAccount } from "#features/accounts"
 import { useI18n } from "#shared/i18n"
 import { useDetailRouteParams } from "#shared/navigation"
 

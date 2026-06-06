@@ -8,7 +8,7 @@ import { ConfirmationDialog } from "#design/patterns/Dialog"
 import EntityList from "#design/patterns/EntityList"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
-import { type Currency, CurrencyCard, useCurrencies } from "#shared/currencies"
+import { type Currency, CurrencyCard, useCurrencies } from "#features/currencies"
 import { useI18n } from "#shared/i18n"
 import { toCurrencyDetailsRoute, toNewCurrencyRoute } from "#shared/navigation"
 

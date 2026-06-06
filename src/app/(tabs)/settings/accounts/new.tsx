@@ -2,7 +2,7 @@ import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 
 import Page from "#design/templates/Page"
-import { type AddAccountDto, AccountForm, useAccounts } from "#shared/accounts"
+import { type AddAccountDto, AccountForm, useAccounts } from "#features/accounts"
 import { useI18n } from "#shared/i18n"
 
 export default function NewAccount(): ReactElement {

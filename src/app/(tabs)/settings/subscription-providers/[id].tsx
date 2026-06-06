@@ -5,13 +5,13 @@ import { ActivityIndicator, Alert } from "react-native"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Page from "#design/templates/Page"
-import { useI18n } from "#shared/i18n"
-import { useDetailRouteParams } from "#shared/navigation"
 import {
   type AddSubscriptionProviderDto,
   SubscriptionProviderForm,
   useSubscriptionProvider,
-} from "#shared/subscriptionProviders"
+} from "#features/subscriptionProviders"
+import { useI18n } from "#shared/i18n"
+import { useDetailRouteParams } from "#shared/navigation"
 
 export default function EditSubscriptionProvider(): ReactElement {
   const router = useRouter()

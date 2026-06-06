@@ -6,27 +6,27 @@ import {
   AccountCard,
   AccountForm,
   AccountSelector,
-} from "#shared/accounts"
+} from "#features/accounts"
 import {
   TRANSACTION_TYPE,
   type TransactionCategory,
   CategoryBullet,
   CategoryCard,
   CategoryForm,
-} from "#shared/categories"
-import { type Currency, CurrencyCard, CurrencyForm } from "#shared/currencies"
-import { SettingsMenu } from "#shared/settings/SettingsMenu"
+} from "#features/categories"
+import { type Currency, CurrencyCard, CurrencyForm } from "#features/currencies"
+import { SettingsMenu } from "#features/settings/SettingsMenu"
 import {
   type SubscriptionProvider,
   SubscriptionProviderCard,
   SubscriptionProviderForm,
-} from "#shared/subscriptionProviders"
+} from "#features/subscriptionProviders"
 import {
   SUBSCRIPTION_BILLING_UNIT,
   SUBSCRIPTION_STATUS,
   type Subscription,
   SubscriptionCard,
-} from "#shared/subscriptions"
+} from "#features/subscriptions"
 import {
   type Transaction,
   TransactionCard,
@@ -34,11 +34,11 @@ import {
   TransactionList,
   TransactionsFilters,
   TransactionTypeBadge,
-} from "#shared/transactions"
+} from "#features/transactions"
 import {
   TRANSACTION_SORT_ORDER,
   TRANSACTION_TYPE_FILTER,
-} from "#shared/transactions/TransactionsPreferences"
+} from "#features/transactions/TransactionsPreferences"
 
 const ts = {
   createdAt: "2026-01-01T00:00:00.000Z",

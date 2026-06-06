@@ -6,6 +6,7 @@
   "type": "module",
   "imports": {
     "#design/*": "./src/shared/design/*/index.ts",
+    "#features/*": "./src/features/*/index.ts",
     "#shared/*": "./src/shared/*/index.ts"
   },
   "scripts": {
@@ -65,6 +66,7 @@
     ],
     "moduleNameMapper": {
       "^#design/(.*)$": "<rootDir>/src/shared/design/$1/index.ts",
+      "^#features/(.*)$": "<rootDir>/src/features/$1/index.ts",
       "^#shared/(.*)$": "<rootDir>/src/shared/$1/index.ts"
     }
   }

@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native"
 import Typography from "#design/elements/Typography"
 import { TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Page from "#design/templates/Page"
-import { DashboardAddFab, DashboardGrid } from "#shared/dashboard"
+import { DashboardAddFab, DashboardGrid } from "#features/dashboard"
 import { useI18n } from "#shared/i18n"
 
 export default function Home(): ReactElement {

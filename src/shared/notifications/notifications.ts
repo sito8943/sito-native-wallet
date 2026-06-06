@@ -1,6 +1,7 @@
+import type * as ExpoNotifications from "expo-notifications"
 import { Platform } from "react-native"
 
-type NotificationsModule = typeof import("expo-notifications")
+type NotificationsModule = typeof ExpoNotifications
 let notificationsModule: NotificationsModule | null = null
 let configured = false
 let attemptedConfiguration = false
@@ -24,8 +25,8 @@ async function configureNotifications(): Promise<NotificationsModule | null> {
     return null
   }
 
-  const { status } = await Notifications.requestPermissionsAsync()
-  if (status !== "granted") {
+  const { granted } = await Notifications.requestPermissionsAsync()
+  if (!granted) {
     return null
   }
 

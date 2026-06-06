@@ -11,10 +11,10 @@ import {
   AccountCard,
   useAccounts,
   useAdjustBalanceSheet,
-} from "#shared/accounts"
+} from "#features/accounts"
+import { useTransactions } from "#features/transactions"
 import { useI18n } from "#shared/i18n"
 import { toAccountDetailsRoute, toNewAccountRoute } from "#shared/navigation"
-import { useTransactions } from "#shared/transactions"
 
 export default function Accounts(): ReactElement {
   const router = useRouter()

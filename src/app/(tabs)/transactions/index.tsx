@@ -9,12 +9,7 @@ import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
-import { AccountSelector } from "#shared/accounts"
-import { useI18n } from "#shared/i18n"
-import {
-  toNewTransactionRoute,
-  toTransactionDetailsRoute,
-} from "#shared/navigation"
+import { AccountSelector } from "#features/accounts"
 import {
   type Transaction,
   TransactionList,
@@ -22,7 +17,12 @@ import {
   useFilteredTransactions,
   useInfiniteTransactions,
   useTransactions,
-} from "#shared/transactions"
+} from "#features/transactions"
+import { useI18n } from "#shared/i18n"
+import {
+  toNewTransactionRoute,
+  toTransactionDetailsRoute,
+} from "#shared/navigation"
 
 export default function Transactions(): ReactElement {
   const router = useRouter()

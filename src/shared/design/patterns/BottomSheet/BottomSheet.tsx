@@ -75,7 +75,7 @@ const createStyles = (colors: ThemeColors) => ({
     justifyContent: "flex-end" as const,
   },
   backdrop: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: colors.overlay,
   },
   sheet: {

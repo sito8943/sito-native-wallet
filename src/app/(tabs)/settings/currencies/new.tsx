@@ -6,7 +6,7 @@ import {
   type AddCurrencyDto,
   CurrencyForm,
   useCurrencies,
-} from "#shared/currencies"
+} from "#features/currencies"
 import { useI18n } from "#shared/i18n"
 
 export default function NewCurrency(): ReactElement {

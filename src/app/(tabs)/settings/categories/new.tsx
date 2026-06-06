@@ -6,7 +6,7 @@ import {
   type AddCategoryDto,
   CategoryForm,
   useCategories,
-} from "#shared/categories"
+} from "#features/categories"
 import { useI18n } from "#shared/i18n"
 
 export default function NewCategory(): ReactElement {

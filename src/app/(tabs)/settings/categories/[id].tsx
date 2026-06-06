@@ -9,7 +9,7 @@ import {
   type AddCategoryDto,
   CategoryForm,
   useCategory,
-} from "#shared/categories"
+} from "#features/categories"
 import { useI18n } from "#shared/i18n"
 import { useDetailRouteParams } from "#shared/navigation"
 
