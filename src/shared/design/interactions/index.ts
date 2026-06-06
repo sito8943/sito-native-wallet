@@ -1,3 +1,4 @@
+export { haptics } from "./haptics"
 export { useDeleteAction } from "./useDeleteAction"
 export { useDeleteDialog } from "./useDeleteDialog"
 export { useDialog } from "./useDialog"

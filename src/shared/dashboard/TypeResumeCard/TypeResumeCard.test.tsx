@@ -29,7 +29,9 @@ describe("Dashboard > TypeResumeCard", () => {
   })
 
   it("renders its active filter chips (type / time / account)", async () => {
-    const { findByText } = render(<TypeResumeCard card={card} onDelete={noop} />)
+    const { findByText } = render(
+      <TypeResumeCard card={card} onDelete={noop} />,
+    )
 
     expect(
       await findByText(translate(LANGUAGE.EN, "dashboard.time.currentMonth")),

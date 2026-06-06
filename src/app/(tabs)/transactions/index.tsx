@@ -5,6 +5,8 @@ import { StyleSheet, View } from "react-native"
 import { APP_ICONS } from "#design/elements/Icon"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
+import { useDeleteDialog } from "#design/interactions"
+import { ConfirmationDialog } from "#design/patterns/Dialog"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import { AccountSelector } from "#shared/accounts"
@@ -14,10 +16,12 @@ import {
   toTransactionDetailsRoute,
 } from "#shared/navigation"
 import {
+  type Transaction,
   TransactionList,
   TransactionsFilters,
   useFilteredTransactions,
   useInfiniteTransactions,
+  useTransactions,
 } from "#shared/transactions"
 
 export default function Transactions(): ReactElement {
@@ -39,6 +43,22 @@ export default function Transactions(): ReactElement {
     filters,
     query,
   })
+
+  const { removeTransaction } = useTransactions()
+
+  const deleteDialog = useDeleteDialog<Transaction>({
+    onConfirm: (transaction) => {
+      removeTransaction(transaction.id)
+    },
+    title: t("transactions.delete.title"),
+    message: t("transactions.delete.description"),
+  })
+
+  // Auto rows (e.g. opening-balance) aren't user-deletable → no swipe.
+  const onSwipeDelete = (transaction: Transaction): (() => void) | undefined =>
+    transaction.auto === true
+      ? undefined
+      : () => deleteDialog.action(transaction).onPress(transaction)
 
   const header = (
     <View style={styles.header}>
@@ -81,6 +101,7 @@ export default function Transactions(): ReactElement {
           onPress={(transaction) =>
             router.push(toTransactionDetailsRoute(transaction.id))
           }
+          onSwipeDelete={onSwipeDelete}
         />
       </Page>
       <FAB
@@ -88,6 +109,7 @@ export default function Transactions(): ReactElement {
         icon={APP_ICONS.add}
         onPress={() => router.push(toNewTransactionRoute())}
       />
+      <ConfirmationDialog {...deleteDialog} confirmLabel={t("common.delete")} />
     </View>
   )
 }

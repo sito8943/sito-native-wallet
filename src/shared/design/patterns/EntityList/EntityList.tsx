@@ -2,6 +2,7 @@ import { type ReactElement } from "react"
 import { FlatList, StyleSheet } from "react-native"
 
 import { spacing } from "#design/foundations"
+import SwipeableRow from "#design/patterns/SwipeableRow"
 import Empty from "#design/templates/Empty"
 import { useI18n } from "#shared/i18n"
 
@@ -18,15 +19,30 @@ export default function EntityList<T extends { id: number }>({
   emptyComponent,
   header,
   onEndReached,
+  onSwipeDelete,
   contentContainerStyle,
 }: EntityListProps<T>): ReactElement {
   const { t } = useI18n()
+
+  const renderRow = (item: T): ReactElement => {
+    const row = renderItem(item)
+    if (onSwipeDelete === undefined) {
+      return row
+    }
+
+    const onDelete = onSwipeDelete(item)
+    if (onDelete === undefined) {
+      return row
+    }
+
+    return <SwipeableRow onDelete={onDelete}>{row}</SwipeableRow>
+  }
 
   return (
     <FlatList<T>
       data={data ?? []}
       keyExtractor={keyExtractor ?? ((item) => item.id.toString())}
-      renderItem={({ item }) => renderItem(item)}
+      renderItem={({ item }) => renderRow(item)}
       ListHeaderComponent={header}
       ListEmptyComponent={
         emptyComponent ?? <Empty message={emptyMessage ?? t("common.empty")} />
