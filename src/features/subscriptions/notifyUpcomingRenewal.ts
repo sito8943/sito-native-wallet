@@ -1,5 +1,6 @@
-import { getDeviceLanguage, translate } from "../../shared/i18n/utils"
 import { createNotification } from "#shared/notifications"
+
+import { getDeviceLanguage, translate } from "../../shared/i18n/utils"
 
 import {
   daysUntilRenewal,

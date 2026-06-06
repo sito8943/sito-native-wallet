@@ -88,7 +88,7 @@ jest.mock("@fortawesome/react-native-fontawesome", () => ({
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage)
 
 jest.mock("react-native-reanimated", () => {
-  const React = jest.requireActual("react")
+  // const React = jest.requireActual("react")
   const { View: RNView } = jest.requireActual("react-native")
   const createAnimatedComponent = (Component: React.ComponentType<unknown>) =>
     Component
