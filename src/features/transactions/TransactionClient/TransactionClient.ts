@@ -10,7 +10,7 @@ import {
 } from "#features/categories/TransactionCategory"
 import { createId, StorageClient } from "#shared/data/storage"
 import { todayStamp } from "#shared/data/time"
-import { getDeviceLanguage, translate } from "#shared/i18n"
+import { getDeviceLanguage, translate } from "../../../shared/i18n/utils"
 
 import { INITIAL_TRANSACTIONS } from "../demoData"
 import { type AddTransactionDto } from "../dtos"

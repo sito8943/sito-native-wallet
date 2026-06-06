@@ -86,3 +86,26 @@ jest.mock("@fortawesome/react-native-fontawesome", () => ({
 }))
 
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage)
+
+jest.mock("react-native-reanimated", () => {
+  const React = jest.requireActual("react")
+  const { View: RNView } = jest.requireActual("react-native")
+  const createAnimatedComponent = (Component: React.ComponentType<unknown>) =>
+    Component
+  return {
+    __esModule: true,
+    default: {
+      View: RNView,
+      createAnimatedComponent,
+    },
+    createAnimatedComponent,
+    useSharedValue: (value: unknown) => ({ value }),
+    useAnimatedStyle: () => ({}),
+    withTiming: (value: unknown) => value,
+    interpolate: () => 0,
+  }
+})
+
+jest.mock("react-native-worklets", () => ({
+  scheduleOnRN: jest.fn(),
+}))
