@@ -3,13 +3,13 @@ import { type ReactElement } from "react"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Page from "#design/templates/Page"
-import { useI18n } from "#shared/i18n"
-import { useDetailRouteParams } from "#shared/navigation"
 import {
   SUBSCRIPTION_STATUS,
   SubscriptionCard,
   useSubscription,
-} from "#shared/subscriptions"
+} from "#features/subscriptions"
+import { useI18n } from "#shared/i18n"
+import { useDetailRouteParams } from "#shared/navigation"
 
 export default function SubscriptionDetails(): ReactElement {
   const { language, t } = useI18n()

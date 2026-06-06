@@ -12,7 +12,7 @@ import {
   CATEGORY_PREFABS,
   CategoryCard,
   useCategories,
-} from "#shared/categories"
+} from "#features/categories"
 import { useI18n } from "#shared/i18n"
 
 export default function CategoryPrefabs(): ReactElement {

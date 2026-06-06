@@ -1,15 +1,33 @@
-import * as Notifications from "expo-notifications"
+import type * as ExpoNotifications from "expo-notifications"
 import { Platform } from "react-native"
 
-let configured: boolean | null = null
+type NotificationsModule = typeof ExpoNotifications
+let notificationsModule: NotificationsModule | null = null
+let configured = false
+let attemptedConfiguration = false
 
-async function configureNotifications(): Promise<boolean> {
-  if (configured !== null) return configured
+async function loadNotificationsModule(): Promise<NotificationsModule | null> {
+  try {
+    return await import("expo-notifications")
+  } catch {
+    return null
+  }
+}
 
-  const { status } = await Notifications.requestPermissionsAsync()
-  if (status !== Notifications.PermissionStatus.GRANTED) {
-    configured = false
-    return false
+async function configureNotifications(): Promise<NotificationsModule | null> {
+  if (attemptedConfiguration) {
+    return configured ? notificationsModule : null
+  }
+  attemptedConfiguration = true
+
+  const Notifications = await loadNotificationsModule()
+  if (!Notifications) {
+    return null
+  }
+
+  const { granted } = await Notifications.requestPermissionsAsync()
+  if (!granted) {
+    return null
   }
 
   Notifications.setNotificationHandler({
@@ -22,7 +40,8 @@ async function configureNotifications(): Promise<boolean> {
   })
 
   configured = true
-  return true
+  notificationsModule = Notifications
+  return Notifications
 }
 
 export async function createNotification({
@@ -34,8 +53,8 @@ export async function createNotification({
   short?: string
   body: string
 }): Promise<void> {
-  const ok = await configureNotifications()
-  if (!ok) return
+  const Notifications = await configureNotifications()
+  if (!Notifications) return
 
   await Notifications.scheduleNotificationAsync({
     content: {

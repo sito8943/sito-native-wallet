@@ -12,7 +12,7 @@ import {
   CategoryCard,
   type TransactionCategory,
   useCategories,
-} from "#shared/categories"
+} from "#features/categories"
 import { useI18n } from "#shared/i18n"
 import { toCategoryDetailsRoute, toNewCategoryRoute } from "#shared/navigation"
 

@@ -1,7 +1,7 @@
 import { type ReactElement } from "react"
 
+import { TransactionDetailScreen } from "#features/transactions"
 import { useDetailRouteParams } from "#shared/navigation"
-import { TransactionDetailScreen } from "#shared/transactions"
 
 export default function EditTransaction(): ReactElement {
   const { id } = useDetailRouteParams()

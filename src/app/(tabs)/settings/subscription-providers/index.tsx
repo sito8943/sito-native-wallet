@@ -8,16 +8,16 @@ import { ConfirmationDialog } from "#design/patterns/Dialog"
 import EntityList from "#design/patterns/EntityList"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
+import {
+  type SubscriptionProvider,
+  SubscriptionProviderCard,
+  useSubscriptionProviders,
+} from "#features/subscriptionProviders"
 import { useI18n } from "#shared/i18n"
 import {
   toNewSubscriptionProviderRoute,
   toSubscriptionProviderDetailsRoute,
 } from "#shared/navigation"
-import {
-  type SubscriptionProvider,
-  SubscriptionProviderCard,
-  useSubscriptionProviders,
-} from "#shared/subscriptionProviders"
 
 export default function SubscriptionProviders(): ReactElement {
   const router = useRouter()

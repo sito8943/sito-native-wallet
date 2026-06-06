@@ -2,12 +2,12 @@ import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 
 import Page from "#design/templates/Page"
-import { useI18n } from "#shared/i18n"
 import {
   type AddTransactionDto,
   TransactionForm,
   useTransactions,
-} from "#shared/transactions"
+} from "#features/transactions"
+import { useI18n } from "#shared/i18n"
 
 export default function NewTransaction(): ReactElement {
   const router = useRouter()

@@ -9,6 +9,8 @@ import { useI18n } from "#shared/i18n"
 export default function Layout(): ReactElement {
   const colors = useThemeColors()
   const { t } = useI18n()
+  const resolveIconColor = (color: unknown): string | undefined =>
+    typeof color === "string" ? color : undefined
 
   return (
     <Tabs
@@ -27,7 +29,11 @@ export default function Layout(): ReactElement {
           title: t("nav.home"),
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <Icon icon={APP_ICONS.home} color={color} size={spacing(5)} />
+            <Icon
+              icon={APP_ICONS.home}
+              color={resolveIconColor(color)}
+              size={spacing(5)}
+            />
           ),
         }}
       />
@@ -39,7 +45,7 @@ export default function Layout(): ReactElement {
           tabBarIcon: ({ color }) => (
             <Icon
               icon={APP_ICONS.transactions}
-              color={color}
+              color={resolveIconColor(color)}
               size={spacing(5)}
             />
           ),
@@ -53,7 +59,7 @@ export default function Layout(): ReactElement {
           tabBarIcon: ({ color }) => (
             <Icon
               icon={APP_ICONS.subscriptions}
-              color={color}
+              color={resolveIconColor(color)}
               size={spacing(5)}
             />
           ),
@@ -65,7 +71,11 @@ export default function Layout(): ReactElement {
           title: t("nav.settings"),
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <Icon icon={APP_ICONS.settings} color={color} size={spacing(5)} />
+            <Icon
+              icon={APP_ICONS.settings}
+              color={resolveIconColor(color)}
+              size={spacing(5)}
+            />
           ),
         }}
       />

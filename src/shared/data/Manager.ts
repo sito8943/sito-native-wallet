@@ -1,19 +1,19 @@
-// Deep path on purpose: the #shared/accounts barrel pulls in useAccounts (which
+// Deep path on purpose: the #features/accounts barrel pulls in useAccounts (which
 // imports the Manager), creating an eval-time import cycle. The client folder
 // has no such dependency.
-import { AccountClient } from "#shared/accounts/AccountClient"
-import { CategoryClient } from "#shared/categories"
-import { CurrencyClient } from "#shared/currencies"
-// Deep path on purpose: the #shared/dashboard barrel pulls in the dashboard
+import { AccountClient } from "#features/accounts/AccountClient"
+import { CategoryClient } from "#features/categories"
+import { CurrencyClient } from "#features/currencies"
+// Deep path on purpose: the #features/dashboard barrel pulls in the dashboard
 // components (which import the Manager through the data hooks), creating an
 // eval-time import cycle. The client folder has no such dependency.
-import { DashboardClient } from "#shared/dashboard/DashboardClient"
-import { SubscriptionProviderClient } from "#shared/subscriptionProviders"
-// Deep path on purpose: the #shared/transactions barrel pulls in the
+import { DashboardClient } from "#features/dashboard/DashboardClient"
+import { SubscriptionProviderClient } from "#features/subscriptionProviders"
+// Deep path on purpose: the #features/transactions barrel pulls in the
 // transaction hooks (which import the accounts/categories barrels and the
 // Manager), creating an eval-time import cycle. The client folder has no such
 // dependency.
-import { TransactionClient } from "#shared/transactions/TransactionClient"
+import { TransactionClient } from "#features/transactions/TransactionClient"
 
 // Single facade over every entity client. The app never touches storage or a
 // service directly — it always goes through manager.<Entity>.<method>().

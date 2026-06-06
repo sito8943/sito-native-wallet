@@ -2,12 +2,12 @@ import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 
 import Page from "#design/templates/Page"
-import { useI18n } from "#shared/i18n"
 import {
   type AddSubscriptionProviderDto,
   SubscriptionProviderForm,
   useSubscriptionProviders,
-} from "#shared/subscriptionProviders"
+} from "#features/subscriptionProviders"
+import { useI18n } from "#shared/i18n"
 
 export default function NewSubscriptionProvider(): ReactElement {
   const router = useRouter()

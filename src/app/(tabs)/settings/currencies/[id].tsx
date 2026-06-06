@@ -9,7 +9,7 @@ import {
   type AddCurrencyDto,
   CurrencyForm,
   useCurrency,
-} from "#shared/currencies"
+} from "#features/currencies"
 import { useI18n } from "#shared/i18n"
 import { useDetailRouteParams } from "#shared/navigation"
 

@@ -1,4 +1,4 @@
-import * as NavigationBar from "expo-navigation-bar"
+import { NavigationBar } from "expo-navigation-bar"
 import { Stack } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import { useEffect, type ReactElement } from "react"
@@ -10,11 +10,11 @@ import {
   ThemeProvider,
   useThemePreference,
 } from "#design/theme"
-import { LanguageProvider } from "#shared/i18n"
 import {
   INITIAL_SUBSCRIPTIONS,
   notifyUpcomingRenewal,
-} from "#shared/subscriptions"
+} from "#features/subscriptions"
+import { LanguageProvider } from "#shared/i18n"
 
 function RootNavigator(): ReactElement {
   const { resolvedTheme } = useThemePreference()
@@ -27,7 +27,7 @@ function RootNavigator(): ReactElement {
       return
     }
 
-    void NavigationBar.setButtonStyleAsync(isDark ? "light" : "dark")
+    NavigationBar.setStyle(isDark ? "light" : "dark")
   }, [isDark])
 
   useEffect(() => {
