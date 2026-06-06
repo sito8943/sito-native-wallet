@@ -17,7 +17,7 @@
     "lint-prettier": "prettier --check .",
     "lint-knip": "knip",
     "prettier:format": "prettier --write .",
-    "build": "eas build --platform android --non-interactive --no-wait",
+    "build": "npx eas-cli build --platform android --non-interactive --no-wait",
     "start": "expo start",
     "test": "jest --watchAll",
     "test:ci": "jest --coverage"

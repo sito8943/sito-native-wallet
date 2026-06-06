@@ -1,5 +1,4 @@
 import { TransactionCard } from "./TransactionCard"
-import { TransactionClient } from "./TransactionClient"
 import { TransactionDetailScreen } from "./TransactionDetailScreen"
 import { TransactionForm } from "./TransactionForm"
 import { TransactionList } from "./TransactionList"
@@ -8,11 +7,9 @@ import { TransactionTypeBadge } from "./TransactionTypeBadge"
 import { useFilteredTransactions } from "./useFilteredTransactions"
 import { useInfiniteTransactions } from "./useInfiniteTransactions"
 import { useTransactions } from "./useTransactions"
-import { useTransactionsList } from "./useTransactionsList"
 
 export {
   TransactionCard,
-  TransactionClient,
   TransactionDetailScreen,
   TransactionForm,
   TransactionsFilters,
@@ -21,7 +18,6 @@ export {
   useFilteredTransactions,
   useInfiniteTransactions,
   useTransactions,
-  useTransactionsList,
 }
 export type { Transaction } from "./Transaction"
 export type { AddTransactionDto, FilterTransactionDto } from "./dtos"
@@ -42,7 +38,3 @@ export type {
   UseInfiniteTransactionsState,
 } from "./useInfiniteTransactions"
 export type { UseTransactionsState } from "./useTransactions"
-export type {
-  UseTransactionsListProps,
-  UseTransactionsListState,
-} from "./useTransactionsList"

@@ -2,7 +2,6 @@ import { AccountCard } from "./AccountCard"
 import { AccountForm } from "./AccountForm"
 import { useAccount } from "./useAccount"
 import { useAccounts } from "./useAccounts"
-import { useAdjustBalanceAction } from "./useAdjustBalanceAction"
 import { useAdjustBalanceSheet } from "./useAdjustBalanceSheet"
 
 export { default as AccountAdjustBalanceSheet } from "./AccountAdjustBalanceSheet"
@@ -20,10 +19,8 @@ export {
   AccountForm,
   useAccount,
   useAccounts,
-  useAdjustBalanceAction,
   useAdjustBalanceSheet,
 }
-export type { UseAdjustBalanceActionProps } from "./useAdjustBalanceAction"
 export type {
   UseAdjustBalanceSheetProps,
   UseAdjustBalanceSheetState,
