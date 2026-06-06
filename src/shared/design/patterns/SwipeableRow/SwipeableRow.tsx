@@ -18,11 +18,8 @@ import {
   type ThemeColors,
 } from "#design/theme"
 
+import { HORIZONTAL_SLOP, TRIGGER_RATIO } from "./constants"
 import { type SwipeableRowProps } from "./types"
-
-const TRIGGER_RATIO = 0.5
-// Horizontal travel before the pan activates, so vertical scrolling wins first.
-const HORIZONTAL_SLOP = 12
 
 // Swipe a row right to reveal a delete backdrop that grows to fill the gap, then
 // commit past TRIGGER_RATIO of the width. onDelete fires on commit (callers

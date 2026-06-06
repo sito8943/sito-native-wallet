@@ -9,7 +9,7 @@ import {
   spacing,
   TYPOGRAPHY_VARIANT,
 } from "#design/foundations"
-import Autocomplete from "#design/patterns/Autocomplete"
+import Select from "#design/patterns/Select"
 import Page from "#design/templates/Page"
 import {
   THEME_PREFERENCE,
@@ -104,7 +104,7 @@ export default function Profile(): ReactElement {
           </Typography>
         </View>
 
-        <Autocomplete
+        <Select
           label={t("profile.language.title")}
           placeholder={t("profile.language.placeholder")}
           options={languageOptions}

@@ -23,7 +23,9 @@ describe("Design > Patterns > ActionMenu", () => {
       <ActionMenu
         entity={row}
         menuLabel="More actions"
-        actions={[action({ accessibilityLabel: "Edit", sticky: true, onPress })]}
+        actions={[
+          action({ accessibilityLabel: "Edit", sticky: true, onPress }),
+        ]}
       />,
     )
 
