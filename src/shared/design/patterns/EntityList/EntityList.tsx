@@ -16,6 +16,7 @@ export default function EntityList<T extends { id: number }>({
   renderItem,
   keyExtractor,
   emptyMessage,
+  emptyActions,
   emptyComponent,
   header,
   onEndReached,
@@ -45,7 +46,12 @@ export default function EntityList<T extends { id: number }>({
       renderItem={({ item }) => renderRow(item)}
       ListHeaderComponent={header}
       ListEmptyComponent={
-        emptyComponent ?? <Empty message={emptyMessage ?? t("common.empty")} />
+        emptyComponent ?? (
+          <Empty
+            message={emptyMessage ?? t("common.empty")}
+            actions={emptyActions}
+          />
+        )
       }
       style={styles.list}
       contentContainerStyle={[styles.content, contentContainerStyle]}

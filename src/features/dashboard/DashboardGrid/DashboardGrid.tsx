@@ -1,11 +1,14 @@
+import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
-import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
+import { BUTTON_VARIANT } from "#design/elements/Button"
 import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import DraggableList from "#design/patterns/DraggableList"
+import Empty from "#design/templates/Empty"
 import { useI18n } from "#shared/i18n"
+import { toAccountsRoute } from "#shared/navigation"
 
 import CurrentBalanceCard from "../CurrentBalanceCard"
 import { DASHBOARD_CARD_TYPE, type DashboardCard } from "../DashboardCard"
@@ -18,6 +21,7 @@ import { useDashboard } from "../useDashboard"
 // confirmation dialog.
 export default function DashboardGrid(): ReactElement {
   const { t } = useI18n()
+  const router = useRouter()
   const { data: cards, removeCard, reorderCards } = useDashboard()
 
   const deleteDialog = useDeleteDialog<DashboardCard>({
@@ -52,9 +56,16 @@ export default function DashboardGrid(): ReactElement {
   if (cards.length === 0) {
     return (
       <View style={styles.empty}>
-        <Typography tone={TYPOGRAPHY_TONE.MUTED}>
-          {t("dashboard.empty")}
-        </Typography>
+        <Empty
+          message={t("dashboard.empty")}
+          actions={[
+            {
+              children: t("dashboard.empty.action"),
+              variant: BUTTON_VARIANT.OUTLINED,
+              onPress: () => router.push(toAccountsRoute()),
+            },
+          ]}
+        />
         <ConfirmationDialog
           {...deleteDialog}
           confirmLabel={t("common.delete")}

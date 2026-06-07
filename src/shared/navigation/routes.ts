@@ -7,6 +7,8 @@ export const toAccountDetailsRoute = (id: number): Href => ({
   params: { id } satisfies DetailRouteParams,
 })
 
+export const toAccountsRoute = (): Href => "/settings/accounts"
+
 export const toNewAccountRoute = (): Href => "/settings/accounts/new"
 
 export const toAccountPrefabsRoute = (): Href => "/settings/accounts/prefabs"

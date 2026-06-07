@@ -2,6 +2,7 @@ export { useDetailRouteParams } from "./hooks"
 export type { DetailRouteParams } from "./params"
 export {
   toAccountDetailsRoute,
+  toAccountsRoute,
   toNewAccountRoute,
   toAccountPrefabsRoute,
   toEditAccountRoute,

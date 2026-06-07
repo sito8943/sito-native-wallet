@@ -2,6 +2,7 @@ import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
+import { BUTTON_VARIANT } from "#design/elements/Button"
 import { APP_ICONS } from "#design/elements/Icon"
 import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
@@ -14,7 +15,11 @@ import {
   useCurrencies,
 } from "#features/currencies"
 import { useI18n } from "#shared/i18n"
-import { toCurrencyDetailsRoute, toNewCurrencyRoute } from "#shared/navigation"
+import {
+  toCurrencyDetailsRoute,
+  toCurrencyPrefabsRoute,
+  toNewCurrencyRoute,
+} from "#shared/navigation"
 
 export default function Currencies(): ReactElement {
   const router = useRouter()
@@ -35,6 +40,13 @@ export default function Currencies(): ReactElement {
         <EntityList
           data={data}
           emptyMessage={t("currencies.empty")}
+          emptyActions={[
+            {
+              children: t("currencies.addCommon"),
+              variant: BUTTON_VARIANT.OUTLINED,
+              onPress: () => router.push(toCurrencyPrefabsRoute()),
+            },
+          ]}
           onSwipeDelete={(currency) => () =>
             deleteDialog.action(currency).onPress(currency)
           }

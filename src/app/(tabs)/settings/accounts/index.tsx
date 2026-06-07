@@ -2,6 +2,7 @@ import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
+import { BUTTON_VARIANT } from "#design/elements/Button"
 import { APP_ICONS } from "#design/elements/Icon"
 import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
@@ -17,7 +18,11 @@ import {
 } from "#features/accounts"
 import { useTransactions } from "#features/transactions"
 import { useI18n } from "#shared/i18n"
-import { toAccountDetailsRoute, toNewAccountRoute } from "#shared/navigation"
+import {
+  toAccountDetailsRoute,
+  toAccountPrefabsRoute,
+  toNewAccountRoute,
+} from "#shared/navigation"
 
 export default function Accounts(): ReactElement {
   const router = useRouter()
@@ -47,6 +52,13 @@ export default function Accounts(): ReactElement {
         <EntityList
           data={data}
           emptyMessage={t("accounts.empty")}
+          emptyActions={[
+            {
+              children: t("accounts.addSuggested"),
+              variant: BUTTON_VARIANT.OUTLINED,
+              onPress: () => router.push(toAccountPrefabsRoute()),
+            },
+          ]}
           onSwipeDelete={(account) => () =>
             deleteDialog.action(account).onPress(account)
           }

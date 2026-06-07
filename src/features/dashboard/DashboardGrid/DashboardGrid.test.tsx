@@ -5,6 +5,12 @@ import { DASHBOARD_CARD_TYPE } from "../DashboardCard"
 
 import DashboardGrid from "./DashboardGrid"
 
+// The global expo-router mock only exposes Link; the grid's empty state needs a
+// router with push(), so override the module for this file.
+jest.mock("expo-router", () => ({
+  useRouter: () => ({ push: jest.fn() }),
+}))
+
 // There is no demo seed anymore, so the test seeds the dashboard store with one
 // current-balance card and the accounts store with the account it points at
 // (balance 2487.48 €). Its headline proves the grid mounted the right card.

@@ -2,6 +2,7 @@ import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
+import { BUTTON_VARIANT } from "#design/elements/Button"
 import { APP_ICONS } from "#design/elements/Icon"
 import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
@@ -14,7 +15,11 @@ import {
   useCategories,
 } from "#features/categories"
 import { useI18n } from "#shared/i18n"
-import { toCategoryDetailsRoute, toNewCategoryRoute } from "#shared/navigation"
+import {
+  toCategoryDetailsRoute,
+  toCategoryPrefabsRoute,
+  toNewCategoryRoute,
+} from "#shared/navigation"
 
 export default function Categories(): ReactElement {
   const router = useRouter()
@@ -36,6 +41,13 @@ export default function Categories(): ReactElement {
         <EntityList
           data={data}
           emptyMessage={t("categories.empty")}
+          emptyActions={[
+            {
+              children: t("categories.addSuggested"),
+              variant: BUTTON_VARIANT.OUTLINED,
+              onPress: () => router.push(toCategoryPrefabsRoute()),
+            },
+          ]}
           onSwipeDelete={(category) => () =>
             deleteDialog.action(category).onPress(category)
           }

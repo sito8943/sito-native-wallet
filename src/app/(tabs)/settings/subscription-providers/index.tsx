@@ -2,6 +2,7 @@ import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
+import { BUTTON_VARIANT } from "#design/elements/Button"
 import { APP_ICONS } from "#design/elements/Icon"
 import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
@@ -17,6 +18,7 @@ import { useI18n } from "#shared/i18n"
 import {
   toNewSubscriptionProviderRoute,
   toSubscriptionProviderDetailsRoute,
+  toSubscriptionProviderPrefabsRoute,
 } from "#shared/navigation"
 
 export default function SubscriptionProviders(): ReactElement {
@@ -38,6 +40,13 @@ export default function SubscriptionProviders(): ReactElement {
         <EntityList
           data={data}
           emptyMessage={t("subscriptionProviders.empty")}
+          emptyActions={[
+            {
+              children: t("subscriptionProviders.addCommon"),
+              variant: BUTTON_VARIANT.OUTLINED,
+              onPress: () => router.push(toSubscriptionProviderPrefabsRoute()),
+            },
+          ]}
           onSwipeDelete={(provider) => () =>
             deleteDialog.action(provider).onPress(provider)
           }
