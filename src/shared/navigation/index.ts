@@ -10,6 +10,7 @@ export {
   toNewTransactionRoute,
   toSubscriptionDetailsRoute,
   toCurrencyDetailsRoute,
+  toCurrenciesRoute,
   toNewCurrencyRoute,
   toCurrencyPrefabsRoute,
   toCategoryDetailsRoute,

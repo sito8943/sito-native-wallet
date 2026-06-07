@@ -64,6 +64,7 @@ export const translations = {
     "accounts.prefabs.empty": "All suggested accounts are already added.",
     "accounts.prefabs.addSelected": "Add {count}",
     "accounts.prefabs.needCurrency": "Add a currency first to create accounts.",
+    "accounts.prefabs.goToCurrencies": "Go to currencies",
     "categories.title": "Categories",
     "categories.new.title": "New category",
     "categories.prefabs.title": "Add suggested categories",
@@ -353,6 +354,7 @@ export const translations = {
     "accounts.prefabs.addSelected": "Añadir {count}",
     "accounts.prefabs.needCurrency":
       "Añade una moneda primero para crear cuentas.",
+    "accounts.prefabs.goToCurrencies": "Ir a monedas",
     "categories.title": "Categorias",
     "categories.new.title": "Nueva categoria",
     "categories.prefabs.title": "Añadir categorias sugeridas",

@@ -2,6 +2,7 @@ import { useRouter } from "expo-router"
 import { type ReactElement, useMemo, useState } from "react"
 import { View } from "react-native"
 
+import Button, { BUTTON_VARIANT } from "#design/elements/Button"
 import { APP_ICONS } from "#design/elements/Icon"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { radius, spacing } from "#design/foundations"
@@ -11,6 +12,7 @@ import { type ThemeColors, useThemedStyles } from "#design/theme"
 import { ACCOUNT_PREFABS, AccountCard, useAccounts } from "#features/accounts"
 import { useCurrencies } from "#features/currencies"
 import { useI18n } from "#shared/i18n"
+import { toCurrenciesRoute } from "#shared/navigation"
 
 export default function AccountPrefabs(): ReactElement {
   const router = useRouter()
@@ -72,10 +74,17 @@ export default function AccountPrefabs(): ReactElement {
   if (defaultCurrency === undefined) {
     return (
       <Page scroll>
-        <View style={styles.empty}>
+        <View style={styles.emptyAction}>
           <Typography tone={TYPOGRAPHY_TONE.MUTED}>
             {t("accounts.prefabs.needCurrency")}
           </Typography>
+          <Button
+            accessibilityLabel={t("accounts.prefabs.goToCurrencies")}
+            variant={BUTTON_VARIANT.OUTLINED}
+            onPress={() => router.push(toCurrenciesRoute())}
+          >
+            {t("accounts.prefabs.goToCurrencies")}
+          </Button>
         </View>
       </Page>
     )
@@ -129,6 +138,11 @@ const createStyles = (colors: ThemeColors) => ({
   },
   empty: {
     padding: spacing(4),
+  },
+  emptyAction: {
+    padding: spacing(4),
+    gap: spacing(3),
+    alignItems: "flex-start" as const,
   },
   selected: {
     borderColor: colors.primary,
