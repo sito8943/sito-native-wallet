@@ -35,6 +35,9 @@ export default function Currencies(): ReactElement {
         <EntityList
           data={data}
           emptyMessage={t("currencies.empty")}
+          onSwipeDelete={(currency) => () =>
+            deleteDialog.action(currency).onPress(currency)
+          }
           renderItem={(currency) => (
             <CurrencyCard
               actions={[deleteDialog.action(currency)]}

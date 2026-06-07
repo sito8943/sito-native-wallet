@@ -36,6 +36,9 @@ export default function Categories(): ReactElement {
         <EntityList
           data={data}
           emptyMessage={t("categories.empty")}
+          onSwipeDelete={(category) => () =>
+            deleteDialog.action(category).onPress(category)
+          }
           renderItem={(category) => (
             <CategoryCard
               actions={[deleteDialog.action(category)]}

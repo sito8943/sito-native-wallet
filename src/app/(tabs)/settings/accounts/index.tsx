@@ -3,10 +3,13 @@ import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
+import { useDeleteDialog } from "#design/interactions"
+import { ConfirmationDialog } from "#design/patterns/Dialog"
 import EntityList from "#design/patterns/EntityList"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import {
+  type Account,
   AccountAdjustBalanceSheet,
   AccountCard,
   useAccounts,
@@ -19,7 +22,7 @@ import { toAccountDetailsRoute, toNewAccountRoute } from "#shared/navigation"
 export default function Accounts(): ReactElement {
   const router = useRouter()
   const { t } = useI18n()
-  const { data } = useAccounts()
+  const { data, removeAccount } = useAccounts()
   const { adjustBalance } = useTransactions()
 
   // The client (local backend) owns the adjustment logic; the screen only
@@ -30,12 +33,23 @@ export default function Accounts(): ReactElement {
     },
   })
 
+  const deleteDialog = useDeleteDialog<Account>({
+    onConfirm: (account) => {
+      removeAccount(account.id)
+    },
+    title: t("accounts.delete.title"),
+    message: t("accounts.delete.description"),
+  })
+
   return (
     <View style={styles.fill}>
       <Page>
         <EntityList
           data={data}
           emptyMessage={t("accounts.empty")}
+          onSwipeDelete={(account) => () =>
+            deleteDialog.action(account).onPress(account)
+          }
           renderItem={(account) => (
             <AccountCard
               account={account}
@@ -53,6 +67,7 @@ export default function Accounts(): ReactElement {
         onPress={() => router.push(toNewAccountRoute())}
       />
       <AccountAdjustBalanceSheet {...sheetProps} />
+      <ConfirmationDialog {...deleteDialog} confirmLabel={t("common.delete")} />
     </View>
   )
 }

@@ -58,6 +58,7 @@ export const translations = {
       "Enter a balance different from the current one",
     "accounts.delete.title": "Delete account",
     "accounts.delete.message": 'Delete "{name}"? This cannot be undone.',
+    "accounts.delete.description": "This account will be removed permanently.",
     "categories.title": "Categories",
     "categories.new.title": "New category",
     "categories.prefabs.title": "Add suggested categories",
@@ -335,6 +336,7 @@ export const translations = {
     "accounts.delete.title": "Eliminar cuenta",
     "accounts.delete.message":
       '¿Eliminar "{name}"? Esta acción no se puede deshacer.',
+    "accounts.delete.description": "Esta cuenta se eliminará permanentemente.",
     "categories.title": "Categorias",
     "categories.new.title": "Nueva categoria",
     "categories.prefabs.title": "Añadir categorias sugeridas",

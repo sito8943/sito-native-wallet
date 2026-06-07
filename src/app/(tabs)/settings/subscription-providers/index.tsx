@@ -38,6 +38,9 @@ export default function SubscriptionProviders(): ReactElement {
         <EntityList
           data={data}
           emptyMessage={t("subscriptionProviders.empty")}
+          onSwipeDelete={(provider) => () =>
+            deleteDialog.action(provider).onPress(provider)
+          }
           renderItem={(provider) => (
             <SubscriptionProviderCard
               actions={[deleteDialog.action(provider)]}
