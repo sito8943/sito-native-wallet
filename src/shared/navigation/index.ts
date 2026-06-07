@@ -3,6 +3,7 @@ export type { DetailRouteParams } from "./params"
 export {
   toAccountDetailsRoute,
   toNewAccountRoute,
+  toAccountPrefabsRoute,
   toEditAccountRoute,
   toTransactionDetailsRoute,
   toAccountTransactionDetailsRoute,
@@ -16,4 +17,5 @@ export {
   toCategoryPrefabsRoute,
   toSubscriptionProviderDetailsRoute,
   toNewSubscriptionProviderRoute,
+  toSubscriptionProviderPrefabsRoute,
 } from "./routes"

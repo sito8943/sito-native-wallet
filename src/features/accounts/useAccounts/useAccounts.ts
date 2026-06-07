@@ -23,6 +23,13 @@ export default function useAccounts(
     addAccount: (input: AddAccountDto) => {
       client.add(input)
     },
+    // No client.addMany: account creation also records an opening transaction,
+    // so each prefab goes through the normal add() path.
+    addAccounts: (inputs: AddAccountDto[]) => {
+      inputs.forEach((input) => {
+        client.add(input)
+      })
+    },
     updateAccount: (id: number, input: AddAccountDto) => {
       client.update(id, input)
     },

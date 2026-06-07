@@ -1,4 +1,8 @@
-import { textIncludes, type QueryParam, type QueryResult } from "#shared/data"
+import {
+  textIncludes,
+  type QueryParam,
+  type QueryResult,
+} from "#shared/data/query"
 import { createId, StorageClient } from "#shared/data/storage"
 
 import { type Currency } from "../Currency"

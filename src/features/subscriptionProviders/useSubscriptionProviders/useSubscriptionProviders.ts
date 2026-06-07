@@ -26,6 +26,9 @@ export default function useSubscriptionProviders(
     addSubscriptionProvider: (input: AddSubscriptionProviderDto) => {
       client.add(input)
     },
+    addSubscriptionProviders: (inputs: AddSubscriptionProviderDto[]) => {
+      client.addMany(inputs)
+    },
     updateSubscriptionProvider: (
       id: number,
       input: AddSubscriptionProviderDto,

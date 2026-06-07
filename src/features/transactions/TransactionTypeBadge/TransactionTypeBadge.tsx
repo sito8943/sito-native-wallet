@@ -6,7 +6,9 @@ import Icon, { APP_ICONS } from "#design/elements/Icon"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useThemeColors } from "#design/theme"
-import { TRANSACTION_TYPE } from "#features/categories"
+// Deep path on purpose: the #features/categories barrel pulls in CategoryCard,
+// which imports this badge — an eval-time cycle. TransactionCategory has none.
+import { TRANSACTION_TYPE } from "#features/categories/TransactionCategory"
 
 import { type TransactionTypeBadgeProps } from "./types"
 

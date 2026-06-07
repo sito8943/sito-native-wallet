@@ -59,6 +59,11 @@ export const translations = {
     "accounts.delete.title": "Delete account",
     "accounts.delete.message": 'Delete "{name}"? This cannot be undone.',
     "accounts.delete.description": "This account will be removed permanently.",
+    "accounts.addSuggested": "Add suggested accounts",
+    "accounts.prefabs.title": "Add suggested accounts",
+    "accounts.prefabs.empty": "All suggested accounts are already added.",
+    "accounts.prefabs.addSelected": "Add {count}",
+    "accounts.prefabs.needCurrency": "Add a currency first to create accounts.",
     "categories.title": "Categories",
     "categories.new.title": "New category",
     "categories.prefabs.title": "Add suggested categories",
@@ -105,6 +110,11 @@ export const translations = {
       'Delete "{name}"? This cannot be undone.',
     "subscriptionProviders.delete.description":
       "This subscription provider will be removed permanently.",
+    "subscriptionProviders.addCommon": "Add common providers",
+    "subscriptionProviders.prefabs.title": "Add common providers",
+    "subscriptionProviders.prefabs.empty":
+      "All common providers are already added.",
+    "subscriptionProviders.prefabs.addSelected": "Add {count}",
     "categories.delete.confirm": "Delete",
     "categories.delete.description":
       "This category will be removed permanently.",
@@ -337,6 +347,12 @@ export const translations = {
     "accounts.delete.message":
       '¿Eliminar "{name}"? Esta acción no se puede deshacer.',
     "accounts.delete.description": "Esta cuenta se eliminará permanentemente.",
+    "accounts.addSuggested": "Añadir cuentas sugeridas",
+    "accounts.prefabs.title": "Añadir cuentas sugeridas",
+    "accounts.prefabs.empty": "Todas las cuentas sugeridas ya están añadidas.",
+    "accounts.prefabs.addSelected": "Añadir {count}",
+    "accounts.prefabs.needCurrency":
+      "Añade una moneda primero para crear cuentas.",
     "categories.title": "Categorias",
     "categories.new.title": "Nueva categoria",
     "categories.prefabs.title": "Añadir categorias sugeridas",
@@ -389,6 +405,11 @@ export const translations = {
       '¿Eliminar "{name}"? Esta acción no se puede deshacer.',
     "subscriptionProviders.delete.description":
       "Este proveedor de suscripciones se eliminará de forma permanente.",
+    "subscriptionProviders.addCommon": "Añadir proveedores comunes",
+    "subscriptionProviders.prefabs.title": "Añadir proveedores comunes",
+    "subscriptionProviders.prefabs.empty":
+      "Todos los proveedores comunes ya están añadidos.",
+    "subscriptionProviders.prefabs.addSelected": "Añadir {count}",
     "categories.delete.confirm": "Eliminar",
     "categories.delete.description":
       "Esta categoria se eliminará de forma permanente.",

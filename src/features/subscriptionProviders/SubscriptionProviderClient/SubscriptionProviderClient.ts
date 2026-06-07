@@ -1,4 +1,8 @@
-import { textIncludes, type QueryParam, type QueryResult } from "#shared/data"
+import {
+  textIncludes,
+  type QueryParam,
+  type QueryResult,
+} from "#shared/data/query"
 import { createId, StorageClient } from "#shared/data/storage"
 
 import { INITIAL_SUBSCRIPTION_PROVIDERS } from "../demoData"
@@ -31,6 +35,10 @@ export default class SubscriptionProviderClient extends StorageClient<Subscripti
 
   public add = (input: AddSubscriptionProviderDto): void => {
     this.insert({ id: createId(), ...input })
+  }
+
+  public addMany = (inputs: AddSubscriptionProviderDto[]): void => {
+    this.insertMany(inputs.map((input) => ({ id: createId(), ...input })))
   }
 
   public update = (id: number, input: AddSubscriptionProviderDto): void => {

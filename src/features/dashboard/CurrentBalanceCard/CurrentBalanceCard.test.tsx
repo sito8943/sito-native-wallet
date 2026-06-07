@@ -7,8 +7,18 @@ import CurrentBalanceCard from "./CurrentBalanceCard"
 
 const noop = (): void => undefined
 
-// Points at the seeded "Main account" (id 1, balance 2487.48 €) from the
-// accounts demo data, so the card computes a known headline value.
+// There is no demo seed anymore, so the test seeds one account (id 1, balance
+// 2487.48 €) into the accounts store. The card resolves the live balance by id,
+// giving a known headline value.
+const MAIN_ACCOUNT = {
+  id: 1,
+  name: "Main account",
+  bankName: "Caixa",
+  balance: 2487.48,
+  type: "digital",
+  currency: { id: 1, name: "Euro", symbol: "€", description: "Euro" },
+}
+
 const card: DashboardCard = {
   id: 1,
   type: DASHBOARD_CARD_TYPE.CURRENT_BALANCE,
@@ -22,6 +32,8 @@ const card: DashboardCard = {
 describe("Dashboard > CurrentBalanceCard", () => {
   beforeEach(async () => {
     await AsyncStorage.clear()
+    // "accounts" is the AccountClient storage key.
+    await AsyncStorage.setItem("accounts", JSON.stringify([MAIN_ACCOUNT]))
     jest.clearAllMocks()
   })
 

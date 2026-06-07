@@ -4,40 +4,10 @@ import {
   type TransactionCategory,
 } from "./TransactionCategory"
 
-const salary: TransactionCategory = {
-  id: 2,
-  name: "Salary",
-  description: "Recurring income from work",
-  color: "#2e7d32",
-  type: TRANSACTION_TYPE.INCOME,
-}
-
-const food: TransactionCategory = {
-  id: 3,
-  name: "Food",
-  description: "Groceries, restaurants and snacks",
-  color: "#ef6c00",
-  type: TRANSACTION_TYPE.EXPENSE,
-}
-
-const transport: TransactionCategory = {
-  id: 4,
-  name: "Transport",
-  description: "Trips, tickets and commuting",
-  color: "#1565c0",
-  type: TRANSACTION_TYPE.EXPENSE,
-}
-
-const home: TransactionCategory = {
-  id: 5,
-  name: "Home",
-  description: "Rent, utilities and household costs",
-  color: "#6a1b9a",
-  type: TRANSACTION_TYPE.EXPENSE,
-}
-
 // System categories backing balance adjustments. Seeded, hidden from the
 // category list and the transaction picker, and used by sign of the delta.
+// These are NOT demo data — the local backend needs them to record auto
+// balance adjustments, so they are always seeded (find-or-created if missing).
 const adjustmentIncome: TransactionCategory = {
   id: ADJUSTMENT_CATEGORY_ID.INCOME,
   name: "Balance adjustment",
@@ -58,17 +28,11 @@ const adjustmentExpense: TransactionCategory = {
   auto: true,
 }
 
-// The system adjustment categories, also used for find-or-create (the local
-// backend re-creates them if missing before recording an auto transaction).
 export const ADJUSTMENT_CATEGORIES: TransactionCategory[] = [
   adjustmentIncome,
   adjustmentExpense,
 ]
 
-export const INITIAL_CATEGORIES: TransactionCategory[] = [
-  salary,
-  food,
-  transport,
-  home,
-  ...ADJUSTMENT_CATEGORIES,
-]
+// No demo seed beyond the system adjustment categories: regular categories
+// start empty and are added from the category prefab picker (or manually).
+export const INITIAL_CATEGORIES: TransactionCategory[] = [...ADJUSTMENT_CATEGORIES]

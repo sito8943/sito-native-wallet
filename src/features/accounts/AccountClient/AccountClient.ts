@@ -1,5 +1,9 @@
 import { type TransactionClient } from "#features/transactions/TransactionClient"
-import { textIncludes, type QueryParam, type QueryResult } from "#shared/data"
+import {
+  textIncludes,
+  type QueryParam,
+  type QueryResult,
+} from "#shared/data/query"
 import { createId, StorageClient } from "#shared/data/storage"
 // Deep, type-only import: the live TransactionClient is injected lazily by the
 // Manager (a thunk), so this never imports the transactions barrel — that would

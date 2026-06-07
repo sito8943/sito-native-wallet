@@ -14,6 +14,7 @@ export type UseAccountsState = {
   error: Error | null
   isLoading: boolean
   addAccount: (input: AddAccountDto) => void
+  addAccounts: (inputs: AddAccountDto[]) => void
   updateAccount: (id: number, input: AddAccountDto) => void
   removeAccount: (id: number) => void
 }

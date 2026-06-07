@@ -1,25 +1,22 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 import { DASHBOARD_CARD_TYPE } from "../DashboardCard"
-import { INITIAL_DASHBOARD } from "../demoData"
 
 import { DASHBOARD_STORAGE_KEY } from "./constants"
 import DashboardClient from "./DashboardClient"
 
-// Exercises the store directly (fresh instance, no React, no singleton) so each
-// test starts from the seeded cards held in the constructor.
+// Exercises the store directly (fresh instance, no React, no singleton). The
+// dashboard ships with no demo seed, so each test builds the state it needs.
 describe("Dashboard > DashboardClient", () => {
   beforeEach(async () => {
     await AsyncStorage.clear()
     jest.clearAllMocks()
   })
 
-  it("seeds the initial cards", () => {
+  it("starts empty (no demo seed)", () => {
     const client = new DashboardClient()
 
-    expect(client.list({ pageSize: 0 }).items).toHaveLength(
-      INITIAL_DASHBOARD.length,
-    )
+    expect(client.list({ pageSize: 0 }).items).toHaveLength(0)
   })
 
   it("adds a card with null title and config", () => {
@@ -28,7 +25,7 @@ describe("Dashboard > DashboardClient", () => {
     client.add({ type: DASHBOARD_CARD_TYPE.TYPE_RESUME, position: 9 })
 
     const items = client.getAll()
-    expect(items).toHaveLength(INITIAL_DASHBOARD.length + 1)
+    expect(items).toHaveLength(1)
     const added = items.at(-1)
     expect(added?.type).toBe(DASHBOARD_CARD_TYPE.TYPE_RESUME)
     expect(added?.title).toBeNull()
@@ -37,6 +34,7 @@ describe("Dashboard > DashboardClient", () => {
 
   it("updates a card title", () => {
     const client = new DashboardClient()
+    client.add({ type: DASHBOARD_CARD_TYPE.CURRENT_BALANCE, position: 0 })
     const [first] = client.getAll()
 
     client.updateTitle(first.id, "My balance")
@@ -46,6 +44,7 @@ describe("Dashboard > DashboardClient", () => {
 
   it("updates a card config", () => {
     const client = new DashboardClient()
+    client.add({ type: DASHBOARD_CARD_TYPE.CURRENT_BALANCE, position: 0 })
     const [first] = client.getAll()
     const config = JSON.stringify({ accountId: 2 })
 
@@ -88,11 +87,12 @@ describe("Dashboard > DashboardClient", () => {
 
   it("removes a card", () => {
     const client = new DashboardClient()
+    client.add({ type: DASHBOARD_CARD_TYPE.CURRENT_BALANCE, position: 0 })
     const [first] = client.getAll()
 
     client.remove(first.id)
 
     expect(client.getById(first.id)).toBeUndefined()
-    expect(client.getAll()).toHaveLength(INITIAL_DASHBOARD.length - 1)
+    expect(client.getAll()).toHaveLength(0)
   })
 })

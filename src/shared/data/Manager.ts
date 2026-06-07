@@ -2,13 +2,16 @@
 // imports the Manager), creating an eval-time import cycle. The client folder
 // has no such dependency.
 import { AccountClient } from "#features/accounts/AccountClient"
-import { CategoryClient } from "#features/categories"
-import { CurrencyClient } from "#features/currencies"
+// Deep paths on purpose (same reason as accounts below): the feature barrels
+// pull in the data hooks, which import the Manager — an eval-time cycle. The
+// client folders have no such dependency.
+import { CategoryClient } from "#features/categories/CategoryClient"
+import { CurrencyClient } from "#features/currencies/CurrencyClient"
 // Deep path on purpose: the #features/dashboard barrel pulls in the dashboard
 // components (which import the Manager through the data hooks), creating an
 // eval-time import cycle. The client folder has no such dependency.
 import { DashboardClient } from "#features/dashboard/DashboardClient"
-import { SubscriptionProviderClient } from "#features/subscriptionProviders"
+import { SubscriptionProviderClient } from "#features/subscriptionProviders/SubscriptionProviderClient"
 // Deep path on purpose: the #features/transactions barrel pulls in the
 // transaction hooks (which import the accounts/categories barrels and the
 // Manager), creating an eval-time import cycle. The client folder has no such

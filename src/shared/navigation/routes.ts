@@ -9,6 +9,8 @@ export const toAccountDetailsRoute = (id: number): Href => ({
 
 export const toNewAccountRoute = (): Href => "/settings/accounts/new"
 
+export const toAccountPrefabsRoute = (): Href => "/settings/accounts/prefabs"
+
 export const toEditAccountRoute = (id: number): Href => ({
   pathname: "/settings/accounts/edit/[id]" as const,
   params: { id } satisfies DetailRouteParams,
@@ -53,6 +55,9 @@ export const toCategoryDetailsRoute = (id: number): Href => ({
 
 export const toNewSubscriptionProviderRoute = (): Href =>
   "/settings/subscription-providers/new"
+
+export const toSubscriptionProviderPrefabsRoute = (): Href =>
+  "/settings/subscription-providers/prefabs"
 
 export const toSubscriptionProviderDetailsRoute = (id: number): Href => ({
   pathname: "/settings/subscription-providers/[id]" as const,

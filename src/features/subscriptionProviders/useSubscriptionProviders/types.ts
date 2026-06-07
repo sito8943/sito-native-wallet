@@ -17,6 +17,7 @@ export type UseSubscriptionProvidersState = {
   error: Error | null
   isLoading: boolean
   addSubscriptionProvider: (input: AddSubscriptionProviderDto) => void
+  addSubscriptionProviders: (inputs: AddSubscriptionProviderDto[]) => void
   updateSubscriptionProvider: (
     id: number,
     input: AddSubscriptionProviderDto,
