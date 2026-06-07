@@ -12,7 +12,7 @@ export default function Home(): ReactElement {
 
   return (
     <View style={styles.screen}>
-      <Page scroll topInset>
+      <Page topInset>
         <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
           {t("home.title")}
         </Typography>

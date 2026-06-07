@@ -9,4 +9,5 @@ export type UseDashboardState = {
   updateTitle: (id: number, title: string) => void
   updateConfig: (id: number, config: string) => void
   removeCard: (id: number) => void
+  reorderCards: (orderedIds: number[]) => void
 }

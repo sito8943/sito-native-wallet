@@ -33,6 +33,17 @@ export default class DashboardClient extends StorageClient<DashboardCard> {
     this.patch(id, { config })
   }
 
+  // Rewrites each card's `position` to match the dropped order. Ids missing
+  // from the list are left untouched.
+  public reorder = (orderedIds: number[]): void => {
+    this.mutate((items) =>
+      items.map((item) => {
+        const position = orderedIds.indexOf(item.id)
+        return position === -1 ? item : { ...item, position }
+      }),
+    )
+  }
+
   public list = (
     params: QueryParam<DashboardCard> = {},
   ): QueryResult<DashboardCard> => this.runQuery(params)

@@ -183,6 +183,12 @@ export default abstract class StorageClient<
     this.delete(id)
   }
 
+  // Escape hatch for bulk rewrites (e.g. reordering): apply a pure transform
+  // over the whole list in one commit (one persist + one notify).
+  protected mutate(mutation: Mutation<T>): void {
+    this.commit(mutation)
+  }
+
   // Applies a mutation to the in-memory cache immediately (so reads and the UI
   // reflect it at once). If disk hasn't loaded yet, the mutation is queued for
   // replay and NOT persisted — persisting now would save the seed state over

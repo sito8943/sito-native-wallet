@@ -109,3 +109,20 @@ jest.mock("react-native-reanimated", () => {
 jest.mock("react-native-worklets", () => ({
   scheduleOnRN: jest.fn(),
 }))
+
+jest.mock("react-native-gesture-handler", () => {
+  const chain = {
+    activateAfterLongPress: () => chain,
+    activeOffsetX: () => chain,
+    failOffsetY: () => chain,
+    onStart: () => chain,
+    onUpdate: () => chain,
+    onEnd: () => chain,
+  }
+  return {
+    Gesture: { Pan: () => chain },
+    GestureDetector: ({ children }: { children?: ReactNode }) => children,
+    GestureHandlerRootView: ({ children }: { children?: ReactNode }) =>
+      children,
+  }
+})

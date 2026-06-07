@@ -29,5 +29,8 @@ export default function useDashboard(): UseDashboardState {
     removeCard: (id: number) => {
       client.remove(id)
     },
+    reorderCards: (orderedIds: number[]) => {
+      client.reorder(orderedIds)
+    },
   }
 }
