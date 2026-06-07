@@ -35,4 +35,6 @@ export const ADJUSTMENT_CATEGORIES: TransactionCategory[] = [
 
 // No demo seed beyond the system adjustment categories: regular categories
 // start empty and are added from the category prefab picker (or manually).
-export const INITIAL_CATEGORIES: TransactionCategory[] = [...ADJUSTMENT_CATEGORIES]
+export const INITIAL_CATEGORIES: TransactionCategory[] = [
+  ...ADJUSTMENT_CATEGORIES,
+]

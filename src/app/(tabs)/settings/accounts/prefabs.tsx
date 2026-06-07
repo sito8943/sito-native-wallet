@@ -25,7 +25,9 @@ export default function AccountPrefabs(): ReactElement {
 
   // Hide prefabs already present (matched by name).
   const available = useMemo(() => {
-    const existing = new Set((data ?? []).map((item) => item.name.toLowerCase()))
+    const existing = new Set(
+      (data ?? []).map((item) => item.name.toLowerCase()),
+    )
     return ACCOUNT_PREFABS.filter(
       (prefab) => !existing.has(prefab.name.toLowerCase()),
     )
