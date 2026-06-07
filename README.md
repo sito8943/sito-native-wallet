@@ -1,10 +1,20 @@
 # SitoWallet
 
-SitoWallet is a personal finance mobile app for everyday money management. It gives you a glanceable dashboard of your current balance, lets you record income and expenses, organize money across multiple accounts and currencies, categorize transactions, and keep recurring subscriptions visible so renewals never surprise you. It works offline first — every action is stored on-device and stays usable without a connection — making it a practical, private tracker for your day-to-day finances.
+SitoWallet is a mobile app for tracking personal finances. It lets you see your current balance, add income and expenses, manage multiple accounts and currencies, categorize transactions, and keep an eye on recurring subscriptions.
+
+The app is offline-first, so your data is saved on the device and the main features keep working even without an internet connection.
 
 ## Technical Overview
 
-SitoWallet is an [Expo](https://docs.expo.dev/) (SDK 56) React Native app written in TypeScript with file-based routing via expo-router. The codebase is organized **feature-first**: routing lives in `src/app` (route files only) and is kept separate from application/rendering logic in `src/features/*` and `src/shared/*`. Each concept is an isolated **modlet** — a self-contained folder exposing its public surface through an `index.ts` barrel — consumed across the app via explicit subpath aliases (`#features/*`, `#shared/*`, `#design/*`) rather than relative `..` chains or a root alias. The app is **local-first**: a `StorageClient` over `AsyncStorage` acts as a stand-in backend, keeping persistence concerns out of the domain and UI so an online API can be swapped in later. Connectivity state is tracked for an offline banner, and local notifications drive subscription reminders.
+SitoWallet is an Expo SDK 56 React Native app built with TypeScript and expo-router.
+
+The project uses a feature-first structure. Route files live in `src/app`, while the actual app logic is split between `src/features` and `src/shared`. Each feature is kept as a small self-contained module with an `index.ts` file that exposes what the rest of the app can use.
+
+Imports are handled through aliases like `#features/*`, `#shared/*`, and `#design/*`, instead of long relative paths.
+
+The app is local-first. Data is stored through a `StorageClient` backed by `AsyncStorage`, so the persistence layer is separated from the UI and domain logic. This makes it easier to replace local storage with an API later.
+
+It also tracks connectivity to show an offline banner and uses local notifications for subscription reminders.
 
 **Tech stack**
 
@@ -24,20 +34,41 @@ SitoWallet is an [Expo](https://docs.expo.dev/) (SDK 56) React Native app writte
 
 ### Prerequisites
 
-- **Node 24** (see `.nvmrc` — run `nvm use`)
+- **Node 24** — see `.nvmrc` and run `nvm use`
 - npm
-- For device/simulator builds: [Expo Go](https://expo.dev/go) or a dev client, plus Xcode (iOS) / Android Studio (Android)
-- For cloud builds: an [Expo account](https://expo.dev/) and `eas-cli` (`npm i -g eas-cli`)
+- For local device/simulator builds:
+  - a **dev client** / custom development build
+  - Xcode for iOS or Android Studio for Android
+- **Expo Go is not supported** because the app uses native modules that Expo Go does not include:
+  - `expo-notifications`
+  - `expo-dev-client`
+  - `@react-native-community/netinfo`
+- For cloud builds:
+  - an [Expo account](https://expo.dev/)
+  - `eas-cli` installed globally: `npm i -g eas-cli`
 
 ### Setup
 
-```bash
-nvm use            # Node 24
-npm install        # .npmrc sets force=true
-npm start          # launch the Expo dev server
-```
+This app needs a dev build. Expo Go will crash on launch because it does not include all the native modules used by the app.
 
-Then press `i` (iOS simulator), `a` (Android emulator), or scan the QR code with a dev client.
+```bash
+nvm use
+npm install
+
+# First time, or after adding/changing a native module:
+# build and install the dev client on a simulator/device.
+npx expo run:ios
+# or
+npx expo run:android
+
+# No local native toolchain?
+# Create a cloud development build instead:
+# eas build --profile development --platform ios
+
+# Day-to-day development:
+# start the dev server and open it from the installed dev build.
+npx expo start --dev-client
+```
 
 ### Environment variables
 
@@ -58,12 +89,16 @@ None required. The app is local-first and stores all data on-device — there ar
 ### Project structure
 
 ```
+
 src/
-  app/        # expo-router routes only (routing layer)
-  features/   # domain modlets: accounts, transactions, subscriptions,
-              # subscriptionProviders, currencies, categories, dashboard, settings
-  shared/     # cross-cutting modlets: data, design, navigation, i18n,
-              # network, notifications, onboarding
+app/ # expo-router routes only (routing layer)
+features/ # domain modlets: accounts, transactions, subscriptions, # subscriptionProviders, currencies, categories, dashboard, settings
+shared/ # cross-cutting modlets: data, design, navigation, i18n, # network, notifications, onboarding
+
 ```
 
 Import from a feature/shared module via its alias, e.g. `import { TransactionForm } from "#features/transactions"`.
+
+```
+
+```

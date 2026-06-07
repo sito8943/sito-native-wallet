@@ -78,7 +78,6 @@ export default function CategoryPrefabs(): ReactElement {
               <CategoryCard
                 category={{ ...prefab, id: index + 1 }}
                 onPress={() => toggle(prefab.key)}
-                style={styles.card}
               />
             </View>
           ))
@@ -108,9 +107,6 @@ const createStyles = (colors: ThemeColors) => ({
   selected: {
     borderColor: colors.primary,
     borderWidth: 1,
-    borderRadius: radius.md,
-  },
-  card: {
     borderRadius: radius.md,
   },
 })

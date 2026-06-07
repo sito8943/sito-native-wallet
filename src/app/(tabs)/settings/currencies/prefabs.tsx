@@ -71,7 +71,6 @@ export default function CurrencyPrefabs(): ReactElement {
               style={[selected.has(prefab.key) && styles.selected]}
             >
               <CurrencyCard
-                style={styles.card}
                 onPress={() => toggle(prefab.key)}
                 currency={{ ...prefab, id: i }}
               />
@@ -103,9 +102,6 @@ const createStyles = (colors: ThemeColors) => ({
   selected: {
     borderColor: colors.primary,
     borderWidth: 1,
-    borderRadius: radius.md,
-  },
-  card: {
     borderRadius: radius.md,
   },
 })

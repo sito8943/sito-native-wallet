@@ -16,7 +16,7 @@ const createStyles = (colors: ThemeColors) => ({
   container: {
     backgroundColor: colors.surface,
     padding: spacing(3),
-    borderRadius: radius.lg,
+    borderRadius: radius.md,
     ...shadows.card,
   },
 })

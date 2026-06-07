@@ -78,7 +78,6 @@ export default function TransactionCard({
 const createStyles = (colors: ThemeColors) => ({
   card: {
     padding: spacing(2),
-    borderRadius: radius.md,
   },
   header: {
     alignItems: "flex-start" as const,

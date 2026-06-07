@@ -10,10 +10,6 @@ import {
   ThemeProvider,
   useThemePreference,
 } from "#design/theme"
-import {
-  INITIAL_SUBSCRIPTIONS,
-  notifyUpcomingRenewal,
-} from "#features/subscriptions"
 import { LanguageProvider } from "#shared/i18n"
 import { OfflineBanner } from "#shared/network"
 
@@ -30,10 +26,6 @@ function RootNavigator(): ReactElement {
 
     NavigationBar.setStyle(isDark ? "light" : "dark")
   }, [isDark])
-
-  useEffect(() => {
-    void notifyUpcomingRenewal(INITIAL_SUBSCRIPTIONS)
-  }, [])
 
   return (
     <>
