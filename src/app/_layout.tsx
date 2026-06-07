@@ -15,6 +15,7 @@ import {
   notifyUpcomingRenewal,
 } from "#features/subscriptions"
 import { LanguageProvider } from "#shared/i18n"
+import { OfflineBanner } from "#shared/network"
 
 function RootNavigator(): ReactElement {
   const { resolvedTheme } = useThemePreference()
@@ -36,6 +37,8 @@ function RootNavigator(): ReactElement {
 
   return (
     <>
+      <OfflineBanner />
+
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
