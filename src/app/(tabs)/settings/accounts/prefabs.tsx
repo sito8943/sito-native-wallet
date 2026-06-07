@@ -17,7 +17,7 @@ import { toCurrenciesRoute } from "#shared/navigation"
 export default function AccountPrefabs(): ReactElement {
   const router = useRouter()
   const styles = useThemedStyles(createStyles)
-  const { t } = useI18n()
+  const { t, language } = useI18n()
   const { data, addAccounts } = useAccounts()
   const { data: currencies } = useCurrencies()
   const [selected, setSelected] = useState<Set<string>>(new Set())
@@ -25,15 +25,15 @@ export default function AccountPrefabs(): ReactElement {
   // Accounts need a currency; prefabs default to the first one available.
   const defaultCurrency = currencies[0]
 
-  // Hide prefabs already present (matched by name).
+  // Hide prefabs already present (matched by localized name).
   const available = useMemo(() => {
     const existing = new Set(
       (data ?? []).map((item) => item.name.toLowerCase()),
     )
     return ACCOUNT_PREFABS.filter(
-      (prefab) => !existing.has(prefab.name.toLowerCase()),
+      (prefab) => !existing.has(prefab.name[language].toLowerCase()),
     )
-  }, [data])
+  }, [data, language])
 
   const toggle = (key: string): void => {
     setSelected((prev) => {
@@ -55,10 +55,10 @@ export default function AccountPrefabs(): ReactElement {
     const chosen = available
       .filter((prefab) => selected.has(prefab.key))
       .map(({ name, bankName, type, description }) => ({
-        name,
+        name: name[language],
         bankName,
         type,
-        description,
+        description: description[language],
         balance: 0,
         currency: defaultCurrency,
       }))
@@ -109,6 +109,8 @@ export default function AccountPrefabs(): ReactElement {
                 account={{
                   ...prefab,
                   id: index + 1,
+                  name: prefab.name[language],
+                  description: prefab.description[language],
                   balance: 0,
                   currency: defaultCurrency,
                 }}

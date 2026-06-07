@@ -18,17 +18,17 @@ import { useI18n } from "#shared/i18n"
 export default function CategoryPrefabs(): ReactElement {
   const router = useRouter()
   const styles = useThemedStyles(createStyles)
-  const { t } = useI18n()
+  const { t, language } = useI18n()
   const { data, addCategories } = useCategories()
   const [selected, setSelected] = useState<Set<string>>(new Set())
 
-  // Hide prefabs already present (matched by name).
+  // Hide prefabs already present (matched by localized name).
   const available = useMemo(() => {
     const existing = new Set(data.map((item) => item.name.toLowerCase()))
     return CATEGORY_PREFABS.filter(
-      (prefab) => !existing.has(prefab.name.toLowerCase()),
+      (prefab) => !existing.has(prefab.name[language].toLowerCase()),
     )
-  }, [data])
+  }, [data, language])
 
   const toggle = (key: string): void => {
     setSelected((prev) => {
@@ -46,10 +46,10 @@ export default function CategoryPrefabs(): ReactElement {
     const chosen = available
       .filter((prefab) => selected.has(prefab.key))
       .map(({ name, type, color, description }) => ({
-        name,
+        name: name[language],
         type,
         color,
-        description,
+        description: description[language],
       }))
 
     if (chosen.length === 0) {
@@ -76,7 +76,12 @@ export default function CategoryPrefabs(): ReactElement {
               style={[selected.has(prefab.key) && styles.selected]}
             >
               <CategoryCard
-                category={{ ...prefab, id: index + 1 }}
+                category={{
+                  ...prefab,
+                  id: index + 1,
+                  name: prefab.name[language],
+                  description: prefab.description[language],
+                }}
                 onPress={() => toggle(prefab.key)}
               />
             </View>

@@ -9,6 +9,10 @@ export type TranslationKey = keyof (typeof translations)["en"]
 
 export type TranslationParams = Record<string, number | string>
 
+// Inline-localized string for data that lives in code (e.g. prefab templates)
+// rather than the translation catalog. Resolved with the active `language`.
+export type LocalizedText = Record<Language, string>
+
 export type I18nContextValue = {
   isLoading: boolean
   language: Language

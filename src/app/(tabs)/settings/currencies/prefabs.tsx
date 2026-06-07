@@ -18,7 +18,7 @@ import { useI18n } from "#shared/i18n"
 export default function CurrencyPrefabs(): ReactElement {
   const router = useRouter()
   const styles = useThemedStyles(createStyles)
-  const { t } = useI18n()
+  const { t, language } = useI18n()
   const { data, addCurrencies } = useCurrencies()
   const [selected, setSelected] = useState<Set<string>>(new Set())
 
@@ -45,7 +45,11 @@ export default function CurrencyPrefabs(): ReactElement {
   const confirm = (): void => {
     const chosen = available
       .filter((prefab) => selected.has(prefab.key))
-      .map(({ name, symbol, description }) => ({ name, symbol, description }))
+      .map(({ name, symbol, description }) => ({
+        name: name[language],
+        symbol,
+        description: description[language],
+      }))
 
     if (chosen.length === 0) {
       return
@@ -72,7 +76,12 @@ export default function CurrencyPrefabs(): ReactElement {
             >
               <CurrencyCard
                 onPress={() => toggle(prefab.key)}
-                currency={{ ...prefab, id: i }}
+                currency={{
+                  ...prefab,
+                  id: i,
+                  name: prefab.name[language],
+                  description: prefab.description[language],
+                }}
               />
             </View>
           ))

@@ -18,7 +18,7 @@ import { useI18n } from "#shared/i18n"
 export default function SubscriptionProviderPrefabs(): ReactElement {
   const router = useRouter()
   const styles = useThemedStyles(createStyles)
-  const { t } = useI18n()
+  const { t, language } = useI18n()
   const { data, addSubscriptionProviders } = useSubscriptionProviders()
   const [selected, setSelected] = useState<Set<string>>(new Set())
 
@@ -45,7 +45,11 @@ export default function SubscriptionProviderPrefabs(): ReactElement {
   const confirm = (): void => {
     const chosen = available
       .filter((prefab) => selected.has(prefab.key))
-      .map(({ name, description, website }) => ({ name, description, website }))
+      .map(({ name, description, website }) => ({
+        name,
+        description: description[language],
+        website,
+      }))
 
     if (chosen.length === 0) {
       return
@@ -71,7 +75,11 @@ export default function SubscriptionProviderPrefabs(): ReactElement {
               style={[selected.has(prefab.key) && styles.selected]}
             >
               <SubscriptionProviderCard
-                provider={{ ...prefab, id: index + 1 }}
+                provider={{
+                  ...prefab,
+                  id: index + 1,
+                  description: prefab.description[language],
+                }}
                 onPress={() => toggle(prefab.key)}
               />
             </View>
