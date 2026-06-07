@@ -234,6 +234,13 @@ export const translations = {
     "profile.appearance.dark": "Dark",
     "profile.appearance.system": "System",
     "profile.preferences.error": "Unable to persist profile preferences.",
+    "profile.info.title": "Profile",
+    "profile.info.description": "Your name and a short bio.",
+    "profile.info.name": "Name",
+    "profile.info.namePlaceholder": "Your name",
+    "profile.info.bio": "About",
+    "profile.info.bioPlaceholder": "A short description about you",
+    "profile.info.error": "Unable to persist profile.",
     "profile.language.title": "Language",
     "profile.language.description":
       "Choose the language used across the app interface.",
@@ -535,6 +542,13 @@ export const translations = {
     "profile.appearance.system": "Sistema",
     "profile.preferences.error":
       "No se pudieron guardar las preferencias de perfil.",
+    "profile.info.title": "Perfil",
+    "profile.info.description": "Tu nombre y una breve bio.",
+    "profile.info.name": "Nombre",
+    "profile.info.namePlaceholder": "Tu nombre",
+    "profile.info.bio": "Acerca de",
+    "profile.info.bioPlaceholder": "Una breve descripción sobre ti",
+    "profile.info.error": "No se pudo guardar el perfil.",
     "profile.language.title": "Idioma",
     "profile.language.description":
       "Elige el idioma usado en la interfaz de la aplicación.",
