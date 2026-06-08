@@ -2,6 +2,9 @@ import { type AddTransactionDto } from "../dtos"
 
 export type TransactionFormProps = {
   defaultValues?: AddTransactionDto
+  // Pre-selects the account on a fresh form (no defaultValues). Used when
+  // adding a transaction from an account's detail screen.
+  defaultAccountId?: number
   submitLabel: string
   onSubmit: (values: AddTransactionDto) => void
   onDelete?: () => void

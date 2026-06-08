@@ -15,13 +15,16 @@ export const isValidAmount = (value: string): boolean => {
 
 export const toFormValues = (
   dto: AddTransactionDto | undefined,
+  // Pre-selected account for a fresh form (e.g. adding from an account's
+  // detail screen). Ignored when editing an existing transaction.
+  defaultAccountId = 0,
 ): TransactionFormValues =>
   dto === undefined
     ? {
         description: "",
         amount: "",
         date: todayStamp(),
-        accountId: 0,
+        accountId: defaultAccountId,
         categoryIds: [],
       }
     : { ...dto, amount: `${dto.amount}` }

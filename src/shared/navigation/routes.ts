@@ -20,6 +20,14 @@ export const toEditAccountRoute = (id: number): Href => ({
 
 export const toNewTransactionRoute = (): Href => "/transactions/new"
 
+// Add-transaction inside the accounts stack — keeps the back button within the
+// settings/accounts navigator (instead of jumping to the transactions tab) and
+// pre-selects the owning account.
+export const toAccountNewTransactionRoute = (accountId: number): Href => ({
+  pathname: "/settings/accounts/transactions/new" as const,
+  params: { accountId },
+})
+
 export const toTransactionDetailsRoute = (id: number): Href => ({
   pathname: "/transactions/[id]" as const,
   params: { id } satisfies DetailRouteParams,

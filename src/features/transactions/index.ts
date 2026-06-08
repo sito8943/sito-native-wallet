@@ -1,3 +1,4 @@
+import { NewTransactionScreen } from "./NewTransactionScreen"
 import { TransactionCard } from "./TransactionCard"
 import { TransactionDetailScreen } from "./TransactionDetailScreen"
 import { TransactionForm } from "./TransactionForm"
@@ -9,6 +10,7 @@ import { useInfiniteTransactions } from "./useInfiniteTransactions"
 import { useTransactions } from "./useTransactions"
 
 export {
+  NewTransactionScreen,
   TransactionCard,
   TransactionDetailScreen,
   TransactionForm,
@@ -22,6 +24,7 @@ export {
 export type { Transaction } from "./Transaction"
 export type { AddTransactionDto, FilterTransactionDto } from "./dtos"
 export type { TransactionCardProps } from "./TransactionCard"
+export type { NewTransactionScreenProps } from "./NewTransactionScreen"
 export type { TransactionDetailScreenProps } from "./TransactionDetailScreen"
 export type { TransactionFormProps } from "./TransactionForm"
 export type { TransactionListProps } from "./TransactionList"

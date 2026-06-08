@@ -53,6 +53,10 @@ export default function Layout(): ReactElement {
         options={{ title: t("accounts.edit.title") }}
       />
       <Stack.Screen
+        name="transactions/new"
+        options={{ title: t("transactions.new.title") }}
+      />
+      <Stack.Screen
         name="transactions/[id]"
         options={{ title: t("accounts.transaction.title") }}
       />

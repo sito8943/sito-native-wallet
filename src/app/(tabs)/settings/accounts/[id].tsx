@@ -1,8 +1,10 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 import { ActivityIndicator, StyleSheet, View } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { APP_ICONS } from "#design/elements/Icon"
+import { ICON_BUTTON_SIZE } from "#design/elements/IconButton"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import FAB from "#design/patterns/FAB"
@@ -11,6 +13,7 @@ import { AccountCard, useAccount } from "#features/accounts"
 import { TransactionList, useTransactions } from "#features/transactions"
 import { useI18n } from "#shared/i18n"
 import {
+  toAccountNewTransactionRoute,
   toAccountTransactionDetailsRoute,
   toEditAccountRoute,
   useDetailRouteParams,
@@ -19,6 +22,7 @@ import {
 export default function AccountDetails(): ReactElement {
   const router = useRouter()
   const { t } = useI18n()
+  const insets = useSafeAreaInsets()
   const { id } = useDetailRouteParams()
   const { data: account, isLoading } = useAccount(id)
   const { data: transactions } = useTransactions({ accountId: id })
@@ -71,10 +75,19 @@ export default function AccountDetails(): ReactElement {
           }
         />
       </Page>
+      {/* Secondary action: edit, a smaller FAB stacked above the primary one. */}
       <FAB
         accessibilityLabel={t("accounts.edit.title")}
         icon={APP_ICONS.edit}
+        size={ICON_BUTTON_SIZE.MD}
         onPress={() => router.push(toEditAccountRoute(account.id))}
+        style={{ bottom: insets.bottom + spacing(16) }}
+      />
+      {/* Primary action: add a transaction to this account. */}
+      <FAB
+        accessibilityLabel={t("transactions.add")}
+        icon={APP_ICONS.add}
+        onPress={() => router.push(toAccountNewTransactionRoute(account.id))}
       />
     </View>
   )
