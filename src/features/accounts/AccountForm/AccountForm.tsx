@@ -24,6 +24,7 @@ export default function AccountForm({
   submitLabel,
   onSubmit,
   onDelete,
+  lockBalance = false,
 }: AccountFormProps): ReactElement {
   const { t } = useI18n()
   const { data: currencies } = useCurrencies()
@@ -125,26 +126,30 @@ export default function AccountForm({
         )}
       />
 
-      <Controller
-        control={control}
-        name="balance"
-        rules={{
-          validate: (value) =>
-            isValidBalance(value) || t("form.validation.invalidAmount"),
-        }}
-        render={({ field: { onChange, onBlur, value }, fieldState }) => (
-          <TextField
-            label={t("form.account.balance")}
-            placeholder="0.00"
-            defaultValue="0"
-            keyboardType="decimal-pad"
-            value={value}
-            onChangeText={onChange}
-            onBlur={onBlur}
-            error={fieldState.error?.message}
-          />
-        )}
-      />
+      {/* Opening balance only (create). When editing, the balance is locked —
+          it moves through transactions / Adjust balance, never a direct edit. */}
+      {!lockBalance && (
+        <Controller
+          control={control}
+          name="balance"
+          rules={{
+            validate: (value) =>
+              isValidBalance(value) || t("form.validation.invalidAmount"),
+          }}
+          render={({ field: { onChange, onBlur, value }, fieldState }) => (
+            <TextField
+              label={t("form.account.balance")}
+              placeholder="0.00"
+              defaultValue="0"
+              keyboardType="decimal-pad"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              error={fieldState.error?.message}
+            />
+          )}
+        />
+      )}
 
       <Controller
         control={control}

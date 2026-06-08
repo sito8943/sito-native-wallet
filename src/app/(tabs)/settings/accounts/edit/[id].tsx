@@ -64,6 +64,7 @@ export default function EditAccount(): ReactElement {
     <Page scroll>
       <AccountForm
         submitLabel={t("accounts.save")}
+        lockBalance
         defaultValues={{
           name: account.name,
           bankName: account.bankName,

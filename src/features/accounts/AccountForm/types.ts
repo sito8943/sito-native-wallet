@@ -17,4 +17,8 @@ export type AccountFormProps = {
   submitLabel: string
   onSubmit: (values: AddAccountDto) => void
   onDelete?: () => void
+  // Hides the balance field (editing): the balance is the ledger total and only
+  // moves through transactions / the Adjust balance action, never a direct edit.
+  // On create it stays editable as the opening balance.
+  lockBalance?: boolean
 }
