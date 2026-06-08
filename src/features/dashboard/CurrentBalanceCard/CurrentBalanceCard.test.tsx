@@ -5,6 +5,12 @@ import { DASHBOARD_CARD_TYPE, type DashboardCard } from "../DashboardCard"
 
 import CurrentBalanceCard from "./CurrentBalanceCard"
 
+// The global expo-router mock only exposes Link; this card calls useRouter()
+// (add-transaction action), so override the module for this file.
+jest.mock("expo-router", () => ({
+  useRouter: () => ({ push: jest.fn() }),
+}))
+
 const noop = (): void => undefined
 
 // There is no demo seed anymore, so the test seeds one account (id 1, balance

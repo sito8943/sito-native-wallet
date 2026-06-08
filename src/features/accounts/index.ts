@@ -1,4 +1,4 @@
-import { AccountCard } from "./AccountCard"
+import { AccountCard, AccountVisual } from "./AccountCard"
 import { AccountForm } from "./AccountForm"
 import { useAccount } from "./useAccount"
 import { useAccounts } from "./useAccounts"
@@ -18,6 +18,7 @@ export {
 } from "./Account"
 export {
   AccountCard,
+  AccountVisual,
   AccountForm,
   useAccount,
   useAccounts,

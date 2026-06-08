@@ -22,6 +22,7 @@ export default function IconButton({
   iconColor,
   iconStyle,
   size = ICON_BUTTON_SIZE.MD,
+  iconSize,
   style,
   variant = ICON_BUTTON_VARIANT.FILLED,
   children,
@@ -29,6 +30,8 @@ export default function IconButton({
 }: IconButtonProps): ReactElement {
   const colors = useThemeColors()
   const resolvedSize = BUTTON_SIZES[size]
+  // Icon glyph scales with `size` by default; `iconSize` overrides it alone.
+  const resolvedIconSize = BUTTON_SIZES[iconSize ?? size].iconSize
   const containerStyle = getContainerStyle({ colors, disabled, variant })
   const resolvedIconColor =
     iconColor ?? color ?? getIconColor({ colors, disabled, variant })
@@ -58,7 +61,7 @@ export default function IconButton({
         <Icon
           color={resolvedIconColor}
           icon={icon}
-          size={resolvedSize.iconSize}
+          size={resolvedIconSize}
           style={iconStyle}
         />
         {children}

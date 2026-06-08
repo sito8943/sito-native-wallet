@@ -2,6 +2,7 @@ import { NewTransactionScreen } from "./NewTransactionScreen"
 import { TransactionCard } from "./TransactionCard"
 import { TransactionDetailScreen } from "./TransactionDetailScreen"
 import { TransactionForm } from "./TransactionForm"
+import { TransactionFormSheet } from "./TransactionFormSheet"
 import { TransactionList } from "./TransactionList"
 import { TransactionsFilters } from "./TransactionsFilters"
 import { TransactionTypeBadge } from "./TransactionTypeBadge"
@@ -14,6 +15,7 @@ export {
   TransactionCard,
   TransactionDetailScreen,
   TransactionForm,
+  TransactionFormSheet,
   TransactionsFilters,
   TransactionList,
   TransactionTypeBadge,
@@ -27,6 +29,7 @@ export type { TransactionCardProps } from "./TransactionCard"
 export type { NewTransactionScreenProps } from "./NewTransactionScreen"
 export type { TransactionDetailScreenProps } from "./TransactionDetailScreen"
 export type { TransactionFormProps } from "./TransactionForm"
+export type { TransactionFormSheetProps } from "./TransactionFormSheet"
 export type { TransactionListProps } from "./TransactionList"
 export type {
   TransactionSortOrder,

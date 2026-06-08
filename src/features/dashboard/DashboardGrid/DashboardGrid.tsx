@@ -7,6 +7,7 @@ import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import DraggableList from "#design/patterns/DraggableList"
 import Empty from "#design/templates/Empty"
+import { useAccounts } from "#features/accounts"
 import { useI18n } from "#shared/i18n"
 import { toAccountsRoute } from "#shared/navigation"
 
@@ -23,6 +24,8 @@ export default function DashboardGrid(): ReactElement {
   const { t } = useI18n()
   const router = useRouter()
   const { data: cards, removeCard, reorderCards } = useDashboard()
+  const { data: accounts } = useAccounts()
+  const hasAccounts = (accounts ?? []).length > 0
 
   const deleteDialog = useDeleteDialog<DashboardCard>({
     onConfirm: (card) => {
@@ -56,16 +59,22 @@ export default function DashboardGrid(): ReactElement {
   if (cards.length === 0) {
     return (
       <View style={styles.empty}>
-        <Empty
-          message={t("dashboard.empty")}
-          actions={[
-            {
-              children: t("dashboard.empty.action"),
-              variant: BUTTON_VARIANT.OUTLINED,
-              onPress: () => router.push(toAccountsRoute()),
-            },
-          ]}
-        />
+        {hasAccounts ? (
+          // Already has an account → the + FAB adds cards; just point at it.
+          <Empty message={t("dashboard.empty.addCard")} />
+        ) : (
+          // Brand-new user → guide to set up the foundation (an account) first.
+          <Empty
+            message={t("dashboard.empty")}
+            actions={[
+              {
+                children: t("dashboard.empty.action"),
+                variant: BUTTON_VARIANT.OUTLINED,
+                onPress: () => router.push(toAccountsRoute()),
+              },
+            ]}
+          />
+        )}
         <ConfirmationDialog
           {...deleteDialog}
           confirmLabel={t("common.delete")}

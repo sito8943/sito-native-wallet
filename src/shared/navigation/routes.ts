@@ -18,7 +18,12 @@ export const toEditAccountRoute = (id: number): Href => ({
   params: { id } satisfies DetailRouteParams,
 })
 
-export const toNewTransactionRoute = (): Href => "/transactions/new"
+// Optional accountId pre-selects the owning account (e.g. from the dashboard's
+// current-balance card). Lands in the transactions tab, which has its own back.
+export const toNewTransactionRoute = (accountId?: number): Href =>
+  accountId === undefined
+    ? "/transactions/new"
+    : { pathname: "/transactions/new", params: { accountId } }
 
 // Add-transaction inside the accounts stack — keeps the back button within the
 // settings/accounts navigator (instead of jumping to the transactions tab) and

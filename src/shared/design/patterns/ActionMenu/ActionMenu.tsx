@@ -71,7 +71,8 @@ export default function ActionMenu<T>({
           onPress={() => {
             action.onPress(entity)
           }}
-          size={ICON_BUTTON_SIZE.LG}
+          iconSize={ICON_BUTTON_SIZE.LG}
+          size={ICON_BUTTON_SIZE.MD}
           variant={ICON_BUTTON_VARIANT.TEXT}
         />
       ))}
@@ -150,8 +151,9 @@ export default function ActionMenu<T>({
 const createStyles = (colors: ThemeColors) => ({
   row: {
     alignItems: "center" as const,
+    justifyContent: "flex-end" as const,
     flexDirection: "row" as const,
-    gap: spacing(1),
+    gap: spacing(0),
   },
   backdrop: {
     flex: 1,
