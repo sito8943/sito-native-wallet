@@ -9,7 +9,12 @@ import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
-import { AccountCard, useAccount } from "#features/accounts"
+import {
+  AccountAdjustBalanceSheet,
+  AccountCard,
+  useAccount,
+  useAdjustBalanceSheet,
+} from "#features/accounts"
 import { TransactionList, useTransactions } from "#features/transactions"
 import { useI18n } from "#shared/i18n"
 import {
@@ -25,7 +30,17 @@ export default function AccountDetails(): ReactElement {
   const insets = useSafeAreaInsets()
   const { id } = useDetailRouteParams()
   const { data: account, isLoading } = useAccount(id)
-  const { data: transactions } = useTransactions({ accountId: id })
+  const { data: transactions, adjustBalance } = useTransactions({
+    accountId: id,
+  })
+
+  // Account actions (currently just adjust balance). The client owns the
+  // adjustment logic; the screen only bridges the account id into it.
+  const { action: adjustAction, sheetProps } = useAdjustBalanceSheet({
+    onAdjust: (target, newBalance, description) => {
+      adjustBalance(target.id, newBalance, description)
+    },
+  })
 
   if (isLoading) {
     return (
@@ -51,7 +66,7 @@ export default function AccountDetails(): ReactElement {
   return (
     <View style={styles.screen}>
       <Page>
-        <AccountCard account={account} />
+        <AccountCard account={account} actions={[adjustAction(account)]} />
 
         {account.description !== undefined && (
           <Typography
@@ -89,6 +104,7 @@ export default function AccountDetails(): ReactElement {
         icon={APP_ICONS.add}
         onPress={() => router.push(toAccountNewTransactionRoute(account.id))}
       />
+      <AccountAdjustBalanceSheet {...sheetProps} />
     </View>
   )
 }
