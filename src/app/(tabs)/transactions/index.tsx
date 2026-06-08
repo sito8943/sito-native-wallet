@@ -54,11 +54,12 @@ export default function Transactions(): ReactElement {
     message: t("transactions.delete.description"),
   })
 
-  // Auto rows (e.g. opening-balance) aren't user-deletable → no swipe.
-  const onSwipeDelete = (transaction: Transaction): (() => void) | undefined =>
-    transaction.auto === true
-      ? undefined
-      : () => deleteDialog.action(transaction).onPress(transaction)
+  // Every row is swipe-deletable, including auto rows (opening balance / balance
+  // adjustments): remove() reverts the account balance, so the ledger stays
+  // consistent.
+  const onSwipeDelete = (transaction: Transaction) => () => {
+    deleteDialog.action(transaction).onPress(transaction)
+  }
 
   const header = (
     <View style={styles.header}>

@@ -7,6 +7,8 @@ import { APP_ICONS } from "#design/elements/Icon"
 import { ICON_BUTTON_SIZE } from "#design/elements/IconButton"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import { useDeleteDialog } from "#design/interactions"
+import { ConfirmationDialog } from "#design/patterns/Dialog"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import {
@@ -15,7 +17,11 @@ import {
   useAccount,
   useAdjustBalanceSheet,
 } from "#features/accounts"
-import { TransactionList, useTransactions } from "#features/transactions"
+import {
+  type Transaction,
+  TransactionList,
+  useTransactions,
+} from "#features/transactions"
 import { useI18n } from "#shared/i18n"
 import {
   toAccountNewTransactionRoute,
@@ -30,8 +36,17 @@ export default function AccountDetails(): ReactElement {
   const insets = useSafeAreaInsets()
   const { id } = useDetailRouteParams()
   const { data: account, isLoading } = useAccount(id)
-  const { data: transactions, adjustBalance } = useTransactions({
-    accountId: id,
+  const { data: transactions, adjustBalance, removeTransaction } =
+    useTransactions({
+      accountId: id,
+    })
+
+  const deleteDialog = useDeleteDialog<Transaction>({
+    onConfirm: (transaction) => {
+      removeTransaction(transaction.id)
+    },
+    title: t("transactions.delete.title"),
+    message: t("transactions.delete.description"),
   })
 
   // Account actions (currently just adjust balance). The client owns the
@@ -88,6 +103,9 @@ export default function AccountDetails(): ReactElement {
           onPress={(transaction) =>
             router.push(toAccountTransactionDetailsRoute(transaction.id))
           }
+          onSwipeDelete={(transaction) => () => {
+            deleteDialog.action(transaction).onPress(transaction)
+          }}
         />
       </Page>
       {/* Secondary action: edit, a smaller FAB stacked above the primary one. */}
@@ -105,6 +123,7 @@ export default function AccountDetails(): ReactElement {
         onPress={() => router.push(toAccountNewTransactionRoute(account.id))}
       />
       <AccountAdjustBalanceSheet {...sheetProps} />
+      <ConfirmationDialog {...deleteDialog} confirmLabel={t("common.delete")} />
     </View>
   )
 }
