@@ -183,6 +183,8 @@ jest.mock("#shared/data", () => ({
     Transactions: mockTransactionsClient,
   }),
   todayStamp: () => "2026/01/01",
+  parseStamp: (value: string) => new Date(value),
+  formatStamp: (date: Date) => date.toISOString(),
 }))
 
 jest.mock("#shared/data/storage", () => ({

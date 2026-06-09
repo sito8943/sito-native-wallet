@@ -84,8 +84,11 @@ export const sumTransactions = (
         !accountIds.includes(transaction.account.id)
       )
         return false
-      if (start !== undefined && transaction.date < start) return false
-      if (end !== undefined && transaction.date > end) return false
+      // Ranges are day-granular; transaction.date carries a time, so compare
+      // only its day portion (else same-day-as-`end` rows would be excluded).
+      const day = transaction.date.slice(0, 10)
+      if (start !== undefined && day < start) return false
+      if (end !== undefined && day > end) return false
       return true
     })
     .reduce((total, transaction) => total + transaction.amount, 0)

@@ -1,17 +1,19 @@
 import { useMemo, type ReactElement } from "react"
 import { Controller, useForm } from "react-hook-form"
 
+import DateTimeField from "#design/elements/DateTimeField"
 import TextField from "#design/elements/TextField"
 import Autocomplete from "#design/patterns/Autocomplete"
 import DeleteButton from "#design/patterns/DeleteButton"
 import Form from "#design/patterns/Form"
 import { useAccounts } from "#features/accounts"
 import { useCategories } from "#features/categories"
+import { formatStamp, parseStamp } from "#shared/data"
 import { useI18n } from "#shared/i18n"
 
 import { type AddTransactionDto } from "../dtos"
 
-import { DATE_PATTERN, TRANSACTION_FIELD_LIMITS } from "./constants"
+import { TRANSACTION_FIELD_LIMITS } from "./constants"
 import { type TransactionFormProps, type TransactionFormValues } from "./types"
 import { isValidAmount, parseAmount, toFormValues } from "./utils"
 
@@ -120,22 +122,13 @@ export default function TransactionForm({
       <Controller
         control={control}
         name="date"
-        rules={{
-          required: t("form.validation.required.date"),
-          pattern: {
-            value: DATE_PATTERN,
-            message: t("form.validation.invalidDateFormat"),
-          },
-        }}
-        render={({ field: { onChange, onBlur, value }, fieldState }) => (
-          <TextField
+        rules={{ required: t("form.validation.required.date") }}
+        render={({ field: { onChange, value }, fieldState }) => (
+          <DateTimeField
             label={t("form.transaction.date")}
-            placeholder="2026/05/24"
-            autoCapitalize="none"
-            autoCorrect={false}
-            value={value}
-            onChangeText={onChange}
-            onBlur={onBlur}
+            placeholder="2026/05/24 13:45"
+            value={value ? parseStamp(value) : null}
+            onChange={(date) => onChange(formatStamp(date))}
             error={fieldState.error?.message}
           />
         )}

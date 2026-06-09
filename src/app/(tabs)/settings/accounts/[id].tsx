@@ -36,10 +36,13 @@ export default function AccountDetails(): ReactElement {
   const insets = useSafeAreaInsets()
   const { id } = useDetailRouteParams()
   const { data: account, isLoading } = useAccount(id)
-  const { data: transactions, adjustBalance, removeTransaction } =
-    useTransactions({
-      accountId: id,
-    })
+  const {
+    data: transactions,
+    adjustBalance,
+    removeTransaction,
+  } = useTransactions({
+    accountId: id,
+  })
 
   const deleteDialog = useDeleteDialog<Transaction>({
     onConfirm: (transaction) => {

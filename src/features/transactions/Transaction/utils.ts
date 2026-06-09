@@ -64,10 +64,13 @@ export const matchesTransactionFilter =
 
     if (filters.date !== undefined) {
       const { start, end } = filters.date
-      if (start != null && transaction.date < start) {
+      // Filter bounds are day-granular; transaction.date carries a time, so
+      // compare only its day portion (else same-day-as-`end` rows would drop).
+      const day = transaction.date.slice(0, 10)
+      if (start != null && day < start) {
         return false
       }
-      if (end != null && transaction.date > end) {
+      if (end != null && day > end) {
         return false
       }
     }

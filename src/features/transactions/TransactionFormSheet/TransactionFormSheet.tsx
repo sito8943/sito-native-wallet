@@ -20,7 +20,11 @@ export default function TransactionFormSheet({
   const { t } = useI18n()
 
   return (
-    <BottomSheet open={open} title={t("transactions.new.title")} onClose={onClose}>
+    <BottomSheet
+      open={open}
+      title={t("transactions.new.title")}
+      onClose={onClose}
+    >
       {open && (
         <TransactionForm
           defaultAccountId={defaultAccountId}
