@@ -16,7 +16,7 @@ export default function SettingsMenu(): ReactElement {
   const { t } = useI18n()
 
   return (
-    <>
+    <View style={styles.container}>
       {settingsMenuItems.map((item) => (
         <Link key={item.labelKey} href={item.href} asChild>
           <Pressable>
@@ -40,7 +40,7 @@ export default function SettingsMenu(): ReactElement {
           </Pressable>
         </Link>
       ))}
-    </>
+    </View>
   )
 }
 
@@ -53,6 +53,9 @@ const styles = StyleSheet.create({
   left: {
     alignItems: "center",
     flexDirection: "row",
+    gap: spacing(4),
+  },
+  container: {
     gap: spacing(4),
   },
 })

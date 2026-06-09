@@ -70,7 +70,10 @@ export default function DashboardGrid(): ReactElement {
               {
                 children: t("dashboard.empty.action"),
                 variant: BUTTON_VARIANT.OUTLINED,
-                onPress: () => router.push(toAccountsRoute()),
+                // withAnchor seeds settings/index beneath the target so the
+                // section has a back button and the tab resets to /settings.
+                onPress: () =>
+                  router.push(toAccountsRoute(), { withAnchor: true }),
               },
             ]}
           />

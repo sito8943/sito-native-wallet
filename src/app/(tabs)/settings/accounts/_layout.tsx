@@ -7,9 +7,15 @@ import IconButton, {
   ICON_BUTTON_VARIANT,
 } from "#design/elements/IconButton"
 import { spacing } from "#design/foundations"
+import HeaderBackButton from "#design/patterns/HeaderBackButton"
 import { useThemeColors } from "#design/theme"
 import { useI18n } from "#shared/i18n"
-import { toAccountPrefabsRoute } from "#shared/navigation"
+import { toAccountPrefabsRoute, toSettingsRoute } from "#shared/navigation"
+
+// Anchor deep pushes/links on index so prefabs/new always have a back button.
+export const unstable_settings = {
+  initialRouteName: "index",
+}
 
 export default function Layout(): ReactElement {
   const colors = useThemeColors()
@@ -26,6 +32,7 @@ export default function Layout(): ReactElement {
         name="index"
         options={{
           title: t("accounts.title"),
+          headerLeft: () => <HeaderBackButton fallback={toSettingsRoute()} />,
           headerRight: () => (
             <IconButton
               accessibilityLabel={t("accounts.addSuggested")}

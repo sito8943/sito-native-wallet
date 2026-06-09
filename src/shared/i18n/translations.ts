@@ -122,6 +122,7 @@ export const translations = {
     "categories.delete.confirm": "Delete",
     "categories.delete.description":
       "This category will be removed permanently.",
+    "common.back": "Back",
     "common.cancel": "Cancel",
     "common.save": "Save",
     "common.search": "Search",
@@ -429,6 +430,7 @@ export const translations = {
     "categories.delete.confirm": "Eliminar",
     "categories.delete.description":
       "Esta categoria se eliminará de forma permanente.",
+    "common.back": "Atrás",
     "common.cancel": "Cancelar",
     "common.save": "Guardar",
     "common.search": "Buscar",

@@ -70,6 +70,9 @@ export default function Layout(): ReactElement {
         options={{
           title: t("nav.settings"),
           headerShown: false,
+          // Re-enter settings at its root instead of restoring the last deep
+          // screen (e.g. a section reached via a deep push from another tab).
+          popToTopOnBlur: true,
           tabBarIcon: ({ color }) => (
             <Icon
               icon={APP_ICONS.settings}
