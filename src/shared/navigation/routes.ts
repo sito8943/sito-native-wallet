@@ -11,6 +11,8 @@ export const toAccountDetailsRoute = (id: number): Href => ({
 
 export const toSettingsRoute = (): Href => "/settings"
 
+export const toProfileRoute = (): Href => "/settings/profile"
+
 export const toAccountsRoute = (): Href => "/settings/accounts"
 
 export const toNewAccountRoute = (): Href => "/settings/accounts/new"

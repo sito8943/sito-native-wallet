@@ -26,6 +26,7 @@ import {
   faScaleBalanced,
   faFilter,
   faEllipsisVertical,
+  faBell,
 } from "@fortawesome/free-solid-svg-icons"
 
 export const APP_ICONS: Record<string, IconProp> = {
@@ -54,4 +55,5 @@ export const APP_ICONS: Record<string, IconProp> = {
   adjustBalance: faScaleBalanced,
   filter: faFilter,
   more: faEllipsisVertical,
+  notifications: faBell,
 }

@@ -1,8 +1,8 @@
 import { useMemo, type ReactElement } from "react"
 import { Pressable, View } from "react-native"
 
+import Avatar, { AVATAR_SIZE } from "#design/elements/Avatar"
 import Card from "#design/elements/Card"
-import Icon, { APP_ICONS } from "#design/elements/Icon"
 import TextField from "#design/elements/TextField"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import {
@@ -15,7 +15,6 @@ import Select from "#design/patterns/Select"
 import Page from "#design/templates/Page"
 import {
   THEME_PREFERENCE,
-  useThemeColors,
   useThemedStyles,
   useThemePreference,
   type ThemeColors,
@@ -46,7 +45,6 @@ const LANGUAGE_OPTIONS: Array<{
 
 export default function Profile(): ReactElement {
   const styles = useThemedStyles(createStyles)
-  const colors = useThemeColors()
   const { preference, setPreference } = useThemePreference()
   const { isLoading, language, setLanguage, t } = useI18n()
   const { data: profile, setData: setProfile } = useProfileInfo()
@@ -65,18 +63,7 @@ export default function Profile(): ReactElement {
     <Page scroll>
       <Card>
         <View style={styles.identity}>
-          <View style={styles.avatar}>
-            {initials ? (
-              <Typography
-                variant={TYPOGRAPHY_VARIANT.TITLE}
-                tone={TYPOGRAPHY_TONE.INVERTED}
-              >
-                {initials}
-              </Typography>
-            ) : (
-              <Icon icon={APP_ICONS.profile} color={colors.textInverted} />
-            )}
-          </View>
+          <Avatar initials={initials} size={AVATAR_SIZE.LG} />
           <View style={styles.identityCopy}>
             <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
               {t("profile.info.title")}
@@ -176,15 +163,6 @@ const createStyles = (colors: ThemeColors) => ({
   identityCopy: {
     flex: 1,
     gap: spacing(1),
-  },
-  avatar: {
-    alignItems: "center" as const,
-    justifyContent: "center" as const,
-    width: spacing(14),
-    height: spacing(14),
-    paddingTop: spacing(1),
-    borderRadius: radius.full,
-    backgroundColor: colors.primary,
   },
   fields: {
     gap: spacing(4),

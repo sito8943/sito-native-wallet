@@ -3,6 +3,7 @@ export type { DetailRouteParams } from "./params"
 export {
   toAccountDetailsRoute,
   toSettingsRoute,
+  toProfileRoute,
   toAccountsRoute,
   toNewAccountRoute,
   toAccountPrefabsRoute,

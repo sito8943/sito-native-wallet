@@ -12,6 +12,7 @@ export const ICON_BUTTON_SIZE = {
   SM: "sm",
   MD: "md",
   LG: "lg",
+  XL: "xl",
 } as const
 
 export const BUTTON_SIZES: Record<
@@ -31,6 +32,11 @@ export const BUTTON_SIZES: Record<
   [ICON_BUTTON_SIZE.LG]: {
     iconSize: spacing(4),
     minSize: spacing(12),
+    padding: spacing(4),
+  },
+  [ICON_BUTTON_SIZE.XL]: {
+    iconSize: spacing(5),
+    minSize: spacing(14),
     padding: spacing(4),
   },
 }
