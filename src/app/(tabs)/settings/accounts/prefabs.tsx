@@ -92,7 +92,7 @@ export default function AccountPrefabs(): ReactElement {
 
   return (
     <View style={styles.fill}>
-      <Page scroll>
+      <Page scroll contentContainerStyle={styles.container}>
         {available.length === 0 ? (
           <View style={styles.empty}>
             <Typography tone={TYPOGRAPHY_TONE.MUTED}>
@@ -137,6 +137,9 @@ export default function AccountPrefabs(): ReactElement {
 const createStyles = (colors: ThemeColors) => ({
   fill: {
     flex: 1,
+  },
+  container: {
+    gap: spacing(4),
   },
   empty: {
     padding: spacing(4),
