@@ -1,5 +1,6 @@
 import { AccountCard, AccountVisual } from "./AccountCard"
 import { AccountForm } from "./AccountForm"
+import { CollapsibleAccountHeader } from "./CollapsibleAccountHeader"
 import { useAccount } from "./useAccount"
 import { useAccounts } from "./useAccounts"
 import { useAdjustBalanceSheet } from "./useAdjustBalanceSheet"
@@ -20,6 +21,7 @@ export {
   AccountCard,
   AccountVisual,
   AccountForm,
+  CollapsibleAccountHeader,
   useAccount,
   useAccounts,
   useAdjustBalanceSheet,
@@ -30,6 +32,7 @@ export type {
 } from "./useAdjustBalanceSheet"
 export type { Account, AccountBankName, AccountType } from "./Account"
 export type { AccountCardProps } from "./AccountCard"
+export type { CollapsibleAccountHeaderProps } from "./CollapsibleAccountHeader"
 export type { AccountSelectorProps } from "./AccountSelector"
 export type { AccountFormProps } from "./AccountForm"
 export type { AddAccountDto } from "./dtos"

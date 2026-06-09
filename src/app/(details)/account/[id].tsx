@@ -1,6 +1,14 @@
 import { useRouter } from "expo-router"
-import { type ReactElement } from "react"
-import { ActivityIndicator, StyleSheet, View } from "react-native"
+import { type ReactElement, useRef, useState } from "react"
+import {
+  ActivityIndicator,
+  Animated,
+  type LayoutChangeEvent,
+  type NativeScrollEvent,
+  type NativeSyntheticEvent,
+  StyleSheet,
+  View,
+} from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { APP_ICONS } from "#design/elements/Icon"
@@ -13,7 +21,7 @@ import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import {
   AccountAdjustBalanceSheet,
-  AccountCard,
+  CollapsibleAccountHeader,
   useAccount,
   useAdjustBalanceSheet,
 } from "#features/accounts"
@@ -29,6 +37,11 @@ import {
   toTransactionDetailsRoute,
   useDetailRouteParams,
 } from "#shared/navigation"
+
+// Compact (collapsed) height of the floating account header.
+const COLLAPSED_HEADER_HEIGHT = spacing(14)
+// Fallback expanded height, used until the real card height is measured.
+const DEFAULT_HEADER_HEIGHT = spacing(50)
 
 export default function AccountDetails(): ReactElement {
   const router = useRouter()
@@ -60,6 +73,25 @@ export default function AccountDetails(): ReactElement {
     },
   })
 
+  // Scroll-linked collapsing header: the list reports its scroll offset, which
+  // shrinks the floating AccountCard into a compact sticky bar. headerHeight is
+  // the measured expanded height, also used to pad the list so the first row
+  // meets the header edge with no gap.
+  const scrollY = useRef(new Animated.Value(0)).current
+  const [headerHeight, setHeaderHeight] = useState(DEFAULT_HEADER_HEIGHT)
+
+  const onScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    { useNativeDriver: false },
+  ) as (event: NativeSyntheticEvent<NativeScrollEvent>) => void
+
+  const onHeaderMeasure = (event: LayoutChangeEvent): void => {
+    const measured = event.nativeEvent.layout.height
+    if (measured > 0 && Math.round(measured) !== Math.round(headerHeight)) {
+      setHeaderHeight(measured)
+    }
+  }
+
   if (isLoading) {
     return (
       <Page centered>
@@ -84,21 +116,36 @@ export default function AccountDetails(): ReactElement {
   return (
     <View style={styles.screen}>
       <Page>
-        <AccountCard account={account} actions={[adjustAction(account)]} />
-
-        <Typography variant={TYPOGRAPHY_VARIANT.TITLE} style={styles.heading}>
-          {t("accounts.details.transactions", { count: transactions.length })}
-        </Typography>
-
         <TransactionList
           data={transactions}
           emptyMessage={t("transactions.empty.default")}
+          contentContainerStyle={{ paddingTop: headerHeight }}
+          onScroll={onScroll}
+          scrollEventThrottle={16}
+          header={
+            <Typography
+              variant={TYPOGRAPHY_VARIANT.CAPTION}
+              style={styles.heading}
+            >
+              {t("accounts.details.transactions", {
+                count: transactions.length,
+              })}
+            </Typography>
+          }
           onPress={(transaction) =>
             router.push(toTransactionDetailsRoute(transaction.id))
           }
           onSwipeDelete={(transaction) => () => {
             deleteDialog.action(transaction).onPress(transaction)
           }}
+        />
+        <CollapsibleAccountHeader
+          account={account}
+          actions={[adjustAction(account)]}
+          scrollY={scrollY}
+          expandedHeight={headerHeight}
+          collapsedHeight={COLLAPSED_HEADER_HEIGHT}
+          onMeasure={onHeaderMeasure}
         />
       </Page>
       {/* Secondary action: edit, a smaller FAB stacked above the primary one. */}

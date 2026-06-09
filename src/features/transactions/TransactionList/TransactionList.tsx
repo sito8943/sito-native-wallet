@@ -17,6 +17,9 @@ export default function TransactionList({
   onEndReached,
   onSwipeDelete,
   header,
+  contentContainerStyle,
+  onScroll,
+  scrollEventThrottle,
 }: TransactionListProps): ReactElement {
   const { t } = useI18n()
 
@@ -27,6 +30,9 @@ export default function TransactionList({
       header={header}
       onEndReached={onEndReached}
       onSwipeDelete={onSwipeDelete}
+      contentContainerStyle={contentContainerStyle}
+      onScroll={onScroll}
+      scrollEventThrottle={scrollEventThrottle}
       renderItem={(transaction) => (
         <TransactionCard
           transaction={transaction}

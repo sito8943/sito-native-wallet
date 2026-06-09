@@ -1,4 +1,10 @@
 import { type ReactElement } from "react"
+import {
+  type NativeScrollEvent,
+  type NativeSyntheticEvent,
+  type StyleProp,
+  type ViewStyle,
+} from "react-native"
 
 import { type Action } from "#design/interactions"
 
@@ -17,4 +23,9 @@ export type TransactionListProps = {
   // Header rendered above the list (e.g. filters), kept inside the same
   // scroll/virtualized container.
   header?: ReactElement
+  // Extra padding for the scroll content (e.g. to clear a floating header).
+  contentContainerStyle?: StyleProp<ViewStyle>
+  // Scroll passthrough for scroll-linked UI such as a collapsing header.
+  onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
+  scrollEventThrottle?: number
 }

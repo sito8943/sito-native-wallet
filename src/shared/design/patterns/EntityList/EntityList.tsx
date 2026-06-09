@@ -22,6 +22,8 @@ export default function EntityList<T extends { id: number }>({
   onEndReached,
   onSwipeDelete,
   contentContainerStyle,
+  onScroll,
+  scrollEventThrottle,
 }: EntityListProps<T>): ReactElement {
   const { t } = useI18n()
 
@@ -57,6 +59,8 @@ export default function EntityList<T extends { id: number }>({
       contentContainerStyle={[styles.content, contentContainerStyle]}
       onEndReached={onEndReached}
       onEndReachedThreshold={0.5}
+      onScroll={onScroll}
+      scrollEventThrottle={scrollEventThrottle}
     />
   )
 }

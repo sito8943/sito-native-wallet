@@ -96,15 +96,6 @@ export default function Profile(): ReactElement {
               setProfile((current) => ({ ...current, name }))
             }}
           />
-          <TextField
-            label={t("profile.info.bio")}
-            placeholder={t("profile.info.bioPlaceholder")}
-            value={profile.description}
-            multiline
-            onChangeText={(description) => {
-              setProfile((current) => ({ ...current, description }))
-            }}
-          />
         </View>
       </Card>
 
