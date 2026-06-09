@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router"
 import { useState, type ReactElement } from "react"
 
 import { APP_ICONS } from "#design/elements/Icon"
@@ -15,6 +16,7 @@ import {
 } from "#features/accounts"
 import { TransactionFormSheet, useTransactions } from "#features/transactions"
 import { useI18n } from "#shared/i18n"
+import { toAccountDetailsRoute } from "#shared/navigation"
 
 import ActiveFilters from "../ActiveFilters"
 import CardFrame from "../CardFrame"
@@ -33,6 +35,7 @@ export default function CurrentBalanceCard({
   onDelete,
 }: CurrentBalanceCardProps): ReactElement {
   const { t } = useI18n()
+  const router = useRouter()
   const accounts = useAccounts().data ?? []
   const { updateTitle, updateConfig } = useDashboard()
   const { adjustBalance, addTransaction } = useTransactions()
@@ -103,7 +106,9 @@ export default function CurrentBalanceCard({
           account={account}
           actions={cardActions(account)}
           onPress={() => {
-            setFiltersOpen(true)
+            // Tapping the card opens the account; the filter action still opens
+            // the config sheet to change which account it tracks.
+            router.push(toAccountDetailsRoute(account.id))
           }}
         />
       ) : (

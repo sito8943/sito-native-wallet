@@ -2,8 +2,10 @@ import { type Href } from "expo-router"
 
 import { type DetailRouteParams } from "./params"
 
+// Detail screens live in the root (details) group so they open from any tab
+// with a back button that returns to the origin (the group has no URL segment).
 export const toAccountDetailsRoute = (id: number): Href => ({
-  pathname: "/settings/accounts/[id]" as const,
+  pathname: "/account/[id]" as const,
   params: { id } satisfies DetailRouteParams,
 })
 
@@ -14,34 +16,19 @@ export const toNewAccountRoute = (): Href => "/settings/accounts/new"
 export const toAccountPrefabsRoute = (): Href => "/settings/accounts/prefabs"
 
 export const toEditAccountRoute = (id: number): Href => ({
-  pathname: "/settings/accounts/edit/[id]" as const,
+  pathname: "/account/edit/[id]" as const,
   params: { id } satisfies DetailRouteParams,
 })
 
-// Optional accountId pre-selects the owning account (e.g. from the dashboard's
-// current-balance card). Lands in the transactions tab, which has its own back.
+// Optional accountId pre-selects the owning account (e.g. from an account's
+// detail screen). Lives in the (details) group → back returns to the origin.
 export const toNewTransactionRoute = (accountId?: number): Href =>
   accountId === undefined
-    ? "/transactions/new"
-    : { pathname: "/transactions/new", params: { accountId } }
-
-// Add-transaction inside the accounts stack — keeps the back button within the
-// settings/accounts navigator (instead of jumping to the transactions tab) and
-// pre-selects the owning account.
-export const toAccountNewTransactionRoute = (accountId: number): Href => ({
-  pathname: "/settings/accounts/transactions/new" as const,
-  params: { accountId },
-})
+    ? "/transaction/new"
+    : { pathname: "/transaction/new", params: { accountId } }
 
 export const toTransactionDetailsRoute = (id: number): Href => ({
-  pathname: "/transactions/[id]" as const,
-  params: { id } satisfies DetailRouteParams,
-})
-
-// Transaction detail inside the accounts stack — keeps the back button within
-// the settings/accounts navigator instead of jumping to the transactions tab.
-export const toAccountTransactionDetailsRoute = (id: number): Href => ({
-  pathname: "/settings/accounts/transactions/[id]" as const,
+  pathname: "/transaction/[id]" as const,
   params: { id } satisfies DetailRouteParams,
 })
 

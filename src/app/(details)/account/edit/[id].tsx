@@ -52,7 +52,7 @@ export default function EditAccount(): ReactElement {
           style: "destructive",
           onPress: () => {
             remove()
-            // Pop past the now-deleted account detail back to the list.
+            // Leave the now-deleted account: pop the detail stack back to origin.
             router.dismissAll()
           },
         },

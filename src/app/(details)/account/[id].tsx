@@ -24,9 +24,9 @@ import {
 } from "#features/transactions"
 import { useI18n } from "#shared/i18n"
 import {
-  toAccountNewTransactionRoute,
-  toAccountTransactionDetailsRoute,
   toEditAccountRoute,
+  toNewTransactionRoute,
+  toTransactionDetailsRoute,
   useDetailRouteParams,
 } from "#shared/navigation"
 
@@ -86,6 +86,16 @@ export default function AccountDetails(): ReactElement {
       <Page>
         <AccountCard account={account} actions={[adjustAction(account)]} />
 
+        {account.description !== undefined && (
+          <Typography
+            variant={TYPOGRAPHY_VARIANT.BODY}
+            tone={TYPOGRAPHY_TONE.MUTED}
+            style={styles.description}
+          >
+            {account.description}
+          </Typography>
+        )}
+
         <Typography variant={TYPOGRAPHY_VARIANT.TITLE} style={styles.heading}>
           {t("accounts.details.transactions", { count: transactions.length })}
         </Typography>
@@ -94,7 +104,7 @@ export default function AccountDetails(): ReactElement {
           data={transactions}
           emptyMessage={t("transactions.empty.default")}
           onPress={(transaction) =>
-            router.push(toAccountTransactionDetailsRoute(transaction.id))
+            router.push(toTransactionDetailsRoute(transaction.id))
           }
           onSwipeDelete={(transaction) => () => {
             deleteDialog.action(transaction).onPress(transaction)
@@ -113,7 +123,7 @@ export default function AccountDetails(): ReactElement {
       <FAB
         accessibilityLabel={t("transactions.add")}
         icon={APP_ICONS.add}
-        onPress={() => router.push(toAccountNewTransactionRoute(account.id))}
+        onPress={() => router.push(toNewTransactionRoute(account.id))}
       />
       <AccountAdjustBalanceSheet {...sheetProps} />
       <ConfirmationDialog {...deleteDialog} confirmLabel={t("common.delete")} />
@@ -124,6 +134,10 @@ export default function AccountDetails(): ReactElement {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+  },
+  description: {
+    marginHorizontal: spacing(4),
+    marginTop: spacing(1),
   },
   heading: {
     marginHorizontal: spacing(4),

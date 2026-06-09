@@ -6,7 +6,7 @@ import { useManager } from "#shared/data"
 import { useClientStore } from "#shared/data/storage"
 
 import { type AddTransactionDto } from "../dtos"
-import { resolveTransactions } from "../Transaction"
+import { resolveTransactions, sortByDate } from "../Transaction"
 
 import { type UseTransactionsOptions, type UseTransactionsState } from "./types"
 
@@ -21,10 +21,13 @@ export default function useTransactions(
 
   const data = useMemo(() => {
     const resolved = resolveTransactions(items, accounts ?? [], categories)
+    const scoped =
+      accountId === undefined
+        ? resolved
+        : resolved.filter((transaction) => transaction.account.id === accountId)
 
-    return accountId === undefined
-      ? resolved
-      : resolved.filter((transaction) => transaction.account.id === accountId)
+    // Newest first, matching the transactions tab (sortByDate is desc).
+    return sortByDate(scoped)
   }, [items, accounts, categories, accountId])
 
   return {

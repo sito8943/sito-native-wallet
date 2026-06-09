@@ -44,22 +44,6 @@ export default function Layout(): ReactElement {
         name="prefabs"
         options={{ title: t("accounts.prefabs.title") }}
       />
-      <Stack.Screen
-        name="[id]"
-        options={{ title: t("accounts.details.title") }}
-      />
-      <Stack.Screen
-        name="edit/[id]"
-        options={{ title: t("accounts.edit.title") }}
-      />
-      <Stack.Screen
-        name="transactions/new"
-        options={{ title: t("transactions.new.title") }}
-      />
-      <Stack.Screen
-        name="transactions/[id]"
-        options={{ title: t("accounts.transaction.title") }}
-      />
     </Stack>
   )
 }

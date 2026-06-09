@@ -7,8 +7,6 @@ export {
   toAccountPrefabsRoute,
   toEditAccountRoute,
   toTransactionDetailsRoute,
-  toAccountTransactionDetailsRoute,
-  toAccountNewTransactionRoute,
   toNewTransactionRoute,
   toSubscriptionDetailsRoute,
   toCurrencyDetailsRoute,
