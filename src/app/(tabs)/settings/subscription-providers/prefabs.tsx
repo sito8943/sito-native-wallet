@@ -3,9 +3,9 @@ import { type ReactElement, useMemo, useState } from "react"
 import { View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
-import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
-import { radius, spacing } from "#design/foundations"
+import { radius } from "#design/foundations"
 import FAB from "#design/patterns/FAB"
+import Empty from "#design/templates/Empty"
 import Page from "#design/templates/Page"
 import { type ThemeColors, useThemedStyles } from "#design/theme"
 import {
@@ -63,11 +63,7 @@ export default function SubscriptionProviderPrefabs(): ReactElement {
     <View style={styles.fill}>
       <Page scroll>
         {available.length === 0 ? (
-          <View style={styles.empty}>
-            <Typography tone={TYPOGRAPHY_TONE.MUTED}>
-              {t("subscriptionProviders.prefabs.empty")}
-            </Typography>
-          </View>
+          <Empty message={t("subscriptionProviders.prefabs.empty")} />
         ) : (
           available.map((prefab, index) => (
             <View
@@ -105,9 +101,6 @@ export default function SubscriptionProviderPrefabs(): ReactElement {
 const createStyles = (colors: ThemeColors) => ({
   fill: {
     flex: 1,
-  },
-  empty: {
-    padding: spacing(4),
   },
   selected: {
     borderColor: colors.primary,

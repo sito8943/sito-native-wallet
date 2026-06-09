@@ -3,9 +3,9 @@ import { type ReactElement, useMemo, useState } from "react"
 import { View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
-import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { radius, spacing } from "#design/foundations"
 import FAB from "#design/patterns/FAB"
+import Empty from "#design/templates/Empty"
 import Page from "#design/templates/Page"
 import { type ThemeColors, useThemedStyles } from "#design/theme"
 import {
@@ -63,11 +63,7 @@ export default function CurrencyPrefabs(): ReactElement {
     <View style={styles.fill}>
       <Page scroll contentContainerStyle={styles.container}>
         {available.length === 0 ? (
-          <View style={styles.empty}>
-            <Typography tone={TYPOGRAPHY_TONE.MUTED}>
-              {t("currencies.prefabs.empty")}
-            </Typography>
-          </View>
+          <Empty message={t("currencies.prefabs.empty")} />
         ) : (
           available.map((prefab, i) => (
             <View
@@ -107,9 +103,6 @@ const createStyles = (colors: ThemeColors) => ({
   },
   container: {
     gap: spacing(4),
-  },
-  empty: {
-    padding: spacing(4),
   },
   selected: {
     borderColor: colors.primary,
