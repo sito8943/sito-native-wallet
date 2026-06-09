@@ -11,6 +11,10 @@ export const translations = {
     "transactions.new.title": "New transaction",
     "transactions.edit.title": "Edit transaction",
     "transactions.new.submit": "Create",
+    "transactions.new.needAccount":
+      "Add an account first to record transactions.",
+    "transactions.new.needCategory":
+      "Add a category first to record transactions.",
     "transactions.error.load": "Failed to load transactions",
     "transactions.empty.loading": "Loading saved transaction view...",
     "transactions.empty.filtered": "No transactions match your saved filters.",
@@ -184,7 +188,6 @@ export const translations = {
     "form.validation.required.amount": "Amount is required",
     "form.validation.required.date": "Date is required",
     "form.validation.invalidPositiveAmount": "Enter an amount greater than 0",
-    "form.validation.invalidDateFormat": "Use the format YYYY/MM/DD",
     "form.validation.pickCategory": "Pick a category",
     "transactions.notFound": "Transaction not found",
     "transactions.delete.title": "Delete transaction",
@@ -306,6 +309,10 @@ export const translations = {
     "transactions.new.title": "Nueva transacción",
     "transactions.edit.title": "Editar transacción",
     "transactions.new.submit": "Crear",
+    "transactions.new.needAccount":
+      "Añade una cuenta primero para registrar transacciones.",
+    "transactions.new.needCategory":
+      "Añade una categoría primero para registrar transacciones.",
     "transactions.error.load": "No se pudieron cargar las transacciones",
     "transactions.empty.loading": "Cargando vista guardada de transacciones...",
     "transactions.empty.filtered":
@@ -491,7 +498,6 @@ export const translations = {
     "form.validation.required.date": "La fecha es obligatoria",
     "form.validation.invalidPositiveAmount":
       "Introduce una cantidad mayor que 0",
-    "form.validation.invalidDateFormat": "Usa el formato YYYY/MM/DD",
     "form.validation.pickCategory": "Elige una categoria",
     "transactions.notFound": "Transacción no encontrada",
     "transactions.delete.title": "Eliminar transacción",

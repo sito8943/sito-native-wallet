@@ -61,6 +61,8 @@ export const toCurrencyDetailsRoute = (id: number): Href => ({
   params: { id } satisfies DetailRouteParams,
 })
 
+export const toCategoriesRoute = (): Href => "/settings/categories"
+
 export const toNewCategoryRoute = (): Href => "/settings/categories/new"
 
 export const toCategoryPrefabsRoute = (): Href => "/settings/categories/prefabs"

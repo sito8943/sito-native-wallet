@@ -86,16 +86,6 @@ export default function AccountDetails(): ReactElement {
       <Page>
         <AccountCard account={account} actions={[adjustAction(account)]} />
 
-        {account.description !== undefined && (
-          <Typography
-            variant={TYPOGRAPHY_VARIANT.BODY}
-            tone={TYPOGRAPHY_TONE.MUTED}
-            style={styles.description}
-          >
-            {account.description}
-          </Typography>
-        )}
-
         <Typography variant={TYPOGRAPHY_VARIANT.TITLE} style={styles.heading}>
           {t("accounts.details.transactions", { count: transactions.length })}
         </Typography>
@@ -134,10 +124,6 @@ export default function AccountDetails(): ReactElement {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-  },
-  description: {
-    marginHorizontal: spacing(4),
-    marginTop: spacing(1),
   },
   heading: {
     marginHorizontal: spacing(4),

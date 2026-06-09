@@ -1,8 +1,13 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 
+import { BUTTON_VARIANT } from "#design/elements/Button"
+import Empty from "#design/templates/Empty"
 import Page from "#design/templates/Page"
+import { useAccounts } from "#features/accounts"
+import { useCategories } from "#features/categories"
 import { useI18n } from "#shared/i18n"
+import { toAccountsRoute, toCategoriesRoute } from "#shared/navigation"
 
 import { type AddTransactionDto } from "../dtos"
 import { TransactionForm } from "../TransactionForm"
@@ -20,10 +25,53 @@ export default function NewTransactionScreen({
   const router = useRouter()
   const { t } = useI18n()
   const { addTransaction } = useTransactions()
+  const { data: accounts } = useAccounts()
+  // A transaction needs an account and at least one (non-system) category, so
+  // both must exist before the form is usable.
+  const { data: categories } = useCategories({ includeSystem: false })
+
+  const hasAccounts = (accounts ?? []).length > 0
+  const hasCategories = categories.length > 0
 
   const handleSubmit = (values: AddTransactionDto): void => {
     addTransaction(values)
     router.back()
+  }
+
+  // Account first, then category — guide one missing prerequisite at a time,
+  // each with its own message and CTA.
+  if (!hasAccounts) {
+    return (
+      <Page scroll>
+        <Empty
+          message={t("transactions.new.needAccount")}
+          actions={[
+            {
+              children: t("accounts.add"),
+              variant: BUTTON_VARIANT.OUTLINED,
+              onPress: () => router.push(toAccountsRoute()),
+            },
+          ]}
+        />
+      </Page>
+    )
+  }
+
+  if (!hasCategories) {
+    return (
+      <Page scroll>
+        <Empty
+          message={t("transactions.new.needCategory")}
+          actions={[
+            {
+              children: t("categories.add"),
+              variant: BUTTON_VARIANT.OUTLINED,
+              onPress: () => router.push(toCategoriesRoute()),
+            },
+          ]}
+        />
+      </Page>
+    )
   }
 
   return (

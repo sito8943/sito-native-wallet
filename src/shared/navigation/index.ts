@@ -16,6 +16,7 @@ export {
   toNewCurrencyRoute,
   toCurrencyPrefabsRoute,
   toCategoryDetailsRoute,
+  toCategoriesRoute,
   toNewCategoryRoute,
   toCategoryPrefabsRoute,
   toSubscriptionProviderDetailsRoute,
