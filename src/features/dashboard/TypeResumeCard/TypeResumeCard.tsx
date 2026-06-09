@@ -9,7 +9,7 @@ import {
   TRANSACTION_TYPE,
   type TransactionType,
 } from "#features/categories/TransactionCategory"
-import { useTransactions } from "#features/transactions"
+import { useTransactionsTotal } from "#features/transactions"
 import { useI18n } from "#shared/i18n"
 
 import ActiveFilters from "../ActiveFilters"
@@ -21,12 +21,7 @@ import {
 } from "../DashboardCard"
 import OptionChips from "../OptionChips"
 import { useDashboard } from "../useDashboard"
-import {
-  formatAmount,
-  getTimeRange,
-  sumTransactions,
-  toAccountSnapshot,
-} from "../utils"
+import { formatAmount, getTimeRange, toAccountSnapshot } from "../utils"
 
 import { type TypeResumeCardProps } from "./types"
 import { parseConfig } from "./utils"
@@ -39,18 +34,21 @@ export default function TypeResumeCard({
 }: TypeResumeCardProps): ReactElement {
   const { t } = useI18n()
   const accounts = useAccounts().data ?? []
-  const { data: transactions } = useTransactions()
   const { updateTitle, updateConfig } = useDashboard()
   const [filtersOpen, setFiltersOpen] = useState(false)
 
   const config = parseConfig(card.config)
   const range = getTimeRange(config.time)
+  const date =
+    range.start !== undefined && range.end !== undefined
+      ? { start: range.start, end: range.end }
+      : undefined
 
-  const total = sumTransactions(transactions, {
+  // The client owns the aggregation; the card just describes what it wants.
+  const total = useTransactionsTotal({
     type: config.type,
-    accountIds: config.account ? [config.account.id] : undefined,
-    start: range.start,
-    end: range.end,
+    accountId: config.account?.id,
+    date,
   })
 
   // Currency follows the scoped account, else the first account.

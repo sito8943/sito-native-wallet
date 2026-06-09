@@ -1,64 +1,7 @@
-import { TRANSACTION_TYPE, type TransactionType } from "#features/categories"
-import { type Transaction } from "#features/transactions"
-
 import { TYPE_RESUME_TIME } from "./DashboardCard"
-import {
-  formatAmount,
-  getCurrentWeekRange,
-  getTimeRange,
-  sumTransactions,
-} from "./utils"
-
-const make = (
-  amount: number,
-  date: string,
-  type: TransactionType,
-  accountId = 1,
-): Transaction => ({
-  id: 1,
-  description: "x",
-  amount,
-  date,
-  account: { id: accountId, name: "A", currencySymbol: "€" },
-  categories: [{ id: 1, name: "c", color: "#000000", type }],
-})
+import { formatAmount, getCurrentWeekRange, getTimeRange } from "./utils"
 
 describe("Dashboard > utils", () => {
-  describe("sumTransactions", () => {
-    const data = [
-      make(10, "2026/06/05", TRANSACTION_TYPE.EXPENSE),
-      make(20, "2026/06/12", TRANSACTION_TYPE.EXPENSE),
-      make(99, "2026/06/12", TRANSACTION_TYPE.INCOME),
-      make(5, "2026/05/30", TRANSACTION_TYPE.EXPENSE),
-      make(7, "2026/06/12", TRANSACTION_TYPE.EXPENSE, 2),
-    ]
-
-    it("sums amounts matching type and date range", () => {
-      expect(
-        sumTransactions(data, {
-          type: TRANSACTION_TYPE.EXPENSE,
-          start: "2026/06/01",
-          end: "2026/06/30",
-        }),
-      ).toBe(37) // 10 + 20 + 7 (excludes income 99 and May 5)
-    })
-
-    it("scopes to the given account ids", () => {
-      expect(
-        sumTransactions(data, {
-          type: TRANSACTION_TYPE.EXPENSE,
-          accountIds: [1],
-          start: "2026/06/01",
-          end: "2026/06/30",
-        }),
-      ).toBe(30) // excludes the account-2 expense
-    })
-
-    it("returns 0 when nothing matches", () => {
-      expect(sumTransactions([], { type: TRANSACTION_TYPE.INCOME })).toBe(0)
-    })
-  })
-
   describe("getTimeRange", () => {
     const june = new Date(2026, 5, 15)
 

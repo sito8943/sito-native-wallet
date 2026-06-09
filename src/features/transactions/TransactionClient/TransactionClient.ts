@@ -71,6 +71,14 @@ export default class TransactionClient extends StorageClient<StoredTransaction> 
     )
   }
 
+  // Sum of the amounts matching the filters (e.g. a dashboard type-resume
+  // total). The aggregation is the backend's job — the UI just asks for it.
+  public total = (filters?: FilterTransactionDto): number =>
+    this.list({ pageSize: 0 }, filters).items.reduce(
+      (sum, transaction) => sum + transaction.amount,
+      0,
+    )
+
   public add = (input: AddTransactionDto): void => {
     const stored: StoredTransaction = { id: createId(), ...input }
     this.insert(stored)

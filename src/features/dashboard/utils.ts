@@ -1,13 +1,8 @@
 import { type Account } from "#features/accounts"
-import {
-  TRANSACTION_TYPE,
-  type TransactionType,
-} from "#features/categories/TransactionCategory"
-import { type Transaction } from "#features/transactions"
 import { type CommonAccountDto } from "#features/transactions/dtos"
 
 import { TYPE_RESUME_TIME, type TypeResumeTime } from "./DashboardCard"
-import { type DateRange, type SumFilter } from "./types"
+import { type DateRange } from "./types"
 
 // Snapshot stored in a card's config (matches the web wallet's persisted
 // account shape). Cards resolve the live account by `id` for the actual value.
@@ -21,11 +16,6 @@ const pad = (value: number): string => `${value}`.padStart(2, "0")
 
 const ymd = (date: Date): string =>
   `${date.getFullYear()}/${pad(date.getMonth() + 1)}/${pad(date.getDate())}`
-
-// A transaction's type comes from its (first) category, falling back to expense
-// — same rule as the transactions module's getTransactionType.
-const resolveTransactionType = (transaction: Transaction): TransactionType =>
-  transaction.categories[0]?.type ?? TRANSACTION_TYPE.EXPENSE
 
 // Current week, Sunday→Saturday, as YYYY/MM/DD strings (the app's stored date
 // format), so they compare lexicographically against transaction.date.
@@ -67,31 +57,6 @@ export const getTimeRange = (
       return {}
   }
 }
-
-// Sums transaction amounts matching type + optional account + optional date
-// range. Date comparison is plain string comparison (safe for fixed-width
-// YYYY/MM/DD).
-export const sumTransactions = (
-  transactions: Transaction[],
-  { type, accountIds, start, end }: SumFilter,
-): number =>
-  transactions
-    .filter((transaction) => {
-      if (resolveTransactionType(transaction) !== type) return false
-      if (
-        accountIds !== undefined &&
-        accountIds.length > 0 &&
-        !accountIds.includes(transaction.account.id)
-      )
-        return false
-      // Ranges are day-granular; transaction.date carries a time, so compare
-      // only its day portion (else same-day-as-`end` rows would be excluded).
-      const day = transaction.date.slice(0, 10)
-      if (start !== undefined && day < start) return false
-      if (end !== undefined && day > end) return false
-      return true
-    })
-    .reduce((total, transaction) => total + transaction.amount, 0)
 
 // "1234.50 €" — amount with two decimals plus the currency symbol (trimmed when
 // there's no symbol). Mirrors how TransactionCard renders amounts.

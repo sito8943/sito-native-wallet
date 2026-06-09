@@ -11,6 +11,7 @@ import {
   AccountAdjustBalanceSheet,
   AccountSelector,
   AccountVisual,
+  useAccount,
   useAccounts,
   useAdjustBalanceSheet,
 } from "#features/accounts"
@@ -34,17 +35,17 @@ export default function CurrentBalanceCard({
   card,
   onDelete,
 }: CurrentBalanceCardProps): ReactElement {
+  const config = parseConfig(card.config)
   const { t } = useI18n()
   const router = useRouter()
+  // accounts feeds the selector; the displayed account is resolved by the
+  // client (getById), not joined from the list in the UI.
   const accounts = useAccounts().data ?? []
+  const { data: account } = useAccount(config.account?.id ?? 0)
   const { updateTitle, updateConfig } = useDashboard()
   const { adjustBalance, addTransaction } = useTransactions()
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [addOpen, setAddOpen] = useState(false)
-
-  const config = parseConfig(card.config)
-  const account =
-    accounts.find((item) => item.id === config.account?.id) ?? null
 
   const noAccountLabel = t("dashboard.currentBalance.noAccount")
 

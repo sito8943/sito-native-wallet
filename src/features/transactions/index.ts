@@ -9,6 +9,7 @@ import { TransactionTypeBadge } from "./TransactionTypeBadge"
 import { useFilteredTransactions } from "./useFilteredTransactions"
 import { useInfiniteTransactions } from "./useInfiniteTransactions"
 import { useTransactions } from "./useTransactions"
+import { useTransactionsTotal } from "./useTransactionsTotal"
 
 export {
   NewTransactionScreen,
@@ -22,6 +23,7 @@ export {
   useFilteredTransactions,
   useInfiniteTransactions,
   useTransactions,
+  useTransactionsTotal,
 }
 export type { Transaction } from "./Transaction"
 export type { AddTransactionDto, FilterTransactionDto } from "./dtos"
