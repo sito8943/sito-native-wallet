@@ -1,8 +1,6 @@
 import { INITIAL_ACCOUNTS } from "#features/accounts"
 import { TRANSACTION_TYPE } from "#features/categories"
 
-import { type Transaction } from "../Transaction"
-import { getTransactionType, sortByDate } from "../Transaction"
 import {
   TRANSACTION_SORT_ORDER,
   TRANSACTION_TYPE_FILTER,
@@ -19,40 +17,6 @@ const isTransactionTypeFilter = (
   value === TRANSACTION_TYPE_FILTER.ALL ||
   value === TRANSACTION_TYPE.INCOME ||
   value === TRANSACTION_TYPE.EXPENSE
-
-const matchesTypeFilter = (
-  transaction: Transaction,
-  typeFilter: TransactionTypeFilter,
-): boolean => {
-  if (typeFilter === TRANSACTION_TYPE_FILTER.ALL) {
-    return true
-  }
-
-  return getTransactionType(transaction) === typeFilter
-}
-
-export const applyTransactionsPreferences = (
-  transactions: Transaction[],
-  preferences: TransactionsPreferences,
-): Transaction[] => {
-  const filtered = transactions.filter((transaction) => {
-    const matchesAccount =
-      preferences.accountId === 0 ||
-      transaction.account.id === preferences.accountId
-
-    return (
-      matchesAccount && matchesTypeFilter(transaction, preferences.typeFilter)
-    )
-  })
-
-  const sorted = sortByDate(filtered)
-
-  if (preferences.sortOrder === TRANSACTION_SORT_ORDER.OLDEST) {
-    return sorted.reverse()
-  }
-
-  return sorted
-}
 
 const parseTransactionsPreferences = (
   value: unknown,

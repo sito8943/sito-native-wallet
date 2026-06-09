@@ -2,10 +2,8 @@ import { useMemo } from "react"
 
 import { useAccounts } from "#features/accounts"
 import { useCategories } from "#features/categories"
-import { applyQuery, SORT_ORDER, useManager } from "#shared/data"
+import { SORT_ORDER, useManager } from "#shared/data"
 import { useClientStore } from "#shared/data/storage"
-
-import { matchesTransactionFilter, resolveTransactions } from "../Transaction"
 
 import {
   type UseTransactionsListProps,
@@ -13,17 +11,16 @@ import {
 } from "./types"
 
 // List hook with the full filter + sort + pagination contract (mirrors the web
-// wallet's useTransactionsList). Resolves the stored transactions, then runs
-// applyQuery with a predicate built from the filters. Filtering happens here
-// rather than on the client because it touches joined fields (type, category)
-// that only exist after resolution; an ApiClient would push filters/query to
-// the server instead.
+// wallet's useTransactionsList). Resolution + filtering live on the client (the
+// backend seam); this hook just subscribes to the relevant stores and forwards
+// the filters/query, the same way it would consume an API.
 export default function useTransactionsList({
   filters = {},
   query = {},
 }: UseTransactionsListProps = {}): UseTransactionsListState {
   const client = useManager().Transactions
   const { items, error, isLoading } = useClientStore(client)
+  // Subscribe so the list re-resolves when an account or category changes.
   const { data: accounts } = useAccounts()
   const { data: categories } = useCategories()
 
@@ -35,18 +32,11 @@ export default function useTransactionsList({
   const queryKey = JSON.stringify({ ...query, sortingBy, sortingOrder })
 
   const result = useMemo(
-    () => {
-      const resolved = resolveTransactions(items, accounts ?? [], categories)
-      return applyQuery(
-        resolved,
-        { ...query, sortingBy, sortingOrder },
-        matchesTransactionFilter(filters),
-      )
-    },
+    () => client.list({ ...query, sortingBy, sortingOrder }, filters),
     // filters/query are object literals; key on their content to avoid
     // recomputing on every render from a fresh reference.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [items, accounts, categories, filtersKey, queryKey],
+    [client, items, accounts, categories, filtersKey, queryKey],
   )
 
   return { result, error, isLoading }

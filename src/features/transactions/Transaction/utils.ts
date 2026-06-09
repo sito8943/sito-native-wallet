@@ -1,9 +1,13 @@
 import { type Account } from "#features/accounts"
+// Deep path on purpose: importing the #features/categories barrel here (a value
+// import) would close the Manager cycle once the TransactionClient imports this
+// module to resolve transactions. The TransactionCategory module has no such
+// dependency.
 import {
   TRANSACTION_TYPE,
   type TransactionCategory,
   type TransactionType,
-} from "#features/categories"
+} from "#features/categories/TransactionCategory"
 
 import {
   type CommonAccountDto,
@@ -15,16 +19,13 @@ import { type StoredTransaction } from "../TransactionClient"
 import { getMissingAccount } from "./constants"
 import { type Transaction } from "./types"
 
-export const sortByDate = (transactions: Transaction[]): Transaction[] =>
-  [...transactions].sort((a, b) => b.date.localeCompare(a.date))
-
 export const getTransactionType = (transaction: Transaction): TransactionType =>
   transaction.categories[0]?.type ?? TRANSACTION_TYPE.EXPENSE
 
 // Translates a FilterTransactionDto into a predicate over a resolved
-// transaction. Lives here (not in the client) because filtering touches joined
-// fields (type, category) that only exist after resolution. A future ApiClient
-// sends these filters to the server instead of matching in memory.
+// transaction, used by TransactionClient.list (the backend seam). Filtering
+// touches joined fields (type, category) that only exist after resolution; a
+// future ApiClient sends these filters to the server instead.
 export const matchesTransactionFilter =
   (filters: FilterTransactionDto) =>
   (transaction: Transaction): boolean => {

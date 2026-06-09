@@ -8,13 +8,23 @@ import {
   ADJUSTMENT_CATEGORY_ID,
   TRANSACTION_TYPE,
 } from "#features/categories/TransactionCategory"
+import {
+  applyQuery,
+  type QueryParam,
+  type QueryResult,
+} from "#shared/data/query"
 import { createId, StorageClient } from "#shared/data/storage"
 import { todayStamp } from "#shared/data/time"
 
 import { getDeviceLanguage, translate } from "../../../shared/i18n/utils"
 
 import { INITIAL_TRANSACTIONS } from "../demoData"
-import { type AddTransactionDto } from "../dtos"
+import { type AddTransactionDto, type FilterTransactionDto } from "../dtos"
+import {
+  matchesTransactionFilter,
+  resolveTransactions,
+  type Transaction,
+} from "../Transaction"
 
 import {
   TRANSACTIONS_ERROR_MESSAGE,
@@ -39,6 +49,26 @@ export default class TransactionClient extends StorageClient<StoredTransaction> 
     })
     this.#accounts = accounts
     this.#categories = categories
+  }
+
+  // Resolution lives here (the backend seam): join the stored id-only records
+  // with the live accounts/categories, then filter + sort + paginate. The UI
+  // just asks for the list; an ApiClient would return it already resolved.
+  public list = (
+    params: QueryParam<Transaction> = {},
+    filters?: FilterTransactionDto,
+  ): QueryResult<Transaction> => {
+    const resolved = resolveTransactions(
+      this.getAll(),
+      this.#accounts.getAll(),
+      this.#categories.getAll(),
+    )
+
+    return applyQuery(
+      resolved,
+      params,
+      filters === undefined ? undefined : matchesTransactionFilter(filters),
+    )
   }
 
   public add = (input: AddTransactionDto): void => {

@@ -1,5 +1,3 @@
-import { useMemo } from "react"
-
 import { useAccounts } from "#features/accounts"
 import { SORT_ORDER } from "#shared/data"
 import { useStoredState } from "#shared/data/storage"
@@ -20,12 +18,11 @@ import {
   TRANSACTIONS_PREFERENCES_STORAGE_KEY,
 } from "./constants"
 import { type UseFilteredTransactionsState } from "./types"
-import { applyTransactionsPreferences, parseStoredPreferences } from "./utils"
+import { parseStoredPreferences } from "./utils"
 
 export default function useFilteredTransactions(): UseFilteredTransactionsState {
   const { data: accounts } = useAccounts()
-  const { data: transactions, isLoading: isLoadingTransactions } =
-    useTransactions()
+  const { isLoading: isLoadingTransactions } = useTransactions()
   const { t } = useI18n()
 
   const {
@@ -41,14 +38,6 @@ export default function useFilteredTransactions(): UseFilteredTransactionsState 
   })
 
   const isLoading = isLoadingPreferences || isLoadingTransactions
-
-  const data = useMemo(() => {
-    if (isLoading) {
-      return null
-    }
-
-    return applyTransactionsPreferences(transactions, preferences)
-  }, [isLoading, transactions, preferences])
 
   // The stored preferences mapped onto the generic filter/query contract, so
   // the list hooks (useTransactionsList / useInfiniteTransactions) consume them
@@ -71,7 +60,6 @@ export default function useFilteredTransactions(): UseFilteredTransactionsState 
 
   return {
     accounts: accounts ?? [],
-    data,
     error,
     isLoading,
     preferences,

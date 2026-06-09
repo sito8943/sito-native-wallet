@@ -11,7 +11,6 @@ import {
 
 export type UseFilteredTransactionsState = {
   accounts: Account[]
-  data: Transaction[] | null
   error: Error | null
   isLoading: boolean
   preferences: TransactionsPreferences

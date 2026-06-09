@@ -6,7 +6,7 @@ import {
 
 export const DEFAULT_TRANSACTIONS_PREFERENCES: TransactionsPreferences = {
   accountId: 0,
-  sortOrder: TRANSACTION_SORT_ORDER.NEWEST,
+  sortOrder: TRANSACTION_SORT_ORDER.OLDEST,
   typeFilter: TRANSACTION_TYPE_FILTER.ALL,
 }
 
