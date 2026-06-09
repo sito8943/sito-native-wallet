@@ -84,7 +84,7 @@ const countActiveFilters = (
 ): number => {
   let count = 0
   if (preferences.typeFilter !== TRANSACTION_TYPE_FILTER.ALL) count++
-  if (preferences.sortOrder !== TRANSACTION_SORT_ORDER.OLDEST) count++
+  if (preferences.sortOrder !== TRANSACTION_SORT_ORDER.NEWEST) count++
   if (preferences.accountId !== 0) count++
   return count
 }
