@@ -9,7 +9,7 @@ import ActionMenu from "#design/patterns/ActionMenu"
 import { useThemeColors, useThemePreference } from "#design/theme"
 import { useI18n } from "#shared/i18n"
 
-import { ACCOUNT_TYPE, ACCOUNT_TYPE_LABEL } from "../Account"
+import { ACCOUNT_TYPE, accountMeta } from "../Account"
 
 import { type AccountCardProps } from "./types"
 import { getAccountCardTheme } from "./utils"
@@ -31,11 +31,7 @@ export default function AccountVisual({
   const isGradient = theme.mode === "gradient"
   const hasBank = account.bankName !== undefined
   const showBankName = hasBank && account.type === ACCOUNT_TYPE.DIGITAL
-  const meta = [
-    ACCOUNT_TYPE_LABEL[account.type],
-    account.currency.name,
-    account.currency.symbol,
-  ].join(" · ")
+  const meta = accountMeta(account)
 
   // Tappable area kept separate from the action row so tapping an action
   // doesn't also trigger the card press.

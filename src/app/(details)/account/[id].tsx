@@ -1,4 +1,4 @@
-import { useRouter } from "expo-router"
+import { Stack, useRouter } from "expo-router"
 import { type ReactElement, useRef, useState } from "react"
 import {
   ActivityIndicator,
@@ -12,7 +12,10 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { APP_ICONS } from "#design/elements/Icon"
-import { ICON_BUTTON_SIZE } from "#design/elements/IconButton"
+import {
+  ICON_BUTTON_SIZE,
+  ICON_BUTTON_VARIANT,
+} from "#design/elements/IconButton"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useDeleteDialog } from "#design/interactions"
@@ -27,7 +30,9 @@ import {
   useAccount,
   useAdjustBalanceSheet,
 } from "#features/accounts"
+import { useCategories } from "#features/categories"
 import {
+  makeDemoTransaction,
   type Transaction,
   TransactionList,
   useTransactions,
@@ -48,11 +53,14 @@ export default function AccountDetails(): ReactElement {
   const { data: account, isLoading } = useAccount(id)
   const {
     data: transactions,
+    addTransaction,
     adjustBalance,
     removeTransaction,
   } = useTransactions({
     accountId: id,
   })
+  // Dev-only seeding uses the user's real categories (system ones excluded).
+  const categories = useCategories({ includeSystem: false }).data
 
   const deleteDialog = useDeleteDialog<Transaction>({
     onConfirm: (transaction) => {
@@ -112,6 +120,8 @@ export default function AccountDetails(): ReactElement {
 
   return (
     <View style={styles.screen}>
+      {/* Title the top bar with the account name instead of the static label. */}
+      <Stack.Screen options={{ title: account.name }} />
       <Page>
         <TransactionList
           data={transactions}
@@ -145,6 +155,17 @@ export default function AccountDetails(): ReactElement {
           onMeasure={onHeaderMeasure}
         />
       </Page>
+      {/* Dev-only: seed a random demo transaction into this account. */}
+      {__DEV__ && (
+        <FAB
+          accessibilityLabel="Add demo transaction"
+          icon={APP_ICONS.prefabs}
+          size={ICON_BUTTON_SIZE.MD}
+          variant={ICON_BUTTON_VARIANT.OUTLINED}
+          onPress={() => addTransaction(makeDemoTransaction(id, categories))}
+          style={{ bottom: insets.bottom + spacing(28) }}
+        />
+      )}
       {/* Secondary action: edit, a smaller FAB stacked above the primary one. */}
       <FAB
         accessibilityLabel={t("accounts.edit.title")}

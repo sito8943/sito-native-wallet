@@ -5,13 +5,14 @@ import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useThemeColors } from "#design/theme"
 
+import { accountMeta } from "../Account"
 import { AccountCard } from "../AccountCard"
 
 import { type CollapsibleAccountHeaderProps } from "./types"
 
 // A sticky, scroll-linked account header for the account-details screen. It
 // floats above the transactions list and, as the user scrolls, shrinks the full
-// AccountCard down to a compact bar (name + balance) so transactions get the
+// AccountCard down to a compact bar (meta + balance) so transactions get the
 // space. The collapse is purely visual — the owner pads the list by the
 // expanded height so content meets the header edge with no gap (the height
 // shrinks 1:1 with the scroll offset over the collapse range).
@@ -73,7 +74,7 @@ export default function CollapsibleAccountHeader({
         pointerEvents="none"
       >
         <Typography variant={TYPOGRAPHY_VARIANT.BODY_STRONG} numberOfLines={1}>
-          {account.name}
+          {accountMeta(account)}
         </Typography>
         <Typography variant={TYPOGRAPHY_VARIANT.BODY_STRONG}>
           {account.balance.toFixed(2)} {account.currency.symbol}
@@ -93,9 +94,13 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   // Absolute with no bottom so its laid-out height is the natural card height,
-  // which onMeasure reports back to the owner for list padding.
+  // which onMeasure reports back to the owner for list padding. paddingTop
+  // gives the card breathing room below the nav header; it's baked into the
+  // measured height so list padding and the collapse range stay in sync.
   fullLayer: {
     left: 0,
+    padding: spacing(4),
+    paddingBottom: 0,
     position: "absolute",
     right: 0,
     top: 0,
@@ -103,10 +108,11 @@ const styles = StyleSheet.create({
   compactBar: {
     alignItems: "center",
     bottom: 0,
+    paddingHorizontal: spacing(4),
+    paddingVertical: spacing(2),
     flexDirection: "row",
     justifyContent: "space-between",
     left: 0,
-    paddingHorizontal: spacing(1),
     position: "absolute",
     right: 0,
   },

@@ -2,7 +2,7 @@ import { type Href } from "expo-router"
 
 import { type APP_ICONS } from "#design/elements/Icon"
 
-import { type TranslationKey } from "../../../shared/i18n/types"
+import { type TranslationKey } from "#shared-i18n/types"
 
 export type SettingsMenuItem = {
   href: Href

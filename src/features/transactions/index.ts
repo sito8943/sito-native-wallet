@@ -25,6 +25,7 @@ export {
   useTransactions,
   useTransactionsTotal,
 }
+export { makeDemoTransaction } from "./demoData"
 export type { Transaction } from "./Transaction"
 export type { AddTransactionDto, FilterTransactionDto } from "./dtos"
 export type { TransactionCardProps } from "./TransactionCard"
