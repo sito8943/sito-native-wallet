@@ -4,12 +4,16 @@ import { StyleSheet, View } from "react-native"
 import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import BottomSheet from "#design/patterns/BottomSheet"
+import { useThemeColors } from "#design/theme"
 import { AccountSelector, useAccounts } from "#features/accounts"
 import {
   TRANSACTION_TYPE,
   type TransactionType,
 } from "#features/categories/TransactionCategory"
-import { useTransactionsTotal } from "#features/transactions"
+import {
+  TransactionTypeBadge,
+  useTransactionsTotal,
+} from "#features/transactions"
 import { useI18n } from "#shared/i18n"
 
 import ActiveFilters from "../ActiveFilters"
@@ -33,6 +37,7 @@ export default function TypeResumeCard({
   onDelete,
 }: TypeResumeCardProps): ReactElement {
   const { t } = useI18n()
+  const colors = useThemeColors()
   const accounts = useAccounts().data ?? []
   const { updateTitle, updateConfig } = useDashboard()
   const [filtersOpen, setFiltersOpen] = useState(false)
@@ -90,6 +95,9 @@ export default function TypeResumeCard({
     t("dashboard.time.currentMonth")
   const accountLabel = config.account?.name ?? t("dashboard.filter.allAccounts")
 
+  const tone =
+    config.type === TRANSACTION_TYPE.INCOME ? colors.positive : colors.negative
+
   const update = (next: TypeResumeConfig) => {
     updateConfig(card.id, JSON.stringify(next))
   }
@@ -115,9 +123,14 @@ export default function TypeResumeCard({
           />
         }
       >
-        <Typography variant={TYPOGRAPHY_VARIANT.DISPLAY}>
-          {formatAmount(total, symbol)}
-        </Typography>
+        <View style={styles.value}>
+          <Typography variant={TYPOGRAPHY_VARIANT.DISPLAY} style={{ color: tone }}>
+            {formatAmount(total, symbol)}
+          </Typography>
+          <View style={styles.badge}>
+            <TransactionTypeBadge type={config.type} showText={false} />
+          </View>
+        </View>
       </CardFrame>
 
       <BottomSheet
@@ -179,5 +192,13 @@ export default function TypeResumeCard({
 const styles = StyleSheet.create({
   section: {
     gap: spacing(2),
+  },
+  value: {
+    position: "relative",
+  },
+  badge: {
+    position: "absolute",
+    right: 0,
+    bottom: 0,
   },
 })
