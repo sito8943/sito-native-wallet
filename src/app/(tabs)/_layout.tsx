@@ -4,7 +4,10 @@ import { Pressable, StyleSheet } from "react-native"
 
 import Avatar from "#design/elements/Avatar"
 import Icon, { APP_ICONS } from "#design/elements/Icon"
-import IconButton, { ICON_BUTTON_SIZE, ICON_BUTTON_VARIANT } from "#design/elements/IconButton"
+import IconButton, {
+  ICON_BUTTON_SIZE,
+  ICON_BUTTON_VARIANT,
+} from "#design/elements/IconButton"
 import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useThemeColors } from "#design/theme"

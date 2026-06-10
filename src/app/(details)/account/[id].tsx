@@ -12,10 +12,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { APP_ICONS } from "#design/elements/Icon"
-import {
-  ICON_BUTTON_SIZE,
-  ICON_BUTTON_VARIANT,
-} from "#design/elements/IconButton"
+import { ICON_BUTTON_SIZE } from "#design/elements/IconButton"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useDeleteDialog } from "#design/interactions"
@@ -161,7 +158,6 @@ export default function AccountDetails(): ReactElement {
           accessibilityLabel="Add demo transaction"
           icon={APP_ICONS.prefabs}
           size={ICON_BUTTON_SIZE.MD}
-          variant={ICON_BUTTON_VARIANT.OUTLINED}
           onPress={() => addTransaction(makeDemoTransaction(id, categories))}
           style={{ bottom: insets.bottom + spacing(28) }}
         />

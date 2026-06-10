@@ -124,7 +124,10 @@ export default function TypeResumeCard({
         }
       >
         <View style={styles.value}>
-          <Typography variant={TYPOGRAPHY_VARIANT.DISPLAY} style={{ color: tone }}>
+          <Typography
+            variant={TYPOGRAPHY_VARIANT.DISPLAY}
+            style={{ color: tone }}
+          >
             {formatAmount(total, symbol)}
           </Typography>
           <View style={styles.badge}>
