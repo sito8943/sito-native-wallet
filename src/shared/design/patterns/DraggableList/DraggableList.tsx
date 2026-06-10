@@ -17,7 +17,7 @@ export default function DraggableList<T>({
   keyExtractor,
   renderItem,
   onReorder,
-  gap = spacing(2),
+  gap = spacing(4),
   header,
   refreshing,
   onRefresh,
