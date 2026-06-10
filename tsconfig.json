@@ -7,7 +7,7 @@
       "#design/*": ["./src/shared/design/*/index.ts"],
       "#features/*": ["./src/features/*/index.ts"],
       "#shared/*": ["./src/shared/*/index.ts"],
-      "#shared-i18n/*": ["./src/shared/i18n/*.ts"]
+      "#i18n/*": ["./src/shared/i18n/*.ts"]
     },
     "strict": true
   },

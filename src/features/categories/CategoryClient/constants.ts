@@ -1,4 +1,4 @@
-import { getDeviceLanguage, translate } from "#shared-i18n/utils"
+import { getDeviceLanguage, translate } from "#i18n/utils"
 
 import { TRANSACTION_TYPE, type TransactionType } from "../TransactionCategory"
 

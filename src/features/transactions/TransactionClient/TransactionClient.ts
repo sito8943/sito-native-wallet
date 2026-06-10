@@ -16,7 +16,7 @@ import {
 import { createId, StorageClient } from "#shared/data/storage"
 import { todayStamp } from "#shared/data/time"
 
-import { getDeviceLanguage, translate } from "#shared-i18n/utils"
+import { getDeviceLanguage, translate } from "#i18n/utils"
 
 import { INITIAL_TRANSACTIONS } from "../demoData"
 import { type AddTransactionDto, type FilterTransactionDto } from "../dtos"

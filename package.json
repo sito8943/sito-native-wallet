@@ -8,7 +8,7 @@
     "#design/*": "./src/shared/design/*/index.ts",
     "#features/*": "./src/features/*/index.ts",
     "#shared/*": "./src/shared/*/index.ts",
-    "#shared-i18n/*": "./src/shared/i18n/*.ts"
+    "#i18n/*": "./src/shared/i18n/*.ts"
   },
   "scripts": {
     "lint": "npm run lint-typecheck && npm run lint-eslint && npm run lint-prettier && npm run lint-knip",
@@ -72,6 +72,7 @@
     "moduleNameMapper": {
       "^#design/(.*)$": "<rootDir>/src/shared/design/$1/index.ts",
       "^#features/(.*)$": "<rootDir>/src/features/$1/index.ts",
+      "^#i18n/(.*)$": "<rootDir>/src/shared/i18n/$1.ts",
       "^#shared/(.*)$": "<rootDir>/src/shared/$1/index.ts"
     }
   }

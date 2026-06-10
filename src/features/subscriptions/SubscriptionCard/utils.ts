@@ -1,4 +1,4 @@
-import { type TranslationKey } from "#shared-i18n/types"
+import { type TranslationKey } from "#i18n/types"
 
 type Translate = (
   key: TranslationKey,

@@ -1,8 +1,8 @@
 import { THEME_PREFERENCE, type ThemePreference } from "#design/theme"
 
-import { LANGUAGE } from "#shared-i18n/constants"
-import { type Language } from "#shared-i18n/types"
-import { getDeviceLanguage, translate } from "#shared-i18n/utils"
+import { LANGUAGE } from "#i18n/constants"
+import { type Language } from "#i18n/types"
+import { getDeviceLanguage, translate } from "#i18n/utils"
 
 export const PROFILE_PREFERENCES_STORAGE_KEY = "sito-wallet:profile"
 export const PROFILE_PREFERENCES_ERROR_MESSAGE = translate(

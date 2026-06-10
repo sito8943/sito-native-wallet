@@ -1,4 +1,4 @@
-import { type TranslationKey } from "#shared-i18n/types"
+import { type TranslationKey } from "#i18n/types"
 
 import { MS_PER_DAY, SUBSCRIPTION_BILLING_UNIT } from "./constants"
 import { type Subscription } from "./types"
