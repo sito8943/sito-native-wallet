@@ -21,7 +21,9 @@ import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import {
   AccountAdjustBalanceSheet,
+  COLLAPSED_HEADER_HEIGHT,
   CollapsibleAccountHeader,
+  DEFAULT_HEADER_HEIGHT,
   useAccount,
   useAdjustBalanceSheet,
 } from "#features/accounts"
@@ -37,11 +39,6 @@ import {
   toTransactionDetailsRoute,
   useDetailRouteParams,
 } from "#shared/navigation"
-
-// Compact (collapsed) height of the floating account header.
-const COLLAPSED_HEADER_HEIGHT = spacing(14)
-// Fallback expanded height, used until the real card height is measured.
-const DEFAULT_HEADER_HEIGHT = spacing(50)
 
 export default function AccountDetails(): ReactElement {
   const router = useRouter()

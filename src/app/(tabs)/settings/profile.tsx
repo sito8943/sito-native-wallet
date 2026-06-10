@@ -14,34 +14,16 @@ import {
 import Select from "#design/patterns/Select"
 import Page from "#design/templates/Page"
 import {
-  THEME_PREFERENCE,
   useThemedStyles,
   useThemePreference,
   type ThemeColors,
-  type ThemePreference,
 } from "#design/theme"
 import { useProfileInfo, profileInitials } from "#features/settings/ProfileInfo"
-import { LANGUAGE, useI18n, type Language } from "#shared/i18n"
-
-const APPEARANCE_OPTIONS: Array<{
-  labelKey:
-    | "profile.appearance.light"
-    | "profile.appearance.dark"
-    | "profile.appearance.system"
-  value: ThemePreference
-}> = [
-  { labelKey: "profile.appearance.light", value: THEME_PREFERENCE.LIGHT },
-  { labelKey: "profile.appearance.dark", value: THEME_PREFERENCE.DARK },
-  { labelKey: "profile.appearance.system", value: THEME_PREFERENCE.SYSTEM },
-]
-
-const LANGUAGE_OPTIONS: Array<{
-  labelKey: "profile.language.english" | "profile.language.spanish"
-  value: Language
-}> = [
-  { labelKey: "profile.language.english", value: LANGUAGE.EN },
-  { labelKey: "profile.language.spanish", value: LANGUAGE.ES },
-]
+import {
+  APPEARANCE_OPTIONS,
+  LANGUAGE_OPTIONS,
+} from "#features/settings/ProfilePreferences"
+import { LANGUAGE, useI18n } from "#shared/i18n"
 
 export default function Profile(): ReactElement {
   const styles = useThemedStyles(createStyles)
@@ -60,7 +42,7 @@ export default function Profile(): ReactElement {
   const selectedLanguageId = language === LANGUAGE.EN ? 1 : 2
 
   return (
-    <Page scroll>
+    <Page scroll contentContainerStyle={styles.content}>
       <Card>
         <View style={styles.identity}>
           <Avatar initials={initials} size={AVATAR_SIZE.LG} />
@@ -150,6 +132,9 @@ export default function Profile(): ReactElement {
 }
 
 const createStyles = (colors: ThemeColors) => ({
+  content: {
+    gap: spacing(4),
+  },
   copy: {
     gap: spacing(2),
     marginBottom: spacing(4),

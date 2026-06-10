@@ -12,6 +12,10 @@ export { INITIAL_ACCOUNTS } from "./demoData"
 export { ACCOUNT_PREFABS } from "./prefabs"
 export type { AccountPrefab } from "./types"
 export {
+  COLLAPSED_HEADER_HEIGHT,
+  DEFAULT_HEADER_HEIGHT,
+} from "./CollapsibleAccountHeader"
+export {
   ACCOUNT_BANK_NAME,
   ACCOUNT_BANK_OPTIONS,
   ACCOUNT_TYPE,

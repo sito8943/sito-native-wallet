@@ -241,7 +241,7 @@ export const translations = {
     "profile.appearance.system": "System",
     "profile.preferences.error": "Unable to persist profile preferences.",
     "profile.info.title": "Profile",
-    "profile.info.description": "Your name and a short bio.",
+    "profile.info.description": "Your name",
     "profile.info.name": "Name",
     "profile.info.namePlaceholder": "Your name",
     "profile.info.bio": "About",
@@ -556,7 +556,7 @@ export const translations = {
     "profile.preferences.error":
       "No se pudieron guardar las preferencias de perfil.",
     "profile.info.title": "Perfil",
-    "profile.info.description": "Tu nombre y una breve bio.",
+    "profile.info.description": "Tu nombre.",
     "profile.info.name": "Nombre",
     "profile.info.namePlaceholder": "Tu nombre",
     "profile.info.bio": "Acerca de",
