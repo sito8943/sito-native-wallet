@@ -22,7 +22,7 @@ import { useI18n } from "#shared/i18n"
 import { toAccountDetailsRoute } from "#shared/navigation"
 
 import { useDashboard } from "../../data/useDashboard"
-import { formatAmount, toAccountSnapshot } from "../../utils"
+import { toAccountSnapshot } from "../../utils"
 import ActiveFilters from "../ActiveFilters"
 import CardFrame from "../CardFrame"
 
