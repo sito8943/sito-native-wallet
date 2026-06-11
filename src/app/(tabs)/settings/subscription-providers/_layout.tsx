@@ -1,18 +1,11 @@
-import { router, Stack } from "expo-router"
+import { Stack } from "expo-router"
 import { type ReactElement } from "react"
 
-import { APP_ICONS } from "#design/elements/Icon"
-import IconButton, {
-  ICON_BUTTON_SIZE,
-  ICON_BUTTON_VARIANT,
-} from "#design/elements/IconButton"
-import { spacing } from "#design/foundations"
 import HeaderBackButton from "#design/patterns/HeaderBackButton"
 import { useThemeColors } from "#design/theme"
 import { useI18n } from "#shared/i18n"
 import {
   toSettingsRoute,
-  toSubscriptionProviderPrefabsRoute,
 } from "#shared/navigation"
 
 // Anchor deep pushes/links on index so prefabs/new always have a back button.
@@ -36,17 +29,6 @@ export default function Layout(): ReactElement {
         options={{
           title: t("subscriptionProviders.title"),
           headerLeft: () => <HeaderBackButton fallback={toSettingsRoute()} />,
-          headerRight: () => (
-            <IconButton
-              accessibilityLabel={t("subscriptionProviders.addCommon")}
-              icon={APP_ICONS.prefabs}
-              iconColor={colors.textStrong}
-              hitSlop={spacing(2)}
-              onPress={() => router.push(toSubscriptionProviderPrefabsRoute())}
-              variant={ICON_BUTTON_VARIANT.TEXT}
-              size={ICON_BUTTON_SIZE.LG}
-            />
-          ),
         }}
       />
       <Stack.Screen

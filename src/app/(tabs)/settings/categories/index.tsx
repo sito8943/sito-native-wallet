@@ -1,13 +1,16 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
+import { ICON_BUTTON_SIZE } from "#design/elements/IconButton"
 import { BUTTON_VARIANT } from "#design/elements/Button"
 import { APP_ICONS } from "#design/elements/Icon"
 import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import EntityList from "#design/patterns/EntityList"
 import FAB from "#design/patterns/FAB"
+import { spacing } from "#design/foundations"
 import Page from "#design/templates/Page"
 import {
   CategoryCard,
@@ -23,6 +26,7 @@ import {
 
 export default function Categories(): ReactElement {
   const router = useRouter()
+  const insets = useSafeAreaInsets()
   const { t } = useI18n()
   // System categories (balance adjustment) aren't user-managed — hide them.
   const { data, removeCategory } = useCategories({ includeSystem: false })
@@ -60,6 +64,13 @@ export default function Categories(): ReactElement {
           )}
         />
       </Page>
+      <FAB
+        accessibilityLabel={t("categories.addSuggested")}
+        icon={APP_ICONS.prefabs}
+        size={ICON_BUTTON_SIZE.MD}
+        onPress={() => router.push(toCategoryPrefabsRoute())}
+        style={{ bottom: insets.bottom + spacing(16) }}
+      />
       <FAB
         accessibilityLabel={t("categories.add")}
         icon={APP_ICONS.add}

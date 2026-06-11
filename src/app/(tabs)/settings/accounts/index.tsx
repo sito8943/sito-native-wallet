@@ -1,13 +1,16 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
+import { ICON_BUTTON_SIZE } from "#design/elements/IconButton"
 import { BUTTON_VARIANT } from "#design/elements/Button"
 import { APP_ICONS } from "#design/elements/Icon"
 import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import EntityList from "#design/patterns/EntityList"
 import FAB from "#design/patterns/FAB"
+import { spacing } from "#design/foundations"
 import Page from "#design/templates/Page"
 import {
   type Account,
@@ -26,6 +29,7 @@ import {
 
 export default function Accounts(): ReactElement {
   const router = useRouter()
+  const insets = useSafeAreaInsets()
   const { t } = useI18n()
   const { data, removeAccount } = useAccounts()
   const { adjustBalance } = useTransactions()
@@ -73,6 +77,13 @@ export default function Accounts(): ReactElement {
           )}
         />
       </Page>
+      <FAB
+        accessibilityLabel={t("accounts.addSuggested")}
+        icon={APP_ICONS.prefabs}
+        size={ICON_BUTTON_SIZE.MD}
+        onPress={() => router.push(toAccountPrefabsRoute())}
+        style={{ bottom: insets.bottom + spacing(16) }}
+      />
       <FAB
         accessibilityLabel={t("accounts.add")}
         icon={APP_ICONS.add}
