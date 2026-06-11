@@ -1,4 +1,4 @@
-import { TYPE_RESUME_TIME } from "./DashboardCard"
+import { TYPE_RESUME_TIME } from "./cards/DashboardCard"
 import { formatAmount, getCurrentWeekRange, getTimeRange } from "./utils"
 
 describe("Dashboard > utils", () => {

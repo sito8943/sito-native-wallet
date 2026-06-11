@@ -6,7 +6,10 @@ import { spacing } from "#design/foundations"
 import BottomSheet from "#design/patterns/BottomSheet"
 import { useI18n } from "#shared/i18n"
 
-import { DASHBOARD_CARD_TYPE, type DashboardCardType } from "../DashboardCard"
+import {
+  DASHBOARD_CARD_TYPE,
+  type DashboardCardType,
+} from "../../cards/DashboardCard"
 
 import { type AddCardSheetProps } from "./types"
 

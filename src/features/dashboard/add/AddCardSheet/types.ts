@@ -1,4 +1,4 @@
-import { type DashboardCardType } from "../DashboardCard"
+import { type DashboardCardType } from "../../cards/DashboardCard"
 
 export type AddCardSheetProps = {
   open: boolean

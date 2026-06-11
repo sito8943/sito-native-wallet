@@ -16,6 +16,8 @@ import {
 } from "#features/transactions"
 import { useI18n } from "#shared/i18n"
 
+import { useDashboard } from "../../data/useDashboard"
+import { formatAmount, getTimeRange, toAccountSnapshot } from "../../utils"
 import ActiveFilters from "../ActiveFilters"
 import CardFrame from "../CardFrame"
 import {
@@ -24,8 +26,6 @@ import {
   type TypeResumeTime,
 } from "../DashboardCard"
 import OptionChips from "../OptionChips"
-import { useDashboard } from "../useDashboard"
-import { formatAmount, getTimeRange, toAccountSnapshot } from "../utils"
 
 import { type TypeResumeCardProps } from "./types"
 import { parseConfig } from "./utils"

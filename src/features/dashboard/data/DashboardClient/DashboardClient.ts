@@ -1,7 +1,7 @@
 import { type QueryParam, type QueryResult } from "#shared/data"
 import { createId, StorageClient } from "#shared/data/storage"
 
-import { type DashboardCard } from "../DashboardCard"
+import { type DashboardCard } from "../../cards/DashboardCard"
 import { INITIAL_DASHBOARD } from "../demoData"
 import { type AddDashboardCardDto } from "../dtos"
 

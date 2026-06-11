@@ -21,10 +21,10 @@ import { TransactionFormSheet, useTransactions } from "#features/transactions"
 import { useI18n } from "#shared/i18n"
 import { toAccountDetailsRoute } from "#shared/navigation"
 
+import { useDashboard } from "../../data/useDashboard"
+import { formatAmount, toAccountSnapshot } from "../../utils"
 import ActiveFilters from "../ActiveFilters"
 import CardFrame from "../CardFrame"
-import { useDashboard } from "../useDashboard"
-import { toAccountSnapshot } from "../utils"
 
 import { type CurrentBalanceCardProps } from "./types"
 import { parseConfig } from "./utils"
