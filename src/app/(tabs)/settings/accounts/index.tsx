@@ -3,14 +3,14 @@ import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-import { ICON_BUTTON_SIZE } from "#design/elements/IconButton"
 import { BUTTON_VARIANT } from "#design/elements/Button"
 import { APP_ICONS } from "#design/elements/Icon"
+import { ICON_BUTTON_SIZE } from "#design/elements/IconButton"
+import { spacing } from "#design/foundations"
 import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import EntityList from "#design/patterns/EntityList"
 import FAB from "#design/patterns/FAB"
-import { spacing } from "#design/foundations"
 import Page from "#design/templates/Page"
 import {
   type Account,
