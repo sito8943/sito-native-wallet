@@ -6,10 +6,10 @@ import BottomSheet from "#design/patterns/BottomSheet"
 import { AccountSelector, useAccounts } from "#features/accounts"
 import { useI18n } from "#shared/i18n"
 
-import ActiveFilters from "../ActiveFilters"
-import CardFrame from "../CardFrame"
 import { useDashboard } from "../../data/useDashboard"
 import { formatAmount, toAccountSnapshot } from "../../utils"
+import ActiveFilters from "../ActiveFilters"
+import CardFrame from "../CardFrame"
 
 import { type CurrentBalanceCardProps } from "./types"
 import { parseConfig } from "./utils"
