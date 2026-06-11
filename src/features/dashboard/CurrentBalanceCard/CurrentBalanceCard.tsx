@@ -9,11 +9,13 @@ import BottomSheet from "#design/patterns/BottomSheet"
 import {
   type Account,
   AccountAdjustBalanceSheet,
+  AccountTransferSheet,
   AccountSelector,
   AccountVisual,
   useAccount,
   useAccounts,
   useAdjustBalanceSheet,
+  useTransferSheet,
 } from "#features/accounts"
 import { TransactionFormSheet, useTransactions } from "#features/transactions"
 import { useI18n } from "#shared/i18n"
@@ -43,7 +45,8 @@ export default function CurrentBalanceCard({
   const accounts = useAccounts().data ?? []
   const { data: account } = useAccount(config.account?.id ?? 0)
   const { updateTitle, updateConfig } = useDashboard()
-  const { adjustBalance, addTransaction } = useTransactions()
+  const { adjustBalance, addTransaction, transferTransaction } =
+    useTransactions()
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [addOpen, setAddOpen] = useState(false)
 
@@ -55,6 +58,18 @@ export default function CurrentBalanceCard({
       adjustBalance(target.id, newBalance, description)
     },
   })
+  const { action: transferAction, sheetProps: transferSheetProps } =
+    useTransferSheet({
+      onTransfer: (from, toAccountId, amount, date, description) => {
+        transferTransaction({
+          fromAccountId: from.id,
+          toAccountId,
+          amount,
+          date,
+          description,
+        })
+      },
+    })
 
   const selectAccount = (accountId: number) => {
     const selected = accounts.find((item) => item.id === accountId) ?? null
@@ -66,11 +81,17 @@ export default function CurrentBalanceCard({
     )
   }
 
-  // Corner actions on the account visual. The adjust action comes from the
-  // shared hook (non-sticky so it collapses into the overflow menu with the
-  // rest); the others bridge into add-transaction, the config sheet and delete.
+  const hasTransferTarget = (origin: Account): boolean =>
+    accounts.some(
+      (candidate) =>
+        candidate.id !== origin.id &&
+        candidate.currency.id === origin.currency.id,
+    )
+
+  // Corner actions on the account visual. Keep the primary money actions
+  // visible; card-management actions stay in the overflow to avoid a crowded
+  // header on the dashboard card.
   const cardActions = (acc: Account): Array<Action<Account>> => [
-    { ...adjustAction(acc), sticky: true },
     {
       id: ACTION_ID.ADD_TRANSACTION,
       sticky: true,
@@ -81,8 +102,13 @@ export default function CurrentBalanceCard({
       },
     },
     {
-      id: ACTION_ID.FILTERS,
+      ...transferAction(acc),
       sticky: true,
+      hidden: !hasTransferTarget(acc),
+    },
+    { ...adjustAction(acc), sticky: true },
+    {
+      id: ACTION_ID.FILTERS,
       icon: APP_ICONS.filter,
       accessibilityLabel: t("dashboard.card.filters"),
       onPress: () => {
@@ -91,7 +117,6 @@ export default function CurrentBalanceCard({
     },
     {
       id: ACTION_ID.DELETE,
-      sticky: true,
       icon: APP_ICONS.delete,
       accessibilityLabel: t("dashboard.card.delete.action"),
       onPress: () => {
@@ -154,6 +179,7 @@ export default function CurrentBalanceCard({
       </BottomSheet>
 
       <AccountAdjustBalanceSheet {...sheetProps} />
+      <AccountTransferSheet {...transferSheetProps} />
 
       <TransactionFormSheet
         open={addOpen}

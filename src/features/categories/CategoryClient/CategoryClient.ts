@@ -5,7 +5,11 @@ import {
 } from "#shared/data/query"
 import { createId, StorageClient } from "#shared/data/storage"
 
-import { ADJUSTMENT_CATEGORIES, INITIAL_CATEGORIES } from "../demoData"
+import {
+  ADJUSTMENT_CATEGORIES,
+  INITIAL_CATEGORIES,
+  TRANSFER_CATEGORIES,
+} from "../demoData"
 import { type AddCategoryDto, type FilterCategoryDto } from "../dtos"
 import { type TransactionCategory } from "../TransactionCategory"
 
@@ -65,6 +69,13 @@ export default class CategoryClient extends StorageClient<TransactionCategory> {
     const existing = new Set(this.getAll().map((category) => category.id))
     this.insertMany(
       ADJUSTMENT_CATEGORIES.filter((category) => !existing.has(category.id)),
+    )
+  }
+
+  public ensureTransferCategories = (): void => {
+    const existing = new Set(this.getAll().map((category) => category.id))
+    this.insertMany(
+      TRANSFER_CATEGORIES.filter((category) => !existing.has(category.id)),
     )
   }
 }

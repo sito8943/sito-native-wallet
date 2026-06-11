@@ -1,0 +1,1 @@
+export const TRANSFER_DESCRIPTION_LIMIT = 60

@@ -16,7 +16,11 @@ export {
   useCategories,
   useCategory,
 }
-export { ADJUSTMENT_CATEGORY_ID, TRANSACTION_TYPE } from "./TransactionCategory"
+export {
+  ADJUSTMENT_CATEGORY_ID,
+  TRANSFER_CATEGORY_ID,
+  TRANSACTION_TYPE,
+} from "./TransactionCategory"
 export type {
   TransactionCategory,
   TransactionType,

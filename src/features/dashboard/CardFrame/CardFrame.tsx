@@ -56,7 +56,7 @@ export default function CardFrame({
           accessibilityLabel={t("dashboard.card.filters")}
           icon={APP_ICONS.filter}
           variant={ICON_BUTTON_VARIANT.TEXT}
-          size={ICON_BUTTON_SIZE.MD}
+          size={ICON_BUTTON_SIZE.LG}
           color={colors.textMuted}
           onPress={onOpenFilters}
         />
@@ -64,7 +64,7 @@ export default function CardFrame({
           accessibilityLabel={t("dashboard.card.delete.action")}
           icon={APP_ICONS.delete}
           variant={ICON_BUTTON_VARIANT.TEXT}
-          size={ICON_BUTTON_SIZE.MD}
+          size={ICON_BUTTON_SIZE.LG}
           color={colors.negative}
           onPress={onDelete}
         />

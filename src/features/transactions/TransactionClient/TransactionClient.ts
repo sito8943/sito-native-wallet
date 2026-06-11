@@ -6,6 +6,7 @@ import { type AccountClient } from "#features/accounts/AccountClient"
 import { type CategoryClient } from "#features/categories/CategoryClient"
 import {
   ADJUSTMENT_CATEGORY_ID,
+  TRANSFER_CATEGORY_ID,
   TRANSACTION_TYPE,
 } from "#features/categories/TransactionCategory"
 import { getDeviceLanguage, translate } from "#i18n/utils"
@@ -18,7 +19,11 @@ import { createId, StorageClient } from "#shared/data/storage"
 import { todayStamp } from "#shared/data/time"
 
 import { INITIAL_TRANSACTIONS } from "../demoData"
-import { type AddTransactionDto, type FilterTransactionDto } from "../dtos"
+import {
+  type AddTransferDto,
+  type AddTransactionDto,
+  type FilterTransactionDto,
+} from "../dtos"
 import {
   matchesTransactionFilter,
   resolveTransactions,
@@ -82,6 +87,58 @@ export default class TransactionClient extends StorageClient<StoredTransaction> 
     const stored: StoredTransaction = { id: createId(), ...input }
     this.insert(stored)
     this.#applyToBalance(stored, 1)
+  }
+
+  public transfer = (input: AddTransferDto): void => {
+    const source = this.#accounts.getById(input.fromAccountId)
+    const target = this.#accounts.getById(input.toAccountId)
+
+    if (
+      source === undefined ||
+      target === undefined ||
+      source.id === target.id ||
+      source.currency.id !== target.currency.id ||
+      !Number.isFinite(input.amount) ||
+      input.amount <= 0
+    ) {
+      return
+    }
+
+    this.#categories.ensureTransferCategories()
+
+    const description = input.description?.trim()
+    const outgoing: StoredTransaction = {
+      id: createId(),
+      description:
+        description && description !== ""
+          ? description
+          : translate(getDeviceLanguage(), "transactions.transfer.out", {
+              account: target.name,
+            }),
+      amount: input.amount,
+      date: input.date,
+      accountId: source.id,
+      categoryIds: [TRANSFER_CATEGORY_ID.OUT],
+      auto: true,
+    }
+    const incoming: StoredTransaction = {
+      id: createId(),
+      description:
+        description && description !== ""
+          ? description
+          : translate(getDeviceLanguage(), "transactions.transfer.in", {
+              account: source.name,
+            }),
+      amount: input.amount,
+      date: input.date,
+      accountId: target.id,
+      categoryIds: [TRANSFER_CATEGORY_ID.IN],
+      auto: true,
+    }
+
+    this.insertMany([outgoing, incoming])
+    this.#applyToBalance(outgoing, 1)
+    this.#applyToBalance(incoming, 1)
   }
 
   public update = (id: number, input: AddTransactionDto): void => {

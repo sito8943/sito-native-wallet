@@ -27,7 +27,7 @@ export {
 }
 export { makeDemoTransaction } from "./demoData"
 export type { Transaction } from "./Transaction"
-export type { AddTransactionDto, FilterTransactionDto } from "./dtos"
+export type { AddTransferDto, AddTransactionDto, FilterTransactionDto } from "./dtos"
 export type { TransactionCardProps } from "./TransactionCard"
 export type { NewTransactionScreenProps } from "./NewTransactionScreen"
 export type { TransactionDetailScreenProps } from "./TransactionDetailScreen"

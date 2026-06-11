@@ -62,6 +62,17 @@ export const translations = {
     "accounts.adjust.validation.requiredBalance": "New balance is required",
     "accounts.adjust.validation.differentBalance":
       "Enter a balance different from the current one",
+    "accounts.transfer.title": "Transfer",
+    "accounts.transfer.submit": "Transfer",
+    "accounts.transfer.fromAccount": "From account",
+    "accounts.transfer.toAccount": "To account",
+    "accounts.transfer.toAccount.placeholder": "Search destination account",
+    "accounts.transfer.description": "Description",
+    "accounts.transfer.description.placeholder": "Optional note",
+    "accounts.transfer.needCompatibleAccount":
+      "Add another account with the same currency to create transfers.",
+    "accounts.transfer.validation.differentAccount":
+      "Choose a different destination account",
     "accounts.delete.title": "Delete account",
     "accounts.delete.message": 'Delete "{name}"? This cannot be undone.',
     "accounts.delete.description": "This account will be removed permanently.",
@@ -200,6 +211,8 @@ export const translations = {
     "transactions.empty.default": "No transactions available.",
     "transactions.unknownAccount": "Unknown account",
     "transactions.balanceAdjustment": "Balance adjustment",
+    "transactions.transfer.out": "Transfer to {account}",
+    "transactions.transfer.in": "Transfer from {account}",
     "transactions.filters.title": "Filters",
     "transactions.filters.activeCount": "{count} active",
     "transactions.filters.type": "Type",
@@ -365,6 +378,17 @@ export const translations = {
       "El nuevo saldo es obligatorio",
     "accounts.adjust.validation.differentBalance":
       "Introduce un saldo distinto del actual",
+    "accounts.transfer.title": "Transferencia",
+    "accounts.transfer.submit": "Transferir",
+    "accounts.transfer.fromAccount": "Cuenta origen",
+    "accounts.transfer.toAccount": "Cuenta destino",
+    "accounts.transfer.toAccount.placeholder": "Buscar cuenta destino",
+    "accounts.transfer.description": "Descripción",
+    "accounts.transfer.description.placeholder": "Nota opcional",
+    "accounts.transfer.needCompatibleAccount":
+      "Añade otra cuenta con la misma moneda para crear transferencias.",
+    "accounts.transfer.validation.differentAccount":
+      "Elige una cuenta destino distinta",
     "accounts.delete.title": "Eliminar cuenta",
     "accounts.delete.message":
       '¿Eliminar "{name}"? Esta acción no se puede deshacer.',
@@ -514,6 +538,8 @@ export const translations = {
     "transactions.empty.default": "No hay transacciones disponibles.",
     "transactions.unknownAccount": "Cuenta desconocida",
     "transactions.balanceAdjustment": "Ajuste de saldo",
+    "transactions.transfer.out": "Transferencia a {account}",
+    "transactions.transfer.in": "Transferencia desde {account}",
     "transactions.filters.title": "Filtros",
     "transactions.filters.activeCount": "{count} activos",
     "transactions.filters.type": "Tipo",

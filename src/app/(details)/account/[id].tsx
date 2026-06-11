@@ -21,11 +21,14 @@ import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import {
   AccountAdjustBalanceSheet,
+  AccountTransferSheet,
   COLLAPSED_HEADER_HEIGHT,
   CollapsibleAccountHeader,
   DEFAULT_HEADER_HEIGHT,
   useAccount,
+  useAccounts,
   useAdjustBalanceSheet,
+  useTransferSheet,
 } from "#features/accounts"
 import { useCategories } from "#features/categories"
 import {
@@ -48,11 +51,14 @@ export default function AccountDetails(): ReactElement {
   const insets = useSafeAreaInsets()
   const { id } = useDetailRouteParams()
   const { data: account, isLoading } = useAccount(id)
+  const { data: accountsData } = useAccounts()
+  const accounts = accountsData ?? []
   const {
     data: transactions,
     addTransaction,
     adjustBalance,
     removeTransaction,
+    transferTransaction,
   } = useTransactions({
     accountId: id,
   })
@@ -67,13 +73,25 @@ export default function AccountDetails(): ReactElement {
     message: t("transactions.delete.description"),
   })
 
-  // Account actions (currently just adjust balance). The client owns the
-  // adjustment logic; the screen only bridges the account id into it.
+  // Account actions create transactions via the client; this screen just
+  // bridges the selected account into those domain operations.
   const { action: adjustAction, sheetProps } = useAdjustBalanceSheet({
     onAdjust: (target, newBalance, description) => {
       adjustBalance(target.id, newBalance, description)
     },
   })
+  const { action: transferAction, sheetProps: transferSheetProps } =
+    useTransferSheet({
+      onTransfer: (from, toAccountId, amount, date, description) => {
+        transferTransaction({
+          fromAccountId: from.id,
+          toAccountId,
+          amount,
+          date,
+          description,
+        })
+      },
+    })
 
   // Scroll-linked collapsing header: the list reports its scroll offset, which
   // shrinks the floating AccountCard into a compact sticky bar. headerHeight is
@@ -115,6 +133,12 @@ export default function AccountDetails(): ReactElement {
     )
   }
 
+  const hasTransferTarget = accounts.some(
+    (candidate) =>
+      candidate.id !== account.id &&
+      candidate.currency.id === account.currency.id,
+  )
+
   return (
     <View style={styles.screen}>
       {/* Title the top bar with the account name instead of the static label. */}
@@ -145,7 +169,13 @@ export default function AccountDetails(): ReactElement {
         />
         <CollapsibleAccountHeader
           account={account}
-          actions={[adjustAction(account)]}
+          actions={[
+            {
+              ...transferAction(account),
+              hidden: !hasTransferTarget,
+            },
+            adjustAction(account),
+          ]}
           scrollY={scrollY}
           expandedHeight={headerHeight}
           collapsedHeight={COLLAPSED_HEADER_HEIGHT}
@@ -176,6 +206,7 @@ export default function AccountDetails(): ReactElement {
         icon={APP_ICONS.add}
         onPress={() => router.push(toNewTransactionRoute(account.id))}
       />
+      <AccountTransferSheet {...transferSheetProps} />
       <AccountAdjustBalanceSheet {...sheetProps} />
       <ConfirmationDialog {...deleteDialog} confirmLabel={t("common.delete")} />
     </View>

@@ -5,7 +5,7 @@ import { useCategories } from "#features/categories"
 import { SORT_ORDER, useManager } from "#shared/data"
 import { useClientStore } from "#shared/data/storage"
 
-import { type AddTransactionDto } from "../dtos"
+import { type AddTransferDto, type AddTransactionDto } from "../dtos"
 
 import { type UseTransactionsOptions, type UseTransactionsState } from "./types"
 
@@ -38,6 +38,9 @@ export default function useTransactions(
     isLoading,
     addTransaction: (input: AddTransactionDto) => {
       client.add(input)
+    },
+    transferTransaction: (input: AddTransferDto) => {
+      client.transfer(input)
     },
     updateTransaction: (id: number, input: AddTransactionDto) => {
       client.update(id, input)
