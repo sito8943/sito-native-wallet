@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { render } from "@testing-library/react-native"
 
-import { DASHBOARD_CARD_TYPE } from "../DashboardCard"
+import { DASHBOARD_CARD_TYPE } from "../cards/DashboardCard"
 
 import DashboardGrid from "./DashboardGrid"
 

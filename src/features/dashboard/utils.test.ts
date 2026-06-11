@@ -1,7 +1,7 @@
 import { TRANSACTION_TYPE, type TransactionType } from "#features/categories"
 import { type Transaction } from "#features/transactions"
 
-import { TYPE_RESUME_TIME } from "./DashboardCard"
+import { TYPE_RESUME_TIME } from "./cards/DashboardCard"
 import {
   formatAmount,
   getCurrentWeekRange,

@@ -20,13 +20,13 @@ import {
   type TypeResumeTime,
 } from "../DashboardCard"
 import OptionChips from "../OptionChips"
-import { useDashboard } from "../useDashboard"
+import { useDashboard } from "../../data/useDashboard"
 import {
   formatAmount,
   getTimeRange,
   sumTransactions,
   toAccountSnapshot,
-} from "../utils"
+} from "../../utils"
 
 import { type TypeResumeCardProps } from "./types"
 import { parseConfig } from "./utils"

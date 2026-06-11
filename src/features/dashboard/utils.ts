@@ -6,7 +6,7 @@ import {
 import { type Transaction } from "#features/transactions"
 import { type CommonAccountDto } from "#features/transactions/dtos"
 
-import { TYPE_RESUME_TIME, type TypeResumeTime } from "./DashboardCard"
+import { TYPE_RESUME_TIME, type TypeResumeTime } from "./cards/DashboardCard"
 import { type DateRange, type SumFilter } from "./types"
 
 // Snapshot stored in a card's config (matches the web wallet's persisted

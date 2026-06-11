@@ -10,7 +10,7 @@ import { CurrencyClient } from "#features/currencies/CurrencyClient"
 // Deep path on purpose: the #features/dashboard barrel pulls in the dashboard
 // components (which import the Manager through the data hooks), creating an
 // eval-time import cycle. The client folder has no such dependency.
-import { DashboardClient } from "#features/dashboard/DashboardClient"
+import { DashboardClient } from "#features/dashboard/data/DashboardClient"
 import { SubscriptionProviderClient } from "#features/subscriptionProviders/SubscriptionProviderClient"
 // Deep path on purpose: the #features/transactions barrel pulls in the
 // transaction hooks (which import the accounts/categories barrels and the

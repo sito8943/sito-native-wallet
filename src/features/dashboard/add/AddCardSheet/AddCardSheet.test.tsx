@@ -2,7 +2,7 @@ import { fireEvent, render } from "@testing-library/react-native"
 
 import { LANGUAGE, translate } from "#shared/i18n"
 
-import { DASHBOARD_CARD_TYPE } from "../DashboardCard"
+import { DASHBOARD_CARD_TYPE } from "../../cards/DashboardCard"
 
 import AddCardSheet from "./AddCardSheet"
 

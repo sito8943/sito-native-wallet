@@ -5,7 +5,7 @@ import FAB from "#design/patterns/FAB"
 import { useI18n } from "#shared/i18n"
 
 import AddCardSheet from "../AddCardSheet"
-import { useDashboard } from "../useDashboard"
+import { useDashboard } from "../../data/useDashboard"
 
 // Floating add-card action. Lives at screen level (outside the scroll) so the
 // FAB stays pinned while the dashboard scrolls; new cards append at the end.
