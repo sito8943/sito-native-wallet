@@ -4,9 +4,7 @@ import { type ReactElement } from "react"
 import HeaderBackButton from "#design/patterns/HeaderBackButton"
 import { useThemeColors } from "#design/theme"
 import { useI18n } from "#shared/i18n"
-import {
-  toSettingsRoute,
-} from "#shared/navigation"
+import { toSettingsRoute } from "#shared/navigation"
 
 // Anchor deep pushes/links on index so prefabs/new always have a back button.
 export const unstable_settings = {

@@ -45,11 +45,13 @@ export default function AccountTransferSheet({
       return []
     }
 
-    return accounts?.filter(
-      (candidate) =>
-        candidate.id !== account.id &&
-        candidate.currency.id === account.currency.id,
-    ) ?? []
+    return (
+      accounts?.filter(
+        (candidate) =>
+          candidate.id !== account.id &&
+          candidate.currency.id === account.currency.id,
+      ) ?? []
+    )
   }, [account, accounts])
 
   const accountOptions = useMemo(
@@ -160,7 +162,10 @@ export default function AccountTransferSheet({
                     return true
                   },
                 }}
-                render={({ field: { onChange, onBlur, value }, fieldState }) => (
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState,
+                }) => (
                   <TextField
                     label={t("form.transaction.amount")}
                     placeholder="0.00"
@@ -199,7 +204,10 @@ export default function AccountTransferSheet({
                     }),
                   },
                 }}
-                render={({ field: { onChange, onBlur, value }, fieldState }) => (
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState,
+                }) => (
                   <TextField
                     label={t("accounts.transfer.description")}
                     placeholder={t("accounts.transfer.description.placeholder")}
