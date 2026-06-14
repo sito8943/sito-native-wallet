@@ -4,11 +4,6 @@ import { type SettingsMenuItem } from "./types"
 
 export const settingsMenuItems: SettingsMenuItem[] = [
   {
-    href: "/sign-in",
-    labelKey: "settings.menu.signIn",
-    icon: APP_ICONS.login,
-  },
-  {
     href: "/settings/profile",
     labelKey: "settings.menu.profile",
     icon: APP_ICONS.profile,

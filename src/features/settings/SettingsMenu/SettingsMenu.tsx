@@ -7,6 +7,7 @@ import Icon, { APP_ICONS } from "#design/elements/Icon"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 import { useThemeColors } from "#design/theme"
+import { AuthMenuCard } from "#features/auth"
 import { useI18n } from "#shared/i18n"
 
 import { settingsMenuItems } from "./items"
@@ -17,6 +18,8 @@ export default function SettingsMenu(): ReactElement {
 
   return (
     <View style={styles.container}>
+      <AuthMenuCard />
+
       {settingsMenuItems.map((item) => (
         <Link key={item.labelKey} href={item.href} asChild>
           <Pressable>

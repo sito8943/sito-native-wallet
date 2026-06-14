@@ -7,6 +7,7 @@ import {
   AccountForm,
   AccountSelector,
 } from "#features/accounts"
+import { SessionProvider } from "#features/auth"
 import {
   TRANSACTION_TYPE,
   type TransactionCategory,
@@ -285,7 +286,11 @@ describe("Shared feature component smoke tests", () => {
   })
 
   it("renders SettingsMenu", () => {
-    const { getByText } = render(<SettingsMenu />)
+    const { getByText } = render(
+      <SessionProvider>
+        <SettingsMenu />
+      </SessionProvider>,
+    )
     expect(getByText("Profile")).toBeTruthy()
   })
 

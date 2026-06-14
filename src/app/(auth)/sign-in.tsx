@@ -8,6 +8,7 @@ import Page from "#design/templates/Page"
 import {
   authClient,
   SignInView,
+  useSession,
   WEB_RECOVERY_URL,
   type SignInFormValues,
 } from "#features/auth"
@@ -18,6 +19,7 @@ import { useI18n } from "#shared/i18n"
 export default function SignIn(): ReactElement {
   const router = useRouter()
   const { t } = useI18n()
+  const { logUser } = useSession()
   const dialog = useDialog()
   const [pending, setPending] = useState<SignInFormValues | null>(null)
   const [loading, setLoading] = useState(false)
@@ -34,7 +36,10 @@ export default function SignIn(): ReactElement {
 
     setLoading(true)
     try {
-      await authClient.login(pending)
+      // Real local-data wipe/replace happens in a later phase; for now logging
+      // in just persists the session (tokens + account snapshot).
+      const session = await authClient.login(pending)
+      await logUser(session)
       dialog.handleClose()
       router.replace("/home")
     } finally {

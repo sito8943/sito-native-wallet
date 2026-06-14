@@ -12,6 +12,7 @@ import {
   ThemeProvider,
   useThemePreference,
 } from "#design/theme"
+import { SessionProvider } from "#features/auth"
 import { LanguageProvider } from "#shared/i18n"
 import { OfflineBanner } from "#shared/network"
 
@@ -71,7 +72,9 @@ export default function Layout(): ReactElement | null {
     <GestureHandlerRootView style={styles.root}>
       <LanguageProvider>
         <ThemeProvider>
-          <RootNavigator />
+          <SessionProvider>
+            <RootNavigator />
+          </SessionProvider>
         </ThemeProvider>
       </LanguageProvider>
     </GestureHandlerRootView>
