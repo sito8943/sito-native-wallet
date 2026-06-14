@@ -8,4 +8,6 @@ export type SignInViewProps = {
   onSignUp: () => void
   onRecovery: () => void
   loading?: boolean
+  // Submit-level error (e.g. wrong credentials, server unreachable).
+  error?: string
 }

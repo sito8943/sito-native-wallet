@@ -7,6 +7,7 @@ import { spacing } from "#design/foundations"
 import Form from "#design/patterns/Form"
 import { useI18n } from "#shared/i18n"
 
+import AuthError from "../AuthError"
 import AuthHeader from "../AuthHeader"
 import AuthLink from "../AuthLink"
 import { EMAIL_PATTERN } from "../utils"
@@ -19,6 +20,7 @@ export default function SignUpView({
   onSubmit,
   onSignIn,
   loading = false,
+  error,
 }: SignUpViewProps): ReactElement {
   const { t } = useI18n()
   const { control, handleSubmit, setError } = useForm<SignUpFormValues>({
@@ -115,6 +117,8 @@ export default function SignUpView({
           />
         )}
       />
+
+      {error !== undefined && <AuthError message={error} />}
     </Form>
   )
 }

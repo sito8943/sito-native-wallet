@@ -7,6 +7,7 @@ import { ConfirmationDialog } from "#design/patterns/Dialog"
 import Page from "#design/templates/Page"
 import {
   authClient,
+  getAuthErrorKey,
   SignInView,
   useSession,
   WEB_RECOVERY_URL,
@@ -23,8 +24,10 @@ export default function SignIn(): ReactElement {
   const dialog = useDialog()
   const [pending, setPending] = useState<SignInFormValues | null>(null)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | undefined>(undefined)
 
   const requestLogin = (values: SignInFormValues): void => {
+    setError(undefined)
     setPending(values)
     dialog.handleOpen()
   }
@@ -42,6 +45,10 @@ export default function SignIn(): ReactElement {
       await logUser(session)
       dialog.handleClose()
       router.replace("/home")
+    } catch (caught) {
+      // Backend down/unreachable or bad credentials — surface it, don't enter.
+      dialog.handleClose()
+      setError(t(getAuthErrorKey(caught)))
     } finally {
       setLoading(false)
     }
@@ -51,6 +58,7 @@ export default function SignIn(): ReactElement {
     <Page scroll>
       <SignInView
         loading={loading}
+        error={error}
         onSubmit={requestLogin}
         onSignUp={() => router.push("/sign-up")}
         onRecovery={() => {

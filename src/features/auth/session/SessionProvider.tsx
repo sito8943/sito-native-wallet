@@ -1,4 +1,4 @@
-import { useCallback, useMemo, type ReactElement } from "react"
+import { useCallback, useEffect, useMemo, type ReactElement } from "react"
 
 // Deep import (not the #shared/data/storage barrel) to avoid a require cycle:
 // the barrel also pulls useClientStore → Manager → feature clients, and the
@@ -7,8 +7,10 @@ import { useCallback, useMemo, type ReactElement } from "react"
 import { useStoredState } from "#shared/data/storage/useStoredState"
 import { useI18n } from "#shared/i18n"
 
-import { SESSION_ACCOUNT_STORAGE_KEY } from "../constants"
+import { authClient } from "../AuthClient"
+import { SESSION_ACCOUNT_STORAGE_KEY, USE_MOCK_AUTH } from "../constants"
 import { type SessionAccountDto, type SessionDto } from "../dtos"
+import { AuthApiError } from "../restClient"
 import { clearSessionTokens, saveSessionTokens } from "../tokenStore"
 import { parseStoredAccount, toSessionSnapshot } from "../utils"
 
@@ -22,9 +24,11 @@ export function SessionProvider({
   children,
 }: SessionProviderProps): ReactElement {
   const { t } = useI18n()
-  const { data: account, isLoading, setData } = useStoredState<
-    SessionAccountDto | null
-  >({
+  const {
+    data: account,
+    isLoading,
+    setData,
+  } = useStoredState<SessionAccountDto | null>({
     errorMessage: t("auth.session.persistError"),
     initialValue: null,
     parseStoredValue: parseStoredAccount,
@@ -44,6 +48,38 @@ export function SessionProvider({
     setData(null)
   }, [setData])
 
+  // Once the snapshot has hydrated, validate it against the backend (the stored
+  // access token may have been revoked/expired). A 401 means the session is
+  // dead → drop it. Only runs with a real backend and an existing session.
+  useEffect(() => {
+    if (USE_MOCK_AUTH || isLoading || account === null) {
+      return
+    }
+
+    let active = true
+
+    void (async () => {
+      try {
+        const session = await authClient.getSession()
+        if (active) {
+          setData(toSessionSnapshot(session))
+        }
+      } catch (error) {
+        if (active && error instanceof AuthApiError && error.status === 401) {
+          await clearSessionTokens()
+          setData(null)
+        }
+      }
+    })()
+
+    return () => {
+      active = false
+    }
+    // Run once when hydration completes; we don't want to re-validate on every
+    // account change (logUser already writes a fresh snapshot).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading])
+
   const value = useMemo(
     () => ({
       account,
@@ -56,8 +92,6 @@ export function SessionProvider({
   )
 
   return (
-    <SessionContext.Provider value={value}>
-      {children}
-    </SessionContext.Provider>
+    <SessionContext.Provider value={value}>{children}</SessionContext.Provider>
   )
 }

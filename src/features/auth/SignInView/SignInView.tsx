@@ -7,6 +7,7 @@ import { spacing } from "#design/foundations"
 import Form from "#design/patterns/Form"
 import { useI18n } from "#shared/i18n"
 
+import AuthError from "../AuthError"
 import AuthHeader from "../AuthHeader"
 import AuthLink from "../AuthLink"
 import { EMAIL_PATTERN } from "../utils"
@@ -20,6 +21,7 @@ export default function SignInView({
   onSignUp,
   onRecovery,
   loading = false,
+  error,
 }: SignInViewProps): ReactElement {
   const { t } = useI18n()
   const { control, handleSubmit } = useForm<SignInFormValues>({
@@ -90,6 +92,8 @@ export default function SignInView({
           />
         )}
       />
+
+      {error !== undefined && <AuthError message={error} />}
     </Form>
   )
 }

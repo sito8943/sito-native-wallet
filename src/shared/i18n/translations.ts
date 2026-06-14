@@ -70,6 +70,10 @@ export const translations = {
     "auth.signedInAs": "Signed in as",
     "auth.signOut": "Sign out",
     "auth.session.persistError": "Couldn't save your session.",
+    "auth.error.invalidCredentials": "Wrong email or password.",
+    "auth.error.emailTaken": "That email is already registered.",
+    "auth.error.generic":
+      "Couldn't reach the server. Check your connection and try again.",
     "accounts.title": "Accounts",
     "accounts.new.title": "New account",
     "accounts.details.title": "Account details",
@@ -423,6 +427,10 @@ export const translations = {
     "auth.signedInAs": "Sesión iniciada como",
     "auth.signOut": "Cerrar sesión",
     "auth.session.persistError": "No se pudo guardar tu sesión.",
+    "auth.error.invalidCredentials": "Correo o contraseña incorrectos.",
+    "auth.error.emailTaken": "Ese correo ya está registrado.",
+    "auth.error.generic":
+      "No se pudo conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.",
     "accounts.title": "Cuentas",
     "accounts.new.title": "Nueva cuenta",
     "accounts.details.title": "Detalle de cuenta",

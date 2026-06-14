@@ -47,20 +47,13 @@ export default function AuthMenuCard(): ReactElement {
   return (
     <Card>
       <View style={styles.identity}>
-        <Icon
-          icon={APP_ICONS.profile}
-          color={colors.textStrong}
-          size={spacing(5)}
-        />
-        <View style={styles.identityCopy}>
-          <Typography
-            variant={TYPOGRAPHY_VARIANT.CAPTION}
-            tone={TYPOGRAPHY_TONE.MUTED}
-          >
-            {t("auth.signedInAs")}
-          </Typography>
-          <Typography>{account?.email ?? ""}</Typography>
-        </View>
+        <Typography
+          variant={TYPOGRAPHY_VARIANT.CAPTION}
+          tone={TYPOGRAPHY_TONE.MUTED}
+        >
+          {t("auth.signedInAs")}
+        </Typography>
+        <Typography>{account?.email ?? ""}</Typography>
       </View>
 
       <Pressable
@@ -96,14 +89,8 @@ const styles = StyleSheet.create({
     gap: spacing(4),
   },
   identity: {
-    alignItems: "center",
-    flexDirection: "row",
-    gap: spacing(4),
-    marginBottom: spacing(4),
-  },
-  identityCopy: {
-    flex: 1,
     gap: spacing(1),
+    marginBottom: spacing(4),
   },
   signOut: {
     alignItems: "center",

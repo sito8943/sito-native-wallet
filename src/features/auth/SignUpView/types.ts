@@ -9,4 +9,6 @@ export type SignUpViewProps = {
   onSubmit: (values: SignUpFormValues) => void
   onSignIn: () => void
   loading?: boolean
+  // Submit-level error (e.g. email already taken, server unreachable).
+  error?: string
 }

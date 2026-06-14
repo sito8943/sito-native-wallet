@@ -9,6 +9,9 @@ export type SessionDto<TExtra extends object = object> = {
   token: string
   refreshToken?: string | null
   accessTokenExpiresAt?: string | null
+  // Wallet extras the Java backend returns on the AuthDto.
+  admin?: boolean
+  emailConfirmed?: boolean
 } & TExtra
 
 // Public, token-free slice persisted to AsyncStorage so the app can show "who
