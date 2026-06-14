@@ -37,6 +37,8 @@ function RootNavigator(): ReactElement {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         {/* Shared detail screens (above the tabs); (details) owns its header. */}
         <Stack.Screen name="(details)" options={{ headerShown: false }} />
+        {/* Optional auth screens (above the tabs); (auth) owns its header. */}
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
       </Stack>
 
       <StatusBar style={isDark ? "light" : "dark"} />

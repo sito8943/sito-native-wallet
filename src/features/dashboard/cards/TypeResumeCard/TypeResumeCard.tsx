@@ -56,7 +56,9 @@ export default function TypeResumeCard({
     range.start !== undefined && range.end !== undefined
       ? { start: range.start, end: range.end }
       : undefined
-  const excludeCategory = config.excludeCategories.map((category) => category.id)
+  const excludeCategory = config.excludeCategories.map(
+    (category) => category.id,
+  )
 
   // The client owns the aggregation; the card just describes what it wants.
   const total = useTransactionsTotal({

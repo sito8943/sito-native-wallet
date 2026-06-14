@@ -28,6 +28,7 @@ import {
   faEllipsisVertical,
   faBell,
   faRightLeft,
+  faRightToBracket,
 } from "@fortawesome/free-solid-svg-icons"
 
 export const APP_ICONS: Record<string, IconProp> = {
@@ -58,4 +59,5 @@ export const APP_ICONS: Record<string, IconProp> = {
   filter: faFilter,
   more: faEllipsisVertical,
   notifications: faBell,
+  login: faRightToBracket,
 }

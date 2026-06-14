@@ -8,7 +8,10 @@ export const parseConfig = (raw: string | null): TypeResumeConfig => {
     // Spread the default so configs persisted before a field existed (e.g.
     // excludeCategories) still resolve to a complete shape.
     return raw
-      ? { ...DEFAULT_TYPE_RESUME_CONFIG, ...(JSON.parse(raw) as TypeResumeConfig) }
+      ? {
+          ...DEFAULT_TYPE_RESUME_CONFIG,
+          ...(JSON.parse(raw) as TypeResumeConfig),
+        }
       : DEFAULT_TYPE_RESUME_CONFIG
   } catch {
     return DEFAULT_TYPE_RESUME_CONFIG
