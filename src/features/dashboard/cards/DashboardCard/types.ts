@@ -1,5 +1,8 @@
 import { type TransactionType } from "#features/categories/TransactionCategory"
-import { type CommonAccountDto } from "#features/transactions/dtos"
+import {
+  type CommonAccountDto,
+  type CommonTransactionCategoryDto,
+} from "#features/transactions/dtos"
 import { type Timestamps } from "#shared/data/storage"
 
 import { type DASHBOARD_CARD_TYPE, type TYPE_RESUME_TIME } from "./constants"
@@ -32,9 +35,11 @@ export type CurrentBalanceConfig = {
   account: CommonAccountDto | null
 }
 
-// null account → every account.
+// null account → every account. `excludeCategories` drops transactions in those
+// categories from the total (snapshots, like `account`; resolved by id).
 export type TypeResumeConfig = {
   account: CommonAccountDto | null
   type: TransactionType
   time: TypeResumeTime
+  excludeCategories: CommonTransactionCategoryDto[]
 }

@@ -3,9 +3,11 @@ import { StyleSheet, View } from "react-native"
 
 import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import Autocomplete from "#design/patterns/Autocomplete"
 import BottomSheet from "#design/patterns/BottomSheet"
 import { useThemeColors } from "#design/theme"
 import { AccountSelector, useAccounts } from "#features/accounts"
+import { useCategories } from "#features/categories"
 import {
   TRANSACTION_TYPE,
   type TransactionType,
@@ -17,7 +19,12 @@ import {
 import { useI18n } from "#shared/i18n"
 
 import { useDashboard } from "../../data/useDashboard"
-import { formatAmount, getTimeRange, toAccountSnapshot } from "../../utils"
+import {
+  formatAmount,
+  getTimeRange,
+  toAccountSnapshot,
+  toCategorySnapshot,
+} from "../../utils"
 import ActiveFilters from "../ActiveFilters"
 import CardFrame from "../CardFrame"
 import {
@@ -39,6 +46,7 @@ export default function TypeResumeCard({
   const { t } = useI18n()
   const colors = useThemeColors()
   const accounts = useAccounts().data ?? []
+  const { data: categories } = useCategories()
   const { updateTitle, updateConfig } = useDashboard()
   const [filtersOpen, setFiltersOpen] = useState(false)
 
@@ -48,12 +56,14 @@ export default function TypeResumeCard({
     range.start !== undefined && range.end !== undefined
       ? { start: range.start, end: range.end }
       : undefined
+  const excludeCategory = config.excludeCategories.map((category) => category.id)
 
   // The client owns the aggregation; the card just describes what it wants.
   const total = useTransactionsTotal({
     type: config.type,
     accountId: config.account?.id,
     date,
+    excludeCategory,
   })
 
   // Currency follows the scoped account, else the first account.
@@ -95,6 +105,21 @@ export default function TypeResumeCard({
     t("dashboard.time.currentMonth")
   const accountLabel = config.account?.name ?? t("dashboard.filter.allAccounts")
 
+  // System categories (transfers, adjustments) aren't user-pickable, matching
+  // the transaction form's options.
+  const categoryOptions = categories
+    .filter((category) => category.system !== true)
+    .map((category) => ({ id: category.id, label: category.name }))
+
+  const excludeLabel =
+    config.excludeCategories.length > 0
+      ? t("dashboard.filter.excluding", {
+          categories: config.excludeCategories
+            .map((category) => category.name)
+            .join(", "),
+        })
+      : null
+
   const tone =
     config.type === TRANSACTION_TYPE.INCOME ? colors.positive : colors.negative
 
@@ -116,7 +141,9 @@ export default function TypeResumeCard({
         onDelete={onDelete}
         activeFilters={
           <ActiveFilters
-            labels={[typeLabel, timeLabel, accountLabel]}
+            labels={[typeLabel, timeLabel, accountLabel, excludeLabel].filter(
+              (label): label is string => label !== null,
+            )}
             onPress={() => {
               setFiltersOpen(true)
             }}
@@ -185,6 +212,26 @@ export default function TypeResumeCard({
               })
             }}
             allLabel={t("dashboard.filter.allAccounts")}
+          />
+        </View>
+
+        <View style={styles.section}>
+          <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>
+            {t("dashboard.filter.excludeCategories")}
+          </Typography>
+          <Autocomplete
+            multiple
+            placeholder={t("dashboard.filter.excludeCategories.placeholder")}
+            options={categoryOptions}
+            value={excludeCategory}
+            onChange={(ids) => {
+              update({
+                ...config,
+                excludeCategories: categories
+                  .filter((category) => ids.includes(category.id))
+                  .map(toCategorySnapshot),
+              })
+            }}
           />
         </View>
       </BottomSheet>

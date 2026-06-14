@@ -64,4 +64,25 @@ describe("Transactions > matchesTransactionFilter", () => {
     // 20 + 7 (both on the 12th, times ignored)
     expect(total).toBe(27)
   })
+
+  it("drops transactions whose category is excluded", () => {
+    const withCategory = (id: number, amount: number): Transaction => ({
+      id: amount,
+      description: "x",
+      amount,
+      date: "2026/06/12 09:00",
+      account: { id: 1, name: "A", currencySymbol: "€" },
+      categories: [
+        { id, name: "c", color: "#000000", type: TRANSACTION_TYPE.EXPENSE },
+      ],
+    })
+    const rows = [withCategory(1, 10), withCategory(2, 20), withCategory(3, 30)]
+
+    const total = rows
+      .filter(matchesTransactionFilter({ excludeCategory: [2, 3] }))
+      .reduce((acc, t) => acc + t.amount, 0)
+
+    // only category 1 survives
+    expect(total).toBe(10)
+  })
 })

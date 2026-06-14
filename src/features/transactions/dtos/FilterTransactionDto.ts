@@ -8,6 +8,9 @@ export type FilterTransactionDto = BaseFilterDto & {
   accountId?: number
   type?: TransactionType
   category?: number[]
+  // Drop transactions in any of these categories (e.g. a type-resume total that
+  // ignores transfers/refunds). Applied after `category` include.
+  excludeCategory?: number[]
   amount?: RangeValue<number>
   date?: RangeValue<string>
   description?: string

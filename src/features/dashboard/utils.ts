@@ -1,5 +1,9 @@
 import { type Account } from "#features/accounts"
-import { type CommonAccountDto } from "#features/transactions/dtos"
+import { type TransactionCategory } from "#features/categories"
+import {
+  type CommonAccountDto,
+  type CommonTransactionCategoryDto,
+} from "#features/transactions/dtos"
 
 import { TYPE_RESUME_TIME, type TypeResumeTime } from "./cards/DashboardCard"
 import { type DateRange } from "./types"
@@ -10,6 +14,17 @@ export const toAccountSnapshot = (account: Account): CommonAccountDto => ({
   id: account.id,
   name: account.name,
   currencySymbol: account.currency.symbol,
+})
+
+// Snapshot stored in a card's config; cards resolve the live category by `id`.
+export const toCategorySnapshot = (
+  category: TransactionCategory,
+): CommonTransactionCategoryDto => ({
+  id: category.id,
+  name: category.name,
+  description: category.description,
+  color: category.color,
+  type: category.type,
 })
 
 const pad = (value: number): string => `${value}`.padStart(2, "0")

@@ -53,6 +53,16 @@ export const matchesTransactionFilter =
       return false
     }
 
+    if (
+      filters.excludeCategory !== undefined &&
+      filters.excludeCategory.length > 0 &&
+      transaction.categories.some((category) =>
+        filters.excludeCategory?.includes(category.id),
+      )
+    ) {
+      return false
+    }
+
     if (filters.amount !== undefined) {
       const { start, end } = filters.amount
       if (start != null && transaction.amount < start) {
