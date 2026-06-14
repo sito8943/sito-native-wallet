@@ -1,6 +1,6 @@
 export type LogoProps = {
-  // Rendered width/height in dp (the mark is square).
-  size?: number
-  // Square tile vs. rounded corners (default rounded).
-  rounded?: boolean
+  // Rendered width in dp; height follows the glyph's aspect ratio.
+  width?: number
+  // Glyph fill. Defaults to the theme primary color.
+  color?: string
 }

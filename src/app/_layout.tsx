@@ -1,5 +1,7 @@
+import { Poppins_700Bold, useFonts } from "@expo-google-fonts/poppins"
 import { NavigationBar } from "expo-navigation-bar"
 import { Stack } from "expo-router"
+import * as SplashScreen from "expo-splash-screen"
 import { StatusBar } from "expo-status-bar"
 import { useEffect, type ReactElement } from "react"
 import { Platform, StyleSheet } from "react-native"
@@ -12,6 +14,11 @@ import {
 } from "#design/theme"
 import { LanguageProvider } from "#shared/i18n"
 import { OfflineBanner } from "#shared/network"
+
+// Hold the native splash until our fonts are ready so the brand wordmark never
+// flashes a fallback. Only Poppins (the wordmark) is custom; everything else
+// uses the system font.
+void SplashScreen.preventAutoHideAsync()
 
 function RootNavigator(): ReactElement {
   const { resolvedTheme } = useThemePreference()
@@ -46,7 +53,19 @@ function RootNavigator(): ReactElement {
   )
 }
 
-export default function Layout(): ReactElement {
+export default function Layout(): ReactElement | null {
+  const [fontsLoaded] = useFonts({ Poppins_700Bold })
+
+  useEffect(() => {
+    if (fontsLoaded) {
+      void SplashScreen.hideAsync()
+    }
+  }, [fontsLoaded])
+
+  if (!fontsLoaded) {
+    return null
+  }
+
   return (
     // Root wrapper required by react-native-gesture-handler.
     <GestureHandlerRootView style={styles.root}>
