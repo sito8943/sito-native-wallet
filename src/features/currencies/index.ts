@@ -2,6 +2,7 @@ import { CurrencyCard } from "./CurrencyCard"
 import { CurrencyClient } from "./CurrencyClient"
 import { CurrencyForm } from "./CurrencyForm"
 import { useCurrencies } from "./useCurrencies"
+import { useCurrenciesSync } from "./useCurrenciesSync"
 import { useCurrency } from "./useCurrency"
 
 export { INITIAL_CURRENCIES } from "./demoData"
@@ -12,6 +13,7 @@ export {
   CurrencyClient,
   CurrencyForm,
   useCurrencies,
+  useCurrenciesSync,
   useCurrency,
 }
 export type { Currency } from "./Currency"

@@ -16,6 +16,7 @@ import {
   type Currency,
   CurrencyCard,
   useCurrencies,
+  useCurrenciesSync,
 } from "#features/currencies"
 import { useI18n } from "#shared/i18n"
 import {
@@ -29,6 +30,8 @@ export default function Currencies(): ReactElement {
   const insets = useSafeAreaInsets()
   const { t } = useI18n()
   const { data, removeCurrency } = useCurrencies()
+  // Pull the user's currencies on sign-in and push local edits back (debounced).
+  useCurrenciesSync()
 
   const deleteDialog = useDeleteDialog<Currency>({
     onConfirm: (currency) => {

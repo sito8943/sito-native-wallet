@@ -1,4 +1,5 @@
 export { useManager } from "./useManager"
+export { manager } from "./Manager"
 export { todayStamp, formatStamp, parseStamp } from "./time"
 export {
   SORT_ORDER,

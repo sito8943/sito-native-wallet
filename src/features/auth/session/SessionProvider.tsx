@@ -1,8 +1,5 @@
 import { useCallback, useEffect, useMemo, type ReactElement } from "react"
 
-// The manager — used to wipe local data on sign-out. Safe to import here: no
-// entity client imports the auth feature, so there's no require cycle.
-import { useManager } from "#shared/data"
 // Deep import (not the #shared/data/storage barrel) to avoid a require cycle:
 // the barrel also pulls useClientStore → Manager → feature clients, and the
 // auth feature is itself imported early (root layout), which can leave
@@ -27,7 +24,6 @@ export function SessionProvider({
   children,
 }: SessionProviderProps): ReactElement {
   const { t } = useI18n()
-  const manager = useManager()
   const {
     data: account,
     isLoading,
@@ -50,10 +46,16 @@ export function SessionProvider({
   const logout = useCallback(async (): Promise<void> => {
     await clearSessionTokens()
     // Drop the signed-in user's local data so the next user (or guest) doesn't
-    // inherit it — and so the category sync can't push it under a new account.
+    // inherit it — and so the entity sync can't push it under a new account.
+    // Imported lazily (dynamic import, not a top-level one): SessionProvider
+    // loads in the root layout, so a static import would force the Manager and
+    // every entity client (+ AsyncStorage) to evaluate before the RN runtime is
+    // ready ("Cannot read property 'EventEmitter' of undefined"). Deferring to
+    // call time keeps that graph lazy.
+    const { manager } = await import("#shared/data")
     manager.clearLocalData()
     setData(null)
-  }, [manager, setData])
+  }, [setData])
 
   // Once the snapshot has hydrated, validate it against the backend (the stored
   // access token may have been revoked/expired). A 401 means the session is
