@@ -20,6 +20,19 @@ type RequestOptions = {
   auth?: boolean
 }
 
+// Abort a hung request so the UI never gets stuck "loading" forever (e.g. wrong
+// host, firewall, server not actually reachable from the device).
+const REQUEST_TIMEOUT_MS = 15000
+
+// Dev-only request tracing so you can see what's happening in the Metro
+// terminal instead of being blind. Stripped in production (__DEV__ === false).
+const log = (...args: unknown[]): void => {
+  if (__DEV__) {
+    // eslint-disable-next-line no-console
+    console.log("[auth]", ...args)
+  }
+}
+
 // Minimal JSON fetch against the wallet API. The real refresh-on-401 retry will
 // layer on top of this; for now a 401 surfaces as an AuthApiError the session
 // provider handles by logging out.
@@ -42,11 +55,34 @@ export async function authRequest<T>(
     }
   }
 
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    method,
-    headers,
-    body: body === undefined ? undefined : JSON.stringify(body),
-  })
+  const url = `${API_BASE_URL}${path}`
+  const controller = new AbortController()
+  const timeout = setTimeout(() => {
+    controller.abort()
+  }, REQUEST_TIMEOUT_MS)
+
+  log(`→ ${method} ${url}`)
+
+  let response: Response
+  try {
+    response = await fetch(url, {
+      method,
+      headers,
+      body: body === undefined ? undefined : JSON.stringify(body),
+      signal: controller.signal,
+    })
+  } catch (error) {
+    // Network failure or the timeout abort — surface it instead of hanging.
+    const reason = controller.signal.aborted
+      ? `timed out after ${REQUEST_TIMEOUT_MS}ms`
+      : String(error)
+    log(`✗ ${method} ${path} — ${reason}`)
+    throw new Error(`Request to ${path} failed: ${reason}`)
+  } finally {
+    clearTimeout(timeout)
+  }
+
+  log(`← ${response.status} ${method} ${path}`)
 
   if (!response.ok) {
     throw new AuthApiError(
