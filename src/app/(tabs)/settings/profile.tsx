@@ -18,7 +18,11 @@ import {
   useThemePreference,
   type ThemeColors,
 } from "#design/theme"
-import { useProfileInfo, profileInitials } from "#features/settings/ProfileInfo"
+import {
+  useProfileInfo,
+  useProfileSync,
+  profileInitials,
+} from "#features/settings/ProfileInfo"
 import {
   APPEARANCE_OPTIONS,
   LANGUAGE_OPTIONS,
@@ -30,6 +34,8 @@ export default function Profile(): ReactElement {
   const { preference, setPreference } = useThemePreference()
   const { isLoading, language, setLanguage, t } = useI18n()
   const { data: profile, setData: setProfile } = useProfileInfo()
+  // Load-only: refresh the local profile from the backend when signed in.
+  useProfileSync(setProfile)
   const initials = profileInitials(profile.name)
   const languageOptions = useMemo(
     () =>
