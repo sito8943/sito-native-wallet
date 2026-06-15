@@ -5,6 +5,9 @@ import {
 } from "#shared/data/query"
 import { createId, StorageClient } from "#shared/data/storage"
 
+// Type-only import: erased at runtime, so it can't form an eval-time cycle
+// through the Manager that constructs this client.
+import { type RemoteCategory } from "../categoriesClient"
 import {
   ADJUSTMENT_CATEGORIES,
   INITIAL_CATEGORIES,
@@ -76,6 +79,46 @@ export default class CategoryClient extends StorageClient<TransactionCategory> {
     const existing = new Set(this.getAll().map((category) => category.id))
     this.insertMany(
       TRANSFER_CATEGORIES.filter((category) => !existing.has(category.id)),
+    )
+  }
+
+  // --- Backend sync bookkeeping ---------------------------------------------
+  // These mutate via `mutate` (not patch/insert) on purpose: they record server
+  // state, not user edits, so they must NOT bump `updatedAt` or otherwise look
+  // like a local change to the push diff.
+
+  // Pull (insert-only): add backend categories we don't already track by
+  // remoteId. Existing local rows are left untouched (local edits win until
+  // pushed); the backend's own auto/system categories are skipped.
+  public mergeRemote = (remote: RemoteCategory[]): void => {
+    this.mutate((items) => {
+      const known = new Set(
+        items
+          .map((category) => category.remoteId)
+          .filter((id): id is number => id !== undefined),
+      )
+
+      const additions = remote
+        .filter((row) => row.auto !== true && !known.has(row.id))
+        .map<TransactionCategory>((row) => ({
+          id: createId(),
+          remoteId: row.id,
+          name: row.name,
+          description: row.description ?? undefined,
+          color: row.color ?? "#9e9e9e",
+          type: row.type,
+        }))
+
+      return additions.length === 0 ? items : [...items, ...additions]
+    })
+  }
+
+  // Record the backend id assigned to a locally-created category after its POST.
+  public attachRemoteId = (localId: number, remoteId: number): void => {
+    this.mutate((items) =>
+      items.map((category) =>
+        category.id === localId ? { ...category, remoteId } : category,
+      ),
     )
   }
 }

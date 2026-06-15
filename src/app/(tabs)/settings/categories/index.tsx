@@ -16,6 +16,7 @@ import {
   CategoryCard,
   type TransactionCategory,
   useCategories,
+  useCategoriesSync,
 } from "#features/categories"
 import { useI18n } from "#shared/i18n"
 import {
@@ -30,6 +31,8 @@ export default function Categories(): ReactElement {
   const { t } = useI18n()
   // System categories (balance adjustment) aren't user-managed — hide them.
   const { data, removeCategory } = useCategories({ includeSystem: false })
+  // Pull the user's categories on sign-in and push local edits back (debounced).
+  useCategoriesSync()
 
   const deleteDialog = useDeleteDialog<TransactionCategory>({
     onConfirm: (category) => {

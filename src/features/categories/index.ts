@@ -3,6 +3,7 @@ import { CategoryCard } from "./CategoryCard"
 import { CategoryClient } from "./CategoryClient"
 import { CategoryForm } from "./CategoryForm"
 import { useCategories } from "./useCategories"
+import { useCategoriesSync } from "./useCategoriesSync"
 import { useCategory } from "./useCategory"
 
 export { INITIAL_CATEGORIES } from "./demoData"
@@ -14,6 +15,7 @@ export {
   CategoryClient,
   CategoryForm,
   useCategories,
+  useCategoriesSync,
   useCategory,
 }
 export {

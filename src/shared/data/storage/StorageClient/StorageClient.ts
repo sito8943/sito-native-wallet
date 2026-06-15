@@ -183,6 +183,17 @@ export default abstract class StorageClient<
     this.delete(id)
   }
 
+  // Factory reset: drop all stored rows back to the seed and persist. Used on
+  // sign-in (the account's server data replaces the device's local data) and on
+  // sign-out (return to a clean guest state). Re-seeds infrastructure rows
+  // (e.g. system categories) so the app stays functional; the mutation ignores
+  // current items, so it overwrites rather than merges.
+  public clear = (): void => {
+    this.commit(() =>
+      this.config.initialValue.map((seed) => this.ensureTimestamps(seed)),
+    )
+  }
+
   // Escape hatch for bulk rewrites (e.g. reordering): apply a pure transform
   // over the whole list in one commit (one persist + one notify).
   protected mutate(mutation: Mutation<T>): void {

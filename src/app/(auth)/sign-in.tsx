@@ -13,6 +13,7 @@ import {
   WEB_RECOVERY_URL,
   type SignInFormValues,
 } from "#features/auth"
+import { useManager } from "#shared/data"
 import { useI18n } from "#shared/i18n"
 
 // Signing in replaces the device's local (guest) data with the account's
@@ -21,6 +22,7 @@ export default function SignIn(): ReactElement {
   const router = useRouter()
   const { t } = useI18n()
   const { logUser } = useSession()
+  const manager = useManager()
   const dialog = useDialog()
   const [pending, setPending] = useState<SignInFormValues | null>(null)
   const [loading, setLoading] = useState(false)
@@ -39,9 +41,12 @@ export default function SignIn(): ReactElement {
 
     setLoading(true)
     try {
-      // Real local-data wipe/replace happens in a later phase; for now logging
-      // in just persists the session (tokens + account snapshot).
       const session = await authClient.login(pending)
+      // The dialog warned the user: drop the device's local (guest) data so the
+      // account's server data replaces it. Each entity's sync re-pulls its rows
+      // from the backend once signed in. (Sign-up does NOT wipe — it uploads the
+      // local data instead.)
+      manager.clearLocalData()
       await logUser(session)
       dialog.handleClose()
       router.replace("/home")

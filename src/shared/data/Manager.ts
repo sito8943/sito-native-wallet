@@ -60,6 +60,20 @@ export class Manager {
       this.Categories,
     ))
   }
+
+  // Reset every entity's local store to its seed. Called on sign-in (the
+  // account's server data replaces the device's guest data) and on sign-out
+  // (clean guest state). Touching each getter instantiates the client lazily,
+  // so stores not yet created are reset on disk too — no stale data from a
+  // previous user lingers behind an un-instantiated client.
+  public clearLocalData = (): void => {
+    this.Accounts.clear()
+    this.Categories.clear()
+    this.Currencies.clear()
+    this.Dashboard.clear()
+    this.SubscriptionProviders.clear()
+    this.Transactions.clear()
+  }
 }
 
 export const manager = new Manager()
