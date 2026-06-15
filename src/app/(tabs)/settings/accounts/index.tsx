@@ -97,6 +97,7 @@ export default function Accounts(): ReactElement {
                   hidden: !hasTransferTarget(account),
                 },
                 adjustAction(account),
+                deleteDialog.action(account),
               ]}
               onPress={(selectedAccount) =>
                 router.push(toAccountDetailsRoute(selectedAccount.id))

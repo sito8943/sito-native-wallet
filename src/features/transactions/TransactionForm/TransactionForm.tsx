@@ -137,7 +137,12 @@ export default function TransactionForm({
       <Controller
         control={control}
         name="accountId"
-        rules={{ required: t("form.validation.required.account") }}
+        // `required` won't catch the "none" sentinel (0 is a present value to
+        // RHF), so validate that a real account (id > 0) was picked.
+        rules={{
+          validate: (value) =>
+            value > 0 || t("form.validation.required.account"),
+        }}
         render={({ field: { onChange, value }, fieldState }) => (
           <Autocomplete
             label={t("form.transaction.account")}

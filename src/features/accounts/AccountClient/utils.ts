@@ -13,6 +13,8 @@ const isAccount = (value: unknown): value is Account => {
 
   return (
     typeof candidate.id === "number" &&
+    (candidate.remoteId === undefined ||
+      typeof candidate.remoteId === "number") &&
     typeof candidate.name === "string" &&
     (candidate.description === undefined ||
       typeof candidate.description === "string") &&

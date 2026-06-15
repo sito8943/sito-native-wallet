@@ -1,5 +1,5 @@
 import { Stack, useRouter } from "expo-router"
-import { type ReactElement, useRef, useState } from "react"
+import { type ReactElement, useEffect, useRef, useState } from "react"
 import {
   ActivityIndicator,
   Animated,
@@ -13,13 +13,14 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { APP_ICONS } from "#design/elements/Icon"
 import { ICON_BUTTON_SIZE } from "#design/elements/IconButton"
-import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
+import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import {
+  type Account,
   AccountAdjustBalanceSheet,
   AccountTransferSheet,
   COLLAPSED_HEADER_HEIGHT,
@@ -50,7 +51,7 @@ export default function AccountDetails(): ReactElement {
   const { t } = useI18n()
   const insets = useSafeAreaInsets()
   const { id } = useDetailRouteParams()
-  const { data: account, isLoading } = useAccount(id)
+  const { data: account, isLoading, remove } = useAccount(id)
   const { data: accountsData } = useAccounts()
   const accounts = accountsData ?? []
   const {
@@ -71,6 +72,17 @@ export default function AccountDetails(): ReactElement {
     },
     title: t("transactions.delete.title"),
     message: t("transactions.delete.description"),
+  })
+
+  // Account delete surfaced on the card's action menu (so it's discoverable, not
+  // just swipe). remove() works by id; the detail leaves itself once the account
+  // is gone (effect below).
+  const accountDeleteDialog = useDeleteDialog<Account>({
+    onConfirm: () => {
+      remove()
+    },
+    title: t("accounts.delete.title"),
+    message: t("accounts.delete.description"),
   })
 
   // Account actions create transactions via the client; this screen just
@@ -112,23 +124,20 @@ export default function AccountDetails(): ReactElement {
     }
   }
 
-  if (isLoading) {
+  // If the account is gone — deleted here, from the edit form, or removed by a
+  // sync — leave the detail instead of stranding the user on a dead screen.
+  const exitedRef = useRef(false)
+  useEffect(() => {
+    if (!isLoading && account === null && !exitedRef.current) {
+      exitedRef.current = true
+      router.back()
+    }
+  }, [isLoading, account, router])
+
+  if (isLoading || account === null) {
     return (
       <Page centered>
         <ActivityIndicator />
-      </Page>
-    )
-  }
-
-  if (account === null) {
-    return (
-      <Page centered>
-        <Typography
-          variant={TYPOGRAPHY_VARIANT.BODY_STRONG}
-          tone={TYPOGRAPHY_TONE.MUTED}
-        >
-          {t("accounts.notFound")}
-        </Typography>
       </Page>
     )
   }
@@ -141,7 +150,7 @@ export default function AccountDetails(): ReactElement {
 
   return (
     <View style={styles.screen}>
-      {/* Title the top bar with the account name instead of the static label. */}
+      {/* Title the top bar with the account name. */}
       <Stack.Screen options={{ title: account.name }} />
       <Page>
         <TransactionList
@@ -175,6 +184,7 @@ export default function AccountDetails(): ReactElement {
               hidden: !hasTransferTarget,
             },
             adjustAction(account),
+            accountDeleteDialog.action(account),
           ]}
           scrollY={scrollY}
           expandedHeight={headerHeight}
@@ -209,6 +219,10 @@ export default function AccountDetails(): ReactElement {
       <AccountTransferSheet {...transferSheetProps} />
       <AccountAdjustBalanceSheet {...sheetProps} />
       <ConfirmationDialog {...deleteDialog} confirmLabel={t("common.delete")} />
+      <ConfirmationDialog
+        {...accountDeleteDialog}
+        confirmLabel={t("common.delete")}
+      />
     </View>
   )
 }

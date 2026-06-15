@@ -203,7 +203,12 @@ export default function AccountForm({
       <Controller
         control={control}
         name="currencyId"
-        rules={{ required: t("form.validation.required.currency") }}
+        // `required` won't catch the "none" sentinel (0 is a present value to
+        // RHF), so validate that a real currency (id > 0) was picked.
+        rules={{
+          validate: (value) =>
+            value > 0 || t("form.validation.required.currency"),
+        }}
         render={({ field: { onChange, value }, fieldState }) => (
           <Autocomplete
             label={t("form.account.currency")}

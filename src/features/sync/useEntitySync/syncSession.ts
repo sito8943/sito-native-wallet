@@ -9,6 +9,12 @@ import { type SyncBaseline } from "../syncEngine"
 let pulledForUser: number | null = null
 let hydrated = false
 const baselines = new Map<string, SyncBaseline>()
+// Serializes pushes: the orchestrator can run on more than one mount, and a
+// create is async (POST → attach remoteId), so two overlapping flushes would
+// both see remoteId-less rows and POST twice (the 2nd → 409). One flush runs at
+// a time; a change arriving mid-flush sets `rerunFlush` so it re-runs after.
+let flushing = false
+let rerunFlush = false
 
 export const syncSession = {
   // True once we've already pulled for this user, so a re-mount skips the pull.
@@ -26,6 +32,25 @@ export const syncSession = {
   },
   getBaseline: (label: string): SyncBaseline | undefined =>
     baselines.get(label),
+  // Run a push exactly once at a time across all mounts. If one is already
+  // running, flag a re-run (the live store state is re-read) instead of starting
+  // a concurrent one — preventing duplicate creates.
+  runFlush: async (task: () => Promise<void>): Promise<void> => {
+    if (flushing) {
+      rerunFlush = true
+      return
+    }
+    flushing = true
+    try {
+      do {
+        rerunFlush = false
+        await task()
+      } while (rerunFlush)
+    } finally {
+      flushing = false
+    }
+  },
+
   // Back to guest: forget everything so the next sign-in pulls fresh.
   reset: (): void => {
     pulledForUser = null

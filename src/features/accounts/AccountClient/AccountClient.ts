@@ -1,3 +1,4 @@
+import { type Currency } from "#features/currencies"
 import { type TransactionClient } from "#features/transactions/TransactionClient"
 import {
   textIncludes,
@@ -9,7 +10,9 @@ import { createId, StorageClient } from "#shared/data/storage"
 // Manager (a thunk), so this never imports the transactions barrel — that would
 // close the accounts ↔ transactions cycle (transactions already needs accounts).
 
-import { type Account } from "../Account"
+import { type Account, accountTypeFromCode } from "../Account"
+// Type-only: erased at runtime, so no eval-time cycle through the Manager.
+import { type RemoteAccount } from "../accountsClient"
 import { INITIAL_ACCOUNTS } from "../demoData"
 import { type AddAccountDto, type FilterAccountDto } from "../dtos"
 
@@ -75,5 +78,59 @@ export default class AccountClient extends StorageClient<Account> {
     this.patch(id, {
       balance: Math.round((account.balance + delta) * 100) / 100,
     })
+  }
+
+  // --- Backend sync bookkeeping ---------------------------------------------
+  // `mutate` (not insert/patch) on purpose: records server state, not user
+  // edits, so it must not bump `updatedAt` or look like a local change.
+
+  // Pull (insert-only): add backend accounts we don't already track by remoteId.
+  // Each row's currency (a backend id) is resolved to a local currency by
+  // remoteId — an account whose currency isn't synced yet is skipped (currencies
+  // pull first, so this is rare) and picked up on a later pull.
+  public mergeRemote = (
+    remote: RemoteAccount[],
+    resolveCurrency: (remoteCurrencyId: number) => Currency | undefined,
+  ): void => {
+    this.mutate((items) => {
+      const known = new Set(
+        items
+          .map((account) => account.remoteId)
+          .filter((id): id is number => id !== undefined),
+      )
+
+      const additions: Account[] = []
+      for (const row of remote) {
+        if (known.has(row.id)) {
+          continue
+        }
+        const currency =
+          row.currency != null ? resolveCurrency(row.currency.id) : undefined
+        if (currency === undefined) {
+          continue
+        }
+        additions.push({
+          id: createId(),
+          remoteId: row.id,
+          name: row.name,
+          description: row.description ?? undefined,
+          bankName: row.bankName ?? undefined,
+          balance: row.balance ?? 0,
+          type: accountTypeFromCode(row.type),
+          currency,
+        })
+      }
+
+      return additions.length === 0 ? items : [...items, ...additions]
+    })
+  }
+
+  // Record the backend id assigned to a locally-created account after its POST.
+  public attachRemoteId = (localId: number, remoteId: number): void => {
+    this.mutate((items) =>
+      items.map((account) =>
+        account.id === localId ? { ...account, remoteId } : account,
+      ),
+    )
   }
 }

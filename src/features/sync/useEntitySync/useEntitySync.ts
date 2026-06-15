@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from "react"
 
+import { accountsSync } from "#features/accounts"
 import { USE_MOCK_AUTH, useSession } from "#features/auth"
 import { categoriesSync } from "#features/categories"
 import { currenciesSync } from "#features/currencies"
@@ -28,6 +29,8 @@ export default function useEntitySync(): void {
     () => [
       bindSync(currenciesSync(manager)),
       bindSync(categoriesSync(manager)),
+      // After currencies: an account references a currency's remoteId.
+      bindSync(accountsSync(manager)),
     ],
     [manager],
   )
@@ -35,6 +38,7 @@ export default function useEntitySync(): void {
   // Re-render on any store change so the push effect re-evaluates the diff.
   const currenciesSnapshot = useClientStore(manager.Currencies)
   const categoriesSnapshot = useClientStore(manager.Categories)
+  const accountsSnapshot = useClientStore(manager.Accounts)
 
   // Pull once per signed-in user, in dependency order. No abort flag: the guard
   // already makes this run a single time, and the work writes to module state +
@@ -77,19 +81,26 @@ export default function useEntitySync(): void {
     }
 
     const handle = setTimeout(() => {
-      void (async () => {
+      void syncSession.runFlush(async () => {
         for (const sync of syncs) {
           const baseline = syncSession.getBaseline(sync.label)
           if (baseline !== undefined) {
             await sync.flush(baseline, { userId })
           }
         }
-      })()
+      })
     }, PUSH_DEBOUNCE_MS)
 
     return () => {
       clearTimeout(handle)
     }
     // The snapshots are the change triggers; manager/syncs are stable.
-  }, [currenciesSnapshot, categoriesSnapshot, isAuthenticated, userId, syncs])
+  }, [
+    currenciesSnapshot,
+    categoriesSnapshot,
+    accountsSnapshot,
+    isAuthenticated,
+    userId,
+    syncs,
+  ])
 }

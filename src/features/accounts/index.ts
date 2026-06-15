@@ -1,5 +1,6 @@
 import { AccountCard, AccountVisual } from "./AccountCard"
 import { AccountForm } from "./AccountForm"
+import { accountsSync } from "./accountsSync"
 import AccountTransferSheet from "./AccountTransferSheet"
 import { CollapsibleAccountHeader } from "./CollapsibleAccountHeader"
 import { useAccount } from "./useAccount"
@@ -30,6 +31,7 @@ export {
   AccountForm,
   AccountTransferSheet,
   CollapsibleAccountHeader,
+  accountsSync,
   useAccount,
   useAccounts,
   useAdjustBalanceSheet,
