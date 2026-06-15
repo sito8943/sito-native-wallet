@@ -14,7 +14,7 @@ export class AuthApiError extends Error {
 }
 
 type RequestOptions = {
-  method?: "GET" | "POST"
+  method?: "GET" | "POST" | "PATCH"
   body?: unknown
   // Attach the stored access token as a Bearer header (for /session, /sign-out).
   auth?: boolean
