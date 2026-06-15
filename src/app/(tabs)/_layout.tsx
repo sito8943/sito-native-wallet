@@ -12,6 +12,7 @@ import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useThemeColors } from "#design/theme"
 import { profileInitials, useProfileInfo } from "#features/settings/ProfileInfo"
+import { useEntitySync } from "#features/sync"
 import { useI18n } from "#shared/i18n"
 import { toProfileRoute } from "#shared/navigation"
 
@@ -21,6 +22,8 @@ export default function Layout(): ReactElement {
   const router = useRouter()
   const { data: profile } = useProfileInfo()
   const initials = profileInitials(profile.name)
+  // Pull every entity on sign-in and push local edits back, in dependency order.
+  useEntitySync()
   const resolveIconColor = (color: unknown): string | undefined =>
     typeof color === "string" ? color : undefined
 

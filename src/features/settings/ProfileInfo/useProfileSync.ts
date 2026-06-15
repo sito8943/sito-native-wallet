@@ -110,7 +110,11 @@ export default function useProfileSync({
     }
 
     const last = lastSyncedRef.current
-    if (last !== null && last.name === trimmedName && last.language === language) {
+    if (
+      last !== null &&
+      last.name === trimmedName &&
+      last.language === language
+    ) {
       return
     }
 
