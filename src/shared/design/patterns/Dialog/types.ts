@@ -3,7 +3,9 @@ import { type ReactNode } from "react"
 export type DialogProps = {
   open: boolean
   title: string
-  onClose: () => void
+  // Omit/undefined to make the dialog non-dismissible (no backdrop/back close),
+  // e.g. while an action is in flight.
+  onClose?: () => void
   children?: ReactNode
 }
 
