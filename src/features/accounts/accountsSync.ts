@@ -43,7 +43,13 @@ export const accountsSync = (
         name: account.name.trim(),
         description: account.description,
         bankName: account.bankName,
-        balance: account.balance,
+        // Send the balance MINUS this account's user (non-auto) transactions:
+        // those sync separately and the backend re-applies each, so subtracting
+        // them here avoids double-counting. Auto rows (opening balance,
+        // adjustments) don't sync, so their effect stays in the number.
+        balance:
+          account.balance -
+          manager.Transactions.userTransactionsEffect(account.id),
         type: accountTypeToCode(account.type),
         currencyId,
         userId,

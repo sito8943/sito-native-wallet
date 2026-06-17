@@ -29,6 +29,11 @@ import {
   resolveTransactions,
   type Transaction,
 } from "../Transaction"
+import { type RemoteTransaction } from "../transactionsClient"
+// Deep path on purpose: the transactionsClient barrel re-exports the REST client
+// (which imports #features/auth) — pulling that into this client (constructed by
+// the Manager) risks an eval-time cycle. The date utils have no such dependency.
+import { isoToStamp } from "../transactionsClient/utils"
 
 import {
   TRANSACTIONS_ERROR_MESSAGE,
@@ -207,14 +212,95 @@ export default class TransactionClient extends StorageClient<StoredTransaction> 
 
   // Income adds, expense subtracts; `direction` flips the sign to undo.
   #applyToBalance(stored: StoredTransaction, direction: 1 | -1): void {
+    this.#accounts.adjustBalance(
+      stored.accountId,
+      direction * this.#signedAmount(stored),
+    )
+  }
+
+  // The transaction's effect on its account's balance: +amount for income,
+  // −amount for expense (type read from the primary category).
+  #signedAmount(stored: StoredTransaction): number {
     const type =
       this.#categories
         .getAll()
         .find((category) => category.id === stored.categoryIds[0])?.type ??
       TRANSACTION_TYPE.EXPENSE
-    const signed =
-      type === TRANSACTION_TYPE.INCOME ? stored.amount : -stored.amount
 
-    this.#accounts.adjustBalance(stored.accountId, direction * signed)
+    return type === TRANSACTION_TYPE.INCOME ? stored.amount : -stored.amount
+  }
+
+  // --- Backend sync bookkeeping ---------------------------------------------
+  // `mutate` (not insert/patch/delete) on purpose: records server state, not a
+  // user edit, so it must NOT bump `updatedAt` or touch account balances — the
+  // accounts pull already brought each balance down, so re-applying a pulled
+  // transaction's effect would double-count it.
+
+  // Net effect on an account's balance of its NON-auto (user) transactions —
+  // exactly what the backend will re-apply once those transactions sync. The
+  // accounts push subtracts this from the balance it sends on CREATE, so the
+  // backend lands on the right balance without double-counting (auto rows like
+  // the opening "Initial transaction" and adjustments stay local, their effect
+  // baked into the sent balance).
+  public userTransactionsEffect = (accountId: number): number =>
+    this.getAll()
+      .filter((item) => item.auto !== true && item.accountId === accountId)
+      .reduce((sum, item) => sum + this.#signedAmount(item), 0)
+
+  // Pull (insert-only): add backend transactions we don't already track by
+  // remoteId. The account FK is resolved to a local account id (skip the row if
+  // its account isn't synced yet); categories are mapped to whatever local ids
+  // resolve (a backend auto category with no local match is simply dropped —
+  // display only, the balance comes from the account).
+  public mergeRemote = (
+    remote: RemoteTransaction[],
+    resolveAccount: (remoteAccountId: number) => number | undefined,
+    resolveCategory: (remoteCategoryId: number) => number | undefined,
+  ): void => {
+    this.mutate((items) => {
+      const known = new Set(
+        items
+          .map((item) => item.remoteId)
+          .filter((id): id is number => id !== undefined),
+      )
+
+      const additions: StoredTransaction[] = []
+      for (const row of remote) {
+        if (known.has(row.id) || row.account == null) {
+          continue
+        }
+        const accountId = resolveAccount(row.account.id)
+        if (accountId === undefined) {
+          continue
+        }
+        const remoteCategories =
+          row.categories ?? (row.category != null ? [row.category] : [])
+        const categoryIds = remoteCategories
+          .map((category) => resolveCategory(category.id))
+          .filter((id): id is number => id !== undefined)
+
+        additions.push({
+          id: createId(),
+          remoteId: row.id,
+          description: row.description ?? "",
+          amount: row.amount,
+          date: row.date != null ? isoToStamp(row.date) : todayStamp(),
+          accountId,
+          categoryIds,
+          auto: row.auto,
+        })
+      }
+
+      return additions.length === 0 ? items : [...items, ...additions]
+    })
+  }
+
+  // Record the backend id assigned to a locally-created transaction after POST.
+  public attachRemoteId = (localId: number, remoteId: number): void => {
+    this.mutate((items) =>
+      items.map((item) =>
+        item.id === localId ? { ...item, remoteId } : item,
+      ),
+    )
   }
 }

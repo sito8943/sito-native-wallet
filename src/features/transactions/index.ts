@@ -26,6 +26,7 @@ export {
   useTransactionsTotal,
 }
 export { makeDemoTransaction } from "./demoData"
+export { transactionsSync } from "./transactionsSync"
 export type { Transaction } from "./Transaction"
 export type {
   AddTransferDto,

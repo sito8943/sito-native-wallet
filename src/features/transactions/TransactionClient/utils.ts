@@ -9,6 +9,8 @@ const isStoredTransaction = (value: unknown): value is StoredTransaction => {
 
   return (
     typeof candidate.id === "number" &&
+    (candidate.remoteId === undefined ||
+      typeof candidate.remoteId === "number") &&
     typeof candidate.amount === "number" &&
     typeof candidate.accountId === "number" &&
     Array.isArray(candidate.categoryIds) &&

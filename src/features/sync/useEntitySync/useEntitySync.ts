@@ -5,6 +5,7 @@ import { USE_MOCK_AUTH, useSession } from "#features/auth"
 import { categoriesSync } from "#features/categories"
 import { currenciesSync } from "#features/currencies"
 import { profileSync, useProfileInfo } from "#features/settings/ProfileInfo"
+import { transactionsSync } from "#features/transactions"
 import { useManager } from "#shared/data"
 import { useClientStore } from "#shared/data/storage"
 import { useI18n } from "#shared/i18n"
@@ -35,6 +36,9 @@ export default function useEntitySync(): void {
       bindSync(categoriesSync(manager)),
       // After currencies: an account references a currency's remoteId.
       bindSync(accountsSync(manager)),
+      // After accounts AND categories: a transaction references both by their
+      // remoteIds.
+      bindSync(transactionsSync(manager)),
       // Singleton record: name (profile store) + language (i18n context).
       // Rebuilt when language changes so the push diffs against the new value.
       bindSingletonSync(profileSync({ language, setLanguage })),
@@ -46,6 +50,7 @@ export default function useEntitySync(): void {
   const currenciesSnapshot = useClientStore(manager.Currencies)
   const categoriesSnapshot = useClientStore(manager.Categories)
   const accountsSnapshot = useClientStore(manager.Accounts)
+  const transactionsSnapshot = useClientStore(manager.Transactions)
   // The profile name lives in its own store; language is already a `syncs` dep.
   const { data: profile } = useProfileInfo()
 
@@ -109,6 +114,7 @@ export default function useEntitySync(): void {
     currenciesSnapshot,
     categoriesSnapshot,
     accountsSnapshot,
+    transactionsSnapshot,
     profile.name,
     isAuthenticated,
     userId,
