@@ -1,4 +1,12 @@
+import { LANGUAGE, type Language } from "#shared/i18n"
+
 import { type ProfileInfo } from "./types"
+
+// Map a backend IETF BCP 47 tag ("en", "es", "es-ES") to an app language.
+// Tag-tolerant on purpose — i18n's parseLanguage demands an exact "es" and so
+// maps regional tags like "es-ES" to EN, which is wrong for backend values.
+export const parseLanguageTag = (tag: string): Language =>
+  tag.toLowerCase().startsWith("es") ? LANGUAGE.ES : LANGUAGE.EN
 
 export const getDefaultProfileInfo = (): ProfileInfo => ({
   name: "",

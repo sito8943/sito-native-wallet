@@ -1,4 +1,4 @@
 export { default as useProfileInfo } from "./useProfileInfo"
-export { default as useProfileSync } from "./useProfileSync"
+export { profileSync, resetProfileSync } from "./profileSync"
 export { profileInitials } from "./utils"
 export type { ProfileInfo } from "./types"

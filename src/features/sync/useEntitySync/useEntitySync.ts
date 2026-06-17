@@ -4,10 +4,12 @@ import { accountsSync } from "#features/accounts"
 import { USE_MOCK_AUTH, useSession } from "#features/auth"
 import { categoriesSync } from "#features/categories"
 import { currenciesSync } from "#features/currencies"
+import { profileSync, useProfileInfo } from "#features/settings/ProfileInfo"
 import { useManager } from "#shared/data"
 import { useClientStore } from "#shared/data/storage"
+import { useI18n } from "#shared/i18n"
 
-import { bindSync } from "../syncEngine"
+import { bindSingletonSync, bindSync } from "../syncEngine"
 
 import { PUSH_DEBOUNCE_MS } from "./constants"
 import { syncSession } from "./syncSession"
@@ -21,24 +23,31 @@ import { syncSession } from "./syncSession"
 export default function useEntitySync(): void {
   const { isAuthenticated, account } = useSession()
   const manager = useManager()
+  const { language, setLanguage } = useI18n()
   const userId = account?.id ?? null
 
   // Dependency order: a dependent entity (e.g. accounts → currencies) must come
-  // AFTER what it references, so the referenced rows have remoteIds first.
+  // AFTER what it references, so the referenced rows have remoteIds first. The
+  // profile is independent of the entities, so its position is free.
   const syncs = useMemo(
     () => [
       bindSync(currenciesSync(manager)),
       bindSync(categoriesSync(manager)),
       // After currencies: an account references a currency's remoteId.
       bindSync(accountsSync(manager)),
+      // Singleton record: name (profile store) + language (i18n context).
+      // Rebuilt when language changes so the push diffs against the new value.
+      bindSingletonSync(profileSync({ language, setLanguage })),
     ],
-    [manager],
+    [manager, language, setLanguage],
   )
 
   // Re-render on any store change so the push effect re-evaluates the diff.
   const currenciesSnapshot = useClientStore(manager.Currencies)
   const categoriesSnapshot = useClientStore(manager.Categories)
   const accountsSnapshot = useClientStore(manager.Accounts)
+  // The profile name lives in its own store; language is already a `syncs` dep.
+  const { data: profile } = useProfileInfo()
 
   // Pull once per signed-in user, in dependency order. No abort flag: the guard
   // already makes this run a single time, and the work writes to module state +
@@ -94,11 +103,13 @@ export default function useEntitySync(): void {
     return () => {
       clearTimeout(handle)
     }
-    // The snapshots are the change triggers; manager/syncs are stable.
+    // The snapshots are the change triggers; manager is stable. `syncs` rebuilds
+    // on a language change and `profile.name` triggers the profile push.
   }, [
     currenciesSnapshot,
     categoriesSnapshot,
     accountsSnapshot,
+    profile.name,
     isAuthenticated,
     userId,
     syncs,

@@ -1,9 +1,15 @@
 import {
   type BoundSync,
   type EntitySync,
+  type SingletonSync,
   type SyncBaseline,
   type SyncContext,
 } from "./types"
+
+// The fixed baseline key for a singleton record: it has no per-row local id, so
+// its one entry lives under a stable key in the same SyncBaseline map the
+// collection engine + syncSession already use — no separate storage shape.
+const SINGLETON_KEY = 0
 
 // Shallow-compare two field snapshots (same fixed keys per entity).
 const fieldsChanged = (
@@ -101,6 +107,49 @@ export const flush = async <T extends { id: number; remoteId?: number }, P>(
     }
   }
 }
+
+// Adapt a singleton record sync to the same BoundSync interface the collection
+// adapters expose, so the orchestrator drives both with one loop and stores the
+// baseline by label in syncSession unchanged. Only ever PATCHes: the record
+// exists server-side (no create), and is never deleted here.
+export const bindSingletonSync = <P>(sync: SingletonSync<P>): BoundSync => ({
+  label: sync.label,
+  pull: sync.pull,
+  buildBaseline: () => {
+    const baseline: SyncBaseline = new Map()
+    const remoteId = sync.remoteId()
+    // Only after a successful pull do we know the PATCH target + server state.
+    if (remoteId !== null) {
+      baseline.set(SINGLETON_KEY, { remoteId, fields: sync.fields() })
+    }
+    return baseline
+  },
+  flush: async (baseline: SyncBaseline, ctx: SyncContext) => {
+    const remoteId = sync.remoteId()
+    // Never pulled (offline at sign-in): no target, so nothing to push yet.
+    if (remoteId === null) {
+      return
+    }
+
+    const payload = sync.toPayload(ctx)
+    // Blank required field — wait for a real value.
+    if (payload === null) {
+      return
+    }
+
+    const base = baseline.get(SINGLETON_KEY)
+    if (base !== undefined && !fieldsChanged(base.fields, sync.fields())) {
+      return
+    }
+
+    try {
+      await sync.update(remoteId, payload)
+      baseline.set(SINGLETON_KEY, { remoteId, fields: sync.fields() })
+    } catch {
+      // Keep the stale baseline so the next change retries the update.
+    }
+  },
+})
 
 // Erase an adapter's T/P generics behind closures so a heterogeneous list of
 // adapters is uniformly typed (`BoundSync[]`) — each bound op stays correct

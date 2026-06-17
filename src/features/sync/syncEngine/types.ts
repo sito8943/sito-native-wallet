@@ -32,9 +32,28 @@ export type EntitySync<T extends { id: number; remoteId?: number }, P> = {
   remove: (remoteIds: number[]) => Promise<number>
 }
 
+// Sync adapter for a SINGLE remote record (e.g. the user profile) — the
+// singleton counterpart to EntitySync. No list/create/remove: the record always
+// exists server-side, so it's only ever pulled and PATCHed. `remoteId` is the
+// PATCH target captured during the pull; the engine diffs `fields()` against the
+// baseline to decide whether to push.
+export type SingletonSync<P> = {
+  label: string
+  // Pull the remote record and write it into local state. Owns its own client
+  // and stashes the remoteId for the subsequent push.
+  pull: () => Promise<void>
+  // The record's backend id from the last pull (PATCH target); null until then.
+  remoteId: () => number | null
+  // Snapshot of the synced fields, compared shallowly to detect edits.
+  fields: () => Record<string, unknown>
+  // Build the PATCH payload, or null to SKIP this push (blank required field).
+  toPayload: (ctx: SyncContext) => P | null
+  update: (remoteId: number, payload: P) => Promise<number>
+}
+
 // An EntitySync with its T/P generics erased behind closures, so a list of
 // differently-typed adapters is homogeneous and the orchestrator can iterate
-// it. Produced by `bindSync`.
+// it. Produced by `bindSync` (collections) or `bindSingletonSync` (single rows).
 export type BoundSync = {
   label: string
   pull: () => Promise<void>

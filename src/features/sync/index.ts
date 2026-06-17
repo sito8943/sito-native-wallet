@@ -1,7 +1,8 @@
 export { useEntitySync } from "./useEntitySync"
-export { buildBaseline, flush, bindSync } from "./syncEngine"
+export { buildBaseline, flush, bindSync, bindSingletonSync } from "./syncEngine"
 export type {
   EntitySync,
+  SingletonSync,
   BoundSync,
   SyncBaseline,
   SyncContext,

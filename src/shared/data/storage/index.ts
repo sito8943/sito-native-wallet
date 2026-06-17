@@ -9,3 +9,9 @@ export type {
   UseStoredStateResult,
 } from "./useStoredState"
 export { useClientStore } from "./useClientStore"
+export { RecordStore, useRecordStore } from "./RecordStore"
+export type {
+  RecordState,
+  RecordStoreConfig,
+  ReactiveRecord,
+} from "./RecordStore"

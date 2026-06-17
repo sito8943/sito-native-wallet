@@ -18,11 +18,7 @@ import {
   useThemePreference,
   type ThemeColors,
 } from "#design/theme"
-import {
-  useProfileInfo,
-  useProfileSync,
-  profileInitials,
-} from "#features/settings/ProfileInfo"
+import { useProfileInfo, profileInitials } from "#features/settings/ProfileInfo"
 import {
   APPEARANCE_OPTIONS,
   LANGUAGE_OPTIONS,
@@ -34,8 +30,8 @@ export default function Profile(): ReactElement {
   const { preference, setPreference } = useThemePreference()
   const { isLoading, language, setLanguage, t } = useI18n()
   const { data: profile, setData: setProfile } = useProfileInfo()
-  // Two-way: pull on sign-in, push name/language edits back (debounced).
-  useProfileSync({ name: profile.name, setProfile, language, setLanguage })
+  // Profile sync (pull on sign-in, debounced push of name/language edits) is
+  // driven centrally by useEntitySync — not here, so it runs app-wide.
   const initials = profileInitials(profile.name)
   const languageOptions = useMemo(
     () =>

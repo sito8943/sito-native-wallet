@@ -1,2 +1,8 @@
-export { buildBaseline, flush, bindSync } from "./syncEngine"
-export type { EntitySync, BoundSync, SyncBaseline, SyncContext } from "./types"
+export { buildBaseline, flush, bindSync, bindSingletonSync } from "./syncEngine"
+export type {
+  EntitySync,
+  SingletonSync,
+  BoundSync,
+  SyncBaseline,
+  SyncContext,
+} from "./types"

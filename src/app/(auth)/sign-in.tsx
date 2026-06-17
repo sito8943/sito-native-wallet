@@ -13,6 +13,7 @@ import {
   WEB_RECOVERY_URL,
   type SignInFormValues,
 } from "#features/auth"
+import { resetProfileSync } from "#features/settings/ProfileInfo"
 import { useManager } from "#shared/data"
 import { useI18n } from "#shared/i18n"
 
@@ -47,6 +48,7 @@ export default function SignIn(): ReactElement {
       // from the backend once signed in. (Sign-up does NOT wipe — it uploads the
       // local data instead.)
       manager.clearLocalData()
+      resetProfileSync()
       await logUser(session)
       dialog.handleClose()
       router.replace("/home")
