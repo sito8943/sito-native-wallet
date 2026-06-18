@@ -5,13 +5,20 @@ import {
 } from "#features/transactions/dtos"
 import { type Timestamps } from "#shared/data/storage"
 
-import { type DASHBOARD_CARD_TYPE, type TYPE_RESUME_TIME } from "./constants"
+import {
+  type BALANCE_HISTORY_PRESET,
+  type DASHBOARD_CARD_TYPE,
+  type TYPE_RESUME_TIME,
+} from "./constants"
 
 export type DashboardCardType =
   (typeof DASHBOARD_CARD_TYPE)[keyof typeof DASHBOARD_CARD_TYPE]
 
 export type TypeResumeTime =
   (typeof TYPE_RESUME_TIME)[keyof typeof TYPE_RESUME_TIME]
+
+export type BalanceHistoryPreset =
+  (typeof BALANCE_HISTORY_PRESET)[keyof typeof BALANCE_HISTORY_PRESET]
 
 // Stored dashboard card. `config` is a JSON string of the card-specific config
 // (kept opaque here so the store stays generic, exactly like the web wallet's
@@ -47,4 +54,11 @@ export type TypeResumeConfig = {
   type: TransactionType
   time: TypeResumeTime
   excludeCategories: CommonTransactionCategoryDto[]
+}
+
+// null account → the single account the user must pick (the chart plots one
+// account's balance over the `preset` window).
+export type BalanceHistoryConfig = {
+  account: CommonAccountDto | null
+  preset: BalanceHistoryPreset
 }

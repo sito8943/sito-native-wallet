@@ -41,7 +41,8 @@ export default function useEntitySync(): void {
       // After accounts AND categories: a transaction references both by their
       // remoteIds.
       bindSync(transactionsSync(manager)),
-      // Independent of the entities (no FK), so order is free.
+      // After accounts AND categories: a card's config snapshots them by backend
+      // id, which the pull remaps to local ids (see dashboardSync).
       bindSync(dashboardSync(manager)),
       bindSync(subscriptionProvidersSync(manager)),
       // Singleton record: name (profile store) + language (i18n context).

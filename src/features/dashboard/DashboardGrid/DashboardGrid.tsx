@@ -11,6 +11,7 @@ import { useAccounts } from "#features/accounts"
 import { useI18n } from "#shared/i18n"
 import { toAccountsRoute } from "#shared/navigation"
 
+import BalanceHistoryCard from "../cards/BalanceHistoryCard"
 import CurrentBalanceCard from "../cards/CurrentBalanceCard"
 import { DASHBOARD_CARD_TYPE, type DashboardCard } from "../cards/DashboardCard"
 import TypeResumeCard from "../cards/TypeResumeCard"
@@ -51,6 +52,8 @@ export default function DashboardGrid(): ReactElement {
         return <CurrentBalanceCard card={card} onDelete={onDelete} />
       case DASHBOARD_CARD_TYPE.TYPE_RESUME:
         return <TypeResumeCard card={card} onDelete={onDelete} />
+      case DASHBOARD_CARD_TYPE.BALANCE_HISTORY:
+        return <BalanceHistoryCard card={card} onDelete={onDelete} />
       default:
         return <View />
     }

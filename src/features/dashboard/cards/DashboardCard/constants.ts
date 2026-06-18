@@ -3,15 +3,30 @@
 // importing the barrel here would read TRANSACTION_TYPE before it's defined.
 import { TRANSACTION_TYPE } from "#features/categories/TransactionCategory"
 
-import { type CurrentBalanceConfig, type TypeResumeConfig } from "./types"
+import {
+  type BalanceHistoryConfig,
+  type CurrentBalanceConfig,
+  type TypeResumeConfig,
+} from "./types"
 
 // Card kinds the wallet can show. Values mirror the web wallet's
-// DashboardCardType enum (WeeklySpent = 1 and SubscriptionForecast = 3 are
-// intentionally omitted — SitoWallet doesn't port those cards). Gaps in the
-// values are kept so the persisted config stays wire-compatible.
+// DashboardCardType enum (WeeklySpent = 1 is deprecated and SubscriptionForecast
+// = 3 needs a Subscriptions entity SitoWallet doesn't have yet — both omitted).
+// Gaps in the values are kept so the persisted config stays wire-compatible.
 export const DASHBOARD_CARD_TYPE = {
   TYPE_RESUME: 0,
   CURRENT_BALANCE: 2,
+  BALANCE_HISTORY: 4,
+} as const
+
+// Time window for the BalanceHistory chart. Each preset maps to a set of date
+// boundaries (see getBalanceHistoryBoundaries). String values are SitoWallet's
+// own — there's no backend balance-history endpoint to stay compatible with.
+export const BALANCE_HISTORY_PRESET = {
+  LAST_7_DAYS: "last7Days",
+  LAST_30_DAYS: "last30Days",
+  LAST_90_DAYS: "last90Days",
+  LAST_12_MONTHS: "last12Months",
 } as const
 
 // Time window for the TypeResume total. String values mirror the web wallet's
@@ -34,4 +49,11 @@ export const DEFAULT_TYPE_RESUME_CONFIG: TypeResumeConfig = {
   type: TRANSACTION_TYPE.INCOME,
   time: TYPE_RESUME_TIME.CURRENT_MONTH,
   excludeCategories: [],
+}
+
+// No account selected → the card asks the user to pick one (like CurrentBalance,
+// a single account's series — no cross-currency aggregate).
+export const DEFAULT_BALANCE_HISTORY_CONFIG: BalanceHistoryConfig = {
+  account: null,
+  preset: BALANCE_HISTORY_PRESET.LAST_30_DAYS,
 }

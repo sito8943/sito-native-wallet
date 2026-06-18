@@ -30,6 +30,10 @@ export default function AddCardSheet({
       type: DASHBOARD_CARD_TYPE.TYPE_RESUME,
       label: t("dashboard.type.typeResume"),
     },
+    {
+      type: DASHBOARD_CARD_TYPE.BALANCE_HISTORY,
+      label: t("dashboard.type.balanceHistory"),
+    },
   ]
 
   return (

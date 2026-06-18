@@ -88,6 +88,33 @@ export default class TransactionClient extends StorageClient<StoredTransaction> 
       0,
     )
 
+  // An account's balance as of each boundary date, reconstructed from its
+  // current balance by undoing the signed effect of transactions dated after
+  // that boundary. Boundaries are YYYY/MM/DD (compared lexicographically
+  // against the stored date), ascending. Powers the dashboard balance-history
+  // card — the aggregation is the backend's job, so it lives here.
+  public balanceHistory = (
+    accountId: number,
+    boundaries: string[],
+  ): Array<{ date: string; balance: number }> => {
+    const account = this.#accounts.getById(accountId)
+    if (account === undefined) {
+      return []
+    }
+
+    const owned = this.getAll().filter((item) => item.accountId === accountId)
+
+    return boundaries.map((boundary) => {
+      const effectAfter = owned
+        .filter((item) => item.date > boundary)
+        .reduce((sum, item) => sum + this.#signedAmount(item), 0)
+      return {
+        date: boundary,
+        balance: Math.round((account.balance - effectAfter) * 100) / 100,
+      }
+    })
+  }
+
   public add = (input: AddTransactionDto): void => {
     const stored: StoredTransaction = { id: createId(), ...input }
     this.insert(stored)

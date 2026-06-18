@@ -5,8 +5,13 @@ import {
   type CommonTransactionCategoryDto,
 } from "#features/transactions/dtos"
 
-import { TYPE_RESUME_TIME, type TypeResumeTime } from "./cards/DashboardCard"
-import { type DateRange } from "./types"
+import {
+  BALANCE_HISTORY_PRESET,
+  TYPE_RESUME_TIME,
+  type BalanceHistoryPreset,
+  type TypeResumeTime,
+} from "./cards/DashboardCard"
+import { type DateRange, type RemoteIdResolver } from "./types"
 
 // Snapshot stored in a card's config (matches the web wallet's persisted
 // account shape). Cards resolve the live account by `id` for the actual value.
@@ -26,6 +31,51 @@ export const toCategorySnapshot = (
   color: category.color,
   type: category.type,
 })
+
+// A pulled card's `config` snapshots reference accounts/categories by their
+// BACKEND id, but the cards resolve the live row by LOCAL id (the two never
+// match — see Account.remoteId). Rewrite those ids to local ones so the card
+// fills its value; without this, pulled cards render empty (account → null,
+// total → 0). Locally-created cards already store local ids, so this only runs
+// on the merge of remote rows. Unresolved refs are dropped (account → null,
+// excluded category removed) rather than left pointing at a foreign id.
+export const remapCardConfigIds = (
+  config: string | null | undefined,
+  resolveAccountId: RemoteIdResolver,
+  resolveCategoryId: RemoteIdResolver,
+): string | null | undefined => {
+  if (!config) return config
+
+  let parsed: Record<string, unknown>
+  try {
+    parsed = JSON.parse(config) as Record<string, unknown>
+  } catch {
+    return config
+  }
+  if (typeof parsed !== "object" || parsed === null) return config
+
+  const next: Record<string, unknown> = { ...parsed }
+
+  const account = next.account as { id?: number } | null | undefined
+  if (account && typeof account.id === "number") {
+    const localId = resolveAccountId(account.id)
+    next.account = localId === undefined ? null : { ...account, id: localId }
+  }
+
+  const exclude = next.excludeCategories
+  if (Array.isArray(exclude)) {
+    next.excludeCategories = exclude
+      .map((raw) => {
+        const category = raw as { id?: number } | null
+        if (!category || typeof category.id !== "number") return null
+        const localId = resolveCategoryId(category.id)
+        return localId === undefined ? null : { ...category, id: localId }
+      })
+      .filter((category): category is { id: number } => category !== null)
+  }
+
+  return JSON.stringify(next)
+}
 
 const pad = (value: number): string => `${value}`.padStart(2, "0")
 
@@ -71,6 +121,44 @@ export const getTimeRange = (
     default:
       return {}
   }
+}
+
+// Ascending YYYY/MM/DD boundary dates for a balance-history preset — the points
+// the chart plots the account balance at. Daily for the short windows, weekly
+// for 90 days, end-of-month for the year, to keep the point count readable.
+export const getBalanceHistoryBoundaries = (
+  preset: BalanceHistoryPreset,
+  today = new Date(),
+): string[] => {
+  const dates: Date[] = []
+  const dayBack = (days: number): Date => {
+    const date = new Date(today)
+    date.setDate(today.getDate() - days)
+    return date
+  }
+
+  switch (preset) {
+    case BALANCE_HISTORY_PRESET.LAST_7_DAYS:
+      for (let i = 6; i >= 0; i -= 1) dates.push(dayBack(i))
+      break
+    case BALANCE_HISTORY_PRESET.LAST_30_DAYS:
+      // Every ~3 days → ~11 points, enough to show the trend without crowding.
+      for (let i = 30; i >= 0; i -= 3) dates.push(dayBack(i))
+      break
+    case BALANCE_HISTORY_PRESET.LAST_90_DAYS:
+      for (let i = 12; i >= 0; i -= 1) dates.push(dayBack(i * 7))
+      break
+    case BALANCE_HISTORY_PRESET.LAST_12_MONTHS:
+      for (let i = 11; i >= 0; i -= 1) {
+        // Day 0 of the next month = last day of that month, i months back.
+        dates.push(new Date(today.getFullYear(), today.getMonth() - i + 1, 0))
+      }
+      break
+    default:
+      break
+  }
+
+  return dates.map(ymd)
 }
 
 // "1234.50 €" — amount with two decimals plus the currency symbol (trimmed when
