@@ -66,12 +66,16 @@ export default function EntityList<T extends { id: number }>({
 }
 
 const styles = StyleSheet.create({
+  // Reach the screen edges (cancel the Page's horizontal padding) and re-inset
+  // the rows via content padding, so the FlatList frame doesn't clip each card's
+  // side shadow. Assumes the standard Page horizontal padding (spacing(4)).
   list: {
     flex: 1,
-    width: "100%",
+    marginHorizontal: -spacing(4),
   },
   content: {
     gap: spacing(4),
     paddingVertical: spacing(2),
+    paddingHorizontal: spacing(4),
   },
 })
