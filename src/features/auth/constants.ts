@@ -33,7 +33,7 @@ const metroHostIp = (): string | null => {
 //   2. DEV with no override → autodetect from the Metro host IP : 8080.
 //   3. Fallback → localhost:8080.
 const resolveApiBaseUrl = (): string => {
-  const explicit = process.env.EXPO_PUBLIC_API_URL
+  const explicit: string | undefined = process.env.EXPO_PUBLIC_API_URL
   if (explicit != null && explicit !== "") {
     return explicit.replace(/\/$/, "")
   }
