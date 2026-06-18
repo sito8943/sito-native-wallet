@@ -5,6 +5,7 @@ import { useSubscriptionProvider } from "./useSubscriptionProvider"
 import { useSubscriptionProviders } from "./useSubscriptionProviders"
 
 export { INITIAL_SUBSCRIPTION_PROVIDERS } from "./demoData"
+export { subscriptionProvidersSync } from "./subscriptionProvidersSync"
 export { SUBSCRIPTION_PROVIDER_PREFABS } from "./prefabs"
 export type { SubscriptionProviderPrefab } from "./types"
 export {

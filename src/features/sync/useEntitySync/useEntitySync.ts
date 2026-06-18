@@ -4,7 +4,9 @@ import { accountsSync } from "#features/accounts"
 import { USE_MOCK_AUTH, useSession } from "#features/auth"
 import { categoriesSync } from "#features/categories"
 import { currenciesSync } from "#features/currencies"
+import { dashboardSync } from "#features/dashboard"
 import { profileSync, useProfileInfo } from "#features/settings/ProfileInfo"
+import { subscriptionProvidersSync } from "#features/subscriptionProviders"
 import { transactionsSync } from "#features/transactions"
 import { useManager } from "#shared/data"
 import { useClientStore } from "#shared/data/storage"
@@ -39,6 +41,9 @@ export default function useEntitySync(): void {
       // After accounts AND categories: a transaction references both by their
       // remoteIds.
       bindSync(transactionsSync(manager)),
+      // Independent of the entities (no FK), so order is free.
+      bindSync(dashboardSync(manager)),
+      bindSync(subscriptionProvidersSync(manager)),
       // Singleton record: name (profile store) + language (i18n context).
       // Rebuilt when language changes so the push diffs against the new value.
       bindSingletonSync(profileSync({ language, setLanguage })),
@@ -51,6 +56,10 @@ export default function useEntitySync(): void {
   const categoriesSnapshot = useClientStore(manager.Categories)
   const accountsSnapshot = useClientStore(manager.Accounts)
   const transactionsSnapshot = useClientStore(manager.Transactions)
+  const dashboardSnapshot = useClientStore(manager.Dashboard)
+  const subscriptionProvidersSnapshot = useClientStore(
+    manager.SubscriptionProviders,
+  )
   // The profile name lives in its own store; language is already a `syncs` dep.
   const { data: profile } = useProfileInfo()
 
@@ -115,6 +124,8 @@ export default function useEntitySync(): void {
     categoriesSnapshot,
     accountsSnapshot,
     transactionsSnapshot,
+    dashboardSnapshot,
+    subscriptionProvidersSnapshot,
     profile.name,
     isAuthenticated,
     userId,
