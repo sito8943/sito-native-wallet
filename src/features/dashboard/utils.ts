@@ -86,7 +86,9 @@ export const remapCardConfigIds = (
     next.excludeCategories = remapCategories(next.excludeCategories)
   }
   if (next.oppositeExcludeCategories !== undefined) {
-    next.oppositeExcludeCategories = remapCategories(next.oppositeExcludeCategories)
+    next.oppositeExcludeCategories = remapCategories(
+      next.oppositeExcludeCategories,
+    )
   }
 
   return JSON.stringify(next)

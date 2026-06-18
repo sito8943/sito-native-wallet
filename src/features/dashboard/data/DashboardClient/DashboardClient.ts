@@ -92,9 +92,7 @@ export default class DashboardClient extends StorageClient<DashboardCard> {
   // Record the backend id assigned to a locally-created card after its POST.
   public attachRemoteId = (localId: number, remoteId: number): void => {
     this.mutate((items) =>
-      items.map((card) =>
-        card.id === localId ? { ...card, remoteId } : card,
-      ),
+      items.map((card) => (card.id === localId ? { ...card, remoteId } : card)),
     )
   }
 }

@@ -110,7 +110,10 @@ describe("Dashboard > utils", () => {
     it("remaps excludeCategories and drops unresolved ones", () => {
       const config = JSON.stringify({
         account: { id: 60 },
-        excludeCategories: [{ id: 70, name: "Rent" }, { id: 999, name: "X" }],
+        excludeCategories: [
+          { id: 70, name: "Rent" },
+          { id: 999, name: "X" },
+        ],
       })
       expect(remapCardConfigIds(config, account, category)).toBe(
         JSON.stringify({

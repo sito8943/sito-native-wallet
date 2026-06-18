@@ -100,7 +100,10 @@ export default class TransactionClient extends StorageClient<StoredTransaction> 
     filters?: FilterTransactionDto,
   ): CategoryBreakdown => {
     const items = this.list({ pageSize: 0 }, filters).items
-    const total = items.reduce((sum, transaction) => sum + transaction.amount, 0)
+    const total = items.reduce(
+      (sum, transaction) => sum + transaction.amount,
+      0,
+    )
 
     const byCategory = new Map<number, CategoryBreakdownEntry>()
     for (const transaction of items) {
@@ -359,9 +362,7 @@ export default class TransactionClient extends StorageClient<StoredTransaction> 
   // Record the backend id assigned to a locally-created transaction after POST.
   public attachRemoteId = (localId: number, remoteId: number): void => {
     this.mutate((items) =>
-      items.map((item) =>
-        item.id === localId ? { ...item, remoteId } : item,
-      ),
+      items.map((item) => (item.id === localId ? { ...item, remoteId } : item)),
     )
   }
 }

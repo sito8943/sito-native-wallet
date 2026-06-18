@@ -1,9 +1,6 @@
 import { authRequest } from "#features/auth"
 
-import {
-  TRANSACTIONS_ENDPOINT,
-  TRANSACTIONS_PULL_PAGE_SIZE,
-} from "./constants"
+import { TRANSACTIONS_ENDPOINT, TRANSACTIONS_PULL_PAGE_SIZE } from "./constants"
 import {
   type TransactionPayload,
   type TransactionsPageResponse,

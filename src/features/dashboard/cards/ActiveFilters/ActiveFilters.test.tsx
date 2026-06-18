@@ -29,7 +29,10 @@ describe("Dashboard > ActiveFilters", () => {
   it("clears just that filter via its × when onClear is set", () => {
     const onClear = jest.fn()
     const { getByRole } = render(
-      <ActiveFilters items={[{ label: "Cash", onClear }]} onPress={jest.fn()} />,
+      <ActiveFilters
+        items={[{ label: "Cash", onClear }]}
+        onPress={jest.fn()}
+      />,
     )
 
     fireEvent.press(getByRole("button"))

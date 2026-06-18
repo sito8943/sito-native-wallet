@@ -1,6 +1,10 @@
 import { type SingletonSync } from "#features/sync"
 
-import { fetchProfile, updateProfile, type ProfileUpdate } from "./profileClient"
+import {
+  fetchProfile,
+  updateProfile,
+  type ProfileUpdate,
+} from "./profileClient"
 import { profileStore } from "./profileStore"
 import { type ProfileSyncDeps } from "./types"
 import { parseLanguageTag } from "./utils"

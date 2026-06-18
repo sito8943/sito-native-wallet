@@ -4,7 +4,4 @@ export {
   updateDashboardCard,
   deleteDashboardCards,
 } from "./dashboardConfigClient"
-export type {
-  RemoteDashboardCard,
-  DashboardCardPayload,
-} from "./types"
+export type { RemoteDashboardCard, DashboardCardPayload } from "./types"

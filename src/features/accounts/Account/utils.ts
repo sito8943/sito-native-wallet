@@ -1,4 +1,8 @@
-import { ACCOUNT_TYPE, ACCOUNT_TYPE_CODE, ACCOUNT_TYPE_LABEL } from "./constants"
+import {
+  ACCOUNT_TYPE,
+  ACCOUNT_TYPE_CODE,
+  ACCOUNT_TYPE_LABEL,
+} from "./constants"
 import { type Account, type AccountType } from "./types"
 
 // Card/header subtitle: "Type · Currency · Symbol", e.g. "Digital · US Dollar · $".

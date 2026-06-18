@@ -1,7 +1,4 @@
-import {
-  useRecordStore,
-  type UseStoredStateResult,
-} from "#shared/data/storage"
+import { useRecordStore, type UseStoredStateResult } from "#shared/data/storage"
 
 import { profileStore } from "./profileStore"
 import { type ProfileInfo } from "./types"

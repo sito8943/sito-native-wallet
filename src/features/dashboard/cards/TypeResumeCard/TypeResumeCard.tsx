@@ -197,8 +197,7 @@ export default function TypeResumeCard({
       ? [
           {
             label: oppositeExcludeLabel,
-            onClear: () =>
-              update({ ...config, oppositeExcludeCategories: [] }),
+            onClear: () => update({ ...config, oppositeExcludeCategories: [] }),
           },
         ]
       : []),
