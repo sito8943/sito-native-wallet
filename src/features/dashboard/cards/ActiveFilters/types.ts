@@ -1,4 +1,4 @@
-export type ActiveFilter = {
+type ActiveFilter = {
   label: string
   // When present, the chip shows a "×" that clears just this filter.
   onClear?: () => void
