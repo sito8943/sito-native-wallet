@@ -1,9 +1,10 @@
 import { type ReactElement } from "react"
-import { ScrollView, StyleSheet } from "react-native"
+import { ScrollView, StyleSheet, View } from "react-native"
 
 import Typography from "#design/elements/Typography"
-import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
+import { TYPOGRAPHY_VARIANT } from "#design/foundations"
 import BottomSheet from "#design/patterns/BottomSheet"
+import { useThemeColors } from "#design/theme"
 import { TransactionCard, useTransactionsList } from "#features/transactions"
 import { SORT_ORDER } from "#shared/data"
 import { useI18n } from "#shared/i18n"
@@ -22,6 +23,7 @@ export default function RecentTransactionsSheet({
   title,
 }: RecentTransactionsSheetProps): ReactElement {
   const { t } = useI18n()
+  const colors = useThemeColors()
   const { result } = useTransactionsList({
     filters,
     query: {
@@ -40,8 +42,17 @@ export default function RecentTransactionsSheet({
         </Typography>
       ) : (
         <ScrollView style={styles.list} contentContainerStyle={styles.content}>
-          {items.map((transaction) => (
-            <TransactionCard key={transaction.id} transaction={transaction} />
+          {items.map((transaction, index) => (
+            <View
+              key={transaction.id}
+              style={
+                index < items.length - 1
+                  ? [styles.divider, { borderBottomColor: colors.border }]
+                  : undefined
+              }
+            >
+              <TransactionCard transaction={transaction} flat />
+            </View>
           ))}
         </ScrollView>
       )}
@@ -54,6 +65,9 @@ const styles = StyleSheet.create({
     maxHeight: RECENT_LIST_MAX_HEIGHT,
   },
   content: {
-    gap: spacing(3),
+    gap: 0,
+  },
+  divider: {
+    borderBottomWidth: 1,
   },
 })

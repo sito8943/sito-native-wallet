@@ -58,3 +58,7 @@ export type {
   UseTransactionsListProps,
   UseTransactionsListState,
 } from "./useTransactionsList"
+export type {
+  CategoryBreakdown,
+  CategoryBreakdownEntry,
+} from "./TransactionClient/types"

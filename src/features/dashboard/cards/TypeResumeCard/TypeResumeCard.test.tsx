@@ -71,6 +71,11 @@ describe("Dashboard > TypeResumeCard", () => {
         translate(LANGUAGE.EN, "dashboard.recentTransactions.action"),
       ),
     ).toBeTruthy()
+    expect(
+      getByLabelText(
+        translate(LANGUAGE.EN, "dashboard.categoryBreakdown.action"),
+      ),
+    ).toBeTruthy()
   })
 
   it("renders a second total when showOppositeType is on", async () => {

@@ -6,4 +6,6 @@ export type TransactionCardProps = {
   transaction: Transaction
   actions?: Array<Action<Transaction>>
   onPress?: (transaction: Transaction) => void
+  // Drops the card's elevation (e.g. nested inside the category breakdown).
+  flat?: boolean
 }

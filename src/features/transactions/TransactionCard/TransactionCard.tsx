@@ -17,6 +17,7 @@ export default function TransactionCard({
   actions,
   onPress,
   transaction,
+  flat = false,
 }: TransactionCardProps): ReactElement {
   const styles = useThemedStyles(createStyles)
   const type = getTransactionType(transaction)
@@ -31,7 +32,8 @@ export default function TransactionCard({
     <EntityCard
       actions={actions}
       entity={transaction}
-      style={styles.card}
+      style={flat ? styles.cardFlat : styles.card}
+      flat={flat}
       onPress={handlePress}
     >
       <View style={styles.header}>
@@ -78,6 +80,12 @@ export default function TransactionCard({
 const createStyles = (colors: ThemeColors) => ({
   card: {
     padding: spacing(2),
+  },
+  // Flat (nested in another surface): keep vertical rhythm but no side inset, so
+  // the row aligns with the surrounding content.
+  cardFlat: {
+    paddingVertical: spacing(2),
+    paddingHorizontal: 0,
   },
   header: {
     alignItems: "flex-start" as const,

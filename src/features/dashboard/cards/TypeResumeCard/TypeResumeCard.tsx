@@ -34,6 +34,7 @@ import {
 } from "../../utils"
 import ActiveFilters from "../ActiveFilters"
 import CardFrame from "../CardFrame"
+import CategoryBreakdownSheet from "../CategoryBreakdownSheet"
 import {
   TYPE_RESUME_TIME,
   type TypeResumeConfig,
@@ -61,6 +62,7 @@ export default function TypeResumeCard({
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [addOpen, setAddOpen] = useState(false)
   const [recentOpen, setRecentOpen] = useState(false)
+  const [breakdownOpen, setBreakdownOpen] = useState(false)
 
   const config = parseConfig(card.config)
   const range = getTimeRange(config.time)
@@ -293,6 +295,17 @@ export default function TypeResumeCard({
                 setRecentOpen(true)
               }}
             />
+            <IconButton
+              accessibilityLabel={t("dashboard.categoryBreakdown.action")}
+              icon={APP_ICONS.list}
+              variant={ICON_BUTTON_VARIANT.TEXT}
+              size={ICON_BUTTON_SIZE.LG}
+              iconColor={colors.textMuted}
+              disabled={total === 0}
+              onPress={() => {
+                setBreakdownOpen(true)
+              }}
+            />
           </View>
         </View>
       </CardFrame>
@@ -433,6 +446,21 @@ export default function TypeResumeCard({
         }}
         onClose={() => {
           setRecentOpen(false)
+        }}
+      />
+
+      <CategoryBreakdownSheet
+        open={breakdownOpen}
+        title={t("dashboard.categoryBreakdown.action")}
+        symbol={symbol}
+        filters={{
+          type: config.type,
+          accountId: config.account?.id,
+          date,
+          excludeCategory,
+        }}
+        onClose={() => {
+          setBreakdownOpen(false)
         }}
       />
     </>

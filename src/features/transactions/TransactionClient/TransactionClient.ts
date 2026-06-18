@@ -39,7 +39,11 @@ import {
   TRANSACTIONS_ERROR_MESSAGE,
   TRANSACTIONS_STORAGE_KEY,
 } from "./constants"
-import { type StoredTransaction } from "./types"
+import {
+  type CategoryBreakdown,
+  type CategoryBreakdownEntry,
+  type StoredTransaction,
+} from "./types"
 import { parseStoredTransactions } from "./utils"
 
 // Local-first stand-in for the backend: persisting a transaction also keeps the
@@ -87,6 +91,36 @@ export default class TransactionClient extends StorageClient<StoredTransaction> 
       (sum, transaction) => sum + transaction.amount,
       0,
     )
+
+  // Per-category breakdown of a filtered total (powers the type-resume card's
+  // category dialog): each category's summed amount and contributing
+  // transactions, sorted by amount desc. A transaction tagged with N categories
+  // counts toward each, so category sums can exceed the overall total.
+  public categoryBreakdown = (
+    filters?: FilterTransactionDto,
+  ): CategoryBreakdown => {
+    const items = this.list({ pageSize: 0 }, filters).items
+    const total = items.reduce((sum, transaction) => sum + transaction.amount, 0)
+
+    const byCategory = new Map<number, CategoryBreakdownEntry>()
+    for (const transaction of items) {
+      for (const category of transaction.categories) {
+        const entry = byCategory.get(category.id) ?? {
+          category,
+          total: 0,
+          transactions: [],
+        }
+        entry.total += transaction.amount
+        entry.transactions.push(transaction)
+        byCategory.set(category.id, entry)
+      }
+    }
+
+    const categories = [...byCategory.values()].sort(
+      (left, right) => right.total - left.total,
+    )
+    return { total, categories }
+  }
 
   // An account's balance as of each boundary date, reconstructed from its
   // current balance by undoing the signed effect of transactions dated after

@@ -3,6 +3,7 @@ import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
 import { BUTTON_VARIANT } from "#design/elements/Button"
+import { spacing } from "#design/foundations"
 import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import DraggableList from "#design/patterns/DraggableList"
@@ -108,12 +109,17 @@ export default function DashboardGrid(): ReactElement {
 }
 
 const styles = StyleSheet.create({
+  // Cancel the Page's horizontal padding so the scroll reaches the screen edges;
+  // the cards are re-inset via listContent below. Without this the ScrollView
+  // clips each card's side shadow at its frame.
   list: {
     flex: 1,
+    marginHorizontal: -spacing(4),
   },
-  // Page already provides outer padding; only the inter-row gap is needed here.
+  // Re-inset the cards (matching the Page padding) so there's room for their
+  // shadow inside the now full-width scroll.
   listContent: {
-    padding: 0,
+    paddingHorizontal: spacing(4),
   },
   empty: {
     flex: 1,
