@@ -54,6 +54,14 @@ export type TypeResumeConfig = {
   type: TransactionType
   time: TypeResumeTime
   excludeCategories: CommonTransactionCategoryDto[]
+  // Also show the opposite type's total (an income card shows expense too, and
+  // vice-versa), mirroring the web wallet's "show opposite type".
+  showOppositeType: boolean
+  // Categories dropped from the opposite-type total. Only meaningful while
+  // `showOppositeType` is on; cleared when it's turned off.
+  oppositeExcludeCategories: CommonTransactionCategoryDto[]
+  // Whether the active-filter chips render in the card header.
+  showFiltersAsBadge: boolean
 }
 
 // null account → the single account the user must pick (the chart plots one

@@ -1,6 +1,7 @@
 import { useState, type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
+import Chip from "#design/elements/Chip"
 import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Autocomplete from "#design/patterns/Autocomplete"
@@ -12,15 +13,12 @@ import {
   TRANSACTION_TYPE,
   type TransactionType,
 } from "#features/categories/TransactionCategory"
-import {
-  TransactionTypeBadge,
-  useTransactionsTotal,
-} from "#features/transactions"
+import { useTransactionsTotal } from "#features/transactions"
 import { useI18n } from "#shared/i18n"
 
 import { useDashboard } from "../../data/useDashboard"
 import {
-  formatAmount,
+  getOppositeType,
   getTimeRange,
   toAccountSnapshot,
   toCategorySnapshot,
@@ -33,6 +31,7 @@ import {
   type TypeResumeTime,
 } from "../DashboardCard"
 import OptionChips from "../OptionChips"
+import TypeTotal from "../TypeTotal"
 
 import { type TypeResumeCardProps } from "./types"
 import { parseConfig } from "./utils"
@@ -66,6 +65,19 @@ export default function TypeResumeCard({
     accountId: config.account?.id,
     date,
     excludeCategory,
+  })
+
+  // Opposite-type total (always computed so the hook order stays stable; only
+  // rendered when showOppositeType is on).
+  const oppositeType = getOppositeType(config.type)
+  const oppositeExcludeCategory = config.oppositeExcludeCategories.map(
+    (category) => category.id,
+  )
+  const oppositeTotal = useTransactionsTotal({
+    type: oppositeType,
+    accountId: config.account?.id,
+    date,
+    excludeCategory: oppositeExcludeCategory,
   })
 
   // Currency follows the scoped account, else the first account.
@@ -108,10 +120,16 @@ export default function TypeResumeCard({
   const accountLabel = config.account?.name ?? t("dashboard.filter.allAccounts")
 
   // System categories (transfers, adjustments) aren't user-pickable, matching
-  // the transaction form's options.
-  const categoryOptions = categories
-    .filter((category) => category.system !== true)
-    .map((category) => ({ id: category.id, label: category.name }))
+  // the transaction form's options; categories are typed, so each exclude list
+  // only offers categories of the type it filters (like the web wallet).
+  const categoryOptionsFor = (forType: TransactionType) =>
+    categories
+      .filter(
+        (category) => category.system !== true && category.type === forType,
+      )
+      .map((category) => ({ id: category.id, label: category.name }))
+  const categoryOptions = categoryOptionsFor(config.type)
+  const oppositeCategoryOptions = categoryOptionsFor(oppositeType)
 
   const excludeLabel =
     config.excludeCategories.length > 0
@@ -121,12 +139,49 @@ export default function TypeResumeCard({
             .join(", "),
         })
       : null
+  const oppositeExcludeLabel =
+    config.showOppositeType && config.oppositeExcludeCategories.length > 0
+      ? t("dashboard.filter.excluding", {
+          categories: config.oppositeExcludeCategories
+            .map((category) => category.name)
+            .join(", "),
+        })
+      : null
 
   const tone =
     config.type === TRANSACTION_TYPE.INCOME ? colors.positive : colors.negative
+  const oppositeTone =
+    oppositeType === TRANSACTION_TYPE.INCOME ? colors.positive : colors.negative
 
   const update = (next: TypeResumeConfig) => {
     updateConfig(card.id, JSON.stringify(next))
+  }
+
+  // Changing the type invalidates the excluded categories (they're typed), so
+  // drop the ones that no longer match either list's type — mirrors the web
+  // wallet's re-validation on type change.
+  const changeType = (type: TransactionType) => {
+    const opposite = getOppositeType(type)
+    update({
+      ...config,
+      type,
+      excludeCategories: config.excludeCategories.filter(
+        (category) => category.type === type,
+      ),
+      oppositeExcludeCategories: config.oppositeExcludeCategories.filter(
+        (category) => category.type === opposite,
+      ),
+    })
+  }
+
+  // Turning the opposite total off clears its excluded categories (web parity).
+  const toggleOppositeType = () => {
+    const next = !config.showOppositeType
+    update({
+      ...config,
+      showOppositeType: next,
+      oppositeExcludeCategories: next ? config.oppositeExcludeCategories : [],
+    })
   }
 
   return (
@@ -142,26 +197,38 @@ export default function TypeResumeCard({
         }}
         onDelete={onDelete}
         activeFilters={
-          <ActiveFilters
-            labels={[typeLabel, timeLabel, accountLabel, excludeLabel].filter(
-              (label): label is string => label !== null,
-            )}
-            onPress={() => {
-              setFiltersOpen(true)
-            }}
-          />
+          config.showFiltersAsBadge ? (
+            <ActiveFilters
+              labels={[
+                typeLabel,
+                timeLabel,
+                accountLabel,
+                excludeLabel,
+                oppositeExcludeLabel,
+              ].filter((label): label is string => label !== null)}
+              onPress={() => {
+                setFiltersOpen(true)
+              }}
+            />
+          ) : undefined
         }
       >
-        <View style={styles.value}>
-          <Typography
-            variant={TYPOGRAPHY_VARIANT.DISPLAY}
-            style={{ color: tone }}
-          >
-            {formatAmount(total, symbol)}
-          </Typography>
-          <View style={styles.badge}>
-            <TransactionTypeBadge type={config.type} showText={false} />
-          </View>
+        <View style={styles.totals}>
+          {config.showOppositeType ? (
+            <TypeTotal
+              type={oppositeType}
+              amount={oppositeTotal}
+              symbol={symbol}
+              tone={oppositeTone}
+              variant={TYPOGRAPHY_VARIANT.TITLE}
+            />
+          ) : null}
+          <TypeTotal
+            type={config.type}
+            amount={total}
+            symbol={symbol}
+            tone={tone}
+          />
         </View>
       </CardFrame>
 
@@ -179,9 +246,7 @@ export default function TypeResumeCard({
           <OptionChips<TransactionType>
             options={typeOptions}
             value={config.type}
-            onSelect={(type) => {
-              update({ ...config, type })
-            }}
+            onSelect={changeType}
           />
         </View>
 
@@ -236,6 +301,51 @@ export default function TypeResumeCard({
             }}
           />
         </View>
+
+        <View style={styles.section}>
+          <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>
+            {t("dashboard.filter.display")}
+          </Typography>
+          <View style={styles.toggles}>
+            <Chip
+              active={config.showOppositeType}
+              label={t("dashboard.filter.showOpposite")}
+              onPress={toggleOppositeType}
+            />
+            <Chip
+              active={config.showFiltersAsBadge}
+              label={t("dashboard.filter.showBadge")}
+              onPress={() => {
+                update({
+                  ...config,
+                  showFiltersAsBadge: !config.showFiltersAsBadge,
+                })
+              }}
+            />
+          </View>
+        </View>
+
+        {config.showOppositeType ? (
+          <View style={styles.section}>
+            <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>
+              {t("dashboard.filter.excludeOppositeCategories")}
+            </Typography>
+            <Autocomplete
+              multiple
+              placeholder={t("dashboard.filter.excludeCategories.placeholder")}
+              options={oppositeCategoryOptions}
+              value={oppositeExcludeCategory}
+              onChange={(ids) => {
+                update({
+                  ...config,
+                  oppositeExcludeCategories: categories
+                    .filter((category) => ids.includes(category.id))
+                    .map(toCategorySnapshot),
+                })
+              }}
+            />
+          </View>
+        ) : null}
       </BottomSheet>
     </>
   )
@@ -245,12 +355,12 @@ const styles = StyleSheet.create({
   section: {
     gap: spacing(2),
   },
-  value: {
-    position: "relative",
+  totals: {
+    gap: spacing(2),
   },
-  badge: {
-    position: "absolute",
-    right: 0,
-    bottom: 0,
+  toggles: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: spacing(2),
   },
 })

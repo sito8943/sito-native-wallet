@@ -49,6 +49,9 @@ export const DEFAULT_TYPE_RESUME_CONFIG: TypeResumeConfig = {
   type: TRANSACTION_TYPE.INCOME,
   time: TYPE_RESUME_TIME.CURRENT_MONTH,
   excludeCategories: [],
+  showOppositeType: false,
+  oppositeExcludeCategories: [],
+  showFiltersAsBadge: false,
 }
 
 // No account selected → the card asks the user to pick one (like CurrentBalance,

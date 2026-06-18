@@ -120,6 +120,17 @@ describe("Dashboard > utils", () => {
       )
     })
 
+    it("remaps oppositeExcludeCategories too", () => {
+      const config = JSON.stringify({
+        oppositeExcludeCategories: [{ id: 70, name: "Rent" }],
+      })
+      expect(remapCardConfigIds(config, account, category)).toBe(
+        JSON.stringify({
+          oppositeExcludeCategories: [{ id: 3, name: "Rent" }],
+        }),
+      )
+    })
+
     it("passes null/empty config through untouched", () => {
       expect(remapCardConfigIds(null, account, category)).toBeNull()
       expect(remapCardConfigIds("", account, category)).toBe("")

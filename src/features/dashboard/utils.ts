@@ -1,5 +1,11 @@
 import { type Account } from "#features/accounts"
 import { type TransactionCategory } from "#features/categories"
+// Deep path on purpose: the categories barrel pulls in hooks → Manager, risking
+// an eval-time cycle when this module is loaded during the sync pull.
+import {
+  TRANSACTION_TYPE,
+  type TransactionType,
+} from "#features/categories/TransactionCategory"
 import {
   type CommonAccountDto,
   type CommonTransactionCategoryDto,
@@ -62,20 +68,36 @@ export const remapCardConfigIds = (
     next.account = localId === undefined ? null : { ...account, id: localId }
   }
 
-  const exclude = next.excludeCategories
-  if (Array.isArray(exclude)) {
-    next.excludeCategories = exclude
-      .map((raw) => {
-        const category = raw as { id?: number } | null
-        if (!category || typeof category.id !== "number") return null
-        const localId = resolveCategoryId(category.id)
-        return localId === undefined ? null : { ...category, id: localId }
-      })
-      .filter((category): category is { id: number } => category !== null)
+  // Remap every category-snapshot list (primary + opposite excludes), dropping
+  // refs that don't resolve to a local category.
+  const remapCategories = (raw: unknown): unknown =>
+    Array.isArray(raw)
+      ? raw
+          .map((entry) => {
+            const category = entry as { id?: number } | null
+            if (!category || typeof category.id !== "number") return null
+            const localId = resolveCategoryId(category.id)
+            return localId === undefined ? null : { ...category, id: localId }
+          })
+          .filter((category): category is { id: number } => category !== null)
+      : raw
+
+  if (next.excludeCategories !== undefined) {
+    next.excludeCategories = remapCategories(next.excludeCategories)
+  }
+  if (next.oppositeExcludeCategories !== undefined) {
+    next.oppositeExcludeCategories = remapCategories(next.oppositeExcludeCategories)
   }
 
   return JSON.stringify(next)
 }
+
+// The transaction type opposite the given one (income ↔ expense). Used by the
+// TypeResume card's "show opposite type" total.
+export const getOppositeType = (type: TransactionType): TransactionType =>
+  type === TRANSACTION_TYPE.INCOME
+    ? TRANSACTION_TYPE.EXPENSE
+    : TRANSACTION_TYPE.INCOME
 
 const pad = (value: number): string => `${value}`.padStart(2, "0")
 
