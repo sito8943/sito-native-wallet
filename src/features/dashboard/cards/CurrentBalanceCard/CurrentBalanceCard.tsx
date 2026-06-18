@@ -150,7 +150,7 @@ export default function CurrentBalanceCard({
           onDelete={onDelete}
           activeFilters={
             <ActiveFilters
-              labels={[noAccountLabel]}
+              items={[{ label: noAccountLabel }]}
               onPress={() => {
                 setFiltersOpen(true)
               }}

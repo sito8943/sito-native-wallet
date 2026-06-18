@@ -8,6 +8,12 @@ import { type DashboardCard } from "../DashboardCard"
 
 import TypeResumeCard from "./TypeResumeCard"
 
+// The card mounts TransactionFormSheet (add-transaction action), which calls
+// useRouter; the global expo-router mock only exposes Link, so override here.
+jest.mock("expo-router", () => ({
+  useRouter: () => ({ push: jest.fn() }),
+}))
+
 const noop = (): void => undefined
 
 const makeCard = (config: object): DashboardCard => ({
@@ -50,6 +56,21 @@ describe("Dashboard > TypeResumeCard", () => {
     expect(
       queryByText(translate(LANGUAGE.EN, "dashboard.time.currentMonth")),
     ).toBeNull()
+  })
+
+  it("exposes the add and recent-transactions actions", () => {
+    const { getByLabelText } = render(
+      <TypeResumeCard card={makeCard({})} onDelete={noop} />,
+    )
+
+    expect(
+      getByLabelText(translate(LANGUAGE.EN, "transactions.add")),
+    ).toBeTruthy()
+    expect(
+      getByLabelText(
+        translate(LANGUAGE.EN, "dashboard.recentTransactions.action"),
+      ),
+    ).toBeTruthy()
   })
 
   it("renders a second total when showOppositeType is on", async () => {

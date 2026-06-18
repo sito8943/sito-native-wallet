@@ -6,11 +6,11 @@ import { spacing } from "#design/foundations"
 
 import { type ActiveFiltersProps } from "./types"
 
-// Read-only summary of a card's filters, rendered as chips that reopen the
-// config sheet when tapped. Labels are unique within a card (account / type /
-// time), so each doubles as its key.
+// Summary of a card's filters, rendered as chips that reopen the config sheet
+// when tapped; clearable filters also show a "×". Labels are unique within a
+// card (account / type / time), so each doubles as its key.
 export default function ActiveFilters({
-  labels,
+  items,
   onPress,
 }: ActiveFiltersProps): ReactElement {
   return (
@@ -20,8 +20,14 @@ export default function ActiveFilters({
       contentContainerStyle={styles.content}
       style={styles.scroll}
     >
-      {labels.map((label) => (
-        <Chip key={label} active={false} label={label} onPress={onPress} />
+      {items.map(({ label, onClear }) => (
+        <Chip
+          key={label}
+          active={false}
+          label={label}
+          onPress={onPress}
+          onClear={onClear}
+        />
       ))}
     </ScrollView>
   )

@@ -109,7 +109,7 @@ export default function BalanceHistoryCard({
         onDelete={onDelete}
         activeFilters={
           <ActiveFilters
-            labels={[accountLabel, presetLabel]}
+            items={[{ label: accountLabel }, { label: presetLabel }]}
             onPress={() => {
               setFiltersOpen(true)
             }}

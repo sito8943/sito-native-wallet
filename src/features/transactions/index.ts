@@ -9,6 +9,7 @@ import { TransactionTypeBadge } from "./TransactionTypeBadge"
 import { useFilteredTransactions } from "./useFilteredTransactions"
 import { useInfiniteTransactions } from "./useInfiniteTransactions"
 import { useTransactions } from "./useTransactions"
+import { useTransactionsList } from "./useTransactionsList"
 import { useTransactionsTotal } from "./useTransactionsTotal"
 
 export {
@@ -23,6 +24,7 @@ export {
   useFilteredTransactions,
   useInfiniteTransactions,
   useTransactions,
+  useTransactionsList,
   useTransactionsTotal,
 }
 export { makeDemoTransaction } from "./demoData"
@@ -52,3 +54,7 @@ export type {
   UseInfiniteTransactionsState,
 } from "./useInfiniteTransactions"
 export type { UseTransactionsState } from "./useTransactions"
+export type {
+  UseTransactionsListProps,
+  UseTransactionsListState,
+} from "./useTransactionsList"

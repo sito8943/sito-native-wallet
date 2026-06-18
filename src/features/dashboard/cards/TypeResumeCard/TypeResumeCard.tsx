@@ -2,6 +2,11 @@ import { useState, type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
 import Chip from "#design/elements/Chip"
+import { APP_ICONS } from "#design/elements/Icon"
+import IconButton, {
+  ICON_BUTTON_SIZE,
+  ICON_BUTTON_VARIANT,
+} from "#design/elements/IconButton"
 import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Autocomplete from "#design/patterns/Autocomplete"
@@ -13,7 +18,11 @@ import {
   TRANSACTION_TYPE,
   type TransactionType,
 } from "#features/categories/TransactionCategory"
-import { useTransactionsTotal } from "#features/transactions"
+import {
+  TransactionFormSheet,
+  useTransactions,
+  useTransactionsTotal,
+} from "#features/transactions"
 import { useI18n } from "#shared/i18n"
 
 import { useDashboard } from "../../data/useDashboard"
@@ -31,6 +40,7 @@ import {
   type TypeResumeTime,
 } from "../DashboardCard"
 import OptionChips from "../OptionChips"
+import RecentTransactionsSheet from "../RecentTransactionsSheet"
 import TypeTotal from "../TypeTotal"
 
 import { type TypeResumeCardProps } from "./types"
@@ -47,7 +57,10 @@ export default function TypeResumeCard({
   const accounts = useAccounts().data ?? []
   const { data: categories } = useCategories()
   const { updateTitle, updateConfig } = useDashboard()
+  const { addTransaction } = useTransactions()
   const [filtersOpen, setFiltersOpen] = useState(false)
+  const [addOpen, setAddOpen] = useState(false)
+  const [recentOpen, setRecentOpen] = useState(false)
 
   const config = parseConfig(card.config)
   const range = getTimeRange(config.time)
@@ -157,6 +170,38 @@ export default function TypeResumeCard({
     updateConfig(card.id, JSON.stringify(next))
   }
 
+  // Active-filter chips. Type and time are always shown; account and the two
+  // exclude lists also get a "×" to clear just that filter (web parity).
+  const filterItems = [
+    { label: typeLabel },
+    { label: timeLabel },
+    ...(config.account
+      ? [
+          {
+            label: accountLabel,
+            onClear: () => update({ ...config, account: null }),
+          },
+        ]
+      : []),
+    ...(excludeLabel
+      ? [
+          {
+            label: excludeLabel,
+            onClear: () => update({ ...config, excludeCategories: [] }),
+          },
+        ]
+      : []),
+    ...(oppositeExcludeLabel
+      ? [
+          {
+            label: oppositeExcludeLabel,
+            onClear: () =>
+              update({ ...config, oppositeExcludeCategories: [] }),
+          },
+        ]
+      : []),
+  ]
+
   // Changing the type invalidates the excluded categories (they're typed), so
   // drop the ones that no longer match either list's type — mirrors the web
   // wallet's re-validation on type change.
@@ -199,13 +244,7 @@ export default function TypeResumeCard({
         activeFilters={
           config.showFiltersAsBadge ? (
             <ActiveFilters
-              labels={[
-                typeLabel,
-                timeLabel,
-                accountLabel,
-                excludeLabel,
-                oppositeExcludeLabel,
-              ].filter((label): label is string => label !== null)}
+              items={filterItems}
               onPress={() => {
                 setFiltersOpen(true)
               }}
@@ -213,22 +252,48 @@ export default function TypeResumeCard({
           ) : undefined
         }
       >
-        <View style={styles.totals}>
-          {config.showOppositeType ? (
+        <View style={styles.body}>
+          <View style={styles.totals}>
+            {config.showOppositeType ? (
+              <TypeTotal
+                type={oppositeType}
+                amount={oppositeTotal}
+                symbol={symbol}
+                tone={oppositeTone}
+                variant={TYPOGRAPHY_VARIANT.TITLE}
+              />
+            ) : null}
             <TypeTotal
-              type={oppositeType}
-              amount={oppositeTotal}
+              type={config.type}
+              amount={total}
               symbol={symbol}
-              tone={oppositeTone}
-              variant={TYPOGRAPHY_VARIANT.TITLE}
+              tone={tone}
             />
-          ) : null}
-          <TypeTotal
-            type={config.type}
-            amount={total}
-            symbol={symbol}
-            tone={tone}
-          />
+          </View>
+
+          <View style={styles.actions}>
+            <IconButton
+              accessibilityLabel={t("transactions.add")}
+              icon={APP_ICONS.add}
+              variant={ICON_BUTTON_VARIANT.TEXT}
+              size={ICON_BUTTON_SIZE.LG}
+              iconColor={colors.primary}
+              onPress={() => {
+                setAddOpen(true)
+              }}
+            />
+            <IconButton
+              accessibilityLabel={t("dashboard.recentTransactions.action")}
+              icon={APP_ICONS.recent}
+              variant={ICON_BUTTON_VARIANT.TEXT}
+              size={ICON_BUTTON_SIZE.LG}
+              iconColor={colors.textMuted}
+              disabled={date === undefined}
+              onPress={() => {
+                setRecentOpen(true)
+              }}
+            />
+          </View>
         </View>
       </CardFrame>
 
@@ -347,6 +412,29 @@ export default function TypeResumeCard({
           </View>
         ) : null}
       </BottomSheet>
+
+      <TransactionFormSheet
+        open={addOpen}
+        defaultAccountId={account?.id}
+        onClose={() => {
+          setAddOpen(false)
+        }}
+        onSubmit={addTransaction}
+      />
+
+      <RecentTransactionsSheet
+        open={recentOpen}
+        title={t("dashboard.recentTransactions.action")}
+        filters={{
+          type: config.type,
+          accountId: config.account?.id,
+          date,
+          excludeCategory,
+        }}
+        onClose={() => {
+          setRecentOpen(false)
+        }}
+      />
     </>
   )
 }
@@ -355,8 +443,20 @@ const styles = StyleSheet.create({
   section: {
     gap: spacing(2),
   },
+  // Totals on the left, actions on the right, both aligned to the bottom.
+  body: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+    gap: spacing(2),
+  },
   totals: {
     gap: spacing(2),
+  },
+  actions: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing(1),
   },
   toggles: {
     flexDirection: "row",
