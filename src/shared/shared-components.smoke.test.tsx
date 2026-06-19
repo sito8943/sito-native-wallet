@@ -33,7 +33,7 @@ import {
   TransactionCard,
   TransactionForm,
   TransactionList,
-  TransactionsFilters,
+  TransactionsFilterSheet,
   TransactionTypeBadge,
 } from "#features/transactions"
 import {
@@ -346,9 +346,10 @@ describe("Shared feature component smoke tests", () => {
     expect(getByText(String(TRANSACTION_TYPE.INCOME))).toBeTruthy()
   })
 
-  it("renders TransactionsFilters", () => {
+  it("renders TransactionsFilterSheet", () => {
     const { getByText } = render(
-      <TransactionsFilters
+      <TransactionsFilterSheet
+        open
         preferences={{
           accountId: 0,
           sortOrder: TRANSACTION_SORT_ORDER.NEWEST,
@@ -356,6 +357,7 @@ describe("Shared feature component smoke tests", () => {
         }}
         setSortOrder={noop}
         setTypeFilter={noop}
+        onClose={noop}
       />,
     )
 

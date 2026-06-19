@@ -4,7 +4,9 @@ import {
   type TransactionTypeFilter,
 } from "../TransactionsPreferences"
 
-export type TransactionsFiltersProps = {
+export type TransactionsFilterSheetProps = {
+  open: boolean
+  onClose: () => void
   preferences: TransactionsPreferences
   setSortOrder: (sortOrder: TransactionSortOrder) => void
   setTypeFilter: (typeFilter: TransactionTypeFilter) => void

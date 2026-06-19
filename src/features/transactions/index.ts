@@ -4,7 +4,8 @@ import { TransactionDetailScreen } from "./TransactionDetailScreen"
 import { TransactionForm } from "./TransactionForm"
 import { TransactionFormSheet } from "./TransactionFormSheet"
 import { TransactionList } from "./TransactionList"
-import { TransactionsFilters } from "./TransactionsFilters"
+import { TransactionsFilterSheet } from "./TransactionsFilterSheet"
+import { TransactionsSummary } from "./TransactionsSummary"
 import { TransactionTypeBadge } from "./TransactionTypeBadge"
 import { useFilteredTransactions } from "./useFilteredTransactions"
 import { useInfiniteTransactions } from "./useInfiniteTransactions"
@@ -18,7 +19,8 @@ export {
   TransactionDetailScreen,
   TransactionForm,
   TransactionFormSheet,
-  TransactionsFilters,
+  TransactionsFilterSheet,
+  TransactionsSummary,
   TransactionList,
   TransactionTypeBadge,
   useFilteredTransactions,
@@ -46,7 +48,8 @@ export type {
   TransactionsPreferences,
   TransactionTypeFilter,
 } from "./TransactionsPreferences"
-export type { TransactionsFiltersProps } from "./TransactionsFilters"
+export type { TransactionsFilterSheetProps } from "./TransactionsFilterSheet"
+export type { TransactionsSummaryProps } from "./TransactionsSummary"
 export type { TransactionTypeBadgeProps } from "./TransactionTypeBadge"
 export type { UseFilteredTransactionsState } from "./useFilteredTransactions"
 export type {

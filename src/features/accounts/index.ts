@@ -12,6 +12,8 @@ export { default as AccountAdjustBalanceSheet } from "./AccountAdjustBalanceShee
 export type { AccountAdjustBalanceSheetProps } from "./AccountAdjustBalanceSheet"
 export type { AccountTransferSheetProps } from "./AccountTransferSheet"
 export { default as AccountSelector } from "./AccountSelector"
+export { default as AccountCarousel } from "./AccountCarousel"
+export type { AccountCarouselProps } from "./AccountCarousel"
 export { INITIAL_ACCOUNTS } from "./demoData"
 export { ACCOUNT_PREFABS } from "./prefabs"
 export type { AccountPrefab } from "./types"
