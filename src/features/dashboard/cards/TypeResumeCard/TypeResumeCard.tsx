@@ -33,6 +33,7 @@ import {
   toCategorySnapshot,
 } from "../../utils"
 import ActiveFilters from "../ActiveFilters"
+import CardDisplaySection from "../CardDisplaySection"
 import CardFrame from "../CardFrame"
 import CategoryBreakdownSheet from "../CategoryBreakdownSheet"
 import {
@@ -379,28 +380,21 @@ export default function TypeResumeCard({
           />
         </View>
 
-        <View style={styles.section}>
-          <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>
-            {t("dashboard.filter.display")}
-          </Typography>
-          <View style={styles.toggles}>
-            <Chip
-              active={config.showOppositeType}
-              label={t("dashboard.filter.showOpposite")}
-              onPress={toggleOppositeType}
-            />
-            <Chip
-              active={config.showFiltersAsBadge}
-              label={t("dashboard.filter.showBadge")}
-              onPress={() => {
-                update({
-                  ...config,
-                  showFiltersAsBadge: !config.showFiltersAsBadge,
-                })
-              }}
-            />
-          </View>
-        </View>
+        <CardDisplaySection
+          showFiltersAsBadge={config.showFiltersAsBadge}
+          onToggleFiltersBadge={() => {
+            update({
+              ...config,
+              showFiltersAsBadge: !config.showFiltersAsBadge,
+            })
+          }}
+        >
+          <Chip
+            active={config.showOppositeType}
+            label={t("dashboard.filter.showOpposite")}
+            onPress={toggleOppositeType}
+          />
+        </CardDisplaySection>
 
         {config.showOppositeType ? (
           <View style={styles.section}>
@@ -484,10 +478,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: spacing(1),
-  },
-  toggles: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: spacing(2),
   },
 })

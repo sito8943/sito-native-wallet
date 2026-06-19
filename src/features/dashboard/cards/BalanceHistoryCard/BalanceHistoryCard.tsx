@@ -18,6 +18,7 @@ import {
   toAccountSnapshot,
 } from "../../utils"
 import ActiveFilters from "../ActiveFilters"
+import CardDisplaySection from "../CardDisplaySection"
 import CardFrame from "../CardFrame"
 import {
   BALANCE_HISTORY_PRESET,
@@ -110,12 +111,14 @@ export default function BalanceHistoryCard({
         }}
         onDelete={onDelete}
         activeFilters={
-          <ActiveFilters
-            items={[{ label: accountLabel }, { label: presetLabel }]}
-            onPress={() => {
-              setFiltersOpen(true)
-            }}
-          />
+          config.showFiltersAsBadge ? (
+            <ActiveFilters
+              items={[{ label: accountLabel }, { label: presetLabel }]}
+              onPress={() => {
+                setFiltersOpen(true)
+              }}
+            />
+          ) : undefined
         }
       >
         {account === null ? (
@@ -178,6 +181,16 @@ export default function BalanceHistoryCard({
             }}
           />
         </View>
+
+        <CardDisplaySection
+          showFiltersAsBadge={config.showFiltersAsBadge}
+          onToggleFiltersBadge={() => {
+            update({
+              ...config,
+              showFiltersAsBadge: !config.showFiltersAsBadge,
+            })
+          }}
+        />
       </BottomSheet>
     </>
   )

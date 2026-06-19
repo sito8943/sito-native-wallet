@@ -41,15 +41,23 @@ export type DashboardCard = Partial<Timestamps> & {
 // wire-compatible with the backend. Cards still resolve the live account by
 // `account.id` for the current balance/currency.
 
+// Display options shared by every card (the web wallet's base card config).
+// Cards spread their default over the persisted config so older configs without
+// these fields still resolve to a complete shape.
+export type BaseCardConfig = {
+  // Whether the active-filter chips render in the card header.
+  showFiltersAsBadge: boolean
+}
+
 // null account → the single account the user must pick (no "all" total, since
 // summing across currencies is meaningless).
-export type CurrentBalanceConfig = {
+export type CurrentBalanceConfig = BaseCardConfig & {
   account: CommonAccountDto | null
 }
 
 // null account → every account. `excludeCategories` drops transactions in those
 // categories from the total (snapshots, like `account`; resolved by id).
-export type TypeResumeConfig = {
+export type TypeResumeConfig = BaseCardConfig & {
   account: CommonAccountDto | null
   type: TransactionType
   time: TypeResumeTime
@@ -60,13 +68,11 @@ export type TypeResumeConfig = {
   // Categories dropped from the opposite-type total. Only meaningful while
   // `showOppositeType` is on; cleared when it's turned off.
   oppositeExcludeCategories: CommonTransactionCategoryDto[]
-  // Whether the active-filter chips render in the card header.
-  showFiltersAsBadge: boolean
 }
 
 // null account → the single account the user must pick (the chart plots one
 // account's balance over the `preset` window).
-export type BalanceHistoryConfig = {
+export type BalanceHistoryConfig = BaseCardConfig & {
   account: CommonAccountDto | null
   preset: BalanceHistoryPreset
 }

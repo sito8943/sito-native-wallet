@@ -1,9 +1,10 @@
 import { useRouter } from "expo-router"
 import { useState, type ReactElement } from "react"
+import { StyleSheet, View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
 import Typography from "#design/elements/Typography"
-import { TYPOGRAPHY_VARIANT } from "#design/foundations"
+import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { type Action, ACTION_ID } from "#design/interactions"
 import BottomSheet from "#design/patterns/BottomSheet"
 import {
@@ -24,6 +25,7 @@ import { toAccountDetailsRoute } from "#shared/navigation"
 import { useDashboard } from "../../data/useDashboard"
 import { toAccountSnapshot } from "../../utils"
 import ActiveFilters from "../ActiveFilters"
+import CardDisplaySection from "../CardDisplaySection"
 import CardFrame from "../CardFrame"
 
 import { type CurrentBalanceCardProps } from "./types"
@@ -71,14 +73,16 @@ export default function CurrentBalanceCard({
       },
     })
 
+  const update = (next: typeof config) => {
+    updateConfig(card.id, JSON.stringify(next))
+  }
+
   const selectAccount = (accountId: number) => {
     const selected = accounts.find((item) => item.id === accountId) ?? null
-    updateConfig(
-      card.id,
-      JSON.stringify({
-        account: selected ? toAccountSnapshot(selected) : null,
-      }),
-    )
+    update({
+      ...config,
+      account: selected ? toAccountSnapshot(selected) : null,
+    })
   }
 
   const hasTransferTarget = (origin: Account): boolean =>
@@ -149,12 +153,14 @@ export default function CurrentBalanceCard({
           }}
           onDelete={onDelete}
           activeFilters={
-            <ActiveFilters
-              items={[{ label: noAccountLabel }]}
-              onPress={() => {
-                setFiltersOpen(true)
-              }}
-            />
+            config.showFiltersAsBadge ? (
+              <ActiveFilters
+                items={[{ label: noAccountLabel }]}
+                onPress={() => {
+                  setFiltersOpen(true)
+                }}
+              />
+            ) : undefined
           }
         >
           <Typography variant={TYPOGRAPHY_VARIANT.DISPLAY}>
@@ -170,12 +176,23 @@ export default function CurrentBalanceCard({
           setFiltersOpen(false)
         }}
       >
-        <AccountSelector
-          accounts={accounts}
-          selectedId={config.account?.id ?? 0}
-          onSelect={selectAccount}
-          allLabel={noAccountLabel}
-        />
+        <View style={styles.sheet}>
+          <AccountSelector
+            accounts={accounts}
+            selectedId={config.account?.id ?? 0}
+            onSelect={selectAccount}
+            allLabel={noAccountLabel}
+          />
+          <CardDisplaySection
+            showFiltersAsBadge={config.showFiltersAsBadge}
+            onToggleFiltersBadge={() => {
+              update({
+                ...config,
+                showFiltersAsBadge: !config.showFiltersAsBadge,
+              })
+            }}
+          />
+        </View>
       </BottomSheet>
 
       <AccountAdjustBalanceSheet {...sheetProps} />
@@ -192,3 +209,9 @@ export default function CurrentBalanceCard({
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  sheet: {
+    gap: spacing(4),
+  },
+})

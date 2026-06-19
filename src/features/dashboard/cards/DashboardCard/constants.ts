@@ -42,6 +42,7 @@ export const TYPE_RESUME_TIME = {
 // No account selected → the card asks the user to pick one.
 export const DEFAULT_CURRENT_BALANCE_CONFIG: CurrentBalanceConfig = {
   account: null,
+  showFiltersAsBadge: false,
 }
 
 export const DEFAULT_TYPE_RESUME_CONFIG: TypeResumeConfig = {
@@ -59,4 +60,5 @@ export const DEFAULT_TYPE_RESUME_CONFIG: TypeResumeConfig = {
 export const DEFAULT_BALANCE_HISTORY_CONFIG: BalanceHistoryConfig = {
   account: null,
   preset: BALANCE_HISTORY_PRESET.LAST_30_DAYS,
+  showFiltersAsBadge: false,
 }

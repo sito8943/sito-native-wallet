@@ -11,6 +11,7 @@ export type {
   DashboardCardType,
   TypeResumeTime,
   BalanceHistoryPreset,
+  BaseCardConfig,
   CurrentBalanceConfig,
   TypeResumeConfig,
   BalanceHistoryConfig,
