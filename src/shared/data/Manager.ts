@@ -49,7 +49,8 @@ export class Manager {
   }
 
   public get SubscriptionProviders(): LocalSubscriptionProviderClient {
-    return (this.#subscriptionProviders ??= new LocalSubscriptionProviderClient())
+    return (this.#subscriptionProviders ??=
+      new LocalSubscriptionProviderClient())
   }
 
   public get Transactions(): LocalTransactionClient {
