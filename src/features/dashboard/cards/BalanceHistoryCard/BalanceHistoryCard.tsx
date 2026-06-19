@@ -64,6 +64,8 @@ export default function BalanceHistoryCard({
   )
 
   const values = points.map((point) => point.balance)
+  // "YYYY/MM/DD" → "MM/DD" for the chart's X axis.
+  const labels = points.map((point) => point.date.slice(5))
   const latest = values.length > 0 ? values[values.length - 1] : 0
 
   const presetOptions = [
@@ -129,7 +131,11 @@ export default function BalanceHistoryCard({
             <Typography variant={TYPOGRAPHY_VARIANT.DISPLAY}>
               {formatAmount(latest, symbol)}
             </Typography>
-            <LineChart values={values} color={colors.primary} />
+            <LineChart
+              values={values}
+              labels={labels}
+              color={colors.primary}
+            />
           </View>
         )}
       </CardFrame>

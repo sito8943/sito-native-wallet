@@ -1,23 +1,31 @@
 import { useState, type ReactElement } from "react"
 import { type LayoutChangeEvent, StyleSheet, View } from "react-native"
-import { Path, Polyline, Svg } from "react-native-svg"
+import { LineChart as GiftedLineChart } from "react-native-gifted-charts"
+
+import { useThemeColors } from "#design/theme"
 
 import {
+  CHART_AXIS_FONT_SIZE,
   CHART_FILL_OPACITY,
   CHART_HEIGHT,
   CHART_PADDING,
+  CHART_SECTIONS,
   CHART_STROKE_WIDTH,
+  CHART_X_LABELS,
+  CHART_Y_AXIS_WIDTH,
+  X_LABELS_HEIGHT,
 } from "./constants"
 import { type LineChartProps } from "./types"
 
-// Minimal line chart over react-native-svg: a polyline of the values plus a
-// faint filled area beneath it. Width is measured from the layout (the chart is
-// full-width); the value range maps to the inner height. No axes — the trend is
-// the point; the caller shows any headline value as text.
+// Minimal area line chart over react-native-gifted-charts: a filled trend line
+// with light Y (value) and X (label) axes. Width is measured from the layout
+// (full-width, no horizontal scroll); the value range maps to the height.
 export default function LineChart({
   values,
   color,
+  labels,
 }: LineChartProps): ReactElement {
+  const colors = useThemeColors()
   const [width, setWidth] = useState(0)
 
   const onLayout = (event: LayoutChangeEvent) => {
@@ -29,38 +37,52 @@ export default function LineChart({
     return <View style={styles.container} onLayout={onLayout} />
   }
 
-  const min = Math.min(...values)
-  const max = Math.max(...values)
-  const span = max - min || 1
-  const innerWidth = width - CHART_PADDING * 2
-  const innerHeight = CHART_HEIGHT - CHART_PADDING * 2
-  const baseline = CHART_HEIGHT - CHART_PADDING
+  // Show ~CHART_X_LABELS evenly-spaced labels, but only on INTERIOR points: the
+  // area is flush with the Y axis (initialSpacing 0), so a label centered on the
+  // first/last point would clip at the plot edge. Interior labels sit inset.
+  const step = Math.max(1, Math.round(values.length / CHART_X_LABELS))
+  const data = values.map((value, index) => ({
+    value,
+    label:
+      labels && index > 0 && index < values.length - 1 && index % step === 0
+        ? labels[index]
+        : "",
+  }))
 
-  const points = values.map((value, index) => {
-    const x = CHART_PADDING + (index / (values.length - 1)) * innerWidth
-    const y = CHART_PADDING + (1 - (value - min) / span) * innerHeight
-    return { x, y }
-  })
-
-  const line = points.map(({ x, y }) => `${x},${y}`).join(" ")
-  const area =
-    `M ${points[0].x},${baseline} ` +
-    points.map(({ x, y }) => `L ${x},${y}`).join(" ") +
-    ` L ${points[points.length - 1].x},${baseline} Z`
+  const axisText = {
+    color: colors.textMuted,
+    fontSize: CHART_AXIS_FONT_SIZE,
+  }
 
   return (
     <View style={styles.container} onLayout={onLayout}>
-      <Svg width={width} height={CHART_HEIGHT}>
-        <Path d={area} fill={color} fillOpacity={CHART_FILL_OPACITY} />
-        <Polyline
-          points={line}
-          fill="none"
-          stroke={color}
-          strokeWidth={CHART_STROKE_WIDTH}
-          strokeLinejoin="round"
-          strokeLinecap="round"
-        />
-      </Svg>
+      <GiftedLineChart
+        data={data}
+        width={width - CHART_Y_AXIS_WIDTH - CHART_PADDING * 2}
+        height={CHART_HEIGHT - CHART_PADDING * 2 - X_LABELS_HEIGHT}
+        adjustToWidth
+        disableScroll
+        initialSpacing={0}
+        endSpacing={0}
+        thickness={CHART_STROKE_WIDTH}
+        color={color}
+        areaChart
+        startFillColor={color}
+        endFillColor={color}
+        startOpacity={CHART_FILL_OPACITY}
+        endOpacity={0}
+        hideDataPoints
+        hideRules
+        noOfSections={CHART_SECTIONS}
+        yAxisThickness={1}
+        yAxisColor={colors.border}
+        yAxisLabelWidth={CHART_Y_AXIS_WIDTH}
+        yAxisTextStyle={axisText}
+        xAxisThickness={1}
+        xAxisColor={colors.border}
+        xAxisLabelsHeight={X_LABELS_HEIGHT}
+        xAxisLabelTextStyle={axisText}
+      />
     </View>
   )
 }
@@ -68,6 +90,8 @@ export default function LineChart({
 const styles = StyleSheet.create({
   container: {
     height: CHART_HEIGHT,
+    justifyContent: "center",
+    paddingHorizontal: CHART_PADDING,
     width: "100%",
   },
 })

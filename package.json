@@ -37,6 +37,7 @@
     "expo-dev-client": "~56.0.19",
     "expo-font": "~56.0.6",
     "expo-haptics": "~56.0.3",
+    "expo-linear-gradient": "~56.0.4",
     "expo-linking": "~56.0.13",
     "expo-navigation-bar": "~56.0.3",
     "expo-notifications": "~56.0.16",
@@ -48,6 +49,7 @@
     "react-hook-form": "^7.77.0",
     "react-native": "0.85.3",
     "react-native-gesture-handler": "~2.31.1",
+    "react-native-gifted-charts": "^1.4.77",
     "react-native-reanimated": "4.3.1",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-screens": "4.25.2",
@@ -77,6 +79,11 @@
       "^#features/(.*)$": "<rootDir>/src/features/$1/index.ts",
       "^#i18n/(.*)$": "<rootDir>/src/shared/i18n/$1.ts",
       "^#shared/(.*)$": "<rootDir>/src/shared/$1/index.ts"
-    }
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(.pnpm|react-native|@react-native|@react-native-community|expo|@expo|@expo-google-fonts|react-navigation|@react-navigation|@sentry/react-native|native-base|react-native-gifted-charts|gifted-charts-core))",
+      "/node_modules/react-native-reanimated/plugin/",
+      "/node_modules/@react-native/babel-preset/"
+    ]
   }
 }
