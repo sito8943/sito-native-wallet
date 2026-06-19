@@ -18,7 +18,10 @@ import {
   useThemePreference,
   type ThemeColors,
 } from "#design/theme"
-import { useProfileInfo, profileInitials } from "#features/settings/components/ProfileInfo"
+import {
+  useProfileInfo,
+  profileInitials,
+} from "#features/settings/components/ProfileInfo"
 import {
   APPEARANCE_OPTIONS,
   LANGUAGE_OPTIONS,

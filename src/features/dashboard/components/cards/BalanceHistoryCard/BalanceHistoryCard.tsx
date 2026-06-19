@@ -134,11 +134,7 @@ export default function BalanceHistoryCard({
             <Typography variant={TYPOGRAPHY_VARIANT.DISPLAY}>
               {formatAmount(latest, symbol)}
             </Typography>
-            <LineChart
-              values={values}
-              labels={labels}
-              color={colors.primary}
-            />
+            <LineChart values={values} labels={labels} color={colors.primary} />
           </View>
         )}
       </CardFrame>

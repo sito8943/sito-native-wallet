@@ -11,7 +11,10 @@ import IconButton, {
 import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useThemeColors } from "#design/theme"
-import { profileInitials, useProfileInfo } from "#features/settings/components/ProfileInfo"
+import {
+  profileInitials,
+  useProfileInfo,
+} from "#features/settings/components/ProfileInfo"
 import { useEntitySync } from "#features/sync"
 import { useI18n } from "#shared/i18n"
 import { toProfileRoute } from "#shared/navigation"

@@ -3,9 +3,7 @@ import { StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
 import Icon, { APP_ICONS } from "#design/elements/Icon"
-import Typography, {
-  TYPOGRAPHY_TONE,
-} from "#design/elements/Typography"
+import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useThemeColors } from "#design/theme"
 import { useI18n } from "#shared/i18n"

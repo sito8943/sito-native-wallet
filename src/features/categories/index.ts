@@ -31,5 +31,8 @@ export type { AddCategoryDto } from "./dtos"
 export type { CategoryBulletProps } from "./components/CategoryBullet"
 export type { CategoryCardProps } from "./components/CategoryCard"
 export type { CategoryFormProps } from "./components/CategoryForm"
-export type { UseCategoriesState, UseCategoriesOptions } from "./hooks/useCategories"
+export type {
+  UseCategoriesState,
+  UseCategoriesOptions,
+} from "./hooks/useCategories"
 export type { UseCategoryState } from "./hooks/useCategory"
