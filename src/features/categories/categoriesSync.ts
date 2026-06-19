@@ -2,12 +2,9 @@ import { type EntitySync, type SyncContext } from "#features/sync"
 import { type Manager } from "#shared/data"
 
 import {
-  createCategory,
-  deleteCategories,
-  fetchCategories,
-  updateCategory,
+  RemoteCategoryClient,
   type CategoryPayload,
-} from "./categoriesClient"
+} from "./clients/RemoteCategoryClient"
 import { type TransactionCategory } from "./TransactionCategory"
 
 // Sync adapter for transaction categories. System categories (balance
@@ -20,7 +17,7 @@ export const categoriesSync = (
   return {
     label: "categories",
     pull: async () => {
-      const rows = await fetchCategories()
+      const rows = await RemoteCategoryClient.fetch()
       client.mergeRemote(rows)
     },
     list: () => client.getAll().filter((category) => category.system !== true),
@@ -41,8 +38,8 @@ export const categoriesSync = (
       color: category.color,
       type: category.type,
     }),
-    create: createCategory,
-    update: updateCategory,
-    remove: deleteCategories,
+    create: RemoteCategoryClient.create,
+    update: RemoteCategoryClient.update,
+    remove: RemoteCategoryClient.remove,
   }
 }

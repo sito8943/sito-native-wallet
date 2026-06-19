@@ -2,12 +2,9 @@ import { type EntitySync, type SyncContext } from "#features/sync"
 import { type Manager } from "#shared/data"
 
 import {
-  createCurrency,
-  deleteCurrencies,
-  fetchCurrencies,
-  updateCurrency,
+  RemoteCurrencyClient,
   type CurrencyPayload,
-} from "./currenciesClient"
+} from "./clients/RemoteCurrencyClient"
 import { type Currency } from "./Currency"
 
 // Sync adapter for currencies. All currencies are user-owned (no system rows),
@@ -20,7 +17,7 @@ export const currenciesSync = (
   return {
     label: "currencies",
     pull: async () => {
-      const rows = await fetchCurrencies()
+      const rows = await RemoteCurrencyClient.fetch()
       client.mergeRemote(rows)
     },
     list: () => client.getAll(),
@@ -39,8 +36,8 @@ export const currenciesSync = (
       description: currency.description ?? "",
       symbol: currency.symbol,
     }),
-    create: createCurrency,
-    update: updateCurrency,
-    remove: deleteCurrencies,
+    create: RemoteCurrencyClient.create,
+    update: RemoteCurrencyClient.update,
+    remove: RemoteCurrencyClient.remove,
   }
 }

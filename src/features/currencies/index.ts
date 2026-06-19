@@ -1,7 +1,6 @@
 import { CurrencyCard } from "./components/CurrencyCard"
 import { CurrencyForm } from "./components/CurrencyForm"
 import { currenciesSync } from "./currenciesSync"
-import { CurrencyClient } from "./CurrencyClient"
 import { useCurrencies } from "./hooks/useCurrencies"
 import { useCurrency } from "./hooks/useCurrency"
 
@@ -10,7 +9,6 @@ export { CURRENCY_PREFABS } from "./prefabs"
 export type { CurrencyPrefab } from "./types"
 export {
   CurrencyCard,
-  CurrencyClient,
   CurrencyForm,
   currenciesSync,
   useCurrencies,

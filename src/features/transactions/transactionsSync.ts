@@ -1,15 +1,12 @@
 import { type EntitySync } from "#features/sync"
 import { type Manager } from "#shared/data"
 
-import { type StoredTransaction } from "./TransactionClient"
+import { type StoredTransaction } from "./clients/LocalTransactionClient"
 import {
-  createTransaction,
-  deleteTransactions,
-  fetchTransactions,
+  RemoteTransactionClient,
   stampToIso,
-  updateTransaction,
   type TransactionPayload,
-} from "./transactionsClient"
+} from "./clients/RemoteTransactionClient"
 
 // Sync adapter for transactions. Runs LAST (after currencies → categories →
 // accounts): a transaction references an account AND its categories by their
@@ -35,7 +32,7 @@ export const transactionsSync = (
   return {
     label: "transactions",
     pull: async () => {
-      const rows = await fetchTransactions()
+      const rows = await RemoteTransactionClient.fetch()
       client.mergeRemote(
         rows,
         (remoteAccountId) =>
@@ -84,8 +81,8 @@ export const transactionsSync = (
       date: transaction.date,
       categoryIds: transaction.categoryIds.join(","),
     }),
-    create: createTransaction,
-    update: updateTransaction,
-    remove: deleteTransactions,
+    create: RemoteTransactionClient.create,
+    update: RemoteTransactionClient.update,
+    remove: RemoteTransactionClient.remove,
   }
 }

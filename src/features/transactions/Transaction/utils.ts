@@ -9,12 +9,12 @@ import {
   type TransactionType,
 } from "#features/categories/TransactionCategory"
 
+import { type StoredTransaction } from "../clients/LocalTransactionClient"
 import {
   type CommonAccountDto,
   type CommonTransactionCategoryDto,
   type FilterTransactionDto,
 } from "../dtos"
-import { type StoredTransaction } from "../TransactionClient"
 
 import { getMissingAccount } from "./constants"
 import { type Transaction } from "./types"

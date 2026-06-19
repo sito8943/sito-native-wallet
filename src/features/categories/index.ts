@@ -1,5 +1,4 @@
 import { categoriesSync } from "./categoriesSync"
-import { CategoryClient } from "./CategoryClient"
 import { CategoryBullet } from "./components/CategoryBullet"
 import { CategoryCard } from "./components/CategoryCard"
 import { CategoryForm } from "./components/CategoryForm"
@@ -12,7 +11,6 @@ export type { CategoryPrefab } from "./types"
 export {
   CategoryBullet,
   CategoryCard,
-  CategoryClient,
   CategoryForm,
   categoriesSync,
   useCategories,

@@ -2,7 +2,6 @@ import { SubscriptionProviderCard } from "./components/SubscriptionProviderCard"
 import { SubscriptionProviderForm } from "./components/SubscriptionProviderForm"
 import { useSubscriptionProvider } from "./hooks/useSubscriptionProvider"
 import { useSubscriptionProviders } from "./hooks/useSubscriptionProviders"
-import { SubscriptionProviderClient } from "./SubscriptionProviderClient"
 
 export { INITIAL_SUBSCRIPTION_PROVIDERS } from "./demoData"
 export { subscriptionProvidersSync } from "./subscriptionProvidersSync"
@@ -10,7 +9,6 @@ export { SUBSCRIPTION_PROVIDER_PREFABS } from "./prefabs"
 export type { SubscriptionProviderPrefab } from "./types"
 export {
   SubscriptionProviderCard,
-  SubscriptionProviderClient,
   SubscriptionProviderForm,
   useSubscriptionProvider,
   useSubscriptionProviders,

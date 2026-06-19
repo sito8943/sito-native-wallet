@@ -1,14 +1,11 @@
 import { type EntitySync, type SyncContext } from "#features/sync"
 import { type Manager } from "#shared/data"
 
-import { type SubscriptionProvider } from "./SubscriptionProvider"
 import {
-  createSubscriptionProvider,
-  deleteSubscriptionProviders,
-  fetchSubscriptionProviders,
-  updateSubscriptionProvider,
+  RemoteSubscriptionProviderClient,
   type SubscriptionProviderPayload,
-} from "./subscriptionProvidersClient"
+} from "./clients/RemoteSubscriptionProviderClient"
+import { type SubscriptionProvider } from "./SubscriptionProvider"
 
 // Sync adapter for subscription providers — a standalone entity (no foreign
 // keys), so its order in the orchestrator is free. `photo` isn't synced (the
@@ -21,7 +18,7 @@ export const subscriptionProvidersSync = (
   return {
     label: "subscriptionProviders",
     pull: async () => {
-      const rows = await fetchSubscriptionProviders()
+      const rows = await RemoteSubscriptionProviderClient.fetch()
       client.mergeRemote(rows)
     },
     list: () => client.getAll(),
@@ -40,8 +37,8 @@ export const subscriptionProvidersSync = (
       description: provider.description ?? "",
       website: provider.website ?? "",
     }),
-    create: createSubscriptionProvider,
-    update: updateSubscriptionProvider,
-    remove: deleteSubscriptionProviders,
+    create: RemoteSubscriptionProviderClient.create,
+    update: RemoteSubscriptionProviderClient.update,
+    remove: RemoteSubscriptionProviderClient.remove,
   }
 }

@@ -64,4 +64,4 @@ export type {
 export type {
   CategoryBreakdown,
   CategoryBreakdownEntry,
-} from "./TransactionClient/types"
+} from "./clients/LocalTransactionClient/types"
