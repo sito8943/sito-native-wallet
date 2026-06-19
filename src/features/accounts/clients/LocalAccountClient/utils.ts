@@ -1,6 +1,6 @@
 import { isCurrency } from "#features/currencies/Currency"
 
-import { type Account, type AccountType } from "../Account"
+import { type Account, type AccountType } from "../../Account"
 
 import { ACCOUNT_TYPES } from "./constants"
 

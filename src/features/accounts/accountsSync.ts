@@ -3,12 +3,9 @@ import { type Manager } from "#shared/data"
 
 import { type Account, accountTypeToCode } from "./Account"
 import {
-  createAccount,
-  deleteAccounts,
-  fetchAccounts,
-  updateAccount,
+  RemoteAccountClient,
   type AccountPayload,
-} from "./accountsClient"
+} from "./clients/RemoteAccountClient"
 
 // Sync adapter for accounts. Depends on currencies: an account references a
 // currency by its backend id, so the orchestrator runs this AFTER currencies so
@@ -27,7 +24,7 @@ export const accountsSync = (
   return {
     label: "accounts",
     pull: async () => {
-      const rows = await fetchAccounts()
+      const rows = await RemoteAccountClient.fetch()
       client.mergeRemote(rows, resolveCurrency)
     },
     list: () => client.getAll(),
@@ -65,8 +62,8 @@ export const accountsSync = (
       type: account.type,
       currencyId: account.currency.id,
     }),
-    create: createAccount,
-    update: updateAccount,
-    remove: deleteAccounts,
+    create: RemoteAccountClient.create,
+    update: RemoteAccountClient.update,
+    remove: RemoteAccountClient.remove,
   }
 }

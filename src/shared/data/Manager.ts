@@ -1,7 +1,7 @@
 // Deep path on purpose: the #features/accounts barrel pulls in useAccounts (which
 // imports the Manager), creating an eval-time import cycle. The client folder
 // has no such dependency.
-import { AccountClient } from "#features/accounts/AccountClient"
+import { LocalAccountClient } from "#features/accounts/clients/LocalAccountClient"
 // Deep paths on purpose (same reason as accounts below): the feature barrels
 // pull in the data hooks, which import the Manager — an eval-time cycle. The
 // client folders have no such dependency.
@@ -22,18 +22,18 @@ import { TransactionClient } from "#features/transactions/TransactionClient"
 // service directly — it always goes through manager.<Entity>.<method>().
 // Clients are created lazily so this module has no eval-time dependency on them.
 export class Manager {
-  #accounts?: AccountClient
+  #accounts?: LocalAccountClient
   #categories?: CategoryClient
   #currencies?: CurrencyClient
   #dashboard?: DashboardClient
   #subscriptionProviders?: SubscriptionProviderClient
   #transactions?: TransactionClient
 
-  public get Accounts(): AccountClient {
+  public get Accounts(): LocalAccountClient {
     // Lazy thunk for Transactions: creating an account records an initial
     // transaction, but the dependency is resolved at call time to avoid a
     // construction cycle (Transactions also needs Accounts).
-    return (this.#accounts ??= new AccountClient(() => this.Transactions))
+    return (this.#accounts ??= new LocalAccountClient(() => this.Transactions))
   }
 
   public get Categories(): CategoryClient {

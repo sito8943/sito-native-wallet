@@ -2,7 +2,7 @@
 // #features/categories barrels here would re-create the Manager import cycle
 // (barrel → hooks → Manager → this client). The client classes are injected as
 // instances by the Manager, so we only need their types.
-import { type AccountClient } from "#features/accounts/AccountClient"
+import { type LocalAccountClient } from "#features/accounts/clients/LocalAccountClient"
 import { type CategoryClient } from "#features/categories/CategoryClient"
 import {
   ADJUSTMENT_CATEGORY_ID,
@@ -50,10 +50,10 @@ import { parseStoredTransactions } from "./utils"
 // owning account's balance in sync. Online, the server would own this; offline,
 // the storage layer does. The UI just calls add/update/remove.
 export default class TransactionClient extends StorageClient<StoredTransaction> {
-  readonly #accounts: AccountClient
+  readonly #accounts: LocalAccountClient
   readonly #categories: CategoryClient
 
-  constructor(accounts: AccountClient, categories: CategoryClient) {
+  constructor(accounts: LocalAccountClient, categories: CategoryClient) {
     super({
       storageKey: TRANSACTIONS_STORAGE_KEY,
       errorMessage: TRANSACTIONS_ERROR_MESSAGE,

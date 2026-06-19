@@ -10,11 +10,11 @@ import { createId, StorageClient } from "#shared/data/storage"
 // Manager (a thunk), so this never imports the transactions barrel — that would
 // close the accounts ↔ transactions cycle (transactions already needs accounts).
 
-import { type Account, accountTypeFromCode } from "../Account"
+import { type Account, accountTypeFromCode } from "../../Account"
 // Type-only: erased at runtime, so no eval-time cycle through the Manager.
-import { type RemoteAccount } from "../accountsClient"
-import { INITIAL_ACCOUNTS } from "../demoData"
-import { type AddAccountDto, type FilterAccountDto } from "../dtos"
+import { INITIAL_ACCOUNTS } from "../../demoData"
+import { type AddAccountDto, type FilterAccountDto } from "../../dtos"
+import { type RemoteAccount } from "../RemoteAccountClient"
 
 import { ACCOUNTS_ERROR_MESSAGE, ACCOUNTS_STORAGE_KEY } from "./constants"
 import { parseStoredAccounts } from "./utils"
@@ -27,7 +27,7 @@ const matchesAccountFilter =
     (filters.currencyId === undefined ||
       account.currency.id === filters.currencyId)
 
-export default class AccountClient extends StorageClient<Account> {
+export default class LocalAccountClient extends StorageClient<Account> {
   readonly #getTransactions: () => TransactionClient
 
   constructor(getTransactions: () => TransactionClient) {

@@ -1,6 +1,6 @@
 import { getDeviceLanguage, translate } from "#i18n/utils"
 
-import { ACCOUNT_TYPE, type AccountType } from "../Account"
+import { ACCOUNT_TYPE, type AccountType } from "../../Account"
 
 export const ACCOUNTS_STORAGE_KEY = "accounts"
 export const ACCOUNTS_ERROR_MESSAGE = translate(
