@@ -12,8 +12,8 @@ import Form from "#design/patterns/Form"
 import { THEME_COLOR, useThemeColors } from "#design/theme"
 import { useI18n } from "#shared/i18n"
 
-import { type AddCategoryDto } from "../dtos"
-import { TRANSACTION_TYPE } from "../TransactionCategory"
+import { type AddCategoryDto } from "../../dtos"
+import { TRANSACTION_TYPE } from "../../TransactionCategory"
 
 import {
   CATEGORY_FIELD_LIMITS,

@@ -1,5 +1,5 @@
-import { type AddTransferDto, type AddTransactionDto } from "../dtos"
-import { type Transaction } from "../Transaction"
+import { type AddTransferDto, type AddTransactionDto } from "../../dtos"
+import { type Transaction } from "../../Transaction"
 
 export type UseTransactionsOptions = {
   // Restrict `data` to one account. Omit for every transaction.

@@ -3,7 +3,7 @@ import { TRANSACTION_TYPE } from "#features/categories"
 import {
   TRANSACTION_SORT_ORDER,
   TRANSACTION_TYPE_FILTER,
-} from "../TransactionsPreferences"
+} from "../../TransactionsPreferences"
 
 export const TYPE_OPTIONS = [
   {

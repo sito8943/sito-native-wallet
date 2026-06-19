@@ -4,7 +4,7 @@ import { APP_ICONS } from "#design/elements/Icon"
 import { type Action, ACTION_ID } from "#design/interactions"
 import { useI18n } from "#shared/i18n"
 
-import { type Account } from "../Account"
+import { type Account } from "../../Account"
 
 import { type UseTransferActionProps } from "./types"
 

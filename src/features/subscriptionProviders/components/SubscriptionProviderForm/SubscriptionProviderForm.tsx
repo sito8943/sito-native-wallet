@@ -7,7 +7,7 @@ import TextField from "#design/elements/TextField"
 import { spacing } from "#design/foundations"
 import { useI18n } from "#shared/i18n"
 
-import { type AddSubscriptionProviderDto } from "../dtos"
+import { type AddSubscriptionProviderDto } from "../../dtos"
 
 import {
   EMPTY_SUBSCRIPTION_PROVIDER,

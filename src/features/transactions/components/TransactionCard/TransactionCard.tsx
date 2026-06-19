@@ -8,7 +8,7 @@ import EntityCard from "#design/patterns/EntityCard"
 import { useThemedStyles, type ThemeColors } from "#design/theme"
 import { CategoryBullet, TRANSACTION_TYPE } from "#features/categories"
 
-import { getTransactionType } from "../Transaction"
+import { getTransactionType } from "../../Transaction"
 import { TransactionTypeBadge } from "../TransactionTypeBadge"
 
 import { type TransactionCardProps } from "./types"

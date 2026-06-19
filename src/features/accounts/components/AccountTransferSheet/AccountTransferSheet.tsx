@@ -15,7 +15,7 @@ import Form from "#design/patterns/Form"
 import { formatStamp, parseStamp, todayStamp } from "#shared/data/time"
 import { useI18n } from "#shared/i18n"
 
-import { useAccounts } from "../useAccounts"
+import { useAccounts } from "../../hooks/useAccounts"
 
 import { TRANSFER_DESCRIPTION_LIMIT } from "./constants"
 import {

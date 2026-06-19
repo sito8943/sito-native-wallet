@@ -1,4 +1,4 @@
-import { type Account } from "../Account"
+import { type Account } from "../../Account"
 
 export type AccountTransferSheetProps = {
   account: Account | null

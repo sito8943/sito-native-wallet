@@ -6,7 +6,7 @@ import DeleteButton from "#design/patterns/DeleteButton"
 import Form from "#design/patterns/Form"
 import { useI18n } from "#shared/i18n"
 
-import { type AddCurrencyDto } from "../dtos"
+import { type AddCurrencyDto } from "../../dtos"
 
 import { CURRENCY_FIELD_LIMITS, EMPTY_CURRENCY } from "./constants"
 import { type CurrencyFormProps } from "./types"

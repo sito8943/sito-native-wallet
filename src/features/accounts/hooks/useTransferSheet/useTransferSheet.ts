@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react"
 
-import { type Account } from "../Account"
+import { type Account } from "../../Account"
 import { useTransferAction } from "../useTransferAction"
 
 import { type UseTransferSheetProps, type UseTransferSheetState } from "./types"

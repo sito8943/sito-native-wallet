@@ -1,6 +1,6 @@
 import { type Action } from "#design/interactions"
 
-import { type SubscriptionProvider } from "../SubscriptionProvider"
+import { type SubscriptionProvider } from "../../SubscriptionProvider"
 
 export type SubscriptionProviderCardProps = {
   provider: SubscriptionProvider

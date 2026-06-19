@@ -1,5 +1,5 @@
-import { type Currency } from "../Currency"
-import { type AddCurrencyDto } from "../dtos"
+import { type Currency } from "../../Currency"
+import { type AddCurrencyDto } from "../../dtos"
 
 export type UseCurrencyState = {
   data: Currency | null

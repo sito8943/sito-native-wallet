@@ -3,14 +3,14 @@ import { SORT_ORDER } from "#shared/data"
 import { useStoredState } from "#shared/data/storage"
 import { useI18n } from "#shared/i18n"
 
-import { type FilterTransactionDto } from "../dtos"
+import { type FilterTransactionDto } from "../../dtos"
 import {
   TRANSACTION_SORT_ORDER,
   TRANSACTION_TYPE_FILTER,
   type TransactionSortOrder,
   type TransactionsPreferences,
   type TransactionTypeFilter,
-} from "../TransactionsPreferences"
+} from "../../TransactionsPreferences"
 import { useTransactions } from "../useTransactions"
 
 import {

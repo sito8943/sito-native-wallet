@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react"
 
-import { type Account } from "../Account"
+import { type Account } from "../../Account"
 import { useAdjustBalanceAction } from "../useAdjustBalanceAction"
 
 import {

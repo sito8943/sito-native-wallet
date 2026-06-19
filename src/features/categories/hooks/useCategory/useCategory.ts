@@ -1,7 +1,7 @@
 import { useManager } from "#shared/data"
 import { useClientStore } from "#shared/data/storage"
 
-import { type AddCategoryDto } from "../dtos"
+import { type AddCategoryDto } from "../../dtos"
 
 import { type UseCategoryState } from "./types"
 

@@ -1,4 +1,4 @@
-import { type AddCurrencyDto } from "../dtos"
+import { type AddCurrencyDto } from "../../dtos"
 
 export type CurrencyFormProps = {
   defaultValues?: AddCurrencyDto

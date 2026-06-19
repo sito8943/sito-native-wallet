@@ -1,7 +1,7 @@
 import { useManager } from "#shared/data"
 import { useClientStore } from "#shared/data/storage"
 
-import { type AddAccountDto } from "../dtos"
+import { type AddAccountDto } from "../../dtos"
 
 import { type UseAccountsOptions, type UseAccountsState } from "./types"
 

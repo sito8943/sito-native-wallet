@@ -2,7 +2,7 @@ import { type StyleProp, type ViewStyle } from "react-native"
 
 import { type Action } from "#design/interactions"
 
-import { type TransactionCategory } from "../TransactionCategory"
+import { type TransactionCategory } from "../../TransactionCategory"
 
 export type CategoryCardProps = {
   category: TransactionCategory

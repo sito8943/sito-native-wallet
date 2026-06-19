@@ -7,7 +7,7 @@ import {
   type TransactionsPreferences,
   type TransactionTypeFilter,
   type TransactionSortOrder,
-} from "../TransactionsPreferences"
+} from "../../TransactionsPreferences"
 
 import { DEFAULT_TRANSACTIONS_PREFERENCES } from "./constants"
 

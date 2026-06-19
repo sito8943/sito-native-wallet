@@ -11,7 +11,7 @@ import { useCategories } from "#features/categories"
 import { formatStamp, parseStamp } from "#shared/data"
 import { useI18n } from "#shared/i18n"
 
-import { type AddTransactionDto } from "../dtos"
+import { type AddTransactionDto } from "../../dtos"
 
 import { TRANSACTION_FIELD_LIMITS } from "./constants"
 import { type TransactionFormProps, type TransactionFormValues } from "./types"

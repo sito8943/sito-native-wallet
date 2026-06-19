@@ -1,7 +1,7 @@
 import { useState } from "react"
 
-import { INITIAL_SUBSCRIPTIONS } from "../demoData"
-import { sortByNextRenewal } from "../Subscription"
+import { INITIAL_SUBSCRIPTIONS } from "../../demoData"
+import { sortByNextRenewal } from "../../Subscription"
 
 import { type UseSubscriptionsState } from "./types"
 

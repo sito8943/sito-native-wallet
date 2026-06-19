@@ -2,7 +2,7 @@ import {
   TRANSACTION_SORT_ORDER,
   TRANSACTION_TYPE_FILTER,
   type TransactionsPreferences,
-} from "../TransactionsPreferences"
+} from "../../TransactionsPreferences"
 
 export const DEFAULT_TRANSACTIONS_PREFERENCES: TransactionsPreferences = {
   accountId: 0,

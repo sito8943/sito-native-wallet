@@ -7,10 +7,10 @@ import { spacing } from "#design/foundations"
 import Form from "#design/patterns/Form"
 import { useI18n } from "#shared/i18n"
 
-import AuthError from "../AuthError"
+import AuthError from "../../AuthError"
+import { EMAIL_PATTERN } from "../../utils"
 import AuthHeader from "../AuthHeader"
 import AuthLink from "../AuthLink"
-import { EMAIL_PATTERN } from "../utils"
 
 import { type SignInFormValues, type SignInViewProps } from "./types"
 

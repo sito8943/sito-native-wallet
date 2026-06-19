@@ -11,12 +11,12 @@ import { useManager } from "#shared/data"
 import { useClientStore } from "#shared/data/storage"
 import { useI18n } from "#shared/i18n"
 
-import { useDashboard } from "../../data/useDashboard"
+import { useDashboard } from "../../../data/useDashboard"
 import {
   formatAmount,
   getBalanceHistoryBoundaries,
   toAccountSnapshot,
-} from "../../utils"
+} from "../../../utils"
 import ActiveFilters from "../ActiveFilters"
 import CardDisplaySection from "../CardDisplaySection"
 import CardFrame from "../CardFrame"

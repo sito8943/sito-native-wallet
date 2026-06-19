@@ -1,6 +1,6 @@
 import { type ReactNode } from "react"
 
-import { type Account } from "../Account"
+import { type Account } from "../../Account"
 
 export type AccountCarouselProps = {
   accounts: Account[]

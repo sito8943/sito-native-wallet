@@ -1,4 +1,4 @@
-import { type DashboardCard } from "../../cards/DashboardCard"
+import { type DashboardCard } from "../../components/cards/DashboardCard"
 
 // Stored value is the raw card array; anything else (corrupt/legacy) resets to
 // empty and the seed re-runs.

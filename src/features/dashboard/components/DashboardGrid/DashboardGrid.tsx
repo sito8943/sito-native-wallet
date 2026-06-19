@@ -12,11 +12,11 @@ import { useAccounts } from "#features/accounts"
 import { useI18n } from "#shared/i18n"
 import { toAccountsRoute } from "#shared/navigation"
 
+import { useDashboard } from "../../data/useDashboard"
 import BalanceHistoryCard from "../cards/BalanceHistoryCard"
 import CurrentBalanceCard from "../cards/CurrentBalanceCard"
 import { DASHBOARD_CARD_TYPE, type DashboardCard } from "../cards/DashboardCard"
 import TypeResumeCard from "../cards/TypeResumeCard"
-import { useDashboard } from "../data/useDashboard"
 
 // The home dashboard: renders each stored card by type. Long-press a card to
 // drag it into a new order (persisted via reorderCards). Adding is handled by

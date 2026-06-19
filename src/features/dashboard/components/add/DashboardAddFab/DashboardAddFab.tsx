@@ -4,7 +4,7 @@ import { APP_ICONS } from "#design/elements/Icon"
 import FAB from "#design/patterns/FAB"
 import { useI18n } from "#shared/i18n"
 
-import { useDashboard } from "../../data/useDashboard"
+import { useDashboard } from "../../../data/useDashboard"
 import AddCardSheet from "../AddCardSheet"
 
 // Floating add-card action. Lives at screen level (outside the scroll) so the

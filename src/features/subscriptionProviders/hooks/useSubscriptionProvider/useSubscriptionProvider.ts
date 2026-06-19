@@ -1,7 +1,7 @@
 import { useManager } from "#shared/data"
 import { useClientStore } from "#shared/data/storage"
 
-import { type AddSubscriptionProviderDto } from "../dtos"
+import { type AddSubscriptionProviderDto } from "../../dtos"
 
 import { type UseSubscriptionProviderState } from "./types"
 

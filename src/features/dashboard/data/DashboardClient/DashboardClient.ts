@@ -5,7 +5,7 @@ import {
   DASHBOARD_CARD_TYPE,
   type DashboardCard,
   type DashboardCardType,
-} from "../../cards/DashboardCard"
+} from "../../components/cards/DashboardCard"
 import { type RemoteDashboardCard } from "../dashboardConfigClient"
 import { INITIAL_DASHBOARD } from "../demoData"
 import { type AddDashboardCardDto } from "../dtos"

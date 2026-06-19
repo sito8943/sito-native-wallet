@@ -1,5 +1,5 @@
-import { type AddSubscriptionProviderDto } from "../dtos"
-import { type SubscriptionProvider } from "../SubscriptionProvider"
+import { type AddSubscriptionProviderDto } from "../../dtos"
+import { type SubscriptionProvider } from "../../SubscriptionProvider"
 
 export type UseSubscriptionProviderState = {
   data: SubscriptionProvider | null

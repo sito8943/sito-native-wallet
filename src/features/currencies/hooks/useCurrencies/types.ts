@@ -1,7 +1,7 @@
 import { type QueryParam, type QueryResult } from "#shared/data"
 
-import { type Currency } from "../Currency"
-import { type AddCurrencyDto, type FilterCurrencyDto } from "../dtos"
+import { type Currency } from "../../Currency"
+import { type AddCurrencyDto, type FilterCurrencyDto } from "../../dtos"
 
 export type UseCurrenciesOptions = {
   filters?: FilterCurrencyDto

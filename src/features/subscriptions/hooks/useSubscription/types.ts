@@ -1,4 +1,4 @@
-import { type Subscription } from "../Subscription"
+import { type Subscription } from "../../Subscription"
 
 export type UseSubscriptionState = {
   data: Subscription | null

@@ -1,6 +1,6 @@
 import { type ResolvedTheme, type ThemeColors } from "#design/theme"
 
-import { ACCOUNT_BANK_NAME } from "../Account"
+import { ACCOUNT_BANK_NAME } from "../../Account"
 
 import { type AccountCardTheme } from "./types"
 

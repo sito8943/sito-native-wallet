@@ -1,4 +1,4 @@
-import { type AddSubscriptionProviderDto } from "../dtos"
+import { type AddSubscriptionProviderDto } from "../../dtos"
 
 export const EMPTY_SUBSCRIPTION_PROVIDER: AddSubscriptionProviderDto = {
   name: "",

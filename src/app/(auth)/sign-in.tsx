@@ -13,7 +13,7 @@ import {
   WEB_RECOVERY_URL,
   type SignInFormValues,
 } from "#features/auth"
-import { resetProfileSync } from "#features/settings/ProfileInfo"
+import { resetProfileSync } from "#features/settings/components/ProfileInfo"
 import { useManager } from "#shared/data"
 import { useI18n } from "#shared/i18n"
 

@@ -9,7 +9,7 @@ import ActionMenu from "#design/patterns/ActionMenu"
 import { useThemeColors, useThemePreference } from "#design/theme"
 import { useI18n } from "#shared/i18n"
 
-import { ACCOUNT_TYPE, accountMeta } from "../Account"
+import { ACCOUNT_TYPE, accountMeta } from "../../Account"
 
 import { type AccountCardProps } from "./types"
 import { getAccountCardTheme } from "./utils"

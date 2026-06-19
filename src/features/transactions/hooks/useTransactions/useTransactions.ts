@@ -5,7 +5,7 @@ import { useCategories } from "#features/categories"
 import { SORT_ORDER, useManager } from "#shared/data"
 import { useClientStore } from "#shared/data/storage"
 
-import { type AddTransferDto, type AddTransactionDto } from "../dtos"
+import { type AddTransferDto, type AddTransactionDto } from "../../dtos"
 
 import { type UseTransactionsOptions, type UseTransactionsState } from "./types"
 

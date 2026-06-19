@@ -8,7 +8,7 @@ import {
 
 import { type Action } from "#design/interactions"
 
-import { type Transaction } from "../Transaction"
+import { type Transaction } from "../../Transaction"
 
 export type TransactionListProps = {
   data?: Transaction[]

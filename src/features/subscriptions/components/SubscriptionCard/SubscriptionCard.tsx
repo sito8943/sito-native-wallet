@@ -6,7 +6,7 @@ import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useI18n } from "#shared/i18n"
 
-import { daysUntilRenewal, formatBillingCycle } from "../Subscription"
+import { daysUntilRenewal, formatBillingCycle } from "../../Subscription"
 
 import { type SubscriptionCardProps } from "./types"
 import { renewalLabel } from "./utils"

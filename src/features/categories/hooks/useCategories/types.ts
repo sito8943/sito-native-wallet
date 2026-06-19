@@ -1,7 +1,7 @@
 import { type QueryParam, type QueryResult } from "#shared/data"
 
-import { type AddCategoryDto, type FilterCategoryDto } from "../dtos"
-import { type TransactionCategory } from "../TransactionCategory"
+import { type AddCategoryDto, type FilterCategoryDto } from "../../dtos"
+import { type TransactionCategory } from "../../TransactionCategory"
 
 export type UseCategoriesOptions = {
   // Include system categories (e.g. balance adjustment). Defaults to true (all

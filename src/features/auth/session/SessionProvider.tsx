@@ -57,7 +57,7 @@ export function SessionProvider({
     // Same lazy-import reason: the profile store + its sync would otherwise pull
     // AsyncStorage into the boot graph. Reset it so the next user doesn't
     // inherit (or re-push) the signed-out user's profile.
-    const { resetProfileSync } = await import("#features/settings/ProfileInfo")
+    const { resetProfileSync } = await import("#features/settings/components/ProfileInfo")
     resetProfileSync()
     setData(null)
   }, [setData])

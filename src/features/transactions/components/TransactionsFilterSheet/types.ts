@@ -2,7 +2,7 @@ import {
   type TransactionSortOrder,
   type TransactionsPreferences,
   type TransactionTypeFilter,
-} from "../TransactionsPreferences"
+} from "../../TransactionsPreferences"
 
 export type TransactionsFilterSheetProps = {
   open: boolean

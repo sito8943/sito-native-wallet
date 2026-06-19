@@ -5,7 +5,7 @@ import { useCategories } from "#features/categories"
 import { useManager } from "#shared/data"
 import { useClientStore } from "#shared/data/storage"
 
-import { type FilterTransactionDto } from "../dtos"
+import { type FilterTransactionDto } from "../../dtos"
 
 // Sum of transaction amounts matching the filters (e.g. a dashboard type-resume
 // total). The client owns the aggregation; this hook just subscribes to the

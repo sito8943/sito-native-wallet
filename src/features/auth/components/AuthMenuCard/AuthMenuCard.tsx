@@ -9,7 +9,7 @@ import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useThemeColors } from "#design/theme"
 import { useI18n } from "#shared/i18n"
 
-import { useSession } from "../session"
+import { useSession } from "../../session"
 
 // Settings entry for auth: a "Sign in" link when browsing as a guest, or the
 // signed-in account + a "Sign out" action when authenticated.

@@ -1,4 +1,4 @@
-import { type DashboardCard } from "../../cards/DashboardCard"
+import { type DashboardCard } from "../../components/cards/DashboardCard"
 import { type AddDashboardCardDto } from "../dtos"
 
 export type UseDashboardState = {

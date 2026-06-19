@@ -5,7 +5,7 @@ import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useThemeColors } from "#design/theme"
 
-import { accountMeta } from "../Account"
+import { accountMeta } from "../../Account"
 import { AccountCard } from "../AccountCard"
 
 import { type CollapsibleAccountHeaderProps } from "./types"

@@ -1,5 +1,5 @@
-import { type AccountType } from "../Account"
-import { type AddAccountDto } from "../dtos"
+import { type AccountType } from "../../Account"
+import { type AddAccountDto } from "../../dtos"
 
 // Form-local shape: text inputs are strings and the currency is held by id
 // until submit maps it back to the full Currency on the DTO.

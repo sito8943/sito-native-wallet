@@ -1,7 +1,7 @@
 import { useManager } from "#shared/data"
 import { useClientStore } from "#shared/data/storage"
 
-import { type AddCurrencyDto } from "../dtos"
+import { type AddCurrencyDto } from "../../dtos"
 
 import { type UseCurrenciesOptions, type UseCurrenciesState } from "./types"
 

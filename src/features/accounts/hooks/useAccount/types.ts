@@ -1,5 +1,5 @@
-import { type Account } from "../Account"
-import { type AddAccountDto } from "../dtos"
+import { type Account } from "../../Account"
+import { type AddAccountDto } from "../../dtos"
 
 export type UseAccountState = {
   // The matching account, or null once loaded if the id isn't found.

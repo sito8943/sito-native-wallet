@@ -1,13 +1,13 @@
 import { type Account } from "#features/accounts"
 import { type QueryParam } from "#shared/data"
 
-import { type FilterTransactionDto } from "../dtos"
-import { type Transaction } from "../Transaction"
+import { type FilterTransactionDto } from "../../dtos"
+import { type Transaction } from "../../Transaction"
 import {
   type TransactionSortOrder,
   type TransactionsPreferences,
   type TransactionTypeFilter,
-} from "../TransactionsPreferences"
+} from "../../TransactionsPreferences"
 
 export type UseFilteredTransactionsState = {
   accounts: Account[]

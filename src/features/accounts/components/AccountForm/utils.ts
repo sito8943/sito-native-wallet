@@ -1,5 +1,5 @@
-import { ACCOUNT_TYPE } from "../Account"
-import { type AddAccountDto } from "../dtos"
+import { ACCOUNT_TYPE } from "../../Account"
+import { type AddAccountDto } from "../../dtos"
 
 import { type AccountFormValues } from "./types"
 

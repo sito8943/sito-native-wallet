@@ -1,12 +1,12 @@
 import { getDeviceLanguage, translate } from "#i18n/utils"
 import { createNotification } from "#shared/notifications"
 
+import { renewalLabel } from "./components/SubscriptionCard/utils"
 import {
   daysUntilRenewal,
   SUBSCRIPTION_STATUS,
   type Subscription,
 } from "./Subscription"
-import { renewalLabel } from "./SubscriptionCard/utils"
 
 export async function notifyUpcomingRenewal(
   subscriptions: Subscription[],

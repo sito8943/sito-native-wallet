@@ -9,9 +9,9 @@ import { useCategories } from "#features/categories"
 import { useI18n } from "#shared/i18n"
 import { toAccountsRoute, toCategoriesRoute } from "#shared/navigation"
 
-import { type AddTransactionDto } from "../dtos"
+import { type AddTransactionDto } from "../../dtos"
+import { useTransactions } from "../../hooks/useTransactions"
 import { TransactionForm } from "../TransactionForm"
-import { useTransactions } from "../useTransactions"
 
 import { type NewTransactionScreenProps } from "./types"
 

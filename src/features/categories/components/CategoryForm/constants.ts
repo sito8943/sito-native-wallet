@@ -1,5 +1,5 @@
-import { type AddCategoryDto } from "../dtos"
-import { TRANSACTION_TYPE } from "../TransactionCategory"
+import { type AddCategoryDto } from "../../dtos"
+import { TRANSACTION_TYPE } from "../../TransactionCategory"
 
 // Preset category colors (entity colors, not theme colors). First is default.
 export const CATEGORY_PALETTE = [

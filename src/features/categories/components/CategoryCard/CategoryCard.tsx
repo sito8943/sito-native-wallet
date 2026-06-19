@@ -5,7 +5,7 @@ import Typography from "#design/elements/Typography"
 import { spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import AutoBadge from "#design/patterns/AutoBadge"
 import EntityCard from "#design/patterns/EntityCard"
-import { TransactionTypeBadge } from "#features/transactions/TransactionTypeBadge"
+import { TransactionTypeBadge } from "#features/transactions/components/TransactionTypeBadge"
 
 import { CategoryBullet } from "../CategoryBullet"
 

@@ -25,13 +25,13 @@ import {
 } from "#features/transactions"
 import { useI18n } from "#shared/i18n"
 
-import { useDashboard } from "../../data/useDashboard"
+import { useDashboard } from "../../../data/useDashboard"
 import {
   getOppositeType,
   getTimeRange,
   toAccountSnapshot,
   toCategorySnapshot,
-} from "../../utils"
+} from "../../../utils"
 import ActiveFilters from "../ActiveFilters"
 import CardDisplaySection from "../CardDisplaySection"
 import CardFrame from "../CardFrame"

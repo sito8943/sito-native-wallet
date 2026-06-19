@@ -1,7 +1,7 @@
 import { type EntitySync, type SyncContext } from "#features/sync"
 import { type Manager } from "#shared/data"
 
-import { type DashboardCard } from "./cards/DashboardCard"
+import { type DashboardCard } from "./components/cards/DashboardCard"
 import {
   createDashboardCard,
   deleteDashboardCards,

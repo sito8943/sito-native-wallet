@@ -1,7 +1,7 @@
 import { type Action } from "#design/interactions"
 
-import { type Account } from "../Account"
-import { type AccountAdjustBalanceSheetProps } from "../AccountAdjustBalanceSheet"
+import { type Account } from "../../Account"
+import { type AccountAdjustBalanceSheetProps } from "../../components/AccountAdjustBalanceSheet"
 
 export type UseAdjustBalanceSheetProps = {
   // Injected by the screen (which knows both domains): turns the chosen target

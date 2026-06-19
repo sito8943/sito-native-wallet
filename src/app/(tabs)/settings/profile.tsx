@@ -18,11 +18,11 @@ import {
   useThemePreference,
   type ThemeColors,
 } from "#design/theme"
-import { useProfileInfo, profileInitials } from "#features/settings/ProfileInfo"
+import { useProfileInfo, profileInitials } from "#features/settings/components/ProfileInfo"
 import {
   APPEARANCE_OPTIONS,
   LANGUAGE_OPTIONS,
-} from "#features/settings/ProfilePreferences"
+} from "#features/settings/components/ProfilePreferences"
 import { LANGUAGE, useI18n } from "#shared/i18n"
 
 export default function Profile(): ReactElement {

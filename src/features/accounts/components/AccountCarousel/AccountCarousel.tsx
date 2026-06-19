@@ -11,7 +11,7 @@ import {
 import { radius, spacing } from "#design/foundations"
 import { useThemedStyles, type ThemeColors } from "#design/theme"
 
-import { type Account } from "../Account"
+import { type Account } from "../../Account"
 import { AccountVisual } from "../AccountCard"
 
 import { GAP, HALF_GAP, PADDING, SIDE } from "./constants"

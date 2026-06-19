@@ -1,7 +1,7 @@
 import { type QueryParam, type QueryResult } from "#shared/data"
 
-import { type FilterTransactionDto } from "../dtos"
-import { type Transaction } from "../Transaction"
+import { type FilterTransactionDto } from "../../dtos"
+import { type Transaction } from "../../Transaction"
 
 export type UseTransactionsListProps = {
   filters?: FilterTransactionDto

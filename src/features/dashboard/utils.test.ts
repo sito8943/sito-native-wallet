@@ -1,4 +1,4 @@
-import { BALANCE_HISTORY_PRESET, TYPE_RESUME_TIME } from "./cards/DashboardCard"
+import { BALANCE_HISTORY_PRESET, TYPE_RESUME_TIME } from "./components/cards/DashboardCard"
 import {
   formatAmount,
   getBalanceHistoryBoundaries,

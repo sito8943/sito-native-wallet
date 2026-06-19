@@ -7,9 +7,9 @@ import { TYPOGRAPHY_VARIANT } from "#design/foundations"
 import Page from "#design/templates/Page"
 import { useI18n } from "#shared/i18n"
 
-import { type AddTransactionDto } from "../dtos"
+import { type AddTransactionDto } from "../../dtos"
+import { useTransactions } from "../../hooks/useTransactions"
 import { TransactionForm } from "../TransactionForm"
-import { useTransactions } from "../useTransactions"
 
 import { type TransactionDetailScreenProps } from "./types"
 

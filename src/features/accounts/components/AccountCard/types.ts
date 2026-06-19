@@ -1,6 +1,6 @@
 import { type Action } from "#design/interactions"
 
-import { type Account } from "../Account"
+import { type Account } from "../../Account"
 
 export type AccountCardProps = {
   account: Account

@@ -1,4 +1,4 @@
-import { type AddCategoryDto } from "../dtos"
+import { type AddCategoryDto } from "../../dtos"
 
 export type CategoryFormProps = {
   defaultValues?: AddCategoryDto

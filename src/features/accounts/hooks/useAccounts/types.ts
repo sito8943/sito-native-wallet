@@ -1,7 +1,7 @@
 import { type QueryParam, type QueryResult } from "#shared/data"
 
-import { type Account } from "../Account"
-import { type AddAccountDto, type FilterAccountDto } from "../dtos"
+import { type Account } from "../../Account"
+import { type AddAccountDto, type FilterAccountDto } from "../../dtos"
 
 export type UseAccountsOptions = {
   filters?: FilterAccountDto

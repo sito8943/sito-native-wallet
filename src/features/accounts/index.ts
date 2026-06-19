@@ -1,26 +1,26 @@
-import { AccountCard, AccountVisual } from "./AccountCard"
-import { AccountForm } from "./AccountForm"
 import { accountsSync } from "./accountsSync"
-import AccountTransferSheet from "./AccountTransferSheet"
-import { CollapsibleAccountHeader } from "./CollapsibleAccountHeader"
-import { useAccount } from "./useAccount"
-import { useAccounts } from "./useAccounts"
-import { useAdjustBalanceSheet } from "./useAdjustBalanceSheet"
-import { useTransferSheet } from "./useTransferSheet"
+import { AccountCard, AccountVisual } from "./components/AccountCard"
+import { AccountForm } from "./components/AccountForm"
+import AccountTransferSheet from "./components/AccountTransferSheet"
+import { CollapsibleAccountHeader } from "./components/CollapsibleAccountHeader"
+import { useAccount } from "./hooks/useAccount"
+import { useAccounts } from "./hooks/useAccounts"
+import { useAdjustBalanceSheet } from "./hooks/useAdjustBalanceSheet"
+import { useTransferSheet } from "./hooks/useTransferSheet"
 
-export { default as AccountAdjustBalanceSheet } from "./AccountAdjustBalanceSheet"
-export type { AccountAdjustBalanceSheetProps } from "./AccountAdjustBalanceSheet"
-export type { AccountTransferSheetProps } from "./AccountTransferSheet"
-export { default as AccountSelector } from "./AccountSelector"
-export { default as AccountCarousel } from "./AccountCarousel"
-export type { AccountCarouselProps } from "./AccountCarousel"
+export { default as AccountAdjustBalanceSheet } from "./components/AccountAdjustBalanceSheet"
+export type { AccountAdjustBalanceSheetProps } from "./components/AccountAdjustBalanceSheet"
+export type { AccountTransferSheetProps } from "./components/AccountTransferSheet"
+export { default as AccountSelector } from "./components/AccountSelector"
+export { default as AccountCarousel } from "./components/AccountCarousel"
+export type { AccountCarouselProps } from "./components/AccountCarousel"
 export { INITIAL_ACCOUNTS } from "./demoData"
 export { ACCOUNT_PREFABS } from "./prefabs"
 export type { AccountPrefab } from "./types"
 export {
   COLLAPSED_HEADER_HEIGHT,
   DEFAULT_HEADER_HEIGHT,
-} from "./CollapsibleAccountHeader"
+} from "./components/CollapsibleAccountHeader"
 export {
   ACCOUNT_BANK_NAME,
   ACCOUNT_BANK_OPTIONS,
@@ -42,16 +42,16 @@ export {
 export type {
   UseAdjustBalanceSheetProps,
   UseAdjustBalanceSheetState,
-} from "./useAdjustBalanceSheet"
+} from "./hooks/useAdjustBalanceSheet"
 export type {
   UseTransferSheetProps,
   UseTransferSheetState,
-} from "./useTransferSheet"
+} from "./hooks/useTransferSheet"
 export type { Account, AccountBankName, AccountType } from "./Account"
-export type { AccountCardProps } from "./AccountCard"
-export type { CollapsibleAccountHeaderProps } from "./CollapsibleAccountHeader"
-export type { AccountSelectorProps } from "./AccountSelector"
-export type { AccountFormProps } from "./AccountForm"
+export type { AccountCardProps } from "./components/AccountCard"
+export type { CollapsibleAccountHeaderProps } from "./components/CollapsibleAccountHeader"
+export type { AccountSelectorProps } from "./components/AccountSelector"
+export type { AccountFormProps } from "./components/AccountForm"
 export type { AddAccountDto } from "./dtos"
-export type { UseAccountsState } from "./useAccounts"
-export type { UseAccountState } from "./useAccount"
+export type { UseAccountsState } from "./hooks/useAccounts"
+export type { UseAccountState } from "./hooks/useAccount"

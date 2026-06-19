@@ -1,7 +1,7 @@
 import { type Action } from "#design/interactions"
 
-import { type Account } from "../Account"
-import { type AccountTransferSheetProps } from "../AccountTransferSheet"
+import { type Account } from "../../Account"
+import { type AccountTransferSheetProps } from "../../components/AccountTransferSheet"
 
 export type UseTransferSheetProps = {
   onTransfer: (

@@ -16,7 +16,7 @@ import {
   TYPE_RESUME_TIME,
   type BalanceHistoryPreset,
   type TypeResumeTime,
-} from "./cards/DashboardCard"
+} from "./components/cards/DashboardCard"
 import { type DateRange, type RemoteIdResolver } from "./types"
 
 // Snapshot stored in a card's config (matches the web wallet's persisted

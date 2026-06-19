@@ -5,7 +5,7 @@ import Typography from "#design/elements/Typography"
 import { spacing, typography, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { TransactionTypeBadge } from "#features/transactions"
 
-import { formatAmount } from "../../utils"
+import { formatAmount } from "../../../utils"
 
 import { type TypeTotalProps } from "./types"
 

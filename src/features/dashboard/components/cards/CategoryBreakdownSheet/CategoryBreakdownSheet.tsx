@@ -13,7 +13,7 @@ import { useManager } from "#shared/data"
 import { useClientStore } from "#shared/data/storage"
 import { useI18n } from "#shared/i18n"
 
-import { formatAmount } from "../../utils"
+import { formatAmount } from "../../../utils"
 
 import { BREAKDOWN_BAR_HEIGHT, BREAKDOWN_LIST_MAX_HEIGHT } from "./constants"
 import { type CategoryBreakdownSheetProps } from "./types"

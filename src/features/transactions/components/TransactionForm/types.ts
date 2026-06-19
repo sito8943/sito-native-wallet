@@ -1,4 +1,4 @@
-import { type AddTransactionDto } from "../dtos"
+import { type AddTransactionDto } from "../../dtos"
 
 export type TransactionFormProps = {
   defaultValues?: AddTransactionDto

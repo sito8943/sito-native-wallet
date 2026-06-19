@@ -16,7 +16,7 @@ import {
   CategoryForm,
 } from "#features/categories"
 import { type Currency, CurrencyCard, CurrencyForm } from "#features/currencies"
-import { SettingsMenu } from "#features/settings/SettingsMenu"
+import { SettingsMenu } from "#features/settings/components/SettingsMenu"
 import {
   type SubscriptionProvider,
   SubscriptionProviderCard,

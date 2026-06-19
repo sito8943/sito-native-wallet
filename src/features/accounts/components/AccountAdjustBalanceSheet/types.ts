@@ -1,4 +1,4 @@
-import { type Account } from "../Account"
+import { type Account } from "../../Account"
 
 export type AccountAdjustBalanceSheetProps = {
   // The account being adjusted; null when the sheet is closed.

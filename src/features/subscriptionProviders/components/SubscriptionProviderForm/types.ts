@@ -1,4 +1,4 @@
-import { type AddSubscriptionProviderDto } from "../dtos"
+import { type AddSubscriptionProviderDto } from "../../dtos"
 
 export type SubscriptionProviderFormProps = {
   defaultValues?: AddSubscriptionProviderDto
