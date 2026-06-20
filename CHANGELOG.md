@@ -12,23 +12,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Authentication: sign-in flow with profile loading after sign in.
+- Authentication: password recovery, change password and email-confirmation resend.
+- Profile photo upload (image picker + backend).
 - Account, transaction and category CRUD.
 - Entity sync layer (`useEntitySync`) that syncs multiple entities per account.
 - Dashboard type resume card with recent activity and actions.
+- Dashboard balance-history line chart (react-native-gifted-charts) with X/Y axes.
+- Shared visualization toggles inherited across all dashboard cards.
+- Intuitive dashboard empty state with a descriptive card picker.
+- Transactions screen redesign: swipeable account carousel, income/expense summary and a filters sheet.
 - Currencies and excluded categories.
 - Auto-detect of the dev server.
 - Architecture rules documentation.
 
 ### Changed
 
+- Data clients split into per-feature `Local<X>Client` (offline store) and `Remote<X>Client` (REST).
+- Features grouped into `components/` and `hooks/` folders.
 - Profile refactored to `useEntitySync` and can now save.
 - Option-selection UX and account delete UX.
+- Softened card shadows; selectable lists use flat cards with a border.
 
 ### Fixed
 
 - Entity list.
 - Circular imports in categories.
 - Confirmation dialog no longer closes while loading.
+- Dashboard card action icon spacing.
+- Border clipping on prefab/suggestion cards.
+- Patch-version mismatches across Expo SDK 56 packages.
 
 ## [0.3.0]
 
