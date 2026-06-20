@@ -27,12 +27,19 @@ type RequestOptions = {
 // host, firewall, server not actually reachable from the device).
 const REQUEST_TIMEOUT_MS = 15000
 
+// Redact credential-bearing terms from any traced string so an auth URL (e.g.
+// /auth/password/change, or a flow that carries a token in the path/query)
+// never reaches the logs as clear text.
+const redact = (value: string): string =>
+  value.replace(/(password|token|reset|recovery|confirm)[^\s/?#&=]*/gi, "$1/***")
+
 // Dev-only request tracing so you can see what's happening in the Metro
 // terminal instead of being blind. Stripped in production (__DEV__ === false).
 const log = (...args: unknown[]): void => {
   if (__DEV__) {
+    const safe = args.map((arg) => (typeof arg === "string" ? redact(arg) : arg))
     // eslint-disable-next-line no-console
-    console.log("[auth]", ...args)
+    console.log("[auth]", ...safe)
   }
 }
 
