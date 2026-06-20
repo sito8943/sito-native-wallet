@@ -7,10 +7,7 @@ import {
 // `excludeCategories`/`oppositeExcludeCategories`; the current shape (web parity)
 // is id arrays under `excludedCategoryIds`/`oppositeExcludedCategoryIds`. Read
 // the id array when present, else fall back to the legacy objects' ids.
-const migrateExcludedIds = (
-  ids: unknown,
-  legacy: unknown,
-): number[] => {
+const migrateExcludedIds = (ids: unknown, legacy: unknown): number[] => {
   if (Array.isArray(ids)) {
     return ids.filter((id): id is number => typeof id === "number")
   }

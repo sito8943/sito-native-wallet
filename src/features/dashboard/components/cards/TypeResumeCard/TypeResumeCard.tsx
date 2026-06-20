@@ -26,7 +26,11 @@ import {
 import { useI18n } from "#shared/i18n"
 
 import { useDashboard } from "../../../data/useDashboard"
-import { getOppositeType, getTimeRange, toAccountSnapshot } from "../../../utils"
+import {
+  getOppositeType,
+  getTimeRange,
+  toAccountSnapshot,
+} from "../../../utils"
 import ActiveFilters from "../ActiveFilters"
 import CardDisplaySection from "../CardDisplaySection"
 import CardFrame from "../CardFrame"
@@ -227,7 +231,9 @@ export default function TypeResumeCard({
     update({
       ...config,
       showOppositeType: next,
-      oppositeExcludedCategoryIds: next ? config.oppositeExcludedCategoryIds : [],
+      oppositeExcludedCategoryIds: next
+        ? config.oppositeExcludedCategoryIds
+        : [],
     })
   }
 
