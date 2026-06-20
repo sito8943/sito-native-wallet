@@ -81,7 +81,7 @@ export async function authRequest<T>(
     controller.abort()
   }, REQUEST_TIMEOUT_MS)
 
-  log(`→ ${method} ${url}`)
+  log(`→ ${method} [request]`)
 
   let response: Response
   try {
@@ -101,13 +101,13 @@ export async function authRequest<T>(
     const reason = controller.signal.aborted
       ? `timed out after ${REQUEST_TIMEOUT_MS}ms`
       : String(error)
-    log(`✗ ${method} ${path} — ${reason}`)
+    log(`✗ ${method} [request] — ${reason}`)
     throw new Error(`Request to ${path} failed: ${reason}`)
   } finally {
     clearTimeout(timeout)
   }
 
-  log(`← ${response.status} ${method} ${path}`)
+  log(`← ${response.status} ${method} [response]`)
 
   if (!response.ok) {
     throw new AuthApiError(
