@@ -33,6 +33,7 @@ import {
   faClock,
   faListUl,
   faLock,
+  faTableCellsLarge,
 } from "@fortawesome/free-solid-svg-icons"
 
 export const APP_ICONS: Record<string, IconProp> = {
@@ -68,4 +69,5 @@ export const APP_ICONS: Record<string, IconProp> = {
   recent: faClock,
   list: faListUl,
   lock: faLock,
+  dashboard: faTableCellsLarge,
 }

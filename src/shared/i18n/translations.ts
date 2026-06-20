@@ -352,6 +352,10 @@ export const translations = {
     "dashboard.empty": "No cards yet. Start by setting up an account.",
     "dashboard.empty.action": "Set up an account",
     "dashboard.empty.addCard": "No cards yet. Tap + to add one.",
+    "dashboard.empty.title": "Build your dashboard",
+    "dashboard.empty.subtitle":
+      "Add cards for an at-a-glance view of your money — balances, income vs expense, and trends.",
+    "dashboard.empty.addAction": "Add your first card",
     "dashboard.addCard.action": "Add a card",
     "dashboard.addCard.title": "Select a card type",
     "dashboard.card.filters": "Filters",
@@ -381,8 +385,13 @@ export const translations = {
     "dashboard.preset.last90Days": "Last 90 days",
     "dashboard.preset.last12Months": "Last 12 months",
     "dashboard.type.currentBalance": "Current balance",
+    "dashboard.type.currentBalance.description": "One account's balance",
     "dashboard.type.typeResume": "Type summary",
+    "dashboard.type.typeResume.description":
+      "Income or expense total for a period",
     "dashboard.type.balanceHistory": "Balance history",
+    "dashboard.type.balanceHistory.description":
+      "An account's balance trend over time",
     "dashboard.currentBalance.placeholder": "Current balance",
     "dashboard.currentBalance.noAccount": "Select an account",
     "dashboard.typeResume.placeholder": "Summary",
@@ -758,6 +767,10 @@ export const translations = {
     "dashboard.empty": "Aún no hay tarjetas. Empieza configurando una cuenta.",
     "dashboard.empty.action": "Configura una cuenta",
     "dashboard.empty.addCard": "Aún no hay tarjetas. Pulsa + para añadir una.",
+    "dashboard.empty.title": "Arma tu inicio",
+    "dashboard.empty.subtitle":
+      "Agrega tarjetas para ver tu dinero de un vistazo — saldos, ingresos vs gastos y tendencias.",
+    "dashboard.empty.addAction": "Agregar tu primera tarjeta",
     "dashboard.addCard.action": "Añadir tarjeta",
     "dashboard.addCard.title": "Elige un tipo de tarjeta",
     "dashboard.card.filters": "Filtros",
@@ -787,8 +800,13 @@ export const translations = {
     "dashboard.preset.last90Days": "Últimos 90 días",
     "dashboard.preset.last12Months": "Últimos 12 meses",
     "dashboard.type.currentBalance": "Saldo actual",
+    "dashboard.type.currentBalance.description": "El saldo de una cuenta",
     "dashboard.type.typeResume": "Resumen por tipo",
+    "dashboard.type.typeResume.description":
+      "Total de ingresos o gastos del periodo",
     "dashboard.type.balanceHistory": "Histórico de saldo",
+    "dashboard.type.balanceHistory.description":
+      "La tendencia del saldo en el tiempo",
     "dashboard.currentBalance.placeholder": "Saldo actual",
     "dashboard.currentBalance.noAccount": "Selecciona una cuenta",
     "dashboard.typeResume.placeholder": "Resumen",

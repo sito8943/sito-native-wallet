@@ -1,18 +1,22 @@
 import { useRouter } from "expo-router"
-import { type ReactElement } from "react"
+import { useState, type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
-import { BUTTON_VARIANT } from "#design/elements/Button"
-import { spacing } from "#design/foundations"
+import Button, { BUTTON_VARIANT } from "#design/elements/Button"
+import Icon, { APP_ICONS } from "#design/elements/Icon"
+import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
+import { radius, spacing, TYPOGRAPHY_VARIANT } from "#design/foundations"
 import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import DraggableList from "#design/patterns/DraggableList"
 import Empty from "#design/templates/Empty"
+import { useThemeColors } from "#design/theme"
 import { useAccounts } from "#features/accounts"
 import { useI18n } from "#shared/i18n"
 import { toAccountsRoute } from "#shared/navigation"
 
 import { useDashboard } from "../../data/useDashboard"
+import AddCardSheet from "../add/AddCardSheet"
 import BalanceHistoryCard from "../cards/BalanceHistoryCard"
 import CurrentBalanceCard from "../cards/CurrentBalanceCard"
 import { DASHBOARD_CARD_TYPE, type DashboardCard } from "../cards/DashboardCard"
@@ -25,9 +29,11 @@ import TypeResumeCard from "../cards/TypeResumeCard"
 export default function DashboardGrid(): ReactElement {
   const { t } = useI18n()
   const router = useRouter()
-  const { data: cards, removeCard, reorderCards } = useDashboard()
+  const colors = useThemeColors()
+  const { data: cards, addCard, removeCard, reorderCards } = useDashboard()
   const { data: accounts } = useAccounts()
   const hasAccounts = (accounts ?? []).length > 0
+  const [addOpen, setAddOpen] = useState(false)
 
   const deleteDialog = useDeleteDialog<DashboardCard>({
     onConfirm: (card) => {
@@ -64,8 +70,40 @@ export default function DashboardGrid(): ReactElement {
     return (
       <View style={styles.empty}>
         {hasAccounts ? (
-          // Already has an account → the + FAB adds cards; just point at it.
-          <Empty message={t("dashboard.empty.addCard")} />
+          // Has an account → explain what the dashboard is and let them add the
+          // first card right here (same picker as the + FAB).
+          <View style={styles.intro}>
+            <View
+              style={[styles.introIcon, { backgroundColor: colors.surface }]}
+            >
+              <Icon
+                icon={APP_ICONS.dashboard}
+                color={colors.primary}
+                size={spacing(8)}
+              />
+            </View>
+            <Typography
+              variant={TYPOGRAPHY_VARIANT.TITLE}
+              style={styles.introCentered}
+            >
+              {t("dashboard.empty.title")}
+            </Typography>
+            <Typography
+              variant={TYPOGRAPHY_VARIANT.BODY}
+              tone={TYPOGRAPHY_TONE.MUTED}
+              style={styles.introCentered}
+            >
+              {t("dashboard.empty.subtitle")}
+            </Typography>
+            <Button
+              accessibilityLabel={t("dashboard.empty.addAction")}
+              onPress={() => {
+                setAddOpen(true)
+              }}
+            >
+              {t("dashboard.empty.addAction")}
+            </Button>
+          </View>
         ) : (
           // Brand-new user → guide to set up the foundation (an account) first.
           <Empty
@@ -85,6 +123,16 @@ export default function DashboardGrid(): ReactElement {
         <ConfirmationDialog
           {...deleteDialog}
           confirmLabel={t("common.delete")}
+        />
+        <AddCardSheet
+          open={addOpen}
+          onClose={() => {
+            setAddOpen(false)
+          }}
+          onSelect={(type) => {
+            addCard({ type, position: cards.length })
+            setAddOpen(false)
+          }}
         />
       </View>
     )
@@ -123,5 +171,22 @@ const styles = StyleSheet.create({
   },
   empty: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  intro: {
+    alignItems: "center",
+    gap: spacing(4),
+    paddingHorizontal: spacing(6),
+  },
+  introIcon: {
+    alignItems: "center",
+    borderRadius: radius.full,
+    height: spacing(20),
+    justifyContent: "center",
+    width: spacing(20),
+  },
+  introCentered: {
+    textAlign: "center",
   },
 })
