@@ -1,15 +1,11 @@
 import { type Account } from "#features/accounts"
-import { type TransactionCategory } from "#features/categories"
 // Deep path on purpose: the categories barrel pulls in hooks → Manager, risking
 // an eval-time cycle when this module is loaded during the sync pull.
 import {
   TRANSACTION_TYPE,
   type TransactionType,
 } from "#features/categories/TransactionCategory"
-import {
-  type CommonAccountDto,
-  type CommonTransactionCategoryDto,
-} from "#features/transactions/dtos"
+import { type CommonAccountDto } from "#features/transactions/dtos"
 
 import {
   BALANCE_HISTORY_PRESET,
@@ -25,17 +21,6 @@ export const toAccountSnapshot = (account: Account): CommonAccountDto => ({
   id: account.id,
   name: account.name,
   currencySymbol: account.currency.symbol,
-})
-
-// Snapshot stored in a card's config; cards resolve the live category by `id`.
-export const toCategorySnapshot = (
-  category: TransactionCategory,
-): CommonTransactionCategoryDto => ({
-  id: category.id,
-  name: category.name,
-  description: category.description,
-  color: category.color,
-  type: category.type,
 })
 
 // A pulled card's `config` snapshots reference accounts/categories by their
@@ -68,26 +53,24 @@ export const remapCardConfigIds = (
     next.account = localId === undefined ? null : { ...account, id: localId }
   }
 
-  // Remap every category-snapshot list (primary + opposite excludes), dropping
-  // refs that don't resolve to a local category.
-  const remapCategories = (raw: unknown): unknown =>
+  // Remap every excluded-category id list (primary + opposite), dropping ids
+  // that don't resolve to a local category. The web wallet persists these as
+  // `excludedCategoryIds`/`oppositeExcludedCategoryIds` (arrays of backend ids).
+  const remapCategoryIds = (raw: unknown): unknown =>
     Array.isArray(raw)
       ? raw
-          .map((entry) => {
-            const category = entry as { id?: number } | null
-            if (!category || typeof category.id !== "number") return null
-            const localId = resolveCategoryId(category.id)
-            return localId === undefined ? null : { ...category, id: localId }
-          })
-          .filter((category): category is { id: number } => category !== null)
+          .map((id) =>
+            typeof id === "number" ? resolveCategoryId(id) : undefined,
+          )
+          .filter((id): id is number => id !== undefined)
       : raw
 
-  if (next.excludeCategories !== undefined) {
-    next.excludeCategories = remapCategories(next.excludeCategories)
+  if (next.excludedCategoryIds !== undefined) {
+    next.excludedCategoryIds = remapCategoryIds(next.excludedCategoryIds)
   }
-  if (next.oppositeExcludeCategories !== undefined) {
-    next.oppositeExcludeCategories = remapCategories(
-      next.oppositeExcludeCategories,
+  if (next.oppositeExcludedCategoryIds !== undefined) {
+    next.oppositeExcludedCategoryIds = remapCategoryIds(
+      next.oppositeExcludedCategoryIds,
     )
   }
 

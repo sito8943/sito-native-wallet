@@ -26,12 +26,7 @@ import {
 import { useI18n } from "#shared/i18n"
 
 import { useDashboard } from "../../../data/useDashboard"
-import {
-  getOppositeType,
-  getTimeRange,
-  toAccountSnapshot,
-  toCategorySnapshot,
-} from "../../../utils"
+import { getOppositeType, getTimeRange, toAccountSnapshot } from "../../../utils"
 import ActiveFilters from "../ActiveFilters"
 import CardDisplaySection from "../CardDisplaySection"
 import CardFrame from "../CardFrame"
@@ -71,9 +66,7 @@ export default function TypeResumeCard({
     range.start !== undefined && range.end !== undefined
       ? { start: range.start, end: range.end }
       : undefined
-  const excludeCategory = config.excludeCategories.map(
-    (category) => category.id,
-  )
+  const excludeCategory = config.excludedCategoryIds
 
   // The client owns the aggregation; the card just describes what it wants.
   const total = useTransactionsTotal({
@@ -86,9 +79,7 @@ export default function TypeResumeCard({
   // Opposite-type total (always computed so the hook order stays stable; only
   // rendered when showOppositeType is on).
   const oppositeType = getOppositeType(config.type)
-  const oppositeExcludeCategory = config.oppositeExcludeCategories.map(
-    (category) => category.id,
-  )
+  const oppositeExcludeCategory = config.oppositeExcludedCategoryIds
   const oppositeTotal = useTransactionsTotal({
     type: oppositeType,
     accountId: config.account?.id,
@@ -147,20 +138,24 @@ export default function TypeResumeCard({
   const categoryOptions = categoryOptionsFor(config.type)
   const oppositeCategoryOptions = categoryOptionsFor(oppositeType)
 
+  // Excluded categories are stored as ids (web parity); resolve their names from
+  // the live categories store for the active-filter chip label.
+  const categoryNames = (ids: number[]): string =>
+    ids
+      .map((id) => categories.find((category) => category.id === id)?.name)
+      .filter((name): name is string => name !== undefined)
+      .join(", ")
+
   const excludeLabel =
-    config.excludeCategories.length > 0
+    config.excludedCategoryIds.length > 0
       ? t("dashboard.filter.excluding", {
-          categories: config.excludeCategories
-            .map((category) => category.name)
-            .join(", "),
+          categories: categoryNames(config.excludedCategoryIds),
         })
       : null
   const oppositeExcludeLabel =
-    config.showOppositeType && config.oppositeExcludeCategories.length > 0
+    config.showOppositeType && config.oppositeExcludedCategoryIds.length > 0
       ? t("dashboard.filter.excluding", {
-          categories: config.oppositeExcludeCategories
-            .map((category) => category.name)
-            .join(", "),
+          categories: categoryNames(config.oppositeExcludedCategoryIds),
         })
       : null
 
@@ -190,7 +185,7 @@ export default function TypeResumeCard({
       ? [
           {
             label: excludeLabel,
-            onClear: () => update({ ...config, excludeCategories: [] }),
+            onClear: () => update({ ...config, excludedCategoryIds: [] }),
           },
         ]
       : []),
@@ -198,7 +193,8 @@ export default function TypeResumeCard({
       ? [
           {
             label: oppositeExcludeLabel,
-            onClear: () => update({ ...config, oppositeExcludeCategories: [] }),
+            onClear: () =>
+              update({ ...config, oppositeExcludedCategoryIds: [] }),
           },
         ]
       : []),
@@ -209,14 +205,18 @@ export default function TypeResumeCard({
   // wallet's re-validation on type change.
   const changeType = (type: TransactionType) => {
     const opposite = getOppositeType(type)
+    const idsOfType = (ids: number[], forType: TransactionType): number[] =>
+      ids.filter(
+        (id) =>
+          categories.find((category) => category.id === id)?.type === forType,
+      )
     update({
       ...config,
       type,
-      excludeCategories: config.excludeCategories.filter(
-        (category) => category.type === type,
-      ),
-      oppositeExcludeCategories: config.oppositeExcludeCategories.filter(
-        (category) => category.type === opposite,
+      excludedCategoryIds: idsOfType(config.excludedCategoryIds, type),
+      oppositeExcludedCategoryIds: idsOfType(
+        config.oppositeExcludedCategoryIds,
+        opposite,
       ),
     })
   }
@@ -227,7 +227,7 @@ export default function TypeResumeCard({
     update({
       ...config,
       showOppositeType: next,
-      oppositeExcludeCategories: next ? config.oppositeExcludeCategories : [],
+      oppositeExcludedCategoryIds: next ? config.oppositeExcludedCategoryIds : [],
     })
   }
 
@@ -373,12 +373,7 @@ export default function TypeResumeCard({
             options={categoryOptions}
             value={excludeCategory}
             onChange={(ids) => {
-              update({
-                ...config,
-                excludeCategories: categories
-                  .filter((category) => ids.includes(category.id))
-                  .map(toCategorySnapshot),
-              })
+              update({ ...config, excludedCategoryIds: ids })
             }}
           />
         </View>
@@ -410,12 +405,7 @@ export default function TypeResumeCard({
               options={oppositeCategoryOptions}
               value={oppositeExcludeCategory}
               onChange={(ids) => {
-                update({
-                  ...config,
-                  oppositeExcludeCategories: categories
-                    .filter((category) => ids.includes(category.id))
-                    .map(toCategorySnapshot),
-                })
+                update({ ...config, oppositeExcludedCategoryIds: ids })
               }}
             />
           </View>

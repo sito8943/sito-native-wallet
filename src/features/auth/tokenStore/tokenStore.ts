@@ -9,18 +9,30 @@ const ACCESS_TOKEN_KEY = "sito-wallet.accessToken"
 const REFRESH_TOKEN_KEY = "sito-wallet.refreshToken"
 const EXPIRES_AT_KEY = "sito-wallet.accessTokenExpiresAt"
 
-// Persist the tokens from a fresh session (login / register / refresh).
-export const saveSessionTokens = async (session: SessionDto): Promise<void> => {
-  await SecureStore.setItemAsync(ACCESS_TOKEN_KEY, session.token)
+// Just the token fields — what a refresh response carries (no account data).
+type TokenSet = {
+  token: string
+  refreshToken?: string | null
+  accessTokenExpiresAt?: string | null
+}
 
-  if (session.refreshToken != null) {
-    await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, session.refreshToken)
+// Persist a token set (the access token, plus the refresh token + expiry when
+// present). Shared by the full-session save and the silent refresh-on-401 path.
+export const saveTokens = async (tokens: TokenSet): Promise<void> => {
+  await SecureStore.setItemAsync(ACCESS_TOKEN_KEY, tokens.token)
+
+  if (tokens.refreshToken != null) {
+    await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, tokens.refreshToken)
   }
 
-  if (session.accessTokenExpiresAt != null) {
-    await SecureStore.setItemAsync(EXPIRES_AT_KEY, session.accessTokenExpiresAt)
+  if (tokens.accessTokenExpiresAt != null) {
+    await SecureStore.setItemAsync(EXPIRES_AT_KEY, tokens.accessTokenExpiresAt)
   }
 }
+
+// Persist the tokens from a fresh session (login / register / refresh).
+export const saveSessionTokens = (session: SessionDto): Promise<void> =>
+  saveTokens(session)
 
 export const getAccessToken = (): Promise<string | null> =>
   SecureStore.getItemAsync(ACCESS_TOKEN_KEY)

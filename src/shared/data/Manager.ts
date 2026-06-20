@@ -62,6 +62,24 @@ export class Manager {
     ))
   }
 
+  // Await every store's disk hydration. The sync orchestrator must call this
+  // before pulling + building baselines: a store hydrates asynchronously, and a
+  // pull's mergeRemote that lands before disk loads is only queued (in-memory +
+  // pending) — buildBaseline would snapshot that transient state, then the late
+  // hydrate() replaces the list, so baseline and live list diverge into a
+  // spurious PATCH-everything + DELETE-everything diff. Touching each getter
+  // instantiates the client lazily so its hydration is in flight before we wait.
+  public hydrateAll = async (): Promise<void> => {
+    await Promise.all([
+      this.Accounts.hydrate(),
+      this.Categories.hydrate(),
+      this.Currencies.hydrate(),
+      this.Dashboard.hydrate(),
+      this.SubscriptionProviders.hydrate(),
+      this.Transactions.hydrate(),
+    ])
+  }
+
   // Reset every entity's local store to its seed. Called on sign-in (the
   // account's server data replaces the device's guest data) and on sign-out
   // (clean guest state). Touching each getter instantiates the client lazily,

@@ -110,29 +110,26 @@ describe("Dashboard > utils", () => {
       )
     })
 
-    it("remaps excludeCategories and drops unresolved ones", () => {
+    it("remaps excludedCategoryIds and drops unresolved ones", () => {
       const config = JSON.stringify({
         account: { id: 60 },
-        excludeCategories: [
-          { id: 70, name: "Rent" },
-          { id: 999, name: "X" },
-        ],
+        excludedCategoryIds: [70, 999],
       })
       expect(remapCardConfigIds(config, account, category)).toBe(
         JSON.stringify({
           account: { id: 2 },
-          excludeCategories: [{ id: 3, name: "Rent" }],
+          excludedCategoryIds: [3],
         }),
       )
     })
 
-    it("remaps oppositeExcludeCategories too", () => {
+    it("remaps oppositeExcludedCategoryIds too", () => {
       const config = JSON.stringify({
-        oppositeExcludeCategories: [{ id: 70, name: "Rent" }],
+        oppositeExcludedCategoryIds: [70],
       })
       expect(remapCardConfigIds(config, account, category)).toBe(
         JSON.stringify({
-          oppositeExcludeCategories: [{ id: 3, name: "Rent" }],
+          oppositeExcludedCategoryIds: [3],
         }),
       )
     })

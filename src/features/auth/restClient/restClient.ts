@@ -1,5 +1,5 @@
-import { API_BASE_URL } from "../constants"
-import { getAccessToken } from "../tokenStore"
+import { API_BASE_URL, AUTH_ENDPOINT } from "../constants"
+import { getAccessToken, getRefreshToken, saveTokens } from "../tokenStore"
 
 // Thrown on any non-2xx response so callers can branch on `status` (e.g. 401 →
 // drop the session, 409 → email already taken).
@@ -21,6 +21,9 @@ type RequestOptions = {
   // Read the response as plain text instead of JSON (e.g. the photo-upload
   // endpoint returns the URL as a bare string, not a JSON document).
   expectText?: boolean
+  // Internal: whether a 401 may trigger a silent token refresh + one retry.
+  // Set false on the retry itself and on the refresh call (no infinite loop).
+  allowRefresh?: boolean
 }
 
 // Abort a hung request so the UI never gets stuck "loading" forever (e.g. wrong
@@ -29,9 +32,6 @@ const REQUEST_TIMEOUT_MS = 15000
 
 // Dev-only request tracing so you can see what's happening in the Metro
 // terminal instead of being blind. Stripped in production (__DEV__ === false).
-// The request path/URL is intentionally NOT logged: auth endpoints (and any
-// token carried in a path/query) are sensitive, so we trace only the method and
-// status with a generic [request]/[response] marker.
 const log = (...args: unknown[]): void => {
   if (__DEV__) {
     // eslint-disable-next-line no-console
@@ -39,9 +39,76 @@ const log = (...args: unknown[]): void => {
   }
 }
 
-// Minimal JSON fetch against the wallet API. The real refresh-on-401 retry will
-// layer on top of this; for now a 401 surfaces as an AuthApiError the session
-// provider handles by logging out.
+// Endpoints whose path is sensitive — these are echoed as a fixed literal so
+// neither the path nor any token riding in its query string ever reaches the
+// logs as clear text (CodeQL js/clear-text-logging).
+const SENSITIVE_PATHS: readonly string[] = [
+  "/auth/password/forgot",
+  "/auth/password/change",
+]
+
+// Build the descriptive label for the dev trace: the request pathname (query
+// string dropped, since tokens can ride there), except sensitive endpoints,
+// which collapse to a fixed "[redacted]" literal.
+const traceLabel = (path: string): string => {
+  const pathname = path.split("?")[0]
+  if (SENSITIVE_PATHS.includes(pathname)) {
+    return "[redacted]"
+  }
+  return pathname
+}
+
+// Token fields a /auth/refresh response carries (no account data).
+type RefreshResponse = {
+  token: string
+  refreshToken?: string | null
+  accessTokenExpiresAt?: unknown
+}
+
+// Exchange the stored refresh token for a fresh access token and persist it.
+// Returns false (don't retry, drop the session) when there's no refresh token or
+// the backend rejects it.
+const performRefresh = async (): Promise<boolean> => {
+  const refreshToken = await getRefreshToken()
+  if (refreshToken === null) {
+    return false
+  }
+  try {
+    const data = await authRequest<RefreshResponse>(AUTH_ENDPOINT.REFRESH, {
+      method: "POST",
+      body: { refreshToken },
+      // The refresh call must never itself try to refresh on a 401.
+      allowRefresh: false,
+    })
+    await saveTokens({
+      token: data.token,
+      refreshToken: data.refreshToken ?? null,
+      accessTokenExpiresAt:
+        typeof data.accessTokenExpiresAt === "string"
+          ? data.accessTokenExpiresAt
+          : null,
+    })
+    return true
+  } catch {
+    return false
+  }
+}
+
+// Single-flight: a burst of authenticated requests (e.g. the sync pull) can 401
+// at once; we must refresh ONCE and have them all await it. A rotating refresh
+// token is consumed on use, so parallel refreshes would invalidate each other
+// and cause a false logout.
+let refreshInFlight: Promise<boolean> | null = null
+const refreshSession = (): Promise<boolean> => {
+  refreshInFlight ??= performRefresh().finally(() => {
+    refreshInFlight = null
+  })
+  return refreshInFlight
+}
+
+// Minimal JSON fetch against the wallet API. On a 401 for an authenticated call
+// it silently refreshes the access token and retries once; only if that fails
+// does the 401 surface as an AuthApiError (the session provider drops to guest).
 export async function authRequest<T>(
   path: string,
   {
@@ -49,6 +116,7 @@ export async function authRequest<T>(
     body,
     auth = false,
     expectText = false,
+    allowRefresh = true,
   }: RequestOptions = {},
 ): Promise<T> {
   const headers: Record<string, string> = {
@@ -77,7 +145,8 @@ export async function authRequest<T>(
     controller.abort()
   }, REQUEST_TIMEOUT_MS)
 
-  log(`→ ${method} [request]`)
+  const label = traceLabel(path)
+  log(`→ ${method} ${label}`)
 
   let response: Response
   try {
@@ -97,15 +166,30 @@ export async function authRequest<T>(
     const reason = controller.signal.aborted
       ? `timed out after ${REQUEST_TIMEOUT_MS}ms`
       : String(error)
-    log(`✗ ${method} [request] — ${reason}`)
+    log(`✗ ${method} ${label} — ${reason}`)
     throw new Error(`Request to ${path} failed: ${reason}`)
   } finally {
     clearTimeout(timeout)
   }
 
-  log(`← ${response.status} ${method} [response]`)
+  log(`← ${response.status} ${method} ${label}`)
 
   if (!response.ok) {
+    // Access token expired/revoked → one silent refresh + retry. Only for
+    // authenticated calls, and not when already retrying or refreshing.
+    if (response.status === 401 && auth && allowRefresh) {
+      const refreshed = await refreshSession()
+      if (refreshed) {
+        return authRequest<T>(path, {
+          method,
+          body,
+          auth,
+          expectText,
+          allowRefresh: false,
+        })
+      }
+    }
+
     throw new AuthApiError(
       response.status,
       `Request to ${path} failed with status ${response.status}`,

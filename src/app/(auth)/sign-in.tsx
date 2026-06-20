@@ -12,6 +12,7 @@ import {
   type SignInFormValues,
 } from "#features/auth"
 import { resetProfileSync } from "#features/settings/components/ProfileInfo"
+import { resetEntitySync } from "#features/sync"
 import { useManager } from "#shared/data"
 import { useI18n } from "#shared/i18n"
 
@@ -41,6 +42,11 @@ export default function SignIn(): ReactElement {
     setLoading(true)
     try {
       const session = await authClient.login(pending)
+      // Forget the sync session FIRST: re-signing in while still authenticated
+      // would otherwise leave a full push baseline against the stores we're about
+      // to clear, and the next flush would DELETE the account's rows on the
+      // backend. Resetting gates the push off until the fresh pull rebuilds it.
+      resetEntitySync()
       // The dialog warned the user: drop the device's local (guest) data so the
       // account's server data replaces it. Each entity's sync re-pulls its rows
       // from the backend once signed in. (Sign-up does NOT wipe — it uploads the

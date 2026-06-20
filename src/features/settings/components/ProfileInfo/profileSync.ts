@@ -27,6 +27,10 @@ export const profileSync = ({
 }: ProfileSyncDeps): SingletonSync<ProfileUpdate> => ({
   label: "profile",
   pull: async () => {
+    // Same hydration guard as the entity stores: build the baseline against the
+    // real disk state, not a pre-load snapshot, so the push diff is correct.
+    await profileStore.hydrate()
+
     const remote = await RemoteProfileClient.fetch()
 
     if (typeof remote.id === "number") {

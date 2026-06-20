@@ -58,3 +58,14 @@ export const syncSession = {
     baselines.clear()
   },
 }
+
+// Forget the sync session from outside the orchestrator (e.g. sign-in, which
+// wipes local data before the new account pulls). Critical for correctness:
+// without this, re-signing in while still authenticated leaves a full push
+// baseline against the just-cleared stores, and the next flush would DELETE the
+// account's rows on the backend (it reads "in baseline, absent locally" as a
+// user deletion). Resetting gates the push off (hydrated=false) until the fresh
+// pull rebuilds the baseline.
+export const resetEntitySync = (): void => {
+  syncSession.reset()
+}

@@ -1,8 +1,5 @@
 import { type TransactionType } from "#features/categories/TransactionCategory"
-import {
-  type CommonAccountDto,
-  type CommonTransactionCategoryDto,
-} from "#features/transactions/dtos"
+import { type CommonAccountDto } from "#features/transactions/dtos"
 import { type Timestamps } from "#shared/data/storage"
 
 import {
@@ -55,19 +52,21 @@ export type CurrentBalanceConfig = BaseCardConfig & {
   account: CommonAccountDto | null
 }
 
-// null account → every account. `excludeCategories` drops transactions in those
-// categories from the total (snapshots, like `account`; resolved by id).
+// null account → every account. `excludedCategoryIds` drops transactions in
+// those categories from the total. Stored as backend category ids (web parity —
+// the web wallet persists `excludedCategoryIds`); the pull remaps them to local
+// ids and the card resolves names from the live categories store.
 export type TypeResumeConfig = BaseCardConfig & {
   account: CommonAccountDto | null
   type: TransactionType
   time: TypeResumeTime
-  excludeCategories: CommonTransactionCategoryDto[]
+  excludedCategoryIds: number[]
   // Also show the opposite type's total (an income card shows expense too, and
   // vice-versa), mirroring the web wallet's "show opposite type".
   showOppositeType: boolean
   // Categories dropped from the opposite-type total. Only meaningful while
   // `showOppositeType` is on; cleared when it's turned off.
-  oppositeExcludeCategories: CommonTransactionCategoryDto[]
+  oppositeExcludedCategoryIds: number[]
 }
 
 // null account → the single account the user must pick (the chart plots one

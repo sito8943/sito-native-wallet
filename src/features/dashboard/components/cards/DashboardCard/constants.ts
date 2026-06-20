@@ -49,9 +49,9 @@ export const DEFAULT_TYPE_RESUME_CONFIG: TypeResumeConfig = {
   account: null,
   type: TRANSACTION_TYPE.INCOME,
   time: TYPE_RESUME_TIME.CURRENT_MONTH,
-  excludeCategories: [],
+  excludedCategoryIds: [],
   showOppositeType: false,
-  oppositeExcludeCategories: [],
+  oppositeExcludedCategoryIds: [],
   showFiltersAsBadge: false,
 }
 

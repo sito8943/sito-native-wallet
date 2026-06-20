@@ -82,6 +82,12 @@ export default function useEntitySync(): void {
     syncSession.markPulledFor(userId)
 
     void (async () => {
+      // Wait for every store's disk load to finish before pulling. Otherwise a
+      // mergeRemote that lands pre-hydration is only queued; buildBaseline would
+      // snapshot that transient list, then the late hydrate() replaces it — and
+      // the diff turns into PATCH-all + DELETE-all against the now-stale baseline.
+      await manager.hydrateAll()
+
       for (const sync of syncs) {
         try {
           await sync.pull()
