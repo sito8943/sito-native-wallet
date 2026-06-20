@@ -26,6 +26,10 @@ export default function Layout(): ReactElement {
         name="profile"
         options={{ title: t("settings.profile.title") }}
       />
+      <Stack.Screen
+        name="change-password"
+        options={{ title: t("auth.changePassword.title") }}
+      />
       <Stack.Screen name="categories" options={{ headerShown: false }} />
       <Stack.Screen name="currencies" options={{ headerShown: false }} />
       <Stack.Screen name="accounts" options={{ headerShown: false }} />

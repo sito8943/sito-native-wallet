@@ -1,5 +1,10 @@
 import { AUTH_ENDPOINT } from "../constants"
-import { type AuthDto, type RegisterDto, type SessionDto } from "../dtos"
+import {
+  type AuthDto,
+  type ChangePasswordDto,
+  type RegisterDto,
+  type SessionDto,
+} from "../dtos"
 import { authRequest } from "../restClient"
 import { getRefreshToken } from "../tokenStore"
 
@@ -78,5 +83,30 @@ export const restAuthClient: AuthClient = {
         body: { refreshToken },
       }),
     )
+  },
+
+  // Returns 202 with an {accepted, message} body we don't need — the email is
+  // sent server-side and its link completes on the web wallet (backend default
+  // redirect), so no redirectTo is sent.
+  forgotPassword: async (email: string): Promise<void> => {
+    await authRequest(AUTH_ENDPOINT.PASSWORD_FORGOT, {
+      method: "POST",
+      body: { email },
+    })
+  },
+
+  changePassword: async (input: ChangePasswordDto): Promise<void> => {
+    await authRequest(AUTH_ENDPOINT.PASSWORD_CHANGE, {
+      method: "POST",
+      auth: true,
+      body: input,
+    })
+  },
+
+  resendConfirmation: async (email: string): Promise<void> => {
+    await authRequest(AUTH_ENDPOINT.EMAIL_CONFIRM_RESEND, {
+      method: "POST",
+      body: { email },
+    })
   },
 }

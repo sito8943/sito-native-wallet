@@ -56,6 +56,24 @@ export default function AuthMenuCard(): ReactElement {
         <Typography>{account?.email ?? ""}</Typography>
       </View>
 
+      <Link href="/settings/change-password" asChild>
+        <Pressable accessibilityRole="button" style={styles.changeRow}>
+          <View style={styles.left}>
+            <Icon
+              icon={APP_ICONS.lock}
+              color={colors.textStrong}
+              size={spacing(5)}
+            />
+            <Typography>{t("auth.changePassword.menu")}</Typography>
+          </View>
+          <Icon
+            icon={APP_ICONS.chevronRight}
+            color={colors.textMuted}
+            size={spacing(4)}
+          />
+        </Pressable>
+      </Link>
+
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={t("auth.signOut")}
@@ -90,6 +108,12 @@ const styles = StyleSheet.create({
   },
   identity: {
     gap: spacing(1),
+    marginBottom: spacing(4),
+  },
+  changeRow: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: spacing(4),
   },
   signOut: {

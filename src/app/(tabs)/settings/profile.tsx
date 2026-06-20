@@ -14,12 +14,14 @@ import {
 import Select from "#design/patterns/Select"
 import Page from "#design/templates/Page"
 import {
+  useThemeColors,
   useThemedStyles,
   useThemePreference,
   type ThemeColors,
 } from "#design/theme"
 import {
   useProfileInfo,
+  useProfilePhoto,
   profileInitials,
 } from "#features/settings/components/ProfileInfo"
 import {
@@ -30,9 +32,11 @@ import { LANGUAGE, useI18n } from "#shared/i18n"
 
 export default function Profile(): ReactElement {
   const styles = useThemedStyles(createStyles)
+  const colors = useThemeColors()
   const { preference, setPreference } = useThemePreference()
   const { isLoading, language, setLanguage, t } = useI18n()
   const { data: profile, setData: setProfile } = useProfileInfo()
+  const { pick, remove, busy } = useProfilePhoto()
   // Profile sync (pull on sign-in, debounced push of name/language edits) is
   // driven centrally by useEntitySync — not here, so it runs app-wide.
   const initials = profileInitials(profile.name)
@@ -50,14 +54,46 @@ export default function Profile(): ReactElement {
     <Page scroll contentContainerStyle={styles.content}>
       <Card>
         <View style={styles.identity}>
-          <Avatar initials={initials} size={AVATAR_SIZE.LG} />
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t("profile.photo.change")}
+            disabled={busy}
+            onPress={() => {
+              void pick()
+            }}
+          >
+            <Avatar
+              initials={initials}
+              uri={profile.photo}
+              size={AVATAR_SIZE.LG}
+            />
+          </Pressable>
           <View style={styles.identityCopy}>
             <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
               {t("profile.info.title")}
             </Typography>
-            <Typography tone={TYPOGRAPHY_TONE.MUTED}>
-              {t("profile.info.description")}
-            </Typography>
+            <View style={styles.photoActions}>
+              <Typography
+                variant={TYPOGRAPHY_VARIANT.LABEL}
+                onPress={() => {
+                  void pick()
+                }}
+                style={{ color: colors.primary }}
+              >
+                {t("profile.photo.change")}
+              </Typography>
+              {profile.photo !== null && (
+                <Typography
+                  variant={TYPOGRAPHY_VARIANT.LABEL}
+                  onPress={() => {
+                    void remove()
+                  }}
+                  style={{ color: colors.negative }}
+                >
+                  {t("profile.photo.remove")}
+                </Typography>
+              )}
+            </View>
           </View>
         </View>
 
@@ -153,6 +189,10 @@ const createStyles = (colors: ThemeColors) => ({
   identityCopy: {
     flex: 1,
     gap: spacing(1),
+  },
+  photoActions: {
+    flexDirection: "row" as const,
+    gap: spacing(4),
   },
   fields: {
     gap: spacing(4),

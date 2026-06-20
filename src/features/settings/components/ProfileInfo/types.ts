@@ -1,12 +1,14 @@
 import { type Language } from "#shared/i18n"
 
 // Local-first user identity. The web wallet's ProfileDto carries name,
-// description, photo and language; photo needs a native image picker (avoided
-// here) and language already lives in ProfilePreferences, so this keeps just
-// the editable text identity.
+// description, photo and language; language already lives in ProfilePreferences,
+// so this keeps the editable text identity plus the avatar photo.
 export type ProfileInfo = {
   name: string
   description: string
+  // Avatar image. Local-first: a picked local `file://` URI offline, or the
+  // backend's (signed) photo URL once uploaded/pulled. null → show initials.
+  photo: string | null
 }
 
 // What the orchestrator injects into profileSync. `language` lives in the i18n

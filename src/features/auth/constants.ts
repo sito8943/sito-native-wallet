@@ -61,4 +61,10 @@ export const AUTH_ENDPOINT = {
   SIGN_OUT: "/auth/sign-out",
   REFRESH: "/auth/refresh",
   SESSION: "/auth/session",
+  // Request a reset email (the token-link completion happens on the web wallet).
+  PASSWORD_FORGOT: "/auth/password/forgot",
+  // Change the signed-in user's password (Bearer; current + new).
+  PASSWORD_CHANGE: "/auth/password/change",
+  // Resend the email-confirmation message.
+  EMAIL_CONFIRM_RESEND: "/auth/email/confirm/resend",
 } as const

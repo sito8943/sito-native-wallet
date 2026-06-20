@@ -18,6 +18,9 @@ type RequestOptions = {
   body?: unknown
   // Attach the stored access token as a Bearer header (for /session, /sign-out).
   auth?: boolean
+  // Read the response as plain text instead of JSON (e.g. the photo-upload
+  // endpoint returns the URL as a bare string, not a JSON document).
+  expectText?: boolean
 }
 
 // Abort a hung request so the UI never gets stuck "loading" forever (e.g. wrong
@@ -38,13 +41,23 @@ const log = (...args: unknown[]): void => {
 // provider handles by logging out.
 export async function authRequest<T>(
   path: string,
-  { method = "GET", body, auth = false }: RequestOptions = {},
+  {
+    method = "GET",
+    body,
+    auth = false,
+    expectText = false,
+  }: RequestOptions = {},
 ): Promise<T> {
   const headers: Record<string, string> = {
     Accept: "application/json",
   }
 
-  if (body !== undefined) {
+  // FormData (multipart, e.g. a photo upload) must NOT get an explicit
+  // Content-Type — fetch sets it with the right multipart boundary. JSON bodies
+  // are stringified and declared.
+  const isMultipart =
+    typeof FormData !== "undefined" && body instanceof FormData
+  if (body !== undefined && !isMultipart) {
     headers["Content-Type"] = "application/json"
   }
 
@@ -68,7 +81,12 @@ export async function authRequest<T>(
     response = await fetch(url, {
       method,
       headers,
-      body: body === undefined ? undefined : JSON.stringify(body),
+      body:
+        body === undefined
+          ? undefined
+          : isMultipart
+            ? body
+            : JSON.stringify(body),
       signal: controller.signal,
     })
   } catch (error) {
@@ -94,6 +112,10 @@ export async function authRequest<T>(
   // 204 No Content (sign-out) carries no body.
   if (response.status === 204) {
     return undefined as T
+  }
+
+  if (expectText) {
+    return (await response.text()) as T
   }
 
   return (await response.json()) as T

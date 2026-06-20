@@ -40,4 +40,13 @@ export const mockAuthClient: AuthClient = {
     await delay(200)
     return mockSession("demo@sito.app")
   },
+  forgotPassword: async (): Promise<void> => {
+    await delay(400)
+  },
+  changePassword: async (): Promise<void> => {
+    await delay(400)
+  },
+  resendConfirmation: async (): Promise<void> => {
+    await delay(400)
+  },
 }

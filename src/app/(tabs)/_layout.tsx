@@ -59,7 +59,7 @@ export default function Layout(): ReactElement {
                 router.push(toProfileRoute(), { withAnchor: true })
               }
             >
-              <Avatar initials={initials} />
+              <Avatar initials={initials} uri={profile.photo} />
               <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
                 {profile.name.trim() || t("home.greeting")}
               </Typography>

@@ -11,6 +11,7 @@ export const parseLanguageTag = (tag: string): Language =>
 export const getDefaultProfileInfo = (): ProfileInfo => ({
   name: "",
   description: "",
+  photo: null,
 })
 
 export const parseProfileInfo = (value: unknown): ProfileInfo => {
@@ -20,7 +21,11 @@ export const parseProfileInfo = (value: unknown): ProfileInfo => {
     return fallback
   }
 
-  const candidate = value as { name?: unknown; description?: unknown }
+  const candidate = value as {
+    name?: unknown
+    description?: unknown
+    photo?: unknown
+  }
 
   return {
     name: typeof candidate.name === "string" ? candidate.name : fallback.name,
@@ -28,6 +33,7 @@ export const parseProfileInfo = (value: unknown): ProfileInfo => {
       typeof candidate.description === "string"
         ? candidate.description
         : fallback.description,
+    photo: typeof candidate.photo === "string" ? candidate.photo : null,
   }
 }
 

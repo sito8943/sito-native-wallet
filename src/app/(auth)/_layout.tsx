@@ -30,6 +30,10 @@ export default function Layout(): ReactElement {
         name="sign-up-confirmation"
         options={{ title: t("auth.confirm.headerTitle") }}
       />
+      <Stack.Screen
+        name="recovery"
+        options={{ title: t("auth.recovery.title") }}
+      />
     </Stack>
   )
 }

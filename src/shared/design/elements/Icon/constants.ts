@@ -32,6 +32,7 @@ import {
   faRightFromBracket,
   faClock,
   faListUl,
+  faLock,
 } from "@fortawesome/free-solid-svg-icons"
 
 export const APP_ICONS: Record<string, IconProp> = {
@@ -66,4 +67,5 @@ export const APP_ICONS: Record<string, IconProp> = {
   logout: faRightFromBracket,
   recent: faClock,
   list: faListUl,
+  lock: faLock,
 }

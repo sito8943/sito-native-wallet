@@ -1,11 +1,7 @@
 import { type SingletonSync } from "#features/sync"
 
-import {
-  fetchProfile,
-  updateProfile,
-  type ProfileUpdate,
-} from "./profileClient"
 import { profileStore } from "./profileStore"
+import { RemoteProfileClient, type ProfileUpdate } from "./RemoteProfileClient"
 import { type ProfileSyncDeps } from "./types"
 import { parseLanguageTag } from "./utils"
 
@@ -31,7 +27,7 @@ export const profileSync = ({
 }: ProfileSyncDeps): SingletonSync<ProfileUpdate> => ({
   label: "profile",
   pull: async () => {
-    const remote = await fetchProfile()
+    const remote = await RemoteProfileClient.fetch()
 
     if (typeof remote.id === "number") {
       remoteId = remote.id
@@ -49,6 +45,11 @@ export const profileSync = ({
     if (typeof remote.language === "string" && remote.language !== "") {
       setLanguage(parseLanguageTag(remote.language))
     }
+
+    const remotePhoto = RemoteProfileClient.resolvePhotoUrl(remote.photo)
+    if (remotePhoto !== null) {
+      profileStore.setData((current) => ({ ...current, photo: remotePhoto }))
+    }
   },
   remoteId: () => remoteId,
   fields: () => ({
@@ -60,5 +61,5 @@ export const profileSync = ({
     const name = profileStore.getSnapshot().data.name.trim()
     return name === "" ? null : { name, language }
   },
-  update: updateProfile,
+  update: RemoteProfileClient.update,
 })

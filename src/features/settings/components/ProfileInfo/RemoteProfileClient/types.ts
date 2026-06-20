@@ -6,6 +6,8 @@ export type RemoteProfile = {
   id?: number
   name?: string
   language?: string
+  // (Signed) URL to the user's avatar, or null/absent when none is set.
+  photo?: string | null
   user?: { id?: number; username?: string }
 }
 

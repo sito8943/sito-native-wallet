@@ -1,6 +1,5 @@
 import { useRouter } from "expo-router"
 import { useState, type ReactElement } from "react"
-import { Linking } from "react-native"
 
 import { useDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
@@ -10,7 +9,6 @@ import {
   getAuthErrorKey,
   SignInView,
   useSession,
-  WEB_RECOVERY_URL,
   type SignInFormValues,
 } from "#features/auth"
 import { resetProfileSync } from "#features/settings/components/ProfileInfo"
@@ -68,9 +66,7 @@ export default function SignIn(): ReactElement {
         error={error}
         onSubmit={requestLogin}
         onSignUp={() => router.push("/sign-up")}
-        onRecovery={() => {
-          void Linking.openURL(WEB_RECOVERY_URL)
-        }}
+        onRecovery={() => router.push("/recovery")}
       />
 
       <ConfirmationDialog
