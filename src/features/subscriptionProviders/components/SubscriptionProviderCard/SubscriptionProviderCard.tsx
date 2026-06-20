@@ -10,10 +10,18 @@ import { type SubscriptionProviderCardProps } from "./types"
 export default function SubscriptionProviderCard({
   provider,
   actions,
+  style,
+  flat,
   onPress,
 }: SubscriptionProviderCardProps): ReactElement {
   return (
-    <EntityCard actions={actions} entity={provider} onPress={onPress}>
+    <EntityCard
+      style={style}
+      flat={flat}
+      actions={actions}
+      entity={provider}
+      onPress={onPress}
+    >
       <View style={styles.copy}>
         <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
           {provider.name}

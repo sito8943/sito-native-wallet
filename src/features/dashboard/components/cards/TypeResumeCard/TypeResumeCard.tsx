@@ -278,7 +278,8 @@ export default function TypeResumeCard({
               accessibilityLabel={t("transactions.add")}
               icon={APP_ICONS.add}
               variant={ICON_BUTTON_VARIANT.TEXT}
-              size={ICON_BUTTON_SIZE.LG}
+              size={ICON_BUTTON_SIZE.MD}
+              iconSize={ICON_BUTTON_SIZE.LG}
               iconColor={colors.primary}
               onPress={() => {
                 setAddOpen(true)
@@ -288,7 +289,8 @@ export default function TypeResumeCard({
               accessibilityLabel={t("dashboard.recentTransactions.action")}
               icon={APP_ICONS.recent}
               variant={ICON_BUTTON_VARIANT.TEXT}
-              size={ICON_BUTTON_SIZE.LG}
+              size={ICON_BUTTON_SIZE.MD}
+              iconSize={ICON_BUTTON_SIZE.LG}
               iconColor={colors.textMuted}
               disabled={date === undefined}
               onPress={() => {
@@ -299,7 +301,8 @@ export default function TypeResumeCard({
               accessibilityLabel={t("dashboard.categoryBreakdown.action")}
               icon={APP_ICONS.list}
               variant={ICON_BUTTON_VARIANT.TEXT}
-              size={ICON_BUTTON_SIZE.LG}
+              iconSize={ICON_BUTTON_SIZE.LG}
+              size={ICON_BUTTON_SIZE.MD}
               iconColor={colors.textMuted}
               disabled={total === 0}
               onPress={() => {

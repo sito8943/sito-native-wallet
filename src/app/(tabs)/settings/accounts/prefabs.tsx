@@ -134,6 +134,9 @@ const createStyles = (colors: ThemeColors) => ({
   },
   container: {
     gap: spacing(4),
+    // Clear the FAB and let the last card's shadow breathe (Page scroll has no
+    // bottom inset of its own).
+    paddingBottom: spacing(20),
   },
   selected: {
     borderColor: colors.primary,

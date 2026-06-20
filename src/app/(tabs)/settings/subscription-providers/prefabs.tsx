@@ -3,7 +3,7 @@ import { type ReactElement, useMemo, useState } from "react"
 import { View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
-import { radius } from "#design/foundations"
+import { radius, spacing } from "#design/foundations"
 import FAB from "#design/patterns/FAB"
 import Empty from "#design/templates/Empty"
 import Page from "#design/templates/Page"
@@ -61,24 +61,22 @@ export default function SubscriptionProviderPrefabs(): ReactElement {
 
   return (
     <View style={styles.fill}>
-      <Page scroll>
+      <Page scroll contentContainerStyle={styles.container}>
         {available.length === 0 ? (
           <Empty message={t("subscriptionProviders.prefabs.empty")} />
         ) : (
           available.map((prefab, index) => (
-            <View
+            <SubscriptionProviderCard
               key={prefab.key}
-              style={[selected.has(prefab.key) && styles.selected]}
-            >
-              <SubscriptionProviderCard
-                provider={{
-                  ...prefab,
-                  id: index + 1,
-                  description: prefab.description[language],
-                }}
-                onPress={() => toggle(prefab.key)}
-              />
-            </View>
+              flat
+              style={[styles.card, selected.has(prefab.key) && styles.selected]}
+              provider={{
+                ...prefab,
+                id: index + 1,
+                description: prefab.description[language],
+              }}
+              onPress={() => toggle(prefab.key)}
+            />
           ))
         )}
       </Page>
@@ -102,9 +100,19 @@ const createStyles = (colors: ThemeColors) => ({
   fill: {
     flex: 1,
   },
+  container: {
+    gap: spacing(4),
+    // Clear the FAB at the bottom (Page scroll has no bottom inset of its own).
+    paddingBottom: spacing(20),
+  },
+  // Flat selectable cards (no shadow → no sibling-shadow artifacts) with a
+  // border; selection swaps the border to the primary color.
+  card: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radius.md,
+  },
   selected: {
     borderColor: colors.primary,
-    borderWidth: 1,
-    borderRadius: radius.md,
   },
 })

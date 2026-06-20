@@ -66,20 +66,18 @@ export default function CurrencyPrefabs(): ReactElement {
           <Empty message={t("currencies.prefabs.empty")} />
         ) : (
           available.map((prefab, i) => (
-            <View
+            <CurrencyCard
               key={prefab.key}
-              style={[selected.has(prefab.key) && styles.selected]}
-            >
-              <CurrencyCard
-                onPress={() => toggle(prefab.key)}
-                currency={{
-                  ...prefab,
-                  id: i,
-                  name: prefab.name[language],
-                  description: prefab.description[language],
-                }}
-              />
-            </View>
+              flat
+              style={[styles.card, selected.has(prefab.key) && styles.selected]}
+              onPress={() => toggle(prefab.key)}
+              currency={{
+                ...prefab,
+                id: i,
+                name: prefab.name[language],
+                description: prefab.description[language],
+              }}
+            />
           ))
         )}
       </Page>
@@ -103,10 +101,18 @@ const createStyles = (colors: ThemeColors) => ({
   },
   container: {
     gap: spacing(4),
+    // Clear the FAB at the bottom (Page scroll has no bottom inset of its own).
+    paddingBottom: spacing(20),
+  },
+  // Selectable prefab cards are flat (no shadow → no sibling-shadow compositing
+  // artifacts) with a border to delineate them; selection swaps the border to
+  // the primary color.
+  card: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radius.md,
   },
   selected: {
     borderColor: colors.primary,
-    borderWidth: 1,
-    borderRadius: radius.md,
   },
 })

@@ -15,11 +15,13 @@ export default function CategoryCard({
   category,
   actions,
   style,
+  flat,
   onPress,
 }: CategoryCardProps): ReactElement {
   return (
     <EntityCard
       style={style}
+      flat={flat}
       actions={actions}
       entity={category}
       onPress={onPress}

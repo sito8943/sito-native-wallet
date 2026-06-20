@@ -18,6 +18,7 @@ export default function CurrencyCard({
   currency,
   actions,
   style,
+  flat,
   onPress,
 }: CurrencyCardProps): ReactElement {
   const styles = useThemedStyles(createStyles)
@@ -25,6 +26,7 @@ export default function CurrencyCard({
   return (
     <EntityCard
       style={style}
+      flat={flat}
       actions={actions}
       entity={currency}
       onPress={onPress}

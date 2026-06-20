@@ -67,20 +67,18 @@ export default function CategoryPrefabs(): ReactElement {
           <Empty message={t("categories.prefabs.empty")} />
         ) : (
           available.map((prefab, index) => (
-            <View
+            <CategoryCard
               key={prefab.key}
-              style={[selected.has(prefab.key) && styles.selected]}
-            >
-              <CategoryCard
-                category={{
-                  ...prefab,
-                  id: index + 1,
-                  name: prefab.name[language],
-                  description: prefab.description[language],
-                }}
-                onPress={() => toggle(prefab.key)}
-              />
-            </View>
+              flat
+              style={[styles.card, selected.has(prefab.key) && styles.selected]}
+              category={{
+                ...prefab,
+                id: index + 1,
+                name: prefab.name[language],
+                description: prefab.description[language],
+              }}
+              onPress={() => toggle(prefab.key)}
+            />
           ))
         )}
       </Page>
@@ -104,10 +102,17 @@ const createStyles = (colors: ThemeColors) => ({
   },
   container: {
     gap: spacing(4),
+    // Clear the FAB at the bottom (Page scroll has no bottom inset of its own).
+    paddingBottom: spacing(20),
+  },
+  // Flat selectable cards (no shadow → no sibling-shadow artifacts) with a
+  // border; selection swaps the border to the primary color.
+  card: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radius.md,
   },
   selected: {
     borderColor: colors.primary,
-    borderWidth: 1,
-    borderRadius: radius.md,
   },
 })
