@@ -12,6 +12,13 @@ export const WEB_RECOVERY_URL = `${WALLET_WEB_URL}/auth/recovery`
 // who is signed in across reloads. Tokens live in expo-secure-store (tokenStore).
 export const SESSION_ACCOUNT_STORAGE_KEY = "sito-wallet.session.account"
 
+// Email of the account whose session expired (access token rejected on launch
+// with no refresh token to recover it). Persisted so the profile can surface a
+// "re-login" warning and so re-signing in as the SAME user can skip the
+// data-loss confirmation + local wipe. Cleared on any successful login/logout.
+export const SESSION_EXPIRED_EMAIL_STORAGE_KEY =
+  "sito-wallet.session.expiredEmail"
+
 // Port the Java wallet API listens on (used for dev host autodetection).
 const DEV_API_PORT = 8080
 

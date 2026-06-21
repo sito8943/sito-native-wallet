@@ -34,6 +34,7 @@ import {
   faListUl,
   faLock,
   faTableCellsLarge,
+  faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons"
 
 export const APP_ICONS: Record<string, IconProp> = {
@@ -70,4 +71,5 @@ export const APP_ICONS: Record<string, IconProp> = {
   list: faListUl,
   lock: faLock,
   dashboard: faTableCellsLarge,
+  warning: faTriangleExclamation,
 }

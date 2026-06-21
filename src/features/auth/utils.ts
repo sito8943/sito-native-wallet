@@ -41,3 +41,8 @@ export const parseStoredAccount = (
 
   return value
 }
+
+// Read the persisted "session expired" email back; anything but a non-empty
+// string resolves to "no expired session".
+export const parseStoredExpiredEmail = (value: unknown): string | null =>
+  typeof value === "string" && value !== "" ? value : null

@@ -309,6 +309,10 @@ export const translations = {
     "profile.appearance.dark": "Dark",
     "profile.appearance.system": "System",
     "profile.preferences.error": "Unable to persist profile preferences.",
+    "profile.sessionExpired.title": "Session expired",
+    "profile.sessionExpired.message":
+      "Your session expired. Sign in again to keep syncing your data.",
+    "profile.sessionExpired.action": "Sign in again",
     "profile.info.title": "Profile",
     "profile.info.description": "Your name",
     "profile.photo.change": "Change photo",
@@ -723,6 +727,10 @@ export const translations = {
     "profile.appearance.system": "Sistema",
     "profile.preferences.error":
       "No se pudieron guardar las preferencias de perfil.",
+    "profile.sessionExpired.title": "Sesión expirada",
+    "profile.sessionExpired.message":
+      "Tu sesión expiró. Inicia sesión de nuevo para seguir sincronizando tus datos.",
+    "profile.sessionExpired.action": "Iniciar sesión de nuevo",
     "profile.info.title": "Perfil",
     "profile.info.description": "Tu nombre.",
     "profile.photo.change": "Cambiar foto",

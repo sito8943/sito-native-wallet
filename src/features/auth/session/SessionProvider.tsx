@@ -8,11 +8,19 @@ import { useStoredState } from "#shared/data/storage/useStoredState"
 import { useI18n } from "#shared/i18n"
 
 import { authClient } from "../AuthClient"
-import { SESSION_ACCOUNT_STORAGE_KEY, USE_MOCK_AUTH } from "../constants"
+import {
+  SESSION_ACCOUNT_STORAGE_KEY,
+  SESSION_EXPIRED_EMAIL_STORAGE_KEY,
+  USE_MOCK_AUTH,
+} from "../constants"
 import { type SessionAccountDto, type SessionDto } from "../dtos"
 import { AuthApiError } from "../restClient"
 import { clearSessionTokens, saveSessionTokens } from "../tokenStore"
-import { parseStoredAccount, toSessionSnapshot } from "../utils"
+import {
+  parseStoredAccount,
+  parseStoredExpiredEmail,
+  toSessionSnapshot,
+} from "../utils"
 
 import { SessionContext } from "./SessionContext"
 import { type SessionProviderProps } from "./types"
@@ -35,16 +43,31 @@ export function SessionProvider({
     storageKey: SESSION_ACCOUNT_STORAGE_KEY,
   })
 
+  // The email of the last account whose session expired on launch. Set when the
+  // session validation below 401s; cleared on any successful login/logout.
+  const { data: expiredEmail, setData: setExpiredEmail } = useStoredState<
+    string | null
+  >({
+    errorMessage: t("auth.session.persistError"),
+    initialValue: null,
+    parseStoredValue: parseStoredExpiredEmail,
+    storageKey: SESSION_EXPIRED_EMAIL_STORAGE_KEY,
+  })
+
   const logUser = useCallback(
     async (session: SessionDto): Promise<void> => {
       await saveSessionTokens(session)
+      // A fresh sign-in clears any prior "session expired" warning.
+      setExpiredEmail(null)
       setData(toSessionSnapshot(session))
     },
-    [setData],
+    [setData, setExpiredEmail],
   )
 
   const logout = useCallback(async (): Promise<void> => {
     await clearSessionTokens()
+    // An explicit logout is a clean exit, not an expiry — drop the warning.
+    setExpiredEmail(null)
     // Drop the signed-in user's local data so the next user (or guest) doesn't
     // inherit it — and so the entity sync can't push it under a new account.
     // Imported lazily (dynamic import, not a top-level one): SessionProvider
@@ -61,7 +84,7 @@ export function SessionProvider({
       await import("#features/settings/components/ProfileInfo")
     resetProfileSync()
     setData(null)
-  }, [setData])
+  }, [setData, setExpiredEmail])
 
   // Once the snapshot has hydrated, validate it against the backend (the stored
   // access token may have been revoked/expired). A 401 means the session is
@@ -82,6 +105,10 @@ export function SessionProvider({
       } catch (error) {
         if (active && error instanceof AuthApiError && error.status === 401) {
           await clearSessionTokens()
+          // Remember who expired so the profile can prompt a re-login and a
+          // same-user sign-in can skip the data-loss wipe. Local data is kept
+          // (no manager.clearLocalData here) — only the dead tokens are dropped.
+          setExpiredEmail(account?.email ?? null)
           setData(null)
         }
       }
@@ -100,10 +127,11 @@ export function SessionProvider({
       account,
       isAuthenticated: account?.id != null || account?.email != null,
       isLoading,
+      expiredEmail,
       logUser,
       logout,
     }),
-    [account, isLoading, logUser, logout],
+    [account, isLoading, expiredEmail, logUser, logout],
   )
 
   return (

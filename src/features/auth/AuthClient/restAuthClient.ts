@@ -39,15 +39,15 @@ const toSession = (response: AuthResponse): SessionDto => ({
 
 // Real client against the Java wallet API (/auth/*).
 export const restAuthClient: AuthClient = {
-  login: async ({
-    email,
-    password,
-    rememberMe,
-  }: AuthDto): Promise<SessionDto> =>
+  // Mobile is a trusted personal device: always request a refresh token
+  // (rememberMe: true) so the access token renews silently. Without it the
+  // backend issues no refresh token and the session dies on access-token expiry
+  // (60 min), forcing a re-login.
+  login: async ({ email, password }: AuthDto): Promise<SessionDto> =>
     toSession(
       await authRequest<AuthResponse>(AUTH_ENDPOINT.SIGN_IN, {
         method: "POST",
-        body: { email, password, rememberMe },
+        body: { email, password, rememberMe: true },
       }),
     ),
 

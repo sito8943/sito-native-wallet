@@ -21,38 +21,42 @@ import { useI18n } from "#shared/i18n"
 export default function SignIn(): ReactElement {
   const router = useRouter()
   const { t } = useI18n()
-  const { logUser } = useSession()
+  const { logUser, expiredEmail } = useSession()
   const manager = useManager()
   const dialog = useDialog()
   const [pending, setPending] = useState<SignInFormValues | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | undefined>(undefined)
 
-  const requestLogin = (values: SignInFormValues): void => {
-    setError(undefined)
-    setPending(values)
-    dialog.handleOpen()
-  }
+  // True when the entered email matches the account whose session just expired:
+  // it's the same user reclaiming their session, so the local data is already
+  // theirs — no wipe, no confirmation.
+  const isSameExpiredUser = (values: SignInFormValues): boolean =>
+    expiredEmail !== null &&
+    values.email.trim().toLowerCase() === expiredEmail.toLowerCase()
 
-  const confirmLogin = async (): Promise<void> => {
-    if (pending === null) {
-      return
-    }
-
+  // Run the actual sign-in. `wipe` drops the device's local (guest) data so the
+  // account's server data replaces it — skipped for a same-user re-login, whose
+  // local data is already the account's.
+  const performLogin = async (
+    values: SignInFormValues,
+    wipe: boolean,
+  ): Promise<void> => {
     setLoading(true)
     try {
-      const session = await authClient.login(pending)
-      // Forget the sync session FIRST: re-signing in while still authenticated
-      // would otherwise leave a full push baseline against the stores we're about
-      // to clear, and the next flush would DELETE the account's rows on the
-      // backend. Resetting gates the push off until the fresh pull rebuilds it.
-      resetEntitySync()
-      // The dialog warned the user: drop the device's local (guest) data so the
-      // account's server data replaces it. Each entity's sync re-pulls its rows
-      // from the backend once signed in. (Sign-up does NOT wipe — it uploads the
-      // local data instead.)
-      manager.clearLocalData()
-      resetProfileSync()
+      const session = await authClient.login(values)
+      if (wipe) {
+        // Forget the sync session FIRST: re-signing in while still authenticated
+        // would otherwise leave a full push baseline against the stores we're
+        // about to clear, and the next flush would DELETE the account's rows on
+        // the backend. Resetting gates the push off until the fresh pull
+        // rebuilds it.
+        resetEntitySync()
+        // Each entity's sync re-pulls its rows from the backend once signed in.
+        // (Sign-up does NOT wipe — it uploads the local data instead.)
+        manager.clearLocalData()
+        resetProfileSync()
+      }
       await logUser(session)
       dialog.handleClose()
       router.replace("/home")
@@ -63,6 +67,24 @@ export default function SignIn(): ReactElement {
     } finally {
       setLoading(false)
     }
+  }
+
+  const requestLogin = (values: SignInFormValues): void => {
+    setError(undefined)
+    // Same user reclaiming an expired session: keep their data, skip the dialog.
+    if (isSameExpiredUser(values)) {
+      void performLogin(values, false)
+      return
+    }
+    setPending(values)
+    dialog.handleOpen()
+  }
+
+  const confirmLogin = async (): Promise<void> => {
+    if (pending === null) {
+      return
+    }
+    await performLogin(pending, true)
   }
 
   return (

@@ -1,8 +1,10 @@
+import { useRouter } from "expo-router"
 import { useMemo, type ReactElement } from "react"
 import { Pressable, View } from "react-native"
 
 import Avatar, { AVATAR_SIZE } from "#design/elements/Avatar"
 import Card from "#design/elements/Card"
+import Icon, { APP_ICONS } from "#design/elements/Icon"
 import TextField from "#design/elements/TextField"
 import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import {
@@ -19,6 +21,7 @@ import {
   useThemePreference,
   type ThemeColors,
 } from "#design/theme"
+import { useSession } from "#features/auth"
 import {
   useProfileInfo,
   useProfilePhoto,
@@ -31,10 +34,12 @@ import {
 import { LANGUAGE, useI18n } from "#shared/i18n"
 
 export default function Profile(): ReactElement {
+  const router = useRouter()
   const styles = useThemedStyles(createStyles)
   const colors = useThemeColors()
   const { preference, setPreference } = useThemePreference()
   const { isLoading, language, setLanguage, t } = useI18n()
+  const { expiredEmail } = useSession()
   const { data: profile, setData: setProfile } = useProfileInfo()
   const { pick, remove, busy } = useProfilePhoto()
   // Profile sync (pull on sign-in, debounced push of name/language edits) is
@@ -52,6 +57,34 @@ export default function Profile(): ReactElement {
 
   return (
     <Page scroll contentContainerStyle={styles.content}>
+      {expiredEmail !== null && (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={t("profile.sessionExpired.action")}
+          onPress={() => {
+            router.push("/sign-in")
+          }}
+        >
+          <Card style={styles.warningCard}>
+            <Icon icon={APP_ICONS.warning} color={colors.negative} size={20} />
+            <View style={styles.warningCopy}>
+              <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>
+                {t("profile.sessionExpired.title")}
+              </Typography>
+              <Typography tone={TYPOGRAPHY_TONE.MUTED}>
+                {t("profile.sessionExpired.message")}
+              </Typography>
+              <Typography
+                variant={TYPOGRAPHY_VARIANT.LABEL}
+                style={{ color: colors.primary }}
+              >
+                {t("profile.sessionExpired.action")}
+              </Typography>
+            </View>
+          </Card>
+        </Pressable>
+      )}
+
       <Card>
         <View style={styles.identity}>
           <Pressable
@@ -175,6 +208,17 @@ export default function Profile(): ReactElement {
 const createStyles = (colors: ThemeColors) => ({
   content: {
     gap: spacing(4),
+  },
+  warningCard: {
+    flexDirection: "row" as const,
+    alignItems: "flex-start" as const,
+    gap: spacing(3),
+    borderLeftWidth: spacing(1),
+    borderLeftColor: colors.negative,
+  },
+  warningCopy: {
+    flex: 1,
+    gap: spacing(1),
   },
   copy: {
     gap: spacing(2),
