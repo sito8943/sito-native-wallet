@@ -32,10 +32,12 @@ const REQUEST_TIMEOUT_MS = 15000
 
 // Dev-only request tracing so you can see what's happening in the Metro
 // terminal instead of being blind. Stripped in production (__DEV__ === false).
-const log = (...args: unknown[]): void => {
+// Accepts only a pre-sanitized message string (built from traceLabel, never raw
+// paths/tokens) so no arbitrary value can reach the logs (CodeQL js/clear-text-logging).
+const log = (message: string): void => {
   if (__DEV__) {
     // eslint-disable-next-line no-console
-    console.log("[auth]", ...args)
+    console.log("[auth]", message)
   }
 }
 
