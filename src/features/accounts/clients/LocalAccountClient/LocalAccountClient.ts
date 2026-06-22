@@ -84,8 +84,8 @@ export default class LocalAccountClient extends StorageClient<Account> {
   // `mutate` (not insert/patch) on purpose: records server state, not user
   // edits, so it must not bump `updatedAt` or look like a local change.
 
-  // Pull (insert-only): add backend accounts we don't already track by remoteId.
-  // Each row's currency (a backend id) is resolved to a local currency by
+  // Pull: refresh backend-owned timestamps on known accounts and insert unknown
+  // ones. Each row's currency (a backend id) is resolved to a local currency by
   // remoteId — an account whose currency isn't synced yet is skipped (currencies
   // pull first, so this is rare) and picked up on a later pull.
   public mergeRemote = (
@@ -93,11 +93,22 @@ export default class LocalAccountClient extends StorageClient<Account> {
     resolveCurrency: (remoteCurrencyId: number) => Currency | undefined,
   ): void => {
     this.mutate((items) => {
+      const remoteById = new Map(remote.map((row) => [row.id, row]))
       const known = new Set(
         items
           .map((account) => account.remoteId)
           .filter((id): id is number => id !== undefined),
       )
+      const reconciled = items.map((account) => {
+        if (account.remoteId === undefined) {
+          return account
+        }
+
+        const row = remoteById.get(account.remoteId)
+        return row?.updatedAt != null
+          ? { ...account, updatedAt: row.updatedAt }
+          : account
+      })
 
       const additions: Account[] = []
       for (const row of remote) {
@@ -118,10 +129,13 @@ export default class LocalAccountClient extends StorageClient<Account> {
           balance: row.balance ?? 0,
           type: accountTypeFromCode(row.type),
           currency,
+          ...(row.updatedAt != null ? { updatedAt: row.updatedAt } : {}),
         })
       }
 
-      return additions.length === 0 ? items : [...items, ...additions]
+      return additions.length === 0
+        ? reconciled
+        : [...reconciled, ...additions]
     })
   }
 

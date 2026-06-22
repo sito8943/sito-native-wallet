@@ -7,6 +7,7 @@ export type RemoteAccount = {
   description?: string | null
   bankName?: string | null
   balance?: number | null
+  updatedAt?: string | null
   type: number
   currency?: { id: number } | null
 }

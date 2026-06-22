@@ -21,7 +21,12 @@ import { type UseFilteredTransactionsState } from "./types"
 import { parseStoredPreferences } from "./utils"
 
 export default function useFilteredTransactions(): UseFilteredTransactionsState {
-  const { data: accounts } = useAccounts()
+  const { data: accounts } = useAccounts({
+    query: {
+      sortingBy: "updatedAt",
+      sortingOrder: SORT_ORDER.DESC,
+    },
+  })
   const { isLoading: isLoadingTransactions } = useTransactions()
   const { t } = useI18n()
 

@@ -14,7 +14,7 @@ import {
 export const RemoteAccountClient = {
   fetch: async (): Promise<RemoteAccount[]> => {
     const page = await authRequest<AccountsPageResponse>(
-      `${ACCOUNTS_ENDPOINT}?page=0&pageSize=${ACCOUNTS_PULL_PAGE_SIZE}`,
+      `${ACCOUNTS_ENDPOINT}?page=0&pageSize=${ACCOUNTS_PULL_PAGE_SIZE}&sort=updatedAt&order=DESC`,
       { auth: true },
     )
     return page.items ?? []
