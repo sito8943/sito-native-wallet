@@ -19,6 +19,7 @@ import {
   type TransactionType,
 } from "#features/categories/TransactionCategory"
 import {
+  type FilterTransactionDto,
   TransactionFormSheet,
   useTransactions,
   useTransactionsTotal,
@@ -71,25 +72,29 @@ export default function TypeResumeCard({
       ? { start: range.start, end: range.end }
       : undefined
   const excludeCategory = config.excludedCategoryIds
-
-  // The client owns the aggregation; the card just describes what it wants.
-  const total = useTransactionsTotal({
+  const filters: FilterTransactionDto = {
     type: config.type,
     accountId: config.account?.id,
     date,
     excludeCategory,
-  })
+    manualOrWithAnyManualCategory: true,
+  }
+
+  // The client owns the aggregation; the card just describes what it wants.
+  const total = useTransactionsTotal(filters)
 
   // Opposite-type total (always computed so the hook order stays stable; only
   // rendered when showOppositeType is on).
   const oppositeType = getOppositeType(config.type)
   const oppositeExcludeCategory = config.oppositeExcludedCategoryIds
-  const oppositeTotal = useTransactionsTotal({
+  const oppositeFilters: FilterTransactionDto = {
     type: oppositeType,
     accountId: config.account?.id,
     date,
     excludeCategory: oppositeExcludeCategory,
-  })
+    manualOrWithAnyManualCategory: true,
+  }
+  const oppositeTotal = useTransactionsTotal(oppositeFilters)
 
   // Currency follows the scoped account, else the first account.
   const account =
@@ -249,8 +254,11 @@ export default function TypeResumeCard({
           setFiltersOpen(true)
         }}
         onDelete={onDelete}
+        filterBadgeCount={
+          config.showFiltersAsBadge ? filterItems.length : undefined
+        }
         activeFilters={
-          config.showFiltersAsBadge ? (
+          !config.showFiltersAsBadge ? (
             <ActiveFilters
               items={filterItems}
               onPress={() => {
@@ -430,12 +438,7 @@ export default function TypeResumeCard({
       <RecentTransactionsSheet
         open={recentOpen}
         title={t("dashboard.recentTransactions.action")}
-        filters={{
-          type: config.type,
-          accountId: config.account?.id,
-          date,
-          excludeCategory,
-        }}
+        filters={filters}
         onClose={() => {
           setRecentOpen(false)
         }}
@@ -445,12 +448,7 @@ export default function TypeResumeCard({
         open={breakdownOpen}
         title={t("dashboard.categoryBreakdown.action")}
         symbol={symbol}
-        filters={{
-          type: config.type,
-          accountId: config.account?.id,
-          date,
-          excludeCategory,
-        }}
+        filters={filters}
         onClose={() => {
           setBreakdownOpen(false)
         }}

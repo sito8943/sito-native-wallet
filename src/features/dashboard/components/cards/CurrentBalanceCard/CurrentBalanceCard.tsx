@@ -24,7 +24,6 @@ import { toAccountDetailsRoute } from "#shared/navigation"
 
 import { useDashboard } from "../../../data/useDashboard"
 import { toAccountSnapshot } from "../../../utils"
-import ActiveFilters from "../ActiveFilters"
 import CardDisplaySection from "../CardDisplaySection"
 import CardFrame from "../CardFrame"
 
@@ -152,16 +151,6 @@ export default function CurrentBalanceCard({
             setFiltersOpen(true)
           }}
           onDelete={onDelete}
-          activeFilters={
-            config.showFiltersAsBadge ? (
-              <ActiveFilters
-                items={[{ label: noAccountLabel }]}
-                onPress={() => {
-                  setFiltersOpen(true)
-                }}
-              />
-            ) : undefined
-          }
         >
           <Typography variant={TYPOGRAPHY_VARIANT.DISPLAY}>
             {noAccountLabel}

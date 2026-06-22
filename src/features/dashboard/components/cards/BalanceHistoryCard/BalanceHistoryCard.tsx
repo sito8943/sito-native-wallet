@@ -110,8 +110,13 @@ export default function BalanceHistoryCard({
           setFiltersOpen(true)
         }}
         onDelete={onDelete}
+        filterBadgeCount={
+          config.showFiltersAsBadge
+            ? 1 + (config.account !== null ? 1 : 0)
+            : undefined
+        }
         activeFilters={
-          config.showFiltersAsBadge ? (
+          !config.showFiltersAsBadge ? (
             <ActiveFilters
               items={[{ label: accountLabel }, { label: presetLabel }]}
               onPress={() => {

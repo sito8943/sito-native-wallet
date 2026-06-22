@@ -42,7 +42,7 @@ export type DashboardCard = Partial<Timestamps> & {
 // Cards spread their default over the persisted config so older configs without
 // these fields still resolve to a complete shape.
 export type BaseCardConfig = {
-  // Whether the active-filter chips render in the card header.
+  // Whether active-filter chips are replaced by a count on the filter button.
   showFiltersAsBadge: boolean
 }
 

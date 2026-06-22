@@ -9,4 +9,7 @@ export type CommonTransactionCategoryDto = {
   description?: string
   color: string
   type: TransactionType
+  // Mirrors the backend category's `auto` flag. Type-resume uses it to apply
+  // the same manual-or-with-any-manual-category rule as the server.
+  auto?: boolean
 }

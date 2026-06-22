@@ -35,27 +35,36 @@ describe("Dashboard > TypeResumeCard", () => {
     jest.clearAllMocks()
   })
 
-  it("renders its active filter chips when showFiltersAsBadge is on", async () => {
-    const { findByText } = render(
+  it("shows the filter count and hides chips in badge mode", async () => {
+    const { findByText, queryByText } = render(
       <TypeResumeCard
-        card={makeCard({ showFiltersAsBadge: true })}
+        card={
+          makeCard({
+            account: { id: 1, name: "Account", currencySymbol: "€" },
+            excludedCategoryIds: [10],
+            showOppositeType: true,
+            oppositeExcludedCategoryIds: [20],
+            showFiltersAsBadge: true,
+          })
+        }
         onDelete={noop}
       />,
+    )
+
+    expect(await findByText("5")).toBeTruthy()
+    expect(
+      queryByText(translate(LANGUAGE.EN, "dashboard.time.currentMonth")),
+    ).toBeNull()
+  })
+
+  it("shows filter chips by default (badge mode off)", async () => {
+    const { findByText } = render(
+      <TypeResumeCard card={makeCard({})} onDelete={noop} />,
     )
 
     expect(
       await findByText(translate(LANGUAGE.EN, "dashboard.time.currentMonth")),
     ).toBeTruthy()
-  })
-
-  it("hides the chips by default (showFiltersAsBadge off)", () => {
-    const { queryByText } = render(
-      <TypeResumeCard card={makeCard({})} onDelete={noop} />,
-    )
-
-    expect(
-      queryByText(translate(LANGUAGE.EN, "dashboard.time.currentMonth")),
-    ).toBeNull()
   })
 
   it("exposes the add and recent-transactions actions", () => {

@@ -374,7 +374,7 @@ export const translations = {
     "dashboard.filter.preset": "Period",
     "dashboard.filter.display": "Display",
     "dashboard.filter.showOpposite": "Show opposite type",
-    "dashboard.filter.showBadge": "Show filters",
+    "dashboard.filter.showBadge": "Show filter count on button",
     "dashboard.filter.excludeCategories": "Excluded categories",
     "dashboard.filter.excludeCategories.placeholder":
       "Pick categories to exclude",
@@ -793,7 +793,7 @@ export const translations = {
     "dashboard.filter.preset": "Periodo",
     "dashboard.filter.display": "Visualización",
     "dashboard.filter.showOpposite": "Mostrar tipo opuesto",
-    "dashboard.filter.showBadge": "Mostrar filtros",
+    "dashboard.filter.showBadge": "Mostrar contador de filtros en el botón",
     "dashboard.filter.excludeCategories": "Categorías excluidas",
     "dashboard.filter.excludeCategories.placeholder":
       "Elige categorías a excluir",

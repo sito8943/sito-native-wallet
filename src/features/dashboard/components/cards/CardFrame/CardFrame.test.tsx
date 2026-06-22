@@ -52,4 +52,25 @@ describe("Dashboard > CardFrame", () => {
     fireEvent.press(getByLabelText(t("dashboard.card.delete.action")))
     expect(onDelete).toHaveBeenCalled()
   })
+
+  it("renders the active-filter count over the filter button", () => {
+    const { getByTestId, getByText } = render(
+      <CardFrame {...baseProps} filterBadgeCount={5}>
+        <Text>value</Text>
+      </CardFrame>,
+    )
+
+    expect(getByTestId("dashboard-filter-badge")).toBeTruthy()
+    expect(getByText("5")).toBeTruthy()
+  })
+
+  it("does not render a badge for an empty filter count", () => {
+    const { queryByTestId } = render(
+      <CardFrame {...baseProps} filterBadgeCount={0}>
+        <Text>value</Text>
+      </CardFrame>,
+    )
+
+    expect(queryByTestId("dashboard-filter-badge")).toBeNull()
+  })
 })

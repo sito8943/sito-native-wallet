@@ -111,15 +111,17 @@ export default function Transactions(): ReactElement {
   const header = (
     <View style={styles.header}>
       {accounts.length > 0 ? (
-        <AccountCarousel
-          accounts={accounts}
-          selectedId={preferences.accountId}
-          onSelect={setAccountId}
-          onPressAccount={(account) => {
-            router.push(toAccountDetailsRoute(account.id))
-          }}
-          action={filterButton}
-        />
+        <View style={styles.accountCarousel}>
+          <AccountCarousel
+            accounts={accounts}
+            selectedId={preferences.accountId}
+            onSelect={setAccountId}
+            onPressAccount={(account) => {
+              router.push(toAccountDetailsRoute(account.id))
+            }}
+            action={filterButton}
+          />
+        </View>
       ) : null}
 
       <TransactionsSummary income={income} expense={expense} symbol={symbol} />
@@ -179,5 +181,11 @@ const styles = StyleSheet.create({
   },
   header: {
     gap: spacing(4),
+  },
+  // EntityList insets every row/header by spacing(4). Let the carousel viewport
+  // reach those list edges; AccountCarousel supplies its own centred-card inset
+  // so neighbouring cards peek symmetrically, matching the web slider.
+  accountCarousel: {
+    marginHorizontal: -spacing(4),
   },
 })

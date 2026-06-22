@@ -29,6 +29,24 @@ export const getTransactionType = (transaction: Transaction): TransactionType =>
 export const matchesTransactionFilter =
   (filters: FilterTransactionDto) =>
   (transaction: Transaction): boolean => {
+    if (filters.manualOrWithAnyManualCategory === true) {
+      const hasManualCategory = transaction.categories.some(
+        (category) => category.auto !== true,
+      )
+
+      if (transaction.auto === true && !hasManualCategory) {
+        return false
+      }
+
+      // The backend's type specification joins through categories. A pulled
+      // auto-only row has no local category because auto categories do not
+      // sync; do not let the generic missing-category fallback classify it as
+      // an expense in TypeResume.
+      if (filters.type !== undefined && transaction.categories.length === 0) {
+        return false
+      }
+    }
+
     if (
       filters.accountId !== undefined &&
       transaction.account.id !== filters.accountId
@@ -113,6 +131,7 @@ const toCommonCategory = (
   description: category.description,
   color: category.color,
   type: category.type,
+  auto: category.auto,
 })
 
 const resolveTransaction = (

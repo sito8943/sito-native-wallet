@@ -6,6 +6,8 @@ export type CardFrameProps = {
   onRename: (title: string) => void
   onOpenFilters: () => void
   onDelete: () => void
+  // Number rendered over the filter button while badge mode is enabled.
+  filterBadgeCount?: number
   // Tappable summary of the active filters (opens the config sheet).
   activeFilters?: ReactNode
   // The card's value content.

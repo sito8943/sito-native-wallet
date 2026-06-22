@@ -85,4 +85,95 @@ describe("Transactions > matchesTransactionFilter", () => {
     // only category 1 survives
     expect(total).toBe(10)
   })
+
+  it("matches the backend TypeResume rule for automatic transactions", () => {
+    const expenseCategory: Transaction["categories"][number] = {
+      id: 1,
+      name: "Expense",
+      color: "#000000",
+      type: TRANSACTION_TYPE.EXPENSE,
+    }
+    const autoCategory: Transaction["categories"][number] = {
+      ...expenseCategory,
+      id: 2,
+      name: "Auto",
+      auto: true,
+    }
+    const transaction = (
+      id: number,
+      amount: number,
+      auto: boolean,
+      categories: Transaction["categories"],
+    ): Transaction => ({
+      id,
+      description: "x",
+      amount,
+      date: "2026/06/12 09:00",
+      account: { id: 1, name: "A", currencySymbol: "€" },
+      categories,
+      auto,
+    })
+    const rows = [
+      transaction(1, 304.85, false, [expenseCategory]),
+      // Pulled backend adjustment: its auto category was intentionally not
+      // synchronized, so the resolved transaction has no categories.
+      transaction(2, 1071.75, true, []),
+      transaction(3, 25, true, [autoCategory]),
+    ]
+
+    const total = rows
+      .filter(
+        matchesTransactionFilter({
+          type: TRANSACTION_TYPE.EXPENSE,
+          manualOrWithAnyManualCategory: true,
+        }),
+      )
+      .reduce((acc, item) => acc + item.amount, 0)
+
+    // The category-less adjustment and auto-only transaction match neither the
+    // backend TypeResume scope nor its type join.
+    expect(total).toBeCloseTo(304.85)
+  })
+
+  it("includes an automatic transaction carrying a manual category", () => {
+    const automatic: Transaction = {
+      id: 1,
+      description: "Generated from a manual category",
+      amount: 10,
+      date: "2026/06/12 09:00",
+      account: { id: 1, name: "A", currencySymbol: "€" },
+      categories: [
+        {
+          id: 1,
+          name: "Expense",
+          color: "#000000",
+          type: TRANSACTION_TYPE.EXPENSE,
+        },
+      ],
+      auto: true,
+    }
+
+    expect(
+      matchesTransactionFilter({
+        type: TRANSACTION_TYPE.EXPENSE,
+        manualOrWithAnyManualCategory: true,
+      })(automatic),
+    ).toBe(true)
+  })
+
+  it("keeps automatic transactions in ordinary transaction filters", () => {
+    const automatic: Transaction = {
+      id: 1,
+      description: "Adjustment",
+      amount: 1071.75,
+      date: "2026/06/12 09:00",
+      account: { id: 1, name: "A", currencySymbol: "€" },
+      categories: [],
+      auto: true,
+    }
+
+    expect(
+      matchesTransactionFilter({ type: TRANSACTION_TYPE.EXPENSE })(automatic),
+    ).toBe(true)
+  })
 })
