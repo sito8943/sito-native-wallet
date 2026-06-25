@@ -5,4 +5,5 @@ export const ACTION_ID = {
   ADD_TRANSACTION: 4,
   FILTERS: 5,
   TRANSFER: 6,
+  RECENT: 7,
 } as const

@@ -1,9 +1,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { render } from "@testing-library/react-native"
+import { fireEvent, render } from "@testing-library/react-native"
+
+import { LANGUAGE, translate } from "#shared/i18n"
 
 import { DASHBOARD_CARD_TYPE, type DashboardCard } from "../DashboardCard"
 
 import CurrentBalanceCard from "./CurrentBalanceCard"
+
+const t = (key: Parameters<typeof translate>[1]): string =>
+  translate(LANGUAGE.EN, key)
 
 // The global expo-router mock only exposes Link; this card calls useRouter()
 // (add-transaction action), so override the module for this file.
@@ -64,5 +69,18 @@ describe("Dashboard > CurrentBalanceCard", () => {
     // With a single account it auto-selects it, so the balance shows instead of
     // the "no account" prompt.
     expect(await findByText("2487.48 €")).toBeTruthy()
+  })
+
+  it("opens the recent transactions sheet from the card action", async () => {
+    const { findByLabelText, findByText } = render(
+      <CurrentBalanceCard card={card} onDelete={noop} />,
+    )
+
+    fireEvent.press(
+      await findByLabelText(t("dashboard.recentTransactions.action")),
+    )
+
+    // No transactions seeded → the sheet opens on its empty state.
+    expect(await findByText(t("transactions.empty.default"))).toBeTruthy()
   })
 })

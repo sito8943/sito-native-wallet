@@ -18,7 +18,11 @@ import {
   useAdjustBalanceSheet,
   useTransferSheet,
 } from "#features/accounts"
-import { TransactionFormSheet, useTransactions } from "#features/transactions"
+import {
+  type FilterTransactionDto,
+  TransactionFormSheet,
+  useTransactions,
+} from "#features/transactions"
 import { useI18n } from "#shared/i18n"
 import { toAccountDetailsRoute } from "#shared/navigation"
 
@@ -26,6 +30,7 @@ import { useDashboard } from "../../../data/useDashboard"
 import { toAccountSnapshot } from "../../../utils"
 import CardDisplaySection from "../CardDisplaySection"
 import CardFrame from "../CardFrame"
+import RecentTransactionsSheet from "../RecentTransactionsSheet"
 
 import { type CurrentBalanceCardProps } from "./types"
 import { parseConfig } from "./utils"
@@ -55,8 +60,13 @@ export default function CurrentBalanceCard({
     useTransactions()
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [addOpen, setAddOpen] = useState(false)
+  const [recentOpen, setRecentOpen] = useState(false)
 
   const noAccountLabel = t("dashboard.currentBalance.noAccount")
+
+  // Recent transactions are scoped to the shown account (no type/date filter) —
+  // the same FilterTransactionDto shape the RecentTransactionsSheet expects.
+  const recentFilters: FilterTransactionDto = { accountId: account?.id }
 
   // The client owns the adjustment logic; the card only bridges the account id.
   const { action: adjustAction, sheetProps } = useAdjustBalanceSheet({
@@ -127,6 +137,15 @@ export default function CurrentBalanceCard({
       hidden: !hasTransferTarget(acc),
     },
     { ...adjustAction(acc), sticky: true },
+    {
+      id: ACTION_ID.RECENT,
+      sticky: true,
+      icon: APP_ICONS.recent,
+      accessibilityLabel: t("dashboard.recentTransactions.action"),
+      onPress: () => {
+        setRecentOpen(true)
+      },
+    },
     {
       id: ACTION_ID.FILTERS,
       icon: APP_ICONS.filter,
@@ -211,6 +230,17 @@ export default function CurrentBalanceCard({
           setAddOpen(false)
         }}
         onSubmit={addTransaction}
+      />
+
+      {/* Recent transactions for this account — the web wallet's dialog, reused
+          from TypeResumeCard. Scoped to the selected account, newest first. */}
+      <RecentTransactionsSheet
+        open={recentOpen}
+        title={t("dashboard.recentTransactions.action")}
+        filters={recentFilters}
+        onClose={() => {
+          setRecentOpen(false)
+        }}
       />
     </>
   )
