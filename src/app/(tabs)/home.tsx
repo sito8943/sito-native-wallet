@@ -2,7 +2,7 @@ import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
 import Page from "#design/templates/Page"
-import { DashboardAddFab, DashboardGrid } from "#features/dashboard"
+import { DashboardActionFabs, DashboardGrid } from "#features/dashboard"
 
 export default function Home(): ReactElement {
   return (
@@ -10,7 +10,7 @@ export default function Home(): ReactElement {
       <Page>
         <DashboardGrid />
       </Page>
-      <DashboardAddFab />
+      <DashboardActionFabs />
     </View>
   )
 }

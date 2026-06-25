@@ -24,8 +24,8 @@ import TypeResumeCard from "../cards/TypeResumeCard"
 
 // The home dashboard: renders each stored card by type. Long-press a card to
 // drag it into a new order (persisted via reorderCards). Adding is handled by
-// the floating DashboardAddFab; deleting routes through the shared
-// confirmation dialog.
+// the floating DashboardActionFabs (in edit mode); deleting routes through the
+// shared confirmation dialog.
 export default function DashboardGrid(): ReactElement {
   const { t } = useI18n()
   const router = useRouter()
