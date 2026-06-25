@@ -15,7 +15,6 @@ import FAB from "#design/patterns/FAB"
 import Page from "#design/templates/Page"
 import { useThemeColors } from "#design/theme"
 import { AccountCarousel } from "#features/accounts"
-import { TRANSACTION_TYPE } from "#features/categories"
 import {
   type Transaction,
   TransactionList,
@@ -24,7 +23,7 @@ import {
   useFilteredTransactions,
   useInfiniteTransactions,
   useTransactions,
-  useTransactionsTotal,
+  useTransactionsGroupedByType,
 } from "#features/transactions"
 import { useI18n } from "#shared/i18n"
 import {
@@ -69,16 +68,10 @@ export default function Transactions(): ReactElement {
     accounts.find((account) => account.id === preferences.accountId) ?? null
   const symbol = selectedAccount?.currency.symbol ?? ""
 
-  // Entrada/Salida totals: always both types for the scoped account, regardless
-  // of the active type filter.
-  const income = useTransactionsTotal({
-    accountId: selectedAccount?.id,
-    type: TRANSACTION_TYPE.INCOME,
-  })
-  const expense = useTransactionsTotal({
-    accountId: selectedAccount?.id,
-    type: TRANSACTION_TYPE.EXPENSE,
-  })
+  // Same grouped-by-type contract as the web account summary: current month,
+  // selected account, balance anchor and backend auto/manual-category rules.
+  const { incomeTotal: income, expenseTotal: expense } =
+    useTransactionsGroupedByType(selectedAccount)
 
   const deleteDialog = useDeleteDialog<Transaction>({
     onConfirm: (transaction) => {

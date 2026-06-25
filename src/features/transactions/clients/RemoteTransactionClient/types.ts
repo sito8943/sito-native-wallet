@@ -27,3 +27,8 @@ export type TransactionPayload = {
 }
 
 export type TransactionsPageResponse = { items?: RemoteTransaction[] | null }
+
+export type TransactionGroupedByType = {
+  incomeTotal: number
+  expenseTotal: number
+}

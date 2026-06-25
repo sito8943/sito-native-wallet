@@ -3,6 +3,7 @@ import { authRequest } from "#features/auth"
 import { TRANSACTIONS_ENDPOINT, TRANSACTIONS_PULL_PAGE_SIZE } from "./constants"
 import {
   type TransactionPayload,
+  type TransactionGroupedByType,
   type TransactionsPageResponse,
   type RemoteTransaction,
 } from "./types"
@@ -17,6 +18,12 @@ export const RemoteTransactionClient = {
     )
     return page.items ?? []
   },
+
+  getGroupedByType: (accountId: number): Promise<TransactionGroupedByType> =>
+    authRequest<TransactionGroupedByType>(
+      `${TRANSACTIONS_ENDPOINT}/grouped-by-type?accountId=${accountId}`,
+      { auth: true },
+    ),
 
   create: (body: TransactionPayload): Promise<number> =>
     authRequest<number>(TRANSACTIONS_ENDPOINT, {

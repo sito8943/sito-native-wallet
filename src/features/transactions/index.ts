@@ -9,6 +9,7 @@ import { TransactionsSummary } from "./components/TransactionsSummary"
 import { TransactionTypeBadge } from "./components/TransactionTypeBadge"
 import { useFilteredTransactions } from "./hooks/useFilteredTransactions"
 import { useInfiniteTransactions } from "./hooks/useInfiniteTransactions"
+import { useTransactionsGroupedByType } from "./hooks/useTransactionsGroupedByType"
 import { useTransactions } from "./hooks/useTransactions"
 import { useTransactionsList } from "./hooks/useTransactionsList"
 import { useTransactionsTotal } from "./hooks/useTransactionsTotal"
@@ -25,6 +26,7 @@ export {
   TransactionTypeBadge,
   useFilteredTransactions,
   useInfiniteTransactions,
+  useTransactionsGroupedByType,
   useTransactions,
   useTransactionsList,
   useTransactionsTotal,

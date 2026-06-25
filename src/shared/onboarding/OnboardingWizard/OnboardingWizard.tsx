@@ -49,6 +49,14 @@ export default function OnboardingWizard(): ReactElement {
 
   const finish = useCallback(() => {
     complete()
+    // Seed a first-run default currency + account so a brand-new device isn't an
+    // empty shell. Lazily imported (dynamic, not top-level): pulling the accounts
+    // feature + Manager graph into onboarding's eager imports would drag the
+    // whole entity-client + AsyncStorage graph into the boot path. Fire-and-
+    // forget — the stores are reactive, so /home shows the account once it lands.
+    void import("#features/accounts/seedDefaultAccount").then(
+      ({ seedDefaultAccount }) => seedDefaultAccount(),
+    )
     router.replace("/home")
   }, [complete, router])
 

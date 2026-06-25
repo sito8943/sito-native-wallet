@@ -83,6 +83,14 @@ export function SessionProvider({
     const { resetProfileSync } =
       await import("#features/settings/components/ProfileInfo")
     resetProfileSync()
+    // Re-seed the now-empty guest device with a default currency + account, the
+    // same starter state a first launch gets — so logging out doesn't leave an
+    // empty shell. Idempotent (no-ops if anything already exists); lazily
+    // imported to keep the entity-client graph out of the boot path.
+    const { seedDefaultAccount } = await import(
+      "#features/accounts/seedDefaultAccount"
+    )
+    await seedDefaultAccount()
     setData(null)
   }, [setData, setExpiredEmail])
 
