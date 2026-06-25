@@ -50,4 +50,19 @@ describe("Dashboard > CurrentBalanceCard", () => {
 
     expect(await findByText("2487.48 €")).toBeTruthy()
   })
+
+  it("defaults to the only account when none is configured", async () => {
+    const unconfigured: DashboardCard = {
+      ...card,
+      config: JSON.stringify({ account: null }),
+    }
+
+    const { findByText } = render(
+      <CurrentBalanceCard card={unconfigured} onDelete={noop} />,
+    )
+
+    // With a single account it auto-selects it, so the balance shows instead of
+    // the "no account" prompt.
+    expect(await findByText("2487.48 €")).toBeTruthy()
+  })
 })

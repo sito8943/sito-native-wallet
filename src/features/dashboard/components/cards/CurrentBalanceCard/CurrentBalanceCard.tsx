@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router"
-import { useState, type ReactElement } from "react"
+import { useEffect, useState, type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
@@ -44,7 +44,12 @@ export default function CurrentBalanceCard({
   // accounts feeds the selector; the displayed account is resolved by the
   // client (getById), not joined from the list in the UI.
   const accounts = useAccounts().data ?? []
-  const { data: account } = useAccount(config.account?.id ?? 0)
+  // With a single account there's no real choice to make, so default the card to
+  // it. Derived for immediate display, then persisted by the effect below so it
+  // sticks (and survives adding more accounts later).
+  const onlyAccount = accounts.length === 1 ? accounts[0] : undefined
+  const effectiveAccountId = config.account?.id ?? onlyAccount?.id ?? 0
+  const { data: account } = useAccount(effectiveAccountId)
   const { updateTitle, updateConfig } = useDashboard()
   const { adjustBalance, addTransaction, transferTransaction } =
     useTransactions()
@@ -75,6 +80,18 @@ export default function CurrentBalanceCard({
   const update = (next: typeof config) => {
     updateConfig(card.id, JSON.stringify(next))
   }
+
+  // Persist the single-account default (not just derive it) so it reads like a
+  // deliberate selection and survives adding more accounts later. Idempotent —
+  // once an account is set this no-ops, and it won't override an explicit pick.
+  useEffect(() => {
+    if (config.account == null && onlyAccount !== undefined) {
+      update({ ...config, account: toAccountSnapshot(onlyAccount) })
+    }
+    // Keyed on the single account's id + whether one is configured; `update`
+    // and `config` are stable enough for this guarded one-shot write.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onlyAccount?.id, config.account?.id])
 
   const selectAccount = (accountId: number) => {
     const selected = accounts.find((item) => item.id === accountId) ?? null
@@ -168,7 +185,7 @@ export default function CurrentBalanceCard({
         <View style={styles.sheet}>
           <AccountSelector
             accounts={accounts}
-            selectedId={config.account?.id ?? 0}
+            selectedId={effectiveAccountId}
             onSelect={selectAccount}
             allLabel={noAccountLabel}
           />
