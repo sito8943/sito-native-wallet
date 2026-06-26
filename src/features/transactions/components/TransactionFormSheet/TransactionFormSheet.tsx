@@ -21,6 +21,7 @@ export default function TransactionFormSheet({
   open,
   onClose,
   defaultAccountId,
+  defaultCategoryIds,
   onSubmit,
 }: TransactionFormSheetProps): ReactElement {
   const { t } = useI18n()
@@ -38,6 +39,7 @@ export default function TransactionFormSheet({
         (hasCategories ? (
           <TransactionForm
             defaultAccountId={defaultAccountId}
+            defaultCategoryIds={defaultCategoryIds}
             submitLabel={t("transactions.new.submit")}
             onSubmit={(values) => {
               onSubmit(values)

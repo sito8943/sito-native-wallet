@@ -20,6 +20,7 @@ import { isValidAmount, parseAmount, toFormValues } from "./utils"
 export default function TransactionForm({
   defaultValues,
   defaultAccountId,
+  defaultCategoryIds,
   submitLabel,
   onSubmit,
   onDelete,
@@ -29,7 +30,11 @@ export default function TransactionForm({
   const { data: accounts } = useAccounts()
   const { data: categories } = useCategories()
   const { control, handleSubmit } = useForm<TransactionFormValues>({
-    defaultValues: toFormValues(defaultValues, defaultAccountId),
+    defaultValues: toFormValues(
+      defaultValues,
+      defaultAccountId,
+      defaultCategoryIds,
+    ),
   })
 
   const accountOptions = useMemo(

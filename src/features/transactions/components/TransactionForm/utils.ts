@@ -18,6 +18,9 @@ export const toFormValues = (
   // Pre-selected account for a fresh form (e.g. adding from an account's
   // detail screen). Ignored when editing an existing transaction.
   defaultAccountId = 0,
+  // Pre-selected categories for a fresh form (e.g. adding from a filtered
+  // dashboard card). Ignored when editing an existing transaction.
+  defaultCategoryIds: number[] = [],
 ): TransactionFormValues =>
   dto === undefined
     ? {
@@ -25,6 +28,6 @@ export const toFormValues = (
         amount: "",
         date: todayStamp(),
         accountId: defaultAccountId,
-        categoryIds: [],
+        categoryIds: defaultCategoryIds,
       }
     : { ...dto, amount: `${dto.amount}` }

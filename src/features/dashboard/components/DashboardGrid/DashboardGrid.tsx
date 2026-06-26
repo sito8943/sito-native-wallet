@@ -20,6 +20,7 @@ import AddCardSheet from "../add/AddCardSheet"
 import BalanceHistoryCard from "../cards/BalanceHistoryCard"
 import CurrentBalanceCard from "../cards/CurrentBalanceCard"
 import { DASHBOARD_CARD_TYPE, type DashboardCard } from "../cards/DashboardCard"
+import LastTransactionsCard from "../cards/LastTransactionsCard"
 import TypeResumeCard from "../cards/TypeResumeCard"
 
 // The home dashboard: renders each stored card by type. Long-press a card to
@@ -61,6 +62,8 @@ export default function DashboardGrid(): ReactElement {
         return <TypeResumeCard card={card} onDelete={onDelete} />
       case DASHBOARD_CARD_TYPE.BALANCE_HISTORY:
         return <BalanceHistoryCard card={card} onDelete={onDelete} />
+      case DASHBOARD_CARD_TYPE.LAST_TRANSACTIONS:
+        return <LastTransactionsCard card={card} onDelete={onDelete} />
       default:
         return <View />
     }

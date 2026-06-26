@@ -398,6 +398,9 @@ export const translations = {
     "dashboard.type.balanceHistory": "Balance history",
     "dashboard.type.balanceHistory.description":
       "An account's balance trend over time",
+    "dashboard.type.lastTransactions": "Last transactions",
+    "dashboard.type.lastTransactions.description":
+      "The latest transactions for an account or categories",
     "dashboard.currentBalance.placeholder": "Current balance",
     "dashboard.currentBalance.noAccount": "Select an account",
     "dashboard.typeResume.placeholder": "Summary",
@@ -406,6 +409,12 @@ export const translations = {
     "dashboard.balanceHistory.placeholder": "Balance history",
     "dashboard.balanceHistory.noAccount": "Select an account",
     "dashboard.balanceHistory.empty": "Not enough data yet",
+    "dashboard.lastTransactions.placeholder": "Last transactions",
+    "dashboard.lastTransactions.limitLabel": "How many",
+    "dashboard.lastTransactions.limitChip": "Last {count}",
+    "dashboard.lastTransactions.categories": "Categories",
+    "dashboard.lastTransactions.categories.placeholder": "All categories",
+    "dashboard.lastTransactions.allCategories": "All categories",
   },
   [LANGUAGE.ES]: {
     "nav.home": "Inicio",
@@ -819,6 +828,9 @@ export const translations = {
     "dashboard.type.balanceHistory": "Histórico de saldo",
     "dashboard.type.balanceHistory.description":
       "La tendencia del saldo en el tiempo",
+    "dashboard.type.lastTransactions": "Últimas transacciones",
+    "dashboard.type.lastTransactions.description":
+      "Las transacciones más recientes de una cuenta o categorías",
     "dashboard.currentBalance.placeholder": "Saldo actual",
     "dashboard.currentBalance.noAccount": "Selecciona una cuenta",
     "dashboard.typeResume.placeholder": "Resumen",
@@ -827,5 +839,11 @@ export const translations = {
     "dashboard.balanceHistory.placeholder": "Histórico de saldo",
     "dashboard.balanceHistory.noAccount": "Selecciona una cuenta",
     "dashboard.balanceHistory.empty": "Aún no hay datos suficientes",
+    "dashboard.lastTransactions.placeholder": "Últimas transacciones",
+    "dashboard.lastTransactions.limitLabel": "Cuántas",
+    "dashboard.lastTransactions.limitChip": "Últimas {count}",
+    "dashboard.lastTransactions.categories": "Categorías",
+    "dashboard.lastTransactions.categories.placeholder": "Todas las categorías",
+    "dashboard.lastTransactions.allCategories": "Todas las categorías",
   },
 } as const

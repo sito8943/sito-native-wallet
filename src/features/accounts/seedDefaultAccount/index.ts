@@ -1,6 +1,7 @@
 import { getLocales } from "expo-localization"
 
 import { CURRENCY_PREFABS } from "#features/currencies"
+import { DASHBOARD_CARD_TYPE } from "#features/dashboard/components/cards/DashboardCard"
 // Top-level manager import is safe here: this module is only ever reached via a
 // dynamic import (from the onboarding finish handler), so the Manager + entity
 // client graph never lands in the eager boot graph.
@@ -91,5 +92,17 @@ export const seedDefaultAccount = async (): Promise<void> => {
     type: ACCOUNT_TYPE.DIGITAL,
     balance: 0,
     currency,
+  })
+
+  // Seed the dashboard so it's not empty on first launch. Both cards default
+  // (config null) to a usable state: CurrentBalance auto-selects the only
+  // account; LastTransactions defaults to "all accounts". No config to set.
+  manager.Dashboard.add({
+    type: DASHBOARD_CARD_TYPE.CURRENT_BALANCE,
+    position: 0,
+  })
+  manager.Dashboard.add({
+    type: DASHBOARD_CARD_TYPE.LAST_TRANSACTIONS,
+    position: 1,
   })
 }

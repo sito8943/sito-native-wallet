@@ -5,6 +5,9 @@ export type TransactionFormProps = {
   // Pre-selects the account on a fresh form (no defaultValues). Used when
   // adding a transaction from an account's detail screen.
   defaultAccountId?: number
+  // Pre-selects categories on a fresh form (no defaultValues). Used when adding
+  // a transaction from a filtered dashboard card with a single category.
+  defaultCategoryIds?: number[]
   submitLabel: string
   onSubmit: (values: AddTransactionDto) => void
   onDelete?: () => void

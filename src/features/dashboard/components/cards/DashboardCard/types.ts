@@ -75,3 +75,13 @@ export type BalanceHistoryConfig = BaseCardConfig & {
   account: CommonAccountDto | null
   preset: BalanceHistoryPreset
 }
+
+// null account → every account; empty `categoryIds` → every category. `limit`
+// caps the visible rows (newest first). Category ids are backend ids (web
+// parity); the card resolves names from the live categories store and the pull
+// remaps them to local ids, like TypeResumeConfig.excludedCategoryIds.
+export type LastTransactionsConfig = BaseCardConfig & {
+  account: CommonAccountDto | null
+  categoryIds: number[]
+  limit: number
+}

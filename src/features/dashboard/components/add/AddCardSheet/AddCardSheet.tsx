@@ -46,6 +46,12 @@ export default function AddCardSheet({
       description: t("dashboard.type.balanceHistory.description"),
       icon: APP_ICONS.in,
     },
+    {
+      type: DASHBOARD_CARD_TYPE.LAST_TRANSACTIONS,
+      label: t("dashboard.type.lastTransactions"),
+      description: t("dashboard.type.lastTransactions.description"),
+      icon: APP_ICONS.recent,
+    },
   ]
 
   return (

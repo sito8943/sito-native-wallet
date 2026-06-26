@@ -6,6 +6,7 @@ import { TRANSACTION_TYPE } from "#features/categories/TransactionCategory"
 import {
   type BalanceHistoryConfig,
   type CurrentBalanceConfig,
+  type LastTransactionsConfig,
   type TypeResumeConfig,
 } from "./types"
 
@@ -17,7 +18,12 @@ export const DASHBOARD_CARD_TYPE = {
   TYPE_RESUME: 0,
   CURRENT_BALANCE: 2,
   BALANCE_HISTORY: 4,
+  LAST_TRANSACTIONS: 5,
 } as const
+
+// Bounds for the LastTransactions card's row count.
+export const LAST_TRANSACTIONS_LIMITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const
+export const DEFAULT_LAST_TRANSACTIONS_LIMIT = 4
 
 // Time window for the BalanceHistory chart. Each preset maps to a set of date
 // boundaries (see getBalanceHistoryBoundaries). String values are SitoWallet's
@@ -60,5 +66,14 @@ export const DEFAULT_TYPE_RESUME_CONFIG: TypeResumeConfig = {
 export const DEFAULT_BALANCE_HISTORY_CONFIG: BalanceHistoryConfig = {
   account: null,
   preset: BALANCE_HISTORY_PRESET.LAST_30_DAYS,
+  showFiltersAsBadge: false,
+}
+
+// null account → every account; empty categories → every category. `limit`
+// caps how many rows show (default 4, the last rendered at half opacity).
+export const DEFAULT_LAST_TRANSACTIONS_CONFIG: LastTransactionsConfig = {
+  account: null,
+  categoryIds: [],
+  limit: DEFAULT_LAST_TRANSACTIONS_LIMIT,
   showFiltersAsBadge: false,
 }
