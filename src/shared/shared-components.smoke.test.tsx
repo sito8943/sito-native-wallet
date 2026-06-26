@@ -7,6 +7,7 @@ import {
   AccountForm,
   AccountSelector,
 } from "#features/accounts"
+import { SessionProvider } from "#features/auth"
 import {
   TRANSACTION_TYPE,
   type TransactionCategory,
@@ -15,7 +16,7 @@ import {
   CategoryForm,
 } from "#features/categories"
 import { type Currency, CurrencyCard, CurrencyForm } from "#features/currencies"
-import { SettingsMenu } from "#features/settings/SettingsMenu"
+import { SettingsMenu } from "#features/settings/components/SettingsMenu"
 import {
   type SubscriptionProvider,
   SubscriptionProviderCard,
@@ -32,7 +33,7 @@ import {
   TransactionCard,
   TransactionForm,
   TransactionList,
-  TransactionsFilters,
+  TransactionsFilterSheet,
   TransactionTypeBadge,
 } from "#features/transactions"
 import {
@@ -183,6 +184,8 @@ jest.mock("#shared/data", () => ({
     Transactions: mockTransactionsClient,
   }),
   todayStamp: () => "2026/01/01",
+  parseStamp: (value: string) => new Date(value),
+  formatStamp: (date: Date) => date.toISOString(),
 }))
 
 jest.mock("#shared/data/storage", () => ({
@@ -283,7 +286,11 @@ describe("Shared feature component smoke tests", () => {
   })
 
   it("renders SettingsMenu", () => {
-    const { getByText } = render(<SettingsMenu />)
+    const { getByText } = render(
+      <SessionProvider>
+        <SettingsMenu />
+      </SessionProvider>,
+    )
     expect(getByText("Profile")).toBeTruthy()
   })
 
@@ -339,9 +346,10 @@ describe("Shared feature component smoke tests", () => {
     expect(getByText(String(TRANSACTION_TYPE.INCOME))).toBeTruthy()
   })
 
-  it("renders TransactionsFilters", () => {
+  it("renders TransactionsFilterSheet", () => {
     const { getByText } = render(
-      <TransactionsFilters
+      <TransactionsFilterSheet
+        open
         preferences={{
           accountId: 0,
           sortOrder: TRANSACTION_SORT_ORDER.NEWEST,
@@ -349,6 +357,7 @@ describe("Shared feature component smoke tests", () => {
         }}
         setSortOrder={noop}
         setTypeFilter={noop}
+        onClose={noop}
       />,
     )
 

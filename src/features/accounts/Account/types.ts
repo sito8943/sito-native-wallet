@@ -9,6 +9,10 @@ export type AccountBankName =
 
 export type Account = Partial<Timestamps> & {
   id: number
+  // Backend id once synced (the local `id` is client-generated and never matches
+  // the backend's). Absent for guest-created accounts not yet pushed. Addresses
+  // PATCH/DELETE and reconciles pulled rows against local ones.
+  remoteId?: number
   name: string
   description?: string
   bankName?: string

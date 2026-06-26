@@ -41,7 +41,6 @@ export default function Form({
 const styles = StyleSheet.create({
   container: {
     gap: spacing(4),
-    paddingHorizontal: spacing(4),
     paddingVertical: spacing(3),
   },
   actions: {

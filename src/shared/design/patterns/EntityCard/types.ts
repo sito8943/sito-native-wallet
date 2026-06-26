@@ -9,4 +9,6 @@ export type EntityCardProps<T> = {
   actions?: Array<Action<T>>
   onPress?: () => void
   style?: StyleProp<ViewStyle>
+  // Drops the card's drop-shadow/elevation (e.g. nested inside another surface).
+  flat?: boolean
 }

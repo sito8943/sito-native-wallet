@@ -1,6 +1,6 @@
-import { SubscriptionCard } from "./SubscriptionCard"
-import { useSubscription } from "./useSubscription"
-import { useSubscriptions } from "./useSubscriptions"
+import { SubscriptionCard } from "./components/SubscriptionCard"
+import { useSubscription } from "./hooks/useSubscription"
+import { useSubscriptions } from "./hooks/useSubscriptions"
 
 export { INITIAL_SUBSCRIPTIONS } from "./demoData"
 export { notifyUpcomingRenewal } from "./notifyUpcomingRenewal"
@@ -17,6 +17,6 @@ export {
   SUBSCRIPTION_BILLING_UNIT,
   SUBSCRIPTION_STATUS,
 } from "./Subscription"
-export type { SubscriptionCardProps } from "./SubscriptionCard"
-export type { UseSubscriptionsState } from "./useSubscriptions"
-export type { UseSubscriptionState } from "./useSubscription"
+export type { SubscriptionCardProps } from "./components/SubscriptionCard"
+export type { UseSubscriptionsState } from "./hooks/useSubscriptions"
+export type { UseSubscriptionState } from "./hooks/useSubscription"

@@ -12,7 +12,7 @@ export const TYPOGRAPHY_VARIANT = {
 
 const typography = {
   [TYPOGRAPHY_VARIANT.DISPLAY]: {
-    fontSize: spacing(6),
+    fontSize: spacing(8),
     fontWeight: "700",
   },
   [TYPOGRAPHY_VARIANT.TITLE]: {

@@ -1,9 +1,14 @@
 import { DEFAULT_PAGE_SIZE, SORT_ORDER } from "./constants"
 import { type QueryParam, type QueryResult } from "./types"
 
-// Generic compare for the common scalar field types (string, number, boolean,
-// and date-ish strings sort lexicographically, which is correct for ISO and
-// YYYY/MM/DD stamps). Unknown types keep their order.
+// Generic compare for the common scalar field types. Strings use code-point
+// order (NOT localeCompare): collation treats the "/" ":" and space in our
+// "YYYY/MM/DD HH:mm" stamps as ignorable/low-priority, which scrambles date
+// order — plain lexicographic compare is correct for these fixed-width stamps
+// and deterministic across engines (Node vs Hermes). Unknown types keep order.
+const lexicographic = (a: string, b: string): number =>
+  a < b ? -1 : a > b ? 1 : 0
+
 const compare = (a: unknown, b: unknown): number => {
   if (a === b) {
     return 0
@@ -14,10 +19,10 @@ const compare = (a: unknown, b: unknown): number => {
   }
 
   if (typeof a === "string" && typeof b === "string") {
-    return a.localeCompare(b)
+    return lexicographic(a, b)
   }
 
-  return String(a).localeCompare(String(b))
+  return lexicographic(String(a), String(b))
 }
 
 // Pure filter → sort → paginate over an in-memory array, returning the same

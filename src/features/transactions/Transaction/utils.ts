@@ -1,33 +1,52 @@
 import { type Account } from "#features/accounts"
+// Deep path on purpose: importing the #features/categories barrel here (a value
+// import) would close the Manager cycle once the TransactionClient imports this
+// module to resolve transactions. The TransactionCategory module has no such
+// dependency.
 import {
   TRANSACTION_TYPE,
   type TransactionCategory,
   type TransactionType,
-} from "#features/categories"
+} from "#features/categories/TransactionCategory"
 
+import { type StoredTransaction } from "../clients/LocalTransactionClient"
 import {
   type CommonAccountDto,
   type CommonTransactionCategoryDto,
   type FilterTransactionDto,
 } from "../dtos"
-import { type StoredTransaction } from "../TransactionClient"
 
 import { getMissingAccount } from "./constants"
 import { type Transaction } from "./types"
-
-export const sortByDate = (transactions: Transaction[]): Transaction[] =>
-  [...transactions].sort((a, b) => b.date.localeCompare(a.date))
 
 export const getTransactionType = (transaction: Transaction): TransactionType =>
   transaction.categories[0]?.type ?? TRANSACTION_TYPE.EXPENSE
 
 // Translates a FilterTransactionDto into a predicate over a resolved
-// transaction. Lives here (not in the client) because filtering touches joined
-// fields (type, category) that only exist after resolution. A future ApiClient
-// sends these filters to the server instead of matching in memory.
+// transaction, used by TransactionClient.list (the backend seam). Filtering
+// touches joined fields (type, category) that only exist after resolution; a
+// future ApiClient sends these filters to the server instead.
 export const matchesTransactionFilter =
   (filters: FilterTransactionDto) =>
   (transaction: Transaction): boolean => {
+    if (filters.manualOrWithAnyManualCategory === true) {
+      const hasManualCategory = transaction.categories.some(
+        (category) => category.auto !== true,
+      )
+
+      if (transaction.auto === true && !hasManualCategory) {
+        return false
+      }
+
+      // The backend's type specification joins through categories. A pulled
+      // auto-only row has no local category because auto categories do not
+      // sync; do not let the generic missing-category fallback classify it as
+      // an expense in TypeResume.
+      if (filters.type !== undefined && transaction.categories.length === 0) {
+        return false
+      }
+    }
+
     if (
       filters.accountId !== undefined &&
       transaction.account.id !== filters.accountId
@@ -52,6 +71,16 @@ export const matchesTransactionFilter =
       return false
     }
 
+    if (
+      filters.excludeCategory !== undefined &&
+      filters.excludeCategory.length > 0 &&
+      transaction.categories.some((category) =>
+        filters.excludeCategory?.includes(category.id),
+      )
+    ) {
+      return false
+    }
+
     if (filters.amount !== undefined) {
       const { start, end } = filters.amount
       if (start != null && transaction.amount < start) {
@@ -64,10 +93,13 @@ export const matchesTransactionFilter =
 
     if (filters.date !== undefined) {
       const { start, end } = filters.date
-      if (start != null && transaction.date < start) {
+      // Filter bounds are day-granular; transaction.date carries a time, so
+      // compare only its day portion (else same-day-as-`end` rows would drop).
+      const day = transaction.date.slice(0, 10)
+      if (start != null && day < start) {
         return false
       }
-      if (end != null && transaction.date > end) {
+      if (end != null && day > end) {
         return false
       }
     }
@@ -99,6 +131,7 @@ const toCommonCategory = (
   description: category.description,
   color: category.color,
   type: category.type,
+  auto: category.auto,
 })
 
 const resolveTransaction = (

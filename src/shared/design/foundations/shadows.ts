@@ -1,16 +1,18 @@
 import { Platform } from "react-native"
 
 const shadows = {
+  // Soft, diffuse lift — low opacity + larger blur reads as a gentle elevation
+  // instead of a hard outline (which looked like a clipped border on cards).
   card:
     Platform.select({
       android: {
-        elevation: 2,
+        elevation: 1,
       },
       ios: {
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.15,
-        shadowRadius: 4,
+        shadowOpacity: 0.06,
+        shadowRadius: 8,
       },
       default: {},
     }) ?? {},

@@ -1,5 +1,7 @@
 export { useManager } from "./useManager"
-export { todayStamp } from "./time"
+export { manager } from "./Manager"
+export type { Manager } from "./Manager"
+export { todayStamp, formatStamp, parseStamp } from "./time"
 export {
   SORT_ORDER,
   DEFAULT_PAGE_SIZE,

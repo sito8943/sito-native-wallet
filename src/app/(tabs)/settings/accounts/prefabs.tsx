@@ -2,11 +2,11 @@ import { useRouter } from "expo-router"
 import { type ReactElement, useMemo, useState } from "react"
 import { View } from "react-native"
 
-import Button, { BUTTON_VARIANT } from "#design/elements/Button"
+import { BUTTON_VARIANT } from "#design/elements/Button"
 import { APP_ICONS } from "#design/elements/Icon"
-import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { radius, spacing } from "#design/foundations"
 import FAB from "#design/patterns/FAB"
+import Empty from "#design/templates/Empty"
 import Page from "#design/templates/Page"
 import { type ThemeColors, useThemedStyles } from "#design/theme"
 import { ACCOUNT_PREFABS, AccountCard, useAccounts } from "#features/accounts"
@@ -74,31 +74,25 @@ export default function AccountPrefabs(): ReactElement {
   if (defaultCurrency === undefined) {
     return (
       <Page scroll>
-        <View style={styles.emptyAction}>
-          <Typography tone={TYPOGRAPHY_TONE.MUTED}>
-            {t("accounts.prefabs.needCurrency")}
-          </Typography>
-          <Button
-            accessibilityLabel={t("accounts.prefabs.goToCurrencies")}
-            variant={BUTTON_VARIANT.OUTLINED}
-            onPress={() => router.push(toCurrenciesRoute())}
-          >
-            {t("accounts.prefabs.goToCurrencies")}
-          </Button>
-        </View>
+        <Empty
+          message={t("accounts.prefabs.needCurrency")}
+          actions={[
+            {
+              children: t("accounts.prefabs.goToCurrencies"),
+              variant: BUTTON_VARIANT.OUTLINED,
+              onPress: () => router.push(toCurrenciesRoute()),
+            },
+          ]}
+        />
       </Page>
     )
   }
 
   return (
     <View style={styles.fill}>
-      <Page scroll>
+      <Page scroll contentContainerStyle={styles.container}>
         {available.length === 0 ? (
-          <View style={styles.empty}>
-            <Typography tone={TYPOGRAPHY_TONE.MUTED}>
-              {t("accounts.prefabs.empty")}
-            </Typography>
-          </View>
+          <Empty message={t("accounts.prefabs.empty")} />
         ) : (
           available.map((prefab, index) => (
             <View
@@ -138,13 +132,11 @@ const createStyles = (colors: ThemeColors) => ({
   fill: {
     flex: 1,
   },
-  empty: {
-    padding: spacing(4),
-  },
-  emptyAction: {
-    padding: spacing(4),
-    gap: spacing(3),
-    alignItems: "flex-start" as const,
+  container: {
+    gap: spacing(4),
+    // Clear the FAB and let the last card's shadow breathe (Page scroll has no
+    // bottom inset of its own).
+    paddingBottom: spacing(20),
   },
   selected: {
     borderColor: colors.primary,

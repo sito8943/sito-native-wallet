@@ -1,6 +1,8 @@
+import { useRouter } from "expo-router"
 import { useMemo, type ReactElement } from "react"
 import { Pressable, View } from "react-native"
 
+import Avatar, { AVATAR_SIZE } from "#design/elements/Avatar"
 import Card from "#design/elements/Card"
 import Icon, { APP_ICONS } from "#design/elements/Icon"
 import TextField from "#design/elements/TextField"
@@ -14,42 +16,34 @@ import {
 import Select from "#design/patterns/Select"
 import Page from "#design/templates/Page"
 import {
-  THEME_PREFERENCE,
   useThemeColors,
   useThemedStyles,
   useThemePreference,
   type ThemeColors,
-  type ThemePreference,
 } from "#design/theme"
-import { useProfileInfo, profileInitials } from "#features/settings/ProfileInfo"
-import { LANGUAGE, useI18n, type Language } from "#shared/i18n"
-
-const APPEARANCE_OPTIONS: Array<{
-  labelKey:
-    | "profile.appearance.light"
-    | "profile.appearance.dark"
-    | "profile.appearance.system"
-  value: ThemePreference
-}> = [
-  { labelKey: "profile.appearance.light", value: THEME_PREFERENCE.LIGHT },
-  { labelKey: "profile.appearance.dark", value: THEME_PREFERENCE.DARK },
-  { labelKey: "profile.appearance.system", value: THEME_PREFERENCE.SYSTEM },
-]
-
-const LANGUAGE_OPTIONS: Array<{
-  labelKey: "profile.language.english" | "profile.language.spanish"
-  value: Language
-}> = [
-  { labelKey: "profile.language.english", value: LANGUAGE.EN },
-  { labelKey: "profile.language.spanish", value: LANGUAGE.ES },
-]
+import { useSession } from "#features/auth"
+import {
+  useProfileInfo,
+  useProfilePhoto,
+  profileInitials,
+} from "#features/settings/components/ProfileInfo"
+import {
+  APPEARANCE_OPTIONS,
+  LANGUAGE_OPTIONS,
+} from "#features/settings/components/ProfilePreferences"
+import { LANGUAGE, useI18n } from "#shared/i18n"
 
 export default function Profile(): ReactElement {
+  const router = useRouter()
   const styles = useThemedStyles(createStyles)
   const colors = useThemeColors()
   const { preference, setPreference } = useThemePreference()
   const { isLoading, language, setLanguage, t } = useI18n()
+  const { expiredEmail } = useSession()
   const { data: profile, setData: setProfile } = useProfileInfo()
+  const { pick, remove, busy } = useProfilePhoto()
+  // Profile sync (pull on sign-in, debounced push of name/language edits) is
+  // driven centrally by useEntitySync — not here, so it runs app-wide.
   const initials = profileInitials(profile.name)
   const languageOptions = useMemo(
     () =>
@@ -62,28 +56,77 @@ export default function Profile(): ReactElement {
   const selectedLanguageId = language === LANGUAGE.EN ? 1 : 2
 
   return (
-    <Page scroll>
+    <Page scroll contentContainerStyle={styles.content}>
+      {expiredEmail !== null && (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={t("profile.sessionExpired.action")}
+          onPress={() => {
+            router.push("/sign-in")
+          }}
+        >
+          <Card style={styles.warningCard}>
+            <Icon icon={APP_ICONS.warning} color={colors.negative} size={20} />
+            <View style={styles.warningCopy}>
+              <Typography variant={TYPOGRAPHY_VARIANT.LABEL}>
+                {t("profile.sessionExpired.title")}
+              </Typography>
+              <Typography tone={TYPOGRAPHY_TONE.MUTED}>
+                {t("profile.sessionExpired.message")}
+              </Typography>
+              <Typography
+                variant={TYPOGRAPHY_VARIANT.LABEL}
+                style={{ color: colors.primary }}
+              >
+                {t("profile.sessionExpired.action")}
+              </Typography>
+            </View>
+          </Card>
+        </Pressable>
+      )}
+
       <Card>
         <View style={styles.identity}>
-          <View style={styles.avatar}>
-            {initials ? (
-              <Typography
-                variant={TYPOGRAPHY_VARIANT.TITLE}
-                tone={TYPOGRAPHY_TONE.INVERTED}
-              >
-                {initials}
-              </Typography>
-            ) : (
-              <Icon icon={APP_ICONS.profile} color={colors.textInverted} />
-            )}
-          </View>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t("profile.photo.change")}
+            disabled={busy}
+            onPress={() => {
+              void pick()
+            }}
+          >
+            <Avatar
+              initials={initials}
+              uri={profile.photo}
+              size={AVATAR_SIZE.LG}
+            />
+          </Pressable>
           <View style={styles.identityCopy}>
             <Typography variant={TYPOGRAPHY_VARIANT.TITLE}>
               {t("profile.info.title")}
             </Typography>
-            <Typography tone={TYPOGRAPHY_TONE.MUTED}>
-              {t("profile.info.description")}
-            </Typography>
+            <View style={styles.photoActions}>
+              <Typography
+                variant={TYPOGRAPHY_VARIANT.LABEL}
+                onPress={() => {
+                  void pick()
+                }}
+                style={{ color: colors.primary }}
+              >
+                {t("profile.photo.change")}
+              </Typography>
+              {profile.photo !== null && (
+                <Typography
+                  variant={TYPOGRAPHY_VARIANT.LABEL}
+                  onPress={() => {
+                    void remove()
+                  }}
+                  style={{ color: colors.negative }}
+                >
+                  {t("profile.photo.remove")}
+                </Typography>
+              )}
+            </View>
           </View>
         </View>
 
@@ -94,15 +137,6 @@ export default function Profile(): ReactElement {
             value={profile.name}
             onChangeText={(name) => {
               setProfile((current) => ({ ...current, name }))
-            }}
-          />
-          <TextField
-            label={t("profile.info.bio")}
-            placeholder={t("profile.info.bioPlaceholder")}
-            value={profile.description}
-            multiline
-            onChangeText={(description) => {
-              setProfile((current) => ({ ...current, description }))
             }}
           />
         </View>
@@ -172,6 +206,20 @@ export default function Profile(): ReactElement {
 }
 
 const createStyles = (colors: ThemeColors) => ({
+  content: {
+    gap: spacing(4),
+  },
+  warningCard: {
+    flexDirection: "row" as const,
+    alignItems: "flex-start" as const,
+    gap: spacing(3),
+    borderLeftWidth: spacing(1),
+    borderLeftColor: colors.negative,
+  },
+  warningCopy: {
+    flex: 1,
+    gap: spacing(1),
+  },
   copy: {
     gap: spacing(2),
     marginBottom: spacing(4),
@@ -186,14 +234,9 @@ const createStyles = (colors: ThemeColors) => ({
     flex: 1,
     gap: spacing(1),
   },
-  avatar: {
-    alignItems: "center" as const,
-    justifyContent: "center" as const,
-    width: spacing(14),
-    height: spacing(14),
-    paddingTop: spacing(1),
-    borderRadius: radius.full,
-    backgroundColor: colors.primary,
+  photoActions: {
+    flexDirection: "row" as const,
+    gap: spacing(4),
   },
   fields: {
     gap: spacing(4),

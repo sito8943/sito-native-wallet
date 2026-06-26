@@ -10,7 +10,7 @@ export type PageProps = {
   scroll?: boolean
   centered?: boolean
   // Most screens sit under a navigator header that already provides the top
-  // safe-area inset, so adding it again here just leaves a dead gap. Headerless
+  // safe-area inset, so adding it again here just leaves a dead gap. Headless
   // screens (e.g. Home) opt back in with `topInset`.
   topInset?: boolean
   // Off by default so content flows edge-to-edge under the tab bar. Screens
@@ -84,7 +84,7 @@ const createStyles = (colors: ThemeColors) => ({
   content: {
     flexGrow: 1,
     paddingHorizontal: spacing(4),
-    gap: spacing(4),
+    gap: spacing(1),
     paddingVertical: spacing(6),
   },
   centeredContent: {

@@ -5,7 +5,7 @@ import {
   type SetStateAction,
 } from "react"
 
-import { useProfilePreferences } from "#features/settings/ProfilePreferences"
+import { useProfilePreferences } from "#features/settings/components/ProfilePreferences"
 
 import { I18nContext } from "./I18nContext"
 import {

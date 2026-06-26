@@ -1,7 +1,12 @@
 import { type QueryParam, type QueryResult } from "#shared/data"
 import { createId, StorageClient } from "#shared/data/storage"
 
-import { type DashboardCard } from "../../cards/DashboardCard"
+import {
+  DASHBOARD_CARD_TYPE,
+  type DashboardCard,
+  type DashboardCardType,
+} from "../../components/cards/DashboardCard"
+import { type RemoteDashboardCard } from "../dashboardConfigClient"
 import { INITIAL_DASHBOARD } from "../demoData"
 import { type AddDashboardCardDto } from "../dtos"
 
@@ -47,4 +52,47 @@ export default class DashboardClient extends StorageClient<DashboardCard> {
   public list = (
     params: QueryParam<DashboardCard> = {},
   ): QueryResult<DashboardCard> => this.runQuery(params)
+
+  // --- Backend sync bookkeeping ---------------------------------------------
+  // `mutate` (not insert/patch) on purpose: records server state, not a user
+  // edit, so it must not bump `updatedAt` or look like a local change.
+
+  // Pull (insert-only): add backend cards we don't already track by remoteId.
+  // A card whose `type` this build doesn't render (the web wallet has cards
+  // SitoWallet doesn't port) is skipped — the grid can't show it.
+  public mergeRemote = (remote: RemoteDashboardCard[]): void => {
+    const supported = Object.values(DASHBOARD_CARD_TYPE) as number[]
+
+    this.mutate((items) => {
+      const known = new Set(
+        items
+          .map((card) => card.remoteId)
+          .filter((id): id is number => id !== undefined),
+      )
+
+      const additions: DashboardCard[] = []
+      for (const row of remote) {
+        if (known.has(row.id) || !supported.includes(row.type)) {
+          continue
+        }
+        additions.push({
+          id: createId(),
+          remoteId: row.id,
+          type: row.type as DashboardCardType,
+          title: row.title ?? null,
+          config: row.config ?? null,
+          position: row.position ?? additions.length,
+        })
+      }
+
+      return additions.length === 0 ? items : [...items, ...additions]
+    })
+  }
+
+  // Record the backend id assigned to a locally-created card after its POST.
+  public attachRemoteId = (localId: number, remoteId: number): void => {
+    this.mutate((items) =>
+      items.map((card) => (card.id === localId ? { ...card, remoteId } : card)),
+    )
+  }
 }

@@ -1,1 +1,1 @@
-export { SettingsMenu } from "./SettingsMenu"
+export { SettingsMenu } from "./components/SettingsMenu"

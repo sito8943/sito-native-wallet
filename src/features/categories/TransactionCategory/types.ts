@@ -7,6 +7,11 @@ export type TransactionType =
 
 export type TransactionCategory = Partial<Timestamps> & {
   id: number
+  // Backend id once this category has been synced to the server (the local
+  // `id` is a client-generated number that never matches the backend's). Absent
+  // for guest-created categories not yet pushed. Used to address PATCH/DELETE
+  // and to reconcile pulled rows against local ones.
+  remoteId?: number
   name: string
   description?: string
   color: string

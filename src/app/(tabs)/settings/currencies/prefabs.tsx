@@ -3,9 +3,9 @@ import { type ReactElement, useMemo, useState } from "react"
 import { View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
-import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { radius, spacing } from "#design/foundations"
 import FAB from "#design/patterns/FAB"
+import Empty from "#design/templates/Empty"
 import Page from "#design/templates/Page"
 import { type ThemeColors, useThemedStyles } from "#design/theme"
 import {
@@ -61,29 +61,23 @@ export default function CurrencyPrefabs(): ReactElement {
 
   return (
     <View style={styles.fill}>
-      <Page scroll>
+      <Page scroll contentContainerStyle={styles.container}>
         {available.length === 0 ? (
-          <View style={styles.empty}>
-            <Typography tone={TYPOGRAPHY_TONE.MUTED}>
-              {t("currencies.prefabs.empty")}
-            </Typography>
-          </View>
+          <Empty message={t("currencies.prefabs.empty")} />
         ) : (
           available.map((prefab, i) => (
-            <View
+            <CurrencyCard
               key={prefab.key}
-              style={[selected.has(prefab.key) && styles.selected]}
-            >
-              <CurrencyCard
-                onPress={() => toggle(prefab.key)}
-                currency={{
-                  ...prefab,
-                  id: i,
-                  name: prefab.name[language],
-                  description: prefab.description[language],
-                }}
-              />
-            </View>
+              flat
+              style={[styles.card, selected.has(prefab.key) && styles.selected]}
+              onPress={() => toggle(prefab.key)}
+              currency={{
+                ...prefab,
+                id: i,
+                name: prefab.name[language],
+                description: prefab.description[language],
+              }}
+            />
           ))
         )}
       </Page>
@@ -105,12 +99,20 @@ const createStyles = (colors: ThemeColors) => ({
   fill: {
     flex: 1,
   },
-  empty: {
-    padding: spacing(4),
+  container: {
+    gap: spacing(4),
+    // Clear the FAB at the bottom (Page scroll has no bottom inset of its own).
+    paddingBottom: spacing(20),
+  },
+  // Selectable prefab cards are flat (no shadow → no sibling-shadow compositing
+  // artifacts) with a border to delineate them; selection swaps the border to
+  // the primary color.
+  card: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radius.md,
   },
   selected: {
     borderColor: colors.primary,
-    borderWidth: 1,
-    borderRadius: radius.md,
   },
 })

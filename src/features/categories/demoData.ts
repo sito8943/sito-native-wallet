@@ -1,5 +1,6 @@
 import {
   ADJUSTMENT_CATEGORY_ID,
+  TRANSFER_CATEGORY_ID,
   TRANSACTION_TYPE,
   type TransactionCategory,
 } from "./TransactionCategory"
@@ -33,8 +34,34 @@ export const ADJUSTMENT_CATEGORIES: TransactionCategory[] = [
   adjustmentExpense,
 ]
 
+const transferOut: TransactionCategory = {
+  id: TRANSFER_CATEGORY_ID.OUT,
+  name: "Transfer out",
+  description: "Automatic outgoing transfer",
+  color: "#455a64",
+  type: TRANSACTION_TYPE.EXPENSE,
+  system: true,
+  auto: true,
+}
+
+const transferIn: TransactionCategory = {
+  id: TRANSFER_CATEGORY_ID.IN,
+  name: "Transfer in",
+  description: "Automatic incoming transfer",
+  color: "#455a64",
+  type: TRANSACTION_TYPE.INCOME,
+  system: true,
+  auto: true,
+}
+
+export const TRANSFER_CATEGORIES: TransactionCategory[] = [
+  transferOut,
+  transferIn,
+]
+
 // No demo seed beyond the system adjustment categories: regular categories
 // start empty and are added from the category prefab picker (or manually).
 export const INITIAL_CATEGORIES: TransactionCategory[] = [
   ...ADJUSTMENT_CATEGORIES,
+  ...TRANSFER_CATEGORIES,
 ]

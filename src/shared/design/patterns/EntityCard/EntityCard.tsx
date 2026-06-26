@@ -19,13 +19,14 @@ export default function EntityCard<T>({
   actions = [],
   onPress,
   style,
+  flat = false,
 }: EntityCardProps<T>): ReactElement {
   const colors = useThemeColors()
   const visibleActions = actions.filter((action) => action.hidden !== true)
 
   return (
-    <Card style={style}>
-      <View style={styles.column}>
+    <Card style={style} flat={flat}>
+      <View style={[styles.column, flat && styles.columnFlat]}>
         <Pressable
           disabled={onPress === undefined}
           style={styles.content}
@@ -67,6 +68,11 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: spacing(4),
     padding: spacing(1),
+  },
+  // Flat cards sit flush in another surface, so drop the side inset to align
+  // their content with the surrounding layout.
+  columnFlat: {
+    paddingHorizontal: 0,
   },
   content: {
     flex: 1,

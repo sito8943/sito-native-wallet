@@ -1,4 +1,4 @@
-import { type DashboardCardType } from "../../cards/DashboardCard"
+import { type DashboardCardType } from "../../components/cards/DashboardCard"
 
 export type AddDashboardCardDto = {
   type: DashboardCardType

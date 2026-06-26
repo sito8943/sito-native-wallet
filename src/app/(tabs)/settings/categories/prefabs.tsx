@@ -3,9 +3,9 @@ import { type ReactElement, useMemo, useState } from "react"
 import { View } from "react-native"
 
 import { APP_ICONS } from "#design/elements/Icon"
-import Typography, { TYPOGRAPHY_TONE } from "#design/elements/Typography"
 import { radius, spacing } from "#design/foundations"
 import FAB from "#design/patterns/FAB"
+import Empty from "#design/templates/Empty"
 import Page from "#design/templates/Page"
 import { type ThemeColors, useThemedStyles } from "#design/theme"
 import {
@@ -62,29 +62,23 @@ export default function CategoryPrefabs(): ReactElement {
 
   return (
     <View style={styles.fill}>
-      <Page scroll>
+      <Page scroll contentContainerStyle={styles.container}>
         {available.length === 0 ? (
-          <View style={styles.empty}>
-            <Typography tone={TYPOGRAPHY_TONE.MUTED}>
-              {t("categories.prefabs.empty")}
-            </Typography>
-          </View>
+          <Empty message={t("categories.prefabs.empty")} />
         ) : (
           available.map((prefab, index) => (
-            <View
+            <CategoryCard
               key={prefab.key}
-              style={[selected.has(prefab.key) && styles.selected]}
-            >
-              <CategoryCard
-                category={{
-                  ...prefab,
-                  id: index + 1,
-                  name: prefab.name[language],
-                  description: prefab.description[language],
-                }}
-                onPress={() => toggle(prefab.key)}
-              />
-            </View>
+              flat
+              style={[styles.card, selected.has(prefab.key) && styles.selected]}
+              category={{
+                ...prefab,
+                id: index + 1,
+                name: prefab.name[language],
+                description: prefab.description[language],
+              }}
+              onPress={() => toggle(prefab.key)}
+            />
           ))
         )}
       </Page>
@@ -106,12 +100,19 @@ const createStyles = (colors: ThemeColors) => ({
   fill: {
     flex: 1,
   },
-  empty: {
-    padding: spacing(4),
+  container: {
+    gap: spacing(4),
+    // Clear the FAB at the bottom (Page scroll has no bottom inset of its own).
+    paddingBottom: spacing(20),
+  },
+  // Flat selectable cards (no shadow → no sibling-shadow artifacts) with a
+  // border; selection swaps the border to the primary color.
+  card: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radius.md,
   },
   selected: {
     borderColor: colors.primary,
-    borderWidth: 1,
-    borderRadius: radius.md,
   },
 })

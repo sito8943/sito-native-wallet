@@ -12,6 +12,8 @@ export const isCurrency = (value: unknown): value is Currency => {
 
   return (
     typeof candidate.id === "number" &&
+    (candidate.remoteId === undefined ||
+      typeof candidate.remoteId === "number") &&
     typeof candidate.name === "string" &&
     typeof candidate.symbol === "string"
   )

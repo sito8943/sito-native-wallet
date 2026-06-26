@@ -1,0 +1,28 @@
+import { type AddTransactionDto } from "../../dtos"
+
+export type TransactionFormProps = {
+  defaultValues?: AddTransactionDto
+  // Pre-selects the account on a fresh form (no defaultValues). Used when
+  // adding a transaction from an account's detail screen.
+  defaultAccountId?: number
+  // Pre-selects categories on a fresh form (no defaultValues). Used when adding
+  // a transaction from a filtered dashboard card with a single category.
+  defaultCategoryIds?: number[]
+  submitLabel: string
+  onSubmit: (values: AddTransactionDto) => void
+  onDelete?: () => void
+  // Auto (system-generated) transactions, e.g. balance adjustments. Still
+  // editable so a mistake can be corrected, but their system category is shown
+  // and locked — it can't be reassigned.
+  auto?: boolean
+}
+
+// Form state keeps amount as text for friendlier numeric input; it is parsed to
+// a number on submit.
+export type TransactionFormValues = {
+  description: string
+  amount: string
+  date: string
+  accountId: number
+  categoryIds: number[]
+}

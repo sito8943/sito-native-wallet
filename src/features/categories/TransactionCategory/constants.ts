@@ -9,3 +9,8 @@ export const ADJUSTMENT_CATEGORY_ID = {
   EXPENSE: 0,
   INCOME: 1,
 } as const
+
+export const TRANSFER_CATEGORY_ID = {
+  OUT: 2,
+  IN: 3,
+} as const

@@ -135,7 +135,8 @@ export default function Autocomplete(props: AutocompleteProps): ReactElement {
     return (
       <Pressable
         accessibilityRole="button"
-        style={styles.option}
+        accessibilityState={{ selected }}
+        style={[styles.option, selected && styles.optionSelected]}
         onPress={() => {
           handleSelect(item.id)
         }}
@@ -321,8 +322,14 @@ const createStyles = (colors: ThemeColors) => ({
     borderBottomWidth: borderWidth.thin,
     flexDirection: "row" as const,
     justifyContent: "space-between" as const,
-    paddingHorizontal: spacing(1),
+    paddingHorizontal: spacing(2),
     paddingVertical: spacing(3),
+  },
+  // Selected: a thin primary outline + faint fill so the choice reads at a
+  // glance without shouting. Overrides the row separator (all four borders) and
+  // pads the sides to sit inside the outline.
+  optionSelected: {
+    backgroundColor: colors.background,
   },
   empty: {
     paddingVertical: spacing(4),

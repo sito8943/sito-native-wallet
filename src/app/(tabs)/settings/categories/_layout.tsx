@@ -1,15 +1,15 @@
-import { router, Stack } from "expo-router"
+import { Stack } from "expo-router"
 import { type ReactElement } from "react"
 
-import { APP_ICONS } from "#design/elements/Icon"
-import IconButton, {
-  ICON_BUTTON_SIZE,
-  ICON_BUTTON_VARIANT,
-} from "#design/elements/IconButton"
-import { spacing } from "#design/foundations"
+import HeaderBackButton from "#design/patterns/HeaderBackButton"
 import { useThemeColors } from "#design/theme"
 import { useI18n } from "#shared/i18n"
-import { toCategoryPrefabsRoute } from "#shared/navigation"
+import { toSettingsRoute } from "#shared/navigation"
+
+// Anchor deep pushes/links on index so prefabs/new always have a back button.
+export const unstable_settings = {
+  initialRouteName: "index",
+}
 
 export default function Layout(): ReactElement {
   const colors = useThemeColors()
@@ -26,17 +26,7 @@ export default function Layout(): ReactElement {
         name="index"
         options={{
           title: t("categories.title"),
-          headerRight: () => (
-            <IconButton
-              accessibilityLabel={t("categories.addSuggested")}
-              icon={APP_ICONS.prefabs}
-              iconColor={colors.textStrong}
-              hitSlop={spacing(2)}
-              onPress={() => router.push(toCategoryPrefabsRoute())}
-              variant={ICON_BUTTON_VARIANT.TEXT}
-              size={ICON_BUTTON_SIZE.LG}
-            />
-          ),
+          headerLeft: () => <HeaderBackButton fallback={toSettingsRoute()} />,
         }}
       />
       <Stack.Screen name="new" options={{ title: t("categories.new.title") }} />

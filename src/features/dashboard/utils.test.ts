@@ -1,64 +1,16 @@
-import { TRANSACTION_TYPE, type TransactionType } from "#features/categories"
-import { type Transaction } from "#features/transactions"
-
-import { TYPE_RESUME_TIME } from "./cards/DashboardCard"
+import {
+  BALANCE_HISTORY_PRESET,
+  TYPE_RESUME_TIME,
+} from "./components/cards/DashboardCard"
 import {
   formatAmount,
+  getBalanceHistoryBoundaries,
   getCurrentWeekRange,
   getTimeRange,
-  sumTransactions,
+  remapCardConfigIds,
 } from "./utils"
 
-const make = (
-  amount: number,
-  date: string,
-  type: TransactionType,
-  accountId = 1,
-): Transaction => ({
-  id: 1,
-  description: "x",
-  amount,
-  date,
-  account: { id: accountId, name: "A", currencySymbol: "€" },
-  categories: [{ id: 1, name: "c", color: "#000000", type }],
-})
-
 describe("Dashboard > utils", () => {
-  describe("sumTransactions", () => {
-    const data = [
-      make(10, "2026/06/05", TRANSACTION_TYPE.EXPENSE),
-      make(20, "2026/06/12", TRANSACTION_TYPE.EXPENSE),
-      make(99, "2026/06/12", TRANSACTION_TYPE.INCOME),
-      make(5, "2026/05/30", TRANSACTION_TYPE.EXPENSE),
-      make(7, "2026/06/12", TRANSACTION_TYPE.EXPENSE, 2),
-    ]
-
-    it("sums amounts matching type and date range", () => {
-      expect(
-        sumTransactions(data, {
-          type: TRANSACTION_TYPE.EXPENSE,
-          start: "2026/06/01",
-          end: "2026/06/30",
-        }),
-      ).toBe(37) // 10 + 20 + 7 (excludes income 99 and May 5)
-    })
-
-    it("scopes to the given account ids", () => {
-      expect(
-        sumTransactions(data, {
-          type: TRANSACTION_TYPE.EXPENSE,
-          accountIds: [1],
-          start: "2026/06/01",
-          end: "2026/06/30",
-        }),
-      ).toBe(30) // excludes the account-2 expense
-    })
-
-    it("returns 0 when nothing matches", () => {
-      expect(sumTransactions([], { type: TRANSACTION_TYPE.INCOME })).toBe(0)
-    })
-  })
-
   describe("getTimeRange", () => {
     const june = new Date(2026, 5, 15)
 
@@ -101,6 +53,96 @@ describe("Dashboard > utils", () => {
 
     it("trims when there is no symbol", () => {
       expect(formatAmount(10, "")).toBe("10.00")
+    })
+  })
+
+  describe("getBalanceHistoryBoundaries", () => {
+    const june = new Date(2026, 5, 15)
+
+    it("returns 7 ascending daily boundaries for last 7 days", () => {
+      const boundaries = getBalanceHistoryBoundaries(
+        BALANCE_HISTORY_PRESET.LAST_7_DAYS,
+        june,
+      )
+      expect(boundaries).toHaveLength(7)
+      expect(boundaries[0]).toBe("2026/06/09")
+      expect(boundaries[6]).toBe("2026/06/15")
+    })
+
+    it("returns 12 end-of-month boundaries for last 12 months", () => {
+      const boundaries = getBalanceHistoryBoundaries(
+        BALANCE_HISTORY_PRESET.LAST_12_MONTHS,
+        june,
+      )
+      expect(boundaries).toHaveLength(12)
+      // 11 months before June 2026 = July 2025, last day.
+      expect(boundaries[0]).toBe("2025/07/31")
+      expect(boundaries[11]).toBe("2026/06/30")
+    })
+
+    it("steps weekly for last 90 days", () => {
+      const boundaries = getBalanceHistoryBoundaries(
+        BALANCE_HISTORY_PRESET.LAST_90_DAYS,
+        june,
+      )
+      expect(boundaries).toHaveLength(13)
+      expect(boundaries[12]).toBe("2026/06/15")
+    })
+  })
+
+  describe("remapCardConfigIds", () => {
+    // remote id 50 → local 1, remote 60 → local 2
+    const account = (remoteId: number) => ({ 50: 1, 60: 2 })[remoteId]
+    // remote category id 70 → local 3
+    const category = (remoteId: number) => ({ 70: 3 })[remoteId]
+
+    it("rewrites the account snapshot id from remote to local", () => {
+      const config = JSON.stringify({ account: { id: 50, name: "Cash" } })
+      expect(remapCardConfigIds(config, account, category)).toBe(
+        JSON.stringify({ account: { id: 1, name: "Cash" } }),
+      )
+    })
+
+    it("nulls an account that isn't synced locally", () => {
+      const config = JSON.stringify({ account: { id: 999, name: "Gone" } })
+      expect(remapCardConfigIds(config, account, category)).toBe(
+        JSON.stringify({ account: null }),
+      )
+    })
+
+    it("remaps excludedCategoryIds and drops unresolved ones", () => {
+      const config = JSON.stringify({
+        account: { id: 60 },
+        excludedCategoryIds: [70, 999],
+      })
+      expect(remapCardConfigIds(config, account, category)).toBe(
+        JSON.stringify({
+          account: { id: 2 },
+          excludedCategoryIds: [3],
+        }),
+      )
+    })
+
+    it("remaps oppositeExcludedCategoryIds too", () => {
+      const config = JSON.stringify({
+        oppositeExcludedCategoryIds: [70],
+      })
+      expect(remapCardConfigIds(config, account, category)).toBe(
+        JSON.stringify({
+          oppositeExcludedCategoryIds: [3],
+        }),
+      )
+    })
+
+    it("passes null/empty config through untouched", () => {
+      expect(remapCardConfigIds(null, account, category)).toBeNull()
+      expect(remapCardConfigIds("", account, category)).toBe("")
+    })
+
+    it("returns malformed JSON unchanged", () => {
+      expect(remapCardConfigIds("{not json", account, category)).toBe(
+        "{not json",
+      )
     })
   })
 })

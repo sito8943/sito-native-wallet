@@ -3,5 +3,4 @@ export {
   getTransactionType,
   matchesTransactionFilter,
   resolveTransactions,
-  sortByDate,
 } from "./utils"

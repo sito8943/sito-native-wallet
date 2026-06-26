@@ -2,12 +2,13 @@ export { useDetailRouteParams } from "./hooks"
 export type { DetailRouteParams } from "./params"
 export {
   toAccountDetailsRoute,
+  toSettingsRoute,
+  toProfileRoute,
   toAccountsRoute,
   toNewAccountRoute,
   toAccountPrefabsRoute,
   toEditAccountRoute,
   toTransactionDetailsRoute,
-  toAccountTransactionDetailsRoute,
   toNewTransactionRoute,
   toSubscriptionDetailsRoute,
   toCurrencyDetailsRoute,
@@ -15,6 +16,7 @@ export {
   toNewCurrencyRoute,
   toCurrencyPrefabsRoute,
   toCategoryDetailsRoute,
+  toCategoriesRoute,
   toNewCategoryRoute,
   toCategoryPrefabsRoute,
   toSubscriptionProviderDetailsRoute,

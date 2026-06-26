@@ -24,3 +24,10 @@ export const ACCOUNT_TYPE_LABEL = {
   [ACCOUNT_TYPE.CASH]: "Cash",
   [ACCOUNT_TYPE.DIGITAL]: "Digital",
 } as const
+
+// Maps each local type to the backend AccountType enum ordinal (PHYSICAL=0,
+// VIRTUAL=1) used on the wire — cash ↔ physical, digital ↔ virtual (card).
+export const ACCOUNT_TYPE_CODE = {
+  [ACCOUNT_TYPE.CASH]: 0,
+  [ACCOUNT_TYPE.DIGITAL]: 1,
+} as const

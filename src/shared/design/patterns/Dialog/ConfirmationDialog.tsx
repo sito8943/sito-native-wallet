@@ -21,8 +21,14 @@ export default function ConfirmationDialog({
 }: ConfirmationDialogProps): ReactElement {
   const { t } = useI18n()
 
+  // While the action is in flight, ignore backdrop/back dismissals so the user
+  // can't close the dialog mid-operation (the cancel button is disabled too).
   return (
-    <Dialog open={open} title={title} onClose={handleClose}>
+    <Dialog
+      open={open}
+      title={title}
+      onClose={isLoading ? undefined : handleClose}
+    >
       {message != null && (
         <Typography
           tone={TYPOGRAPHY_TONE.MUTED}

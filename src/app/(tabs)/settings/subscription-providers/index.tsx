@@ -1,9 +1,12 @@
 import { useRouter } from "expo-router"
 import { type ReactElement } from "react"
 import { StyleSheet, View } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { BUTTON_VARIANT } from "#design/elements/Button"
 import { APP_ICONS } from "#design/elements/Icon"
+import { ICON_BUTTON_SIZE } from "#design/elements/IconButton"
+import { spacing } from "#design/foundations"
 import { useDeleteDialog } from "#design/interactions"
 import { ConfirmationDialog } from "#design/patterns/Dialog"
 import EntityList from "#design/patterns/EntityList"
@@ -23,6 +26,7 @@ import {
 
 export default function SubscriptionProviders(): ReactElement {
   const router = useRouter()
+  const insets = useSafeAreaInsets()
   const { t } = useI18n()
   const { data, removeSubscriptionProvider } = useSubscriptionProviders()
 
@@ -61,6 +65,13 @@ export default function SubscriptionProviders(): ReactElement {
           )}
         />
       </Page>
+      <FAB
+        accessibilityLabel={t("subscriptionProviders.addCommon")}
+        icon={APP_ICONS.prefabs}
+        size={ICON_BUTTON_SIZE.MD}
+        onPress={() => router.push(toSubscriptionProviderPrefabsRoute())}
+        style={{ bottom: insets.bottom + spacing(16) }}
+      />
       <FAB
         accessibilityLabel={t("subscriptionProviders.add")}
         icon={APP_ICONS.add}

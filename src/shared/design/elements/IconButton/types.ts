@@ -22,7 +22,11 @@ export type IconButtonProps = Omit<PressableProps, "children" | "style"> & {
   color?: string
   iconColor?: string
   iconStyle?: IconProps["style"]
+  // Controls the button box (min size + padding).
   size?: IconButtonSize
+  // Controls the glyph size independently of the button box. Defaults to
+  // `size`, so button and icon scale together unless overridden.
+  iconSize?: IconButtonSize
   style?: StyleProp<ViewStyle>
   variant?: IconButtonVariant
   children?: ReactNode

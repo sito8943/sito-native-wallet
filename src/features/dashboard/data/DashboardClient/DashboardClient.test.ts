@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
-import { DASHBOARD_CARD_TYPE } from "../../cards/DashboardCard"
+import { DASHBOARD_CARD_TYPE } from "../../components/cards/DashboardCard"
 
 import { DASHBOARD_STORAGE_KEY } from "./constants"
 import DashboardClient from "./DashboardClient"

@@ -1,4 +1,5 @@
 export { lightColors, darkColors } from "./colors"
+export { FONT_FAMILY } from "./fonts"
 export { default as borderWidth } from "./borderWidth"
 export { default as radius } from "./radius"
 export { default as shadows } from "./shadows"

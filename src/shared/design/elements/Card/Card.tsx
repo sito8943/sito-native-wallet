@@ -6,10 +6,18 @@ import { useThemedStyles, type ThemeColors } from "#design/theme"
 
 import { type CardProps } from "./types"
 
-export default function Card({ children, style }: CardProps): ReactElement {
+export default function Card({
+  children,
+  style,
+  flat = false,
+}: CardProps): ReactElement {
   const styles = useThemedStyles(createStyles)
 
-  return <View style={[styles.container, style]}>{children}</View>
+  return (
+    <View style={[styles.container, !flat && styles.elevated, style]}>
+      {children}
+    </View>
+  )
 }
 
 const createStyles = (colors: ThemeColors) => ({
@@ -17,6 +25,8 @@ const createStyles = (colors: ThemeColors) => ({
     backgroundColor: colors.surface,
     padding: spacing(3),
     borderRadius: radius.md,
+  },
+  elevated: {
     ...shadows.card,
   },
 })
